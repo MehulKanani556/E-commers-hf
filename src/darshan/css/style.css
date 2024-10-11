@@ -1,0 +1,336 @@
+body {
+    color: #2B221E;
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+ul {
+    list-style: none;
+}
+
+.d_cur {
+    cursor: pointer;
+}
+
+/* Container css start */
+
+.d_container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+@media (min-width: 1650px) {
+    .d_container {
+        width: 1620px;
+    }
+}
+
+@media (min-width: 1441px) and (max-width: 1649px) {
+    .d_container {
+        width: 1350px;
+        max-width: none;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1440px) {
+    .d_container {
+        width: 1199px;
+        max-width: none;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .d_container {
+        width: 970px;
+        max-width: none;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .d_container {
+        width: 750px;
+        max-width: none;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+    .d_container {
+        max-width: 750px;
+    }
+}
+
+@media (min-width: 300px) and (max-width: 450px) {
+    .d_container {
+        max-width: 750px;
+        padding: 0px 10px;
+    }
+}
+
+/* Container css End */
+
+/* Banner section css start */
+
+.d_womenbannerbg {
+    background: linear-gradient(102.1deg, #2A2735 0%, #312A2B 80.43%);
+    width: 100%;
+}
+
+.d_womenbannerbg .d_content p {
+    color: #CAD0D9;
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 24px;
+}
+
+.d_womenbannerbg .d_content .d_head {
+    max-width: 700px;
+    margin-bottom: 48px;
+}
+
+.d_womenbannerbg .d_content .d_head h2 {
+    font-size: 100px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 120px;
+}
+
+.d_womenbannerbg .d_content .d_cta a {
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 12px 24px;
+    color: #181D25;
+    font-weight: 500;
+}
+
+.d_womenbannerbg .d_content .d_cta .d_arrowicon {
+    font-size: 18px;
+}
+
+.d_womenbannerbg .d_img {
+    height: 850px;
+    width: 900px;
+}
+
+.d_womenbannerbg .d_img img {
+    width: 100%;
+    height: 100%;
+}
+
+.d_womenbannerbg .d_plus {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-shadow: 0px 8px 32px -4px #676F7B1A;
+    background-color: #fff;
+}
+
+.d_womenbannerbg .d_plus .d_plusicon {
+    color: #181D25;
+    font-size: 18px;
+}
+
+.d_womenbannerbg .d_popbox {
+    border-radius: 8px;
+    background-color: #181D25;
+    border: 1px solid #333D4C;
+    box-shadow: 0px 8px 30px -4px #080B1240;
+    padding: 12px;
+    position: relative;
+}
+
+.d_womenbannerbg .d_popbox::after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    top: 50%;
+    background-color: #181D25;
+    right: -8px;
+    transform: translateY(-50%) rotate(135deg);
+    z-index: 1;
+    border: 1px solid #181D25;
+}
+
+.d_womenbannerbg .d_popbox .d_img {
+    width: 74px;
+    height: 74px;
+    margin-right: 12px;
+}
+
+.d_womenbannerbg .d_popbox .d_img img {
+    width: 100%;
+    height: 100%;
+}
+
+.d_womenbannerbg .d_popbox .d_text {
+    width: 110px;
+}
+
+.d_womenbannerbg .d_popbox .d_text h6 {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    color: #fff;
+}
+
+.d_womenbannerbg .d_popbox .d_text .d_price {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+}
+
+
+
+.d_womenbannerbg .d_fall_img {
+    position: relative;
+}
+
+.d_womenbannerbg .d_pls {
+    position: absolute;
+    top: 50%;
+    left: 30%;
+}
+
+.d_womenbannerbg .d_pls2 {
+    position: absolute;
+    top: 34%;
+    left: 47%;
+}
+
+.d_womenbannerbg .d_pls3 {
+    position: absolute;
+    top: 85%;
+    left: 42%;
+}
+
+.d_womenbannerbg .d_popup_par {
+    position: relative;
+}
+
+.d_womenbannerbg .d_popup {
+    position: absolute;
+    right: 100%;
+    top: 20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    transform: translateY(-50%);
+}
+
+.d_womenbannerbg .d_popup_par span:hover+.d_popup {
+    opacity: 1;
+}
+
+
+/* Banner section css end */
+
+@media(max-width:1450px)
+{
+    .d_womenbannerbg .d_img{
+        height: 700px;
+        width: 720px;
+    }
+    .d_womenbannerbg .d_content .d_head h2{
+        font-size: 70px;
+        line-height: 80px;
+    }
+}
+@media(max-width:1199px)
+{
+
+}
+@media(max-width:991px)
+{
+    .d_womenbannerbg .d_img {
+        height: 465px;
+        width: 385px;
+    }
+    .d_womenbannerbg .d_content .d_head h2{
+        font-size: 48px;
+        line-height: 50px;
+    }
+    .d_womenbannerbg .d_content .d_head{
+        margin-bottom: 28px;
+    }
+    .d_womenbannerbg .d_plus{
+        width: 30px;
+        height: 30px;
+    }
+    .d_womenbannerbg .d_plus .d_plusicon{
+        font-size: 16px;
+    }
+    .d_womenbannerbg .d_popbox {
+        padding: 5px;
+    }
+    .d_womenbannerbg .d_popbox .d_img{
+        width: 60px;
+        height: 60px;
+    }
+    .d_womenbannerbg .d_popbox .d_text h6{
+        font-size: 12px;
+    }
+    .d_womenbannerbg .d_popbox .d_text .d_price{
+        font-size: 14px;
+    }
+}
+@media(max-width:767px)
+{
+    .d_womenbannerbg .d_img {
+        height: 350px;
+        width: 550px;
+    }
+    .d_womenbannerbg .d_content .d_head h2{
+        font-size: 32px;
+    }
+    .d_womenbannerbg .d_content .d_cta{
+        margin-bottom: 20px;
+    }
+    .d_womenbannerbg{
+        padding-top: 20px;
+    }
+    .d_womenbannerbg .d_popup{
+        top: 15px;
+    }
+}
+@media(max-width:575px)
+{
+    .d_womenbannerbg .d_popbox .d_img{
+        width: 30px;
+        height: 30px;
+    }
+    .d_womenbannerbg .d_popbox .d_text h6{
+        margin-bottom: 0;
+        line-height: 18px;
+    }
+    .d_womenbannerbg .d_popbox .d_text h6{
+        font-size: 11px;
+    }
+    .d_womenbannerbg .d_popbox{
+        flex-direction: column ;
+    }
+    .d_womenbannerbg .d_pls .d_popup{
+        right: 260px;
+    }
+    .d_womenbannerbg .d_pls .d_popbox::after{
+        left: -8px;
+    }
+}
+@media(max-width:375px){
+    .d_womenbannerbg .d_img{
+        width: 400px;
+        height: 100%;
+    }
+    .d_womenbannerbg .d_pls .d_popup{
+        right: 215px;
+    }
+}
+@media(max-width:320px){
+    .d_womenbannerbg .d_pls .d_popup{
+        right: 165px;
+    }
+}
