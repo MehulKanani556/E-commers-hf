@@ -1,0 +1,72 @@
+/* nav bar */
+
+.header {
+    background-color: #2B221E;
+}
+
+.VK_header_drop .dropdown-toggle::after {
+    display: none;
+}
+
+.VK_header_search_bar {
+    width: 880px;
+}
+
+
+/* header */
+.white_space {
+    white-space: nowrap;
+}
+
+ul {
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+}
+
+ul::-webkit-scrollbar {
+    display: none;
+}
+
+.VK_nav_btn{
+    border: none;
+}
+
+/* -------------------------------------------------------- media query -------------------------------------------------------- */
+
+
+/*  extra small device */
+@media (max-width:480px) {}
+
+
+/* small device */
+@media (max-width:575px) and (min-width:481px) {}
+
+
+/* medium device */
+@media (max-width:766px) and (min-width:576px) {}
+
+
+/* lg device */
+@media (max-width:991px) and (min-width:767px) {}
+
+
+/* xl device */
+@media (max-width:1199px) and (min-width:992px) {}
+
+
+/* 2xl device */
+@media (max-width:1440px) and (min-width:1200px) {
+    .VK_header_nav {
+        padding: 0px 50px;
+    }
+}
+
+
+/* 3xl device */
+@media (min-width:1441px) {
+    .VK_header_nav {
+        padding: 0px 50px;
+    }
+}
