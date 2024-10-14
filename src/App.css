@@ -1,4 +1,16 @@
- /* Container css start  */
+/* font css */
+:root {
+    font-family: "inter", sans-serif;
+}
+
+.inter{
+    font-family: "inter", sans-serif;
+}
+
+
+
+
+/* Container css start  */
 
 .d_container {
     margin-right: auto;
@@ -49,6 +61,6 @@
 
 
 
-.outline_none{
+.outline_none {
     outline: none;
 }

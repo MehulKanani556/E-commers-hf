@@ -2,14 +2,16 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
-import Womenstore from './darshan/pages/Womenstore';
+// import Footer from './Vivek/Component/footer/Footer';
+import Home from './Vivek/Component/Home/Home';
 
 
 function App() {
   return (
     <div className="App">
 
-      <Womenstore />
+      <Home/>
+
 
     </div>
   );

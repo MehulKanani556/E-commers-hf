@@ -1,3 +1,83 @@
-.Footer{
+.Footer {
     background-color: #2B221E;
+}
+
+.VK_footer_par{
+    position: relative;
+    z-index: 1;
+}
+
+.VK_footer_net img{
+    position: absolute;
+    bottom: 0%;
+    right: 0%;
+    z-index: -1;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ------------------------------------------ media query ------------------------------------------ */
+
+
+/*  extra small device */
+@media (max-width:480px) {
+    .VK_sec_padding {
+        padding: 40px 0px;
+    }
+}
+
+
+/* small device */
+@media (max-width:575px) and (min-width:481px) {
+    .VK_sec_padding {
+        padding: 40px 0px;
+    }
+}
+
+
+/* medium device */
+@media (max-width:766px) and (min-width:576px) {
+    .VK_sec_padding {
+        padding: 40px 0px;
+    }
+}
+
+
+/* lg device */
+@media (max-width:991px) and (min-width:767px) {
+    .VK_sec_padding {
+        padding: 50px 0px;
+    }
+}
+
+
+/* xl device */
+@media (max-width:1199px) and (min-width:992px) {
+    .VK_sec_padding {
+        padding: 50px 0px;
+    }
+}
+
+
+/* 2xl device */
+@media (max-width:1440px) and (min-width:1200px) {
+    .VK_sec_padding {
+        padding: 80px 0px;
+    }
+}
+
+
+/* 3xl device */
+@media (min-width:1441px) {
+    .VK_sec_padding {
+        padding: 80px 0px;
+    }
 }
