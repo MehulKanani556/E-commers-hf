@@ -77,7 +77,263 @@
     font-size: 15px;
 }
 
+.V_back_spe_off {
+    background-image: url('../../assets/special_offer.png');
+    height: 576px;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+}
 
+.V_special {
+    width: 188px;
+    clip-path: polygon(100% 0%, 90% 50%, 100% 100%, 0 100%, 0% 50%, 0 0);
+    background-color: #434377;
+}
+
+.V_sale {
+    width: 538px;
+    font-size: 58px;
+    font-weight: 600;
+}
+
+.V_thirty30 {
+    font-size: 58px;
+    font-weight: 600;
+    color: #434377;
+}
+.V_five_pro{
+    width: 20%;
+}
+
+.V_five_pro:hover{
+    opacity: 0.5;
+}
+
+.V_five{
+    width: 280px;
+    height: 356px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.V_card {
+    width: 340px;
+    position: relative;
+    border-radius: 0px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.V_card:hover {
+    width: 340px;
+    position: relative;
+    border-radius: 0px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.V_best_seller_tag {
+    position: absolute;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 0px;
+}
+
+.V_product_image {
+    height: 340px;
+    width: 340px;
+}
+
+.V_product_image:hover {
+    padding: 0px;
+}
+
+.V_brand {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24.2px;
+    letter-spacing: 0.02em;
+    text-align: left;
+
+}
+
+.V_description {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.94px;
+    letter-spacing: 0.02em;
+    text-align: left;
+
+}
+
+.V_rating {
+    display: flex;
+    align-items: center;
+}
+
+.V_star {
+    color: #ffcc00;
+}
+
+.V_rating_value {
+    margin-left: 4px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.V_price_container {
+    display: flex;
+    align-items: center;
+}
+
+.V_discounted_price {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24.2px;
+    letter-spacing: 0.02em;
+    text-align: right;
+
+}
+
+.V_original_price {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16.94px;
+    text-align: right;
+
+}
+
+.V_color {
+    height: 20px;
+    width: 20px;
+    border-radius: 50px;
+}
+
+.V_heart {
+    height: 26px;
+    width: 26px;
+}
+
+.V_buynow {
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.V_color1 {
+    background-color: #16325B;
+    height: 20px;
+    width: 20px;
+    border-radius: 50px;
+}
+
+.V_color2 {
+    background-color: #DFD1A2;
+    height: 20px;
+    width: 20px;
+    border-radius: 50px;
+}
+
+.V_color3 {
+    background-color: #989898;
+    height: 20px;
+    width: 20px;
+    border-radius: 50px;
+}
+
+.V_color4 {
+    background-color: #C6C7C6;
+    height: 20px;
+    width: 20px;
+    border-radius: 50px;
+}
+
+.V_color5 {
+    background-color: #9FBF9F;
+    height: 20px;
+    width: 20px;
+    border-radius: 50px;
+}
+
+.V_color6 {
+    background-color: #BCEFEF;
+    height: 20px;
+    width: 20px;
+    border-radius: 50px;
+}
+
+.V_color7 {
+    background-color: #BC9590;
+    height: 20px;
+    width: 20px;
+    border-radius: 50px;
+}
+
+.V_color8 {
+    background-color: #333134;
+    height: 20px;
+    width: 20px;
+    border-radius: 50px;
+}
+
+.V_color9 {
+    background-color: #EDC285;
+    height: 20px;
+    width: 20px;
+    border-radius: 50px;
+}
+
+.V_color10 {
+    background-color: #c5c3c3;
+    height: 20px;
+    width: 20px;
+    border-radius: 50px;
+}
+
+/* Initially show these elements
+.V_card .V_best_seller_tag,
+.V_card .V_price_container,
+.V_card .V_color {
+  display: block;
+}
+
+/* Initially hide these elements */
+/* .V_card .V_heart,
+.V_card .V_buynow {
+  display: none;
+} */
+
+/* On hover, hide the badge, price container, and color */
+/* .V_card:hover .V_best_seller_tag,
+.V_card:hover .V_price_container,
+.V_card:hover .V_color {
+  display: none;
+} */
+
+/* On hover, show the heart, cart, and "Buy Now" button */
+/* .V_card:hover .V_heart,
+.V_card:hover .V_buynow {
+  display: flex;
+} */
 
 
 /* ///////////////////////////////////////////////////////// container ////////////////////////////////////////////////// */
@@ -118,6 +374,27 @@
     .V_new {
         font-size: 28px;
     }
+    .V_sale {
+        width: 538px;
+        font-size: 58px;
+    }
+
+    .V_thirty30 {
+        font-size: 58px;
+
+    }
+
+    .V_back_spe_off {
+        height: 576px;
+        width: 100%;
+    }
+    .V_five_pro{
+        width: 20%;
+    }
+    .V_five{
+        width: 280px;
+        height: 356px;
+    }
 }
 
 @media (min-width: 1440px) and (max-width: 1649px) {
@@ -151,8 +428,30 @@
         height: 300px;
         width: 100%;
     }
+
     .V_new {
         font-size: 28px;
+    }
+    .V_sale {
+        width: 538px;
+        font-size: 58px;
+    }
+
+    .V_thirty30 {
+        font-size: 58px;
+
+    }
+
+    .V_back_spe_off {
+        height: 576px;
+        width: 100%;
+    }
+    .V_five_pro{
+        width: 20%;
+    }
+    .V_five{
+        width: 280px;
+        height: 356px;
     }
 }
 
@@ -192,8 +491,30 @@
         height: 315px;
         width: 100%;
     }
+
     .V_new {
         font-size: 28px;
+    }
+    .V_sale {
+        width: 538px;
+        font-size: 58px;
+    }
+
+    .V_thirty30 {
+        font-size: 58px;
+
+    }
+
+    .V_back_spe_off {
+        height: 576px;
+        width: 100%;
+    }
+    .V_five_pro{
+        width: 20%;
+    }
+    .V_five{
+        width: 280px;
+        height: 320px;
     }
 }
 
@@ -233,8 +554,31 @@
         height: 215px;
         width: 100%;
     }
+
     .V_new {
         font-size: 26px;
+    }
+
+    .V_sale {
+        width: 400px;
+        font-size: 48px;
+    }
+
+    .V_thirty30 {
+        font-size: 48px;
+
+    }
+
+    .V_back_spe_off {
+        height: 400px;
+        width: 100%;
+    }
+    .V_five_pro{
+        width: 20%;
+    }
+    .V_five{
+        width: 230px;
+        height: 260px;
     }
 }
 
@@ -273,8 +617,36 @@
         height: 250px;
         width: 100%;
     }
+
     .V_new {
         font-size: 24px;
+    }
+
+    .V_sale {
+        width: 320px;
+        font-size: 40px;
+    }
+
+    .V_thirty30 {
+        font-size: 40px;
+
+    }
+
+    .V_back_spe_off {
+        height: 300px;
+        width: 100%;
+    }
+
+    .V_special {
+        width: 188px;
+
+    }
+    .V_five_pro{
+        width: 33%;
+    }
+    .V_five{
+        width: 250px;
+        height: 300px;
     }
 }
 
@@ -313,8 +685,36 @@
         height: 200px;
         width: 100%;
     }
+
     .V_new {
         font-size: 22px;
+    }
+
+    .V_sale {
+        width: 290px;
+        font-size: 34px;
+    }
+
+    .V_thirty30 {
+        font-size: 34px;
+
+    }
+
+    .V_back_spe_off {
+        height: 250px;
+        width: 100%;
+    }
+
+    .V_special {
+        width: 180px;
+
+    }
+    .V_five_pro{
+        width: 33%;
+    }
+    .V_five{
+        width: 250px;
+        height: 300px;
     }
 }
 
@@ -357,9 +757,36 @@
     .V_new {
         font-size: 22px;
     }
+
+    .V_sale {
+        width: 250px;
+        font-size: 30px;
+    }
+
+    .V_thirty30 {
+        font-size: 30px;
+
+    }
+
+    .V_back_spe_off {
+        height: 180px;
+        width: 100%;
+    }
+
+    .V_special {
+        width: 150px;
+
+    }
+    .V_five_pro{
+        width: 50%;
+    }
+    .V_five{
+        width: 180px;
+        height: 210px;
+    }
 }
 
-@media (min-width: 300px) and (max-width: 450px) {
+@media (min-width: 300px) and (max-width: 479px) {
     .V_img_height {
         width: 130px;
         height: 105.4px;
@@ -397,5 +824,35 @@
 
     .V_new {
         font-size: 22px;
+    }
+
+    .V_sale {
+        width: 150px;
+        font-size: 20px;
+    }
+
+    .V_thirty30 {
+        font-size: 20px;
+
+    }
+
+    .V_back_spe_off {
+        height: 150px;
+        width: 100%;
+    }
+
+    .V_special {
+        width: 140px;
+    }
+
+    .V_card {
+        width: 320px;
+    }
+    .V_five_pro{
+        width: 50%;
+    }
+    .V_five{
+        width: 150px;
+        height: 178px;
     }
 }
