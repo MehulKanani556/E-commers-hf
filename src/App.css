@@ -1,3 +1,12 @@
+/* / font css / */
+:root {
+    font-family: "inter", sans-serif;
+}
+
+.inter {
+    font-family: "inter", sans-serif;
+}
+ 
  /* Container css start  */
 
 .d_container {
@@ -51,4 +60,25 @@
 
 .outline_none{
     outline: none;
+}
+
+body {
+    color: #2B221E;
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+ul {
+    list-style: none;
+}
+
+.d_cur {
+    cursor: pointer;
+}
+.d_p-80{
+    padding: 80px 0;
 }

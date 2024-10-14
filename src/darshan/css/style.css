@@ -1,80 +1,12 @@
-body {
-    color: #2B221E;
-    font-size: 16px;
-}
-
-a {
-    text-decoration: none;
-    box-sizing: border-box;
-}
-
-ul {
-    list-style: none;
-}
-
-.d_cur {
-    cursor: pointer;
-}
-
-/* Container css start */
-
-.d_container {
-    margin-right: auto;
-    margin-left: auto;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-@media (min-width: 1650px) {
-    .d_container {
-        width: 1620px;
-    }
-}
-
-@media (min-width: 1441px) and (max-width: 1649px) {
-    .d_container {
-        width: 1350px;
-        max-width: none;
-    }
-}
-
-@media (min-width: 1200px) and (max-width: 1440px) {
-    .d_container {
-        width: 1199px;
-        max-width: none;
-    }
-}
-
-@media (min-width: 992px) and (max-width: 1199px) {
-    .d_container {
-        width: 970px;
-        max-width: none;
-    }
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-    .d_container {
-        width: 750px;
-        max-width: none;
-    }
-}
-
-@media (min-width: 480px) and (max-width: 767px) {
-    .d_container {
-        max-width: 750px;
-    }
-}
-
-@media (min-width: 300px) and (max-width: 450px) {
-    .d_container {
-        max-width: 750px;
-        padding: 0px 10px;
-    }
-}
-
-/* Container css End */
 
 /* Banner section css start */
+
+.d_firstbg{
+    overflow: hidden;
+}
+.owl_height{
+    height: 800px;
+}
 
 .d_womenbannerbg {
     background: linear-gradient(102.1deg, #2A2735 0%, #312A2B 80.43%);
@@ -213,124 +145,308 @@ ul {
     position: relative;
 }
 
+
+
 .d_womenbannerbg .d_popup {
     position: absolute;
     right: 100%;
     top: 20px;
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.3s ease;
     transform: translateY(-50%);
+    z-index: 10;
 }
 
-.d_womenbannerbg .d_popup_par span:hover+.d_popup {
+.d_womenbannerbg .d_popup_par .d_plus:hover+.d_popup {
     opacity: 1;
 }
 
+.d_bannersilder2 {
+    background-image: url('./../d_img/womenbanner2.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* position: relative; */
+}
+
+.d_bannersilder2 .d_content {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.d_bannersilder2 .d_content h2{
+    font-size: 140px;
+    font-weight: 900;
+    color: #fff;
+    font-style: italic;
+}
+.d_bannersilder2 .d_content h3{
+    font-size: 40px;
+    font-weight: 500;
+    font-style: italic;
+    color: #fff;
+    letter-spacing: 3px;
+}
+.d_bannersilder2 .d_content p{
+    max-width: 490px;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: 1px;
+    line-height: 28px;
+}
+
+.d_bannersilder2 .d_content .d_cta a{
+    padding: 12px 60px;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    color: #2B221E;
+}
+.d_bannersilder3 {
+    background-image: url('./../d_img/womenbanner3.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* position: relative; */
+}
+.d_bannersilder3 .d_text {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.d_bannersilder3 .d_text h6{
+    font-size: 32px;
+    font-weight: 400;
+    color: #818181;
+    margin-bottom: 16px;
+}
+.d_bannersilder3 .d_text h2{
+    font-size: 72px;
+    font-weight: 400;
+    color: #000;
+    max-width: 448px;
+    margin-bottom: 16px;
+}
+.d_bannersilder3 .d_text p{
+    font-size: 20px;
+    font-weight: 400;
+    color: #181818;
+    max-width: 640px;
+    line-height: 36px;
+}
+.d_bannersilder3 .d_text .d_cta a{
+    padding: 12px 60px;
+    border-radius: 4px;
+    background-color: #2B221E;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+}
 
 /* Banner section css end */
 
-@media(max-width:1450px)
-{
-    .d_womenbannerbg .d_img{
+@media(max-width:1450px) {
+    .d_womenbannerbg .d_img {
         height: 700px;
         width: 720px;
     }
-    .d_womenbannerbg .d_content .d_head h2{
+
+    .d_womenbannerbg .d_content .d_head h2 {
         font-size: 70px;
         line-height: 80px;
     }
+    .owl_height{
+        height: 660px;
+    }
+    .d_bannersilder2 .d_content h2{
+        font-size: 100px;
+    }
+    .d_bannersilder2 .d_content h3{
+        font-size: 30px;
+    }
+    .d_bannersilder2 .d_content p{
+        line-height: 20px;
+    }
 }
-@media(max-width:1199px)
-{
 
+@media(max-width:1199px) {
+    .d_bannersilder2{
+        background-position: right;
+    }
+    .d_bannersilder2 .d_content h2{
+        font-size: 70px;
+    }
+    .d_bannersilder2 .d_content h3{
+        font-size: 26px;
+    }
+    .owl_height{
+        height: 440px;
+    }
+    .d_bannersilder2 .d_content .d_cta a,.d_bannersilder3 .d_text .d_cta a{
+        padding: 12px 30px;
+    }
+    .d_bannersilder3 .d_text h6{
+        font-size: 28px;
+    }
+    .d_bannersilder3 .d_text h2{
+        font-size: 50px;
+    }
+    .d_bannersilder3 .d_text p{
+        font-size: 18px;
+        line-height: 26px;
+    }
 }
-@media(max-width:991px)
-{
+
+@media(max-width:991px) {
     .d_womenbannerbg .d_img {
         height: 465px;
         width: 385px;
     }
-    .d_womenbannerbg .d_content .d_head h2{
+
+    .d_womenbannerbg .d_content .d_head h2 {
         font-size: 48px;
         line-height: 50px;
     }
-    .d_womenbannerbg .d_content .d_head{
+
+    .d_womenbannerbg .d_content .d_head {
         margin-bottom: 28px;
     }
-    .d_womenbannerbg .d_plus{
+
+    .d_womenbannerbg .d_plus {
         width: 30px;
         height: 30px;
     }
-    .d_womenbannerbg .d_plus .d_plusicon{
+
+    .d_womenbannerbg .d_plus .d_plusicon {
         font-size: 16px;
     }
+
     .d_womenbannerbg .d_popbox {
         padding: 5px;
     }
-    .d_womenbannerbg .d_popbox .d_img{
+
+    .d_womenbannerbg .d_popbox .d_img {
         width: 60px;
         height: 60px;
     }
-    .d_womenbannerbg .d_popbox .d_text h6{
+
+    .d_womenbannerbg .d_popbox .d_text h6 {
         font-size: 12px;
     }
-    .d_womenbannerbg .d_popbox .d_text .d_price{
+
+    .d_womenbannerbg .d_popbox .d_text .d_price {
         font-size: 14px;
     }
-}
-@media(max-width:767px)
-{
-    .d_womenbannerbg .d_img {
-        height: 350px;
-        width: 550px;
+    .d_bannersilder3 .d_text h6{
+        font-size: 24px;
+        margin-bottom: 8px;
     }
-    .d_womenbannerbg .d_content .d_head h2{
+    .d_bannersilder3 .d_text h2{
+        font-size: 36px;
+        max-width: 400px;
+        margin-bottom: 8px;
+    }
+    .d_bannersilder3 .d_text p{
+        font-size: 16px;
+        line-height: 20px;
+        max-width: 400px;
+    }
+}
+
+@media(max-width:767px) {
+   
+
+    .d_womenbannerbg .d_content .d_head h2 {
         font-size: 32px;
     }
-    .d_womenbannerbg .d_content .d_cta{
+
+    .d_womenbannerbg .d_content .d_cta {
         margin-bottom: 20px;
     }
-    .d_womenbannerbg{
+
+    .d_womenbannerbg {
         padding-top: 20px;
     }
-    .d_womenbannerbg .d_popup{
+
+    .d_womenbannerbg .d_popup {
         top: 15px;
     }
+
+
 }
-@media(max-width:575px)
-{
-    .d_womenbannerbg .d_popbox .d_img{
+
+@media(max-width:575px) {
+    .d_womenbannerbg .d_popbox .d_img {
         width: 30px;
         height: 30px;
     }
-    .d_womenbannerbg .d_popbox .d_text h6{
+
+    .d_womenbannerbg .d_popbox .d_text h6 {
         margin-bottom: 0;
         line-height: 18px;
     }
-    .d_womenbannerbg .d_popbox .d_text h6{
+
+    .d_womenbannerbg .d_popbox .d_text h6 {
         font-size: 11px;
     }
-    .d_womenbannerbg .d_popbox{
-        flex-direction: column ;
+
+    .d_womenbannerbg .d_popbox {
+        flex-direction: column;
     }
-    .d_womenbannerbg .d_pls .d_popup{
+
+    .d_womenbannerbg .d_pls .d_popup {
         right: 260px;
     }
-    .d_womenbannerbg .d_pls .d_popbox::after{
+
+    .d_womenbannerbg .d_pls .d_popbox::after {
         left: -8px;
     }
+    .d_bannersilder2 .d_content h2{
+        font-size: 50px;
+    }
+    .d_bannersilder2 .d_content h3{
+        font-size: 22px;
+    }
+    .owl_height{
+        height: 500px;
+    }
+    .d_womenbannerbg .d_img {
+        height: 328px;
+        width: 550px;
+    }
+    .d_bannersilder3{
+        background-position: right;
+    }
+    .d_bannersilder3 .d_text h2{
+        font-size: 30px;
+    }
+    .d_bannersilder3 .d_text h6{
+        font-size: 22px;
+    }
 }
-@media(max-width:375px){
-    .d_womenbannerbg .d_img{
+
+@media(max-width:375px) {
+    .d_womenbannerbg .d_img {
         width: 400px;
         height: 100%;
     }
-    .d_womenbannerbg .d_pls .d_popup{
+
+    .d_womenbannerbg .d_pls .d_popup {
         right: 215px;
     }
+    .owl_height {
+        height: 580px;
+    }
 }
-@media(max-width:320px){
-    .d_womenbannerbg .d_pls .d_popup{
+
+@media(max-width:320px) {
+    .d_womenbannerbg .d_pls .d_popup {
         right: 165px;
+    }
+    .owl_height {
+        height: 610px;
     }
 }
