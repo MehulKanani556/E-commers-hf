@@ -54,7 +54,6 @@
     border-bottom-right-radius: 30px;
     background-size: cover;
     background-position: center;
-
 }
 
 .V_best_img_1 {
@@ -102,25 +101,75 @@
     font-weight: 600;
     color: #434377;
 }
-.V_five_pro{
+
+.V_five_pro {
     width: 20%;
 }
 
-.V_five_pro:hover{
+.V_five_pro:hover {
     opacity: 0.5;
 }
 
-.V_five{
+.V_five {
     width: 280px;
     height: 356px;
 }
 
 
+.V_eat {
+    grid-column: 1;
+    width: 511px;
+    height: 397px;
+}
 
+.V_unleshing {
+    grid-column: 2 / span 2;
+    width: 929px;
+    height: 397px;
+}
 
+.V_build {
+    grid-column: 1;
+    width: 480px;
+    height: 480px;
+}
 
+.V_watch {
+    grid-column: 2;
+    width: 480px;
+    height: 480px;
+}
 
+.V_same {
+    grid-column: 3;
+    width: 480px;
+    height: 480px;
+}
 
+.V_plugin {
+    grid-column: 1 / span 2;
+    width: 929px;
+    height: 397px;
+}
+
+.V_lost {
+    grid-column: 3;
+    width: 511px;
+    height: 397px;
+}
+
+.V_grid_container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
 
 
 
@@ -137,6 +186,7 @@
 
 .V_card {
     width: 340px;
+    height: 475px;
     position: relative;
     border-radius: 0px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
@@ -145,6 +195,7 @@
 
 .V_card:hover {
     width: 340px;
+    height: 475px;
     position: relative;
     border-radius: 0px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
@@ -222,11 +273,7 @@
 
 }
 
-.V_color {
-    height: 20px;
-    width: 20px;
-    border-radius: 50px;
-}
+
 
 .V_heart {
     height: 26px;
@@ -239,82 +286,14 @@
     text-align: center;
 }
 
-.V_color1 {
-    background-color: #16325B;
-    height: 20px;
-    width: 20px;
-    border-radius: 50px;
-}
 
-.V_color2 {
-    background-color: #DFD1A2;
-    height: 20px;
-    width: 20px;
-    border-radius: 50px;
-}
 
-.V_color3 {
-    background-color: #989898;
-    height: 20px;
-    width: 20px;
-    border-radius: 50px;
-}
-
-.V_color4 {
-    background-color: #C6C7C6;
-    height: 20px;
-    width: 20px;
-    border-radius: 50px;
-}
-
-.V_color5 {
-    background-color: #9FBF9F;
-    height: 20px;
-    width: 20px;
-    border-radius: 50px;
-}
-
-.V_color6 {
-    background-color: #BCEFEF;
-    height: 20px;
-    width: 20px;
-    border-radius: 50px;
-}
-
-.V_color7 {
-    background-color: #BC9590;
-    height: 20px;
-    width: 20px;
-    border-radius: 50px;
-}
-
-.V_color8 {
-    background-color: #333134;
-    height: 20px;
-    width: 20px;
-    border-radius: 50px;
-}
-
-.V_color9 {
-    background-color: #EDC285;
-    height: 20px;
-    width: 20px;
-    border-radius: 50px;
-}
-
-.V_color10 {
-    background-color: #c5c3c3;
-    height: 20px;
-    width: 20px;
-    border-radius: 50px;
-}
-
-/* Initially show these elements
-.V_card .V_best_seller_tag,
+/* Initially show these elements */
+/* .V_card .V_best_seller_tag,
 .V_card .V_price_container,
 .V_card .V_color {
   display: block;
-}
+} */
 
 /* Initially hide these elements */
 /* .V_card .V_heart,
@@ -374,6 +353,7 @@
     .V_new {
         font-size: 28px;
     }
+
     .V_sale {
         width: 538px;
         font-size: 58px;
@@ -388,10 +368,12 @@
         height: 576px;
         width: 100%;
     }
-    .V_five_pro{
+
+    .V_five_pro {
         width: 20%;
     }
-    .V_five{
+
+    .V_five {
         width: 280px;
         height: 356px;
     }
@@ -432,6 +414,7 @@
     .V_new {
         font-size: 28px;
     }
+
     .V_sale {
         width: 538px;
         font-size: 58px;
@@ -446,10 +429,12 @@
         height: 576px;
         width: 100%;
     }
-    .V_five_pro{
+
+    .V_five_pro {
         width: 20%;
     }
-    .V_five{
+
+    .V_five {
         width: 280px;
         height: 356px;
     }
@@ -495,6 +480,7 @@
     .V_new {
         font-size: 28px;
     }
+
     .V_sale {
         width: 538px;
         font-size: 58px;
@@ -509,10 +495,12 @@
         height: 576px;
         width: 100%;
     }
-    .V_five_pro{
+
+    .V_five_pro {
         width: 20%;
     }
-    .V_five{
+
+    .V_five {
         width: 280px;
         height: 320px;
     }
@@ -573,10 +561,12 @@
         height: 400px;
         width: 100%;
     }
-    .V_five_pro{
+
+    .V_five_pro {
         width: 20%;
     }
-    .V_five{
+
+    .V_five {
         width: 230px;
         height: 260px;
     }
@@ -641,10 +631,12 @@
         width: 188px;
 
     }
-    .V_five_pro{
+
+    .V_five_pro {
         width: 33%;
     }
-    .V_five{
+
+    .V_five {
         width: 250px;
         height: 300px;
     }
@@ -709,10 +701,12 @@
         width: 180px;
 
     }
-    .V_five_pro{
+
+    .V_five_pro {
         width: 33%;
     }
-    .V_five{
+
+    .V_five {
         width: 250px;
         height: 300px;
     }
@@ -777,10 +771,12 @@
         width: 150px;
 
     }
-    .V_five_pro{
+
+    .V_five_pro {
         width: 50%;
     }
-    .V_five{
+
+    .V_five {
         width: 180px;
         height: 210px;
     }
@@ -848,10 +844,12 @@
     .V_card {
         width: 320px;
     }
-    .V_five_pro{
+
+    .V_five_pro {
         width: 50%;
     }
-    .V_five{
+
+    .V_five {
         width: 150px;
         height: 178px;
     }
