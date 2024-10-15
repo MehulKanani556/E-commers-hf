@@ -1,11 +1,60 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './header.css'
 import { Accordion, Button, Col, Dropdown, Offcanvas, Row } from 'react-bootstrap'
-import { FaAngleDown, FaBars, FaLocationCrosshairs, FaLocationDot, FaPlus, FaRegHeart, FaUser } from 'react-icons/fa6'
+import { FaAngleDown, FaAngleLeft, FaAngleRight, FaBars, FaLocationCrosshairs, FaLocationDot, FaPlus, FaRegHeart, FaUser } from 'react-icons/fa6'
 import { IoSearch } from 'react-icons/io5'
 import { BsCart3 } from 'react-icons/bs'
+import Models from './model/Models'
 
 const Header = () => {
+
+    // login 
+    const [modalShow, setModalShow] = React.useState(false);
+    var [login, setlogin] = useState(false)
+    let login_chk = () => {
+        let login = localStorage.getItem('login')
+
+        if (login) {
+            setlogin(false)
+            setModalShow(false);
+        } else {
+            setlogin(true)
+            setModalShow(true);
+        }
+    }
+
+
+    // const [IsScroll, setIsScroll] = useState(false);
+    // const navListRef = useRef(null);
+
+    // useEffect(() => {
+    //     checkScroll();
+    //     window.addEventListener('resize', checkScroll);
+
+    //     return () => {
+    //         window.removeEventListener('resize', checkScroll);
+    //     };
+    // }, []);
+
+
+    // const checkScroll = () => {
+    //     if (navListRef.current.scrollWidth > navListRef.current.clientWidth) {
+    //         setIsScroll(true);
+    //     } else {
+    //         setIsScroll(false);
+    //     }
+    // };
+
+
+    // const handleNavScroll = (direction) => {
+    //     const scrollAmount = 100;
+    //     if (direction === 'left') {
+    //         navListRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    //     } else {
+    //         navListRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    //     }
+    // };
+
 
 
     const [show, setShow] = useState(false);
@@ -118,7 +167,7 @@ const Header = () => {
                                 </span>
                             </div>
                         </Col>
-                        <Col sm={2} lg={2} className='text-white'>
+                        <Col sm={2} lg={2} className='text-white p-0 pe-lg-3'>
                             <div className='h-100 d-none d-md-block'>
                                 <div className='d-flex align-items-center justify-content-lg-end justify-content-xxl-start h-100 gap-4'>
                                     <div>
@@ -128,7 +177,9 @@ const Header = () => {
                                         <img src={require("../../assets/Cart.png")} height={22} width={22} alt="" />
                                     </div>
                                     <div>
-                                        <img src={require("../../assets/user.png")} height={22} width={22} alt="" />
+                                        <button className='bg-transparent border-0' onClick={() => { login_chk() }}>
+                                            <img src={require("../../assets/user.png")} height={22} width={22} alt="" />
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -137,16 +188,23 @@ const Header = () => {
                 </div >
             </header >
 
-            <nav>
+            {/* <nav className='overflow-hidden'>
                 <Row className='m-0'>
                     <Col className='p-0'>
-                        <div className='VK_header_nav'>
-                            <ul className='list-unstyled justify-content-between m-0 p-0 d-flex flex-nowrap white_space'>
-                                <li className='py-3 px-2 VK_sub_menu'>
+                        <div className='VK_header_nav d-flex justify-content-center overflow-hidden'>
+                            {IsScroll && (
+                                <button className='border-0' onClick={() => handleNavScroll('left')}>
+                                    <FaAngleLeft />
+                                </button>
+                            )}
+                            <ul className='w-100 VK_sub_scroll_bar list-unstyled justify-content-between m-0 p-0 d-flex flex-nowrap overflow-auto white_space'
+                                ref={navListRef}
+                                onScroll={checkScroll}>
+                                <li className='py-3 px-lg-2 px-4 VK_sub_menu'>
                                     Women
-                                    <div className='VK_mega_menu d-none'>
-                                        <div className='d-flex flex-wrap justify-content-between'>
-                                            <div>
+                                    <div className='VK_mega_menu'>
+                                        <div className='VK_mega_menu_div_parent'>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Indian Wear
@@ -179,7 +237,7 @@ const Header = () => {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Western Wear
@@ -218,7 +276,7 @@ const Header = () => {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Watches
@@ -243,7 +301,7 @@ const Header = () => {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Footwear
@@ -275,7 +333,7 @@ const Header = () => {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Sports & Active Wear
@@ -289,7 +347,7 @@ const Header = () => {
                                                         Footwear
                                                     </li>
                                                     <li className='py-1'>
-                                                        Sports AccessoriesSports Accessories
+                                                        Sports Accessories
                                                     </li>
                                                     <li className='py-1'>
                                                         Sports Equipment
@@ -316,7 +374,7 @@ const Header = () => {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Lingerie & Sleepwear
@@ -343,7 +401,7 @@ const Header = () => {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Beauty & Personal Care
@@ -388,11 +446,11 @@ const Header = () => {
                                         </div>
                                     </div>
                                 </li>
-                                <li className='py-3 px-2 VK_sub_menu'>
+                                <li className='py-3 px-lg-2 px-4 VK_sub_menu'>
                                     Men
-                                    <div className='VK_mega_menu d-none'>
-                                        <div className='d-flex flex-wrap justify-content-between'>
-                                            <div>
+                                    <div className='VK_mega_menu'>
+                                        <div className='VK_mega_menu_div_parent'>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Topwear
@@ -425,7 +483,7 @@ const Header = () => {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Indian & Festive Wear
@@ -466,7 +524,7 @@ const Header = () => {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Footwear
@@ -496,7 +554,7 @@ const Header = () => {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Watches
@@ -516,7 +574,7 @@ const Header = () => {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Sports & Active Wear
@@ -543,7 +601,7 @@ const Header = () => {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Innerwear & Sleepwear
@@ -570,7 +628,7 @@ const Header = () => {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Personal Care & Grooming
@@ -611,11 +669,11 @@ const Header = () => {
                                         </div>
                                     </div>
                                 </li>
-                                <li className='py-3 px-2 VK_sub_menu'>
+                                <li className='py-3 px-lg-2 px-4 VK_sub_menu'>
                                     Baby & Kids
                                     <div className='VK_mega_menu'>
-                                        <div className='d-flex flex-wrap justify-content-between'>
-                                            <div>
+                                        <div className='VK_mega_menu_div_parent'>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Boy
@@ -651,7 +709,7 @@ const Header = () => {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Girl
@@ -690,7 +748,7 @@ const Header = () => {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Footwear
@@ -717,7 +775,7 @@ const Header = () => {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Toys & Games
@@ -741,34 +799,42 @@ const Header = () => {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
-                                                        Sports & Active Wear
+                                                        Kids Accessories
                                                     </b>
                                                 </p>
                                                 <ul className='list-unstyled p-0 m-0 header_light inter'>
                                                     <li className='py-1'>
-                                                        Fitness Accessories
+                                                        Sunglasses
                                                     </li>
                                                     <li className='py-1'>
-                                                        Tracksuits
+                                                        Caps & Hats
                                                     </li>
                                                     <li className='py-1'>
-                                                        Sport Shoes
+                                                        Watches
                                                     </li>
                                                     <li className='py-1'>
-                                                        Jackets
+                                                        Bags
+                                                    </li>
+                                                    <li className='py-1 font_18 text-black mt-2'>
+                                                        <b>
+                                                            Personal Care
+                                                        </b>
                                                     </li>
                                                     <li className='py-1'>
-                                                        Track Panets
+                                                        Skin Care Products
                                                     </li>
                                                     <li className='py-1'>
-                                                        Shorts
+                                                        Hair Oils
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Shampoos
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
                                                         Innerwear & Sleepwear
@@ -776,34 +842,92 @@ const Header = () => {
                                                 </p>
                                                 <ul className='list-unstyled p-0 m-0 header_light inter'>
                                                     <li className='py-1'>
-                                                        Boxers
+                                                        Innerwear sets
                                                     </li>
                                                     <li className='py-1'>
-                                                        Vests
+                                                        Trunks & Briefs
                                                     </li>
                                                     <li className='py-1'>
-                                                        Shapewear
+                                                        Night Suits
                                                     </li>
                                                     <li className='py-1'>
-                                                        Loungewear
+                                                        Lounge T-shirts
                                                     </li>
                                                     <li className='py-1'>
-                                                        Briefs & Trunks
-                                                    </li>
-                                                    <li className='py-1'>
-                                                        Thermals
+                                                        Thermal Innerwear
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div>
+                                            <div className='VK_menu_list'>
                                                 <p className='mb-2 font_18 header_color inter'>
                                                     <b>
-                                                        Personal Care & Grooming
+                                                        Winterwear
                                                     </b>
                                                 </p>
                                                 <ul className='list-unstyled p-0 m-0 header_light inter'>
                                                     <li className='py-1'>
-                                                        Cosmetic Skin Care
+                                                        Sweater
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Coats & Winter Jackets
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Winter Clothing Sets
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        BodySuits
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li className='py-3 px-lg-2 px-4 VK_sub_menu'>
+                                    Beauty & Health
+                                    <div className='VK_mega_menu'>
+                                        <div className='VK_mega_menu_div_parent'>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Mackup
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Primer
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Foundation
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Lipstick
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Eyeliner
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Compact
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Nail Polish
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Kajal
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Eyeshadow
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Skincare
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Sunscreen
                                                     </li>
                                                     <li className='py-1'>
                                                         Face Wash
@@ -812,50 +936,758 @@ const Header = () => {
                                                         Body Wash
                                                     </li>
                                                     <li className='py-1'>
-                                                        Grooming Kit
+                                                        Body Lotion
                                                     </li>
-                                                    <li className='py-1 font_18 text-black mt-3'>
+                                                    <li className='py-1'>
+                                                        Face Moisturiser
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Lip Balm
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Cream
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Health & Personal Care
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Hair Oil
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Hand Wash
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Glucose
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Ayurvedic Care
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Hair Color
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Hair Gel
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Fragrances
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Perfumes
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Body Mist
+                                                    </li>
+                                                    <li className='py-1 font_18 text-black mt-2'>
                                                         <b>
-                                                            Bags
+                                                            Baby Care
+                                                        </b>
+                                                    </li>
+                                                    <li className='py-1 font_18 text-black mt-2'>
+                                                        <b>
+                                                            Men’s Grooming
                                                         </b>
                                                     </li>
                                                     <li className='py-1'>
-                                                        Handbags
+                                                        Hair Wax
                                                     </li>
                                                     <li className='py-1'>
-                                                        Travel Bags
+                                                        Face Shaver
                                                     </li>
                                                     <li className='py-1'>
-                                                        Laptop Bags
+                                                        Beard Oil
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Makeup Set
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Beauty Kit
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Company
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Lakme
                                                     </li>
                                                     <li className='py-1'>
-                                                        Wallets
+                                                        Nivea
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Loreal
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Maybelline
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Philips
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Biotique
                                                     </li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </li>
-                                <li className='py-3 px-2 VK_sub_menu'>
-                                    Beauty & Health
-                                </li>
-                                <li className='py-3 px-2 VK_sub_menu'>
+                                <li className='py-3 px-lg-2 px-4 VK_sub_menu'>
                                     Electronics & Mobiles
+                                    <div className='VK_mega_menu'>
+                                        <div className='VK_mega_menu_div_parent'>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Mobile, TV & More
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Smart Phones
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Android TV
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        I pad
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Laptop
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Computer
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Refrigerator
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Air Conditioner
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Speaker
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Wearable Device
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Smart Watch
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Air pods
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Headphone
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Smart Glasses
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Fitness Tracker
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Games
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Play Station
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Sony PSP
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Gaming PC
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Gaming Headset
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Gaming Chair
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Accessories
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Mobile Case
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Mousepad & more...
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Mobile Skins
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Adapter
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Charging Cable
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Pen drive & SD Card
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Powerbanks
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Company
+                                                    </b>
+                                                </p>
+                                                <div className='d-flex justify-content-between'>
+                                                    <ul className='list-unstyled px-2 m-0 header_light inter'>
+                                                        <li className='py-1'>
+                                                            Vivo
+                                                        </li>
+                                                        <li className='py-1'>
+                                                            Oppo
+                                                        </li>
+                                                        <li className='py-1'>
+                                                            Samsung
+                                                        </li>
+                                                        <li className='py-1'>
+                                                            Sony
+                                                        </li>
+                                                        <li className='py-1'>
+                                                            Apple
+                                                        </li>
+                                                        <li className='py-1'>
+                                                            Dell
+                                                        </li>
+                                                        <li className='py-1'>
+                                                            HP
+                                                        </li>
+                                                        <li className='py-1'>
+                                                            Lenovo
+                                                        </li>
+                                                    </ul>
+                                                    <ul className='list-unstyled px-2 m-0 header_light inter'>
+                                                        <li className='py-1'>
+                                                            Asus
+                                                        </li>
+                                                        <li className='py-1'>
+                                                            Sony
+                                                        </li>
+                                                        <li className='py-1'>
+                                                            Boat
+                                                        </li>
+                                                        <li className='py-1'>
+                                                            Noise
+                                                        </li>
+                                                        <li className='py-1'>
+                                                            JBL
+                                                        </li>
+                                                        <li className='py-1'>
+                                                            Mitsubishi
+                                                        </li>
+                                                        <li className='py-1'>
+                                                            O General
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </li>
-                                <li className='py-3 px-2 VK_sub_menu'>
+                                <li className='py-3 px-lg-2 px-4 VK_sub_menu'>
                                     Sports
+                                    <div className='VK_mega_menu'>
+                                        <div className='VK_mega_menu_div_parent'>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Sports & Active wear
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Active T-Shirts
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Track Pants
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Track Suits
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Jackets
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Sweatshirts
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Swimwear
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Shoes
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Running
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Training
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Baseball
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Football
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Cricket
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Hiker & Trail
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Golf
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Skateboarding
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Sport Accessories & Gear
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Socks
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Insoles
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Hats & Gloves
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Safety Gears
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Headbands & Wristbands
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Bags
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Company
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Sketchers
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Adidas
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Nike
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Puma
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        New Balance
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Reebok
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Asics
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Under Armour
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </li>
-                                <li className='py-3 px-2 VK_sub_menu'>
+                                <li className='py-3 px-lg-2 px-4 VK_sub_menu'>
                                     Luggage
+                                    <div className='VK_mega_menu'>
+                                        <div className='VK_mega_menu_div_parent'>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Trolley Bag
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Soft trolleys
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Hard trolleys
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Hybrid trolleys
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Duffle trolleys
+                                                    </li>
+                                                    <li className='py-1 font_18 text-black mt-2'>
+                                                        <b>
+                                                            Duffle Bags
+                                                        </b>
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Duffle bags
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Cross body bags
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Backpacks
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Laptop backpacks
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Travel backpacks
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Hiking backpacks
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Rusksack
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Cycling backpacks
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Hydration backpacks
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Camera backpacks
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Climbing backpacks
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Accessories
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Neck pillows
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Eye mask
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Travel kit & Organizer
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Luggage tags
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Passport covers
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Ear plugs
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Company
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Monos
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Delsey paris
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        July
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Louis Vitton
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        American Touristr
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Safari
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Provogue
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        VIP
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </li>
-                                <li className='py-3 px-2 VK_sub_menu'>
+                                <li className='py-3 px-lg-2 px-4 VK_sub_menu'>
                                     Home & Kitchen
+                                    <div className='VK_mega_menu'>
+                                        <div className='VK_mega_menu_div_parent'>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Cookwear & Kitchenwear
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Pans
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Tawas
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Pressure Cookers
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Gas Stove
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Kitchen Containers
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Crockeries
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Utensils
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Table wear & Dinner wear
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Coffee mug
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Dinner wear
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Bar set
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Flasks
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Dinner set
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Home Decor
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Paintings
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Wall Clock
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Showpiece & Art crafts
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Curtains & Sofa
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        TV Unit
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Floor Covering
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Chandelier
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Smart Home
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Smart Light
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Smart security system
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Smart door locks
+                                                    </li>
+                                                    <li className='py-1 font_18 text-black mt-2'>
+                                                        <b>
+                                                            Other
+                                                        </b>
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Light
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Home utilities & Organizer
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Bathroom & Kitchen fitting
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Accessories
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Kitchen cutleries
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Controllers
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Switch boards
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Cutleries
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className='VK_menu_list'>
+                                                <p className='mb-2 font_18 header_color inter'>
+                                                    <b>
+                                                        Company
+                                                    </b>
+                                                </p>
+                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                    <li className='py-1'>
+                                                        Prestige
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Caraway
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Cuisinart
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Borosil
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Branbantia
+                                                    </li>
+                                                    <li className='py-1'>
+                                                        Milton
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </li>
                             </ul>
+                            {IsScroll && (
+                                <button className='border-0' onClick={() => handleNavScroll('right')}>
+                                    <FaAngleRight />
+                                </button>
+                            )}
+                        </div>
+                    </Col>
+                </Row>
+            </nav> */}
+
+            <nav>
+                <Row>
+                    <Col>
+                        <div>
+                            
                         </div>
                     </Col>
                 </Row>
             </nav>
+
+            {/* models */}
+
+            {
+                login ? (
+                    <Models onHide={() => setModalShow(false)} show={modalShow} setmodel={setModalShow} />
+                ) : (null)
+            }
+
+
         </React.Fragment >
     )
 }

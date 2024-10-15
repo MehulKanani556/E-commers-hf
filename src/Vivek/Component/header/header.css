@@ -34,55 +34,289 @@
 
 /* nav bar */
 
-.VK_sub_menu {
-    position: relative;
+.VK_sub_scroll_bar {
+    /* -ms-overflow-style: none; */
+    scrollbar-width: none;
+    overflow-x: auto;
 }
 
-.VK_sub_menu:hover .VK_mega_menu {
-    opacity: 1;
-    display: block;
+.VK_sub_scroll_bar::-webkit-scrollbar {
+    display: none;
+}
+
+.VK_mega_menu {
+    /* transition: all 0.5s ease; */
 }
 
 .header_color {
     color: #2B221E;
 }
 
-.header_light{
+.header_light {
     color: #6A6A6A;
 }
 
+.VK_mega_menu_div_parent {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.VK_menu_list {
+    margin: 15px 10px;
+    padding: 0px 10px;
+    flex-grow: 1;
+    flex-basis: calc(33.33% - 20px);
+    box-sizing: border-box;
+}
+
+
 .VK_mega_menu {
-    position: fixed;
+    position: absolute;
     width: 100vw;
-    /* opacity: 0; */
-    /* display: none; */
     padding: 30px 30px 50px 50px;
     left: 0%;
+    opacity: 0;
+    visibility: hidden;
+    top: 128px;
     background-color: white;
     z-index: 3;
+    /* transition: all 0.5s ease; */
+}
+
+.VK_sub_menu:hover .VK_mega_menu {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+.VK_sub_menu:hover {
+    background-color: #f0eded !important;
+}
+
+
+
+/* model css */
+
+.model_padding {
+    padding: 40px 50px;
+}
+
+.model_heading {
+    font-size: 26px;
+    color: black;
+}
+
+/* register model */
+
+.VK_underline {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+.register_model .modal-content {
+    border-radius: 0px;
+}
+
+.modal-dialog {
+    width: 600px;
+    margin: 0px auto;
+}
+
+.model_input {
+    background-color: #EDEDED;
+    border: 2px solid #EDEDED;
+    padding: 15px;
+    border-radius: 5px;
+    outline: none;
+}
+
+.model_input:focus {
+    background-color: white;
+}
+
+.input_password {
+    position: relative;
+}
+
+.VK_eyes {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.model_theme {
+    background-color: #2B221E;
+    color: white;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    font-weight: 500;
+    letter-spacing: 1px;
+    border-radius: 5px;
+}
+
+/* login model */
+.VK_forget_link{
+    color: #DB4444;
 }
 
 /* -------------------------------------------------------- media query -------------------------------------------------------- */
 
 
 /*  extra small device */
-@media (max-width:480px) {}
+@media (max-width:480px) {
+    .VK_mega_menu_div_parent {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .VK_mega_menu {
+        padding: 30px 10px 20px 10px;
+    }
+
+    /* model */
+
+    .model_input {
+        padding: 10px;
+    }
+
+    .model_p{
+        font-size: 14px;
+    }
+
+    .model_heading{
+        font-size: 20px;
+    }
+
+    .model_theme {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .register_model .modal-dialog {
+        width: 100%;
+    }
+
+    .login_model .modal-dialog {
+        width: 100%;
+    }
+
+    .model_padding {
+        padding: 20px 20px;
+    }
+}
 
 
 /* small device */
-@media (max-width:575px) and (min-width:481px) {}
+@media (max-width:575px) and (min-width:481px) {
+    .VK_mega_menu_div_parent {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .VK_mega_menu {
+        padding: 30px 30px 20px 30px;
+    }
+
+    /* model */
+
+    .register_model .modal-dialog {
+        width: 400px;
+    }
+
+    .login_model .modal-dialog {
+        width: 400px;
+    }
+
+    .model_padding {
+        padding: 30px 30px;
+    }
+}
 
 
 /* medium device */
-@media (max-width:766px) and (min-width:576px) {}
+@media (max-width:766px) and (min-width:576px) {
+    .VK_mega_menu_div_parent {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .VK_mega_menu {
+        padding: 30px 30px 20px 30px;
+    }
+
+    /* model */
+
+    .register_model .modal-dialog {
+        width: 450px;
+    }
+
+    .login_model .modal-dialog {
+        width: 450px;
+    }
+
+    .model_padding {
+        padding: 30px 30px;
+    }
+}
 
 
 /* lg device */
-@media (max-width:991px) and (min-width:767px) {}
+@media (max-width:991px) and (min-width:767px) {
+    .VK_mega_menu_div_parent {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .VK_mega_menu {
+        padding: 30px 30px 20px 30px;
+    }
+
+    /* model */
+
+    .register_model .modal-dialog {
+        width: 500px;
+    }
+
+    .login_model .modal-dialog {
+        width: 500px;
+    }
+
+    .model_padding {
+        padding: 40px 50px;
+    }
+}
 
 
 /* xl device */
-@media (max-width:1199px) and (min-width:992px) {}
+@media (max-width:1199px) and (min-width:992px) {
+
+    .VK_header_nav {
+        padding: 0px 50px;
+    }
+
+    .VK_mega_menu_div_parent {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .VK_mega_menu {
+        padding: 30px 30px 20px 50px;
+    }
+
+    /* model */
+
+    .register_model .modal-dialog {
+        width: 500px;
+    }
+
+    .login_model .modal-dialog {
+        width: 500px;
+    }
+
+    .model_padding {
+        padding: 40px 50px;
+    }
+}
 
 
 /* 2xl device */
@@ -90,6 +324,29 @@
     .VK_header_nav {
         padding: 0px 50px;
     }
+
+    .VK_mega_menu_div_parent {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    .VK_mega_menu {
+        padding: 30px 30px 20px 50px;
+    }
+
+    /* model */
+
+    .register_model .modal-dialog {
+        width: 500px;
+    }
+
+    .login_model .modal-dialog {
+        width: 500px;
+    }
+
+    .model_padding {
+        padding: 40px 40px;
+    }
+
 }
 
 
@@ -97,5 +354,38 @@
 @media (min-width:1441px) {
     .VK_header_nav {
         padding: 0px 50px;
+    }
+
+    .VK_mega_menu_div_parent {
+        grid-template-columns: repeat(7, 1fr);
+    }
+
+    .VK_mega_menu {
+        padding: 30px 20px 50px 50px;
+    }
+
+    /* model */
+
+    .register_model .modal-dialog {
+        width: 600px;
+    }
+
+    .login_model .modal-dialog {
+        width: 600px;
+    }
+
+    .model_padding {
+        padding: 40px 50px;
+    }
+
+    .model_p {
+        font-size: 20px;
+    }
+
+}
+
+@media (max-width:1660px) and (min-width:1442px) {
+    .VK_mega_menu_div_parent {
+        grid-template-columns: repeat(6, 1fr);
     }
 }
