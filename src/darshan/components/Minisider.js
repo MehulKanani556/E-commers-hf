@@ -11,6 +11,7 @@ const Minisider = () => {
         loop: true,
         nav: true,
         dots: false,
+        margin:30,
         responsive: {
             0: {
                 items: 1
@@ -18,46 +19,48 @@ const Minisider = () => {
             600: {
                 items: 3
             },
-            1200:{
-                items:5
+            1200: {
+                items: 5
             },
             1500: {
                 items: 6
             }
         },
-        navText: [
-            `<span class='nav-btn prev-slide'><MdOutlineKeyboardArrowLeft /></span>`,
-            `<span class='nav-btn next-slide'><MdKeyboardArrowRight /></span>`
-        ],
     };
 
     const images = [
-        { bg: require('./../d_img/minisilderbg.png'), main: require('./../d_img/minisiderimg1.png'), category: "Western Wear" },
-        { bg: require('./../d_img/minisilderbg.png'), main: require('./../d_img/minisiderimg2.png'), category: "Western Wear" },
-        { bg: require('./../d_img/minisilderbg.png'), main: require('./../d_img/minisiderimg3.png'), category: "Western Wear" },
-        { bg: require('./../d_img/minisilderbg.png'), main: require('./../d_img/minisiderimg4.png'), category: "Western Wear" },
-        { bg: require('./../d_img/minisilderbg.png'), main: require('./../d_img/minisiderimg5.png'), category: "Western Wear" },
-        { bg: require('./../d_img/minisilderbg.png'), main: require('./../d_img/minisiderimg6.png'), category: "Western Wear" },
+        {  main: require('./../d_img/minisiderimg1.png'), category: "Western Wear" },
+        {  main: require('./../d_img/minisiderimg2.png'), category: "Indian Wear" },
+        {  main: require('./../d_img/minisiderimg3.png'), category: "Sports Wear" },
+        {  main: require('./../d_img/minisiderimg4.png'), category: "Footwear" },
+        {  main: require('./../d_img/minisiderimg5.png'), category: "Jewellery" },
+        {  main: require('./../d_img/minisiderimg6.png'), category: "Handbags & Wallet" },
     ];
 
     return (
         <>
 
-            <section className='d_p-80 d_secsection'>
+            <section className='d_p-80 d_minisider'>
                 <div className="d_container">
-                    <OwlCarousel className='owl-theme' {...settings}>
+                    <div className="row justify-content-center">
+                        <div className="col-10">
+                        <OwlCarousel className='owl-theme d_minisider' items={6} {...settings}>
                         {images.map((image, index) => (
-                            <div key={index} className="d_minisilder">
-                                <div className="d_bgimg">
-                                    <img src={image.bg} alt={`Background ${index + 1}`} className="background-image" />
-                                    <div className="d_img">
-                                        <img src={image.main} alt={`Main ${index + 1}`} className="main-image" />
+                            <div key={index} className="d-flex justify-content-center">
+                                <div className="d_mini">
+                                    <div className="d_bgimg">
+                                        <div className="d_img">
+                                            <img src={image.main} alt="" />
+                                        </div>
                                     </div>
+                                    <p className='mb-0 d_category-label'>{image.category}</p>
                                 </div>
-                                <p className='d_category-label mb-0'>{image.category}</p>
                             </div>
                         ))}
                     </OwlCarousel>
+                        </div>  
+                    </div>
+                    
                 </div>
             </section>
 

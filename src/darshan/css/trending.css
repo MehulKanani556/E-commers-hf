@@ -1,0 +1,126 @@
+.d_margin{
+    margin: 0 15px;
+}
+.d_trend .d_head {
+    margin-bottom: 30px;
+}
+
+.d_trend .d_head h4 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #2B221E;
+    text-transform: uppercase;
+}
+
+.d_trend .d_head p a {
+    font-size: 15px;
+    font-weight: 500;
+    color: #2C7AA6;
+}
+
+.d_trend .d_box {
+    position: relative;
+    box-shadow: 0px 4px 14px 0px #8F8F8F40;
+    transition: .3s ease-in-out;
+}
+
+.d_trend .d_box .d_img {
+    width: 100%;
+    height: 100%;
+}
+
+.d_trend .d_box .d_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.d_trend .d_box .d_trendicon{
+    position: absolute;
+    top: 7%;
+    /* opacity: 0; */
+    /* visibility: hidden; */
+}
+.d_trend .d_box:hover .d_trendicon{
+    opacity: 1;
+    visibility: visible;
+}
+.d_trend .d_box .d_trendicon .d_icon{
+    font-size: 26px;
+    color: #fff;
+    margin: 0 20px;
+}
+.d_trend .d_box .d_seller {
+    padding: 5px 24px;
+    background-color: #2B221E;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    position: absolute;
+    top: 0;
+}
+.d_trend .d_box .d_content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 12px;
+    width: 100%;
+    background-color: #fff;
+}
+
+.d_trend .d_box .d_content .d_name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+    letter-spacing: 1px;
+}
+
+.d_trend .d_box .d_content .d_staricon {
+    color: #F8A120;
+    font-size: 14px;
+}
+
+.d_trend .d_box .d_content .d_review {
+    font-size: 12px;
+    font-weight: 500;
+    color: #2B221E;
+}
+
+.d_trend .d_box .d_content .d_desc {
+    font-size: 14px;
+    font-weight: 400;
+    color: #000;
+    margin: 6px 0 24px 0;
+}
+
+.d_trend .d_box .d_content .d_color {
+    width: 20px;
+    height: 20px;
+    background-color: #BF002A;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+.d_trend .d_box .d_content .d_color.active{
+    border: 0.75px solid #000000;
+}
+
+.d_trend .d_box .d_content .d_color:last-child {
+    margin-right: 0;
+}
+.d_trend .d_box .d_content .d_price{
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+}
+.d_trend .d_box .d_content .d_disprice{
+    font-size: 14px;
+    color: #6A6A6A;
+    font-weight: 500;
+}
+.d_trend .d_box .d_content .d_buy a{
+    border-radius: 4px;
+    background-color: #2B221E;
+    padding: 14px 0;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+}

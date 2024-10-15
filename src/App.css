@@ -64,3 +64,14 @@
 .outline_none {
     outline: none;
 }
+.d_p-80{
+    padding: 80px 0;
+}
+.d_cur{
+    cursor: pointer;
+}
+@media(max-width:991px){
+    .d_p-80{
+        padding: 30px 0;
+    }
+}

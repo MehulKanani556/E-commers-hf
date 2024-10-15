@@ -1,18 +1,123 @@
-.d_card {
-    height: 300px;
-    background-color: #98BBD3;
-    position: relative;
-}
+ .d_cardimg {
+     border-top-right-radius: 20px;
+     border-bottom-left-radius: 20px;
+     width: 100%;
+     height: 320px;
+     background-position: center;
+     background-size: cover;
+     padding: 0 0 0 60px;
+     background-repeat: no-repeat;
+ }
 
-.d_card .d_img {
-    position: absolute;
-    right: 0;
-    top: -100px; /* Keep the top aligned with the top of the card */
-    width: 100%;
-}
+ .d_card .d_bgcard1 {
+     background-image: url('./../d_img/cardbg.png');
+ }
 
-.d_card .d_img img {
-    width: 100%;
-    height: auto; /* Maintain aspect ratio */
-    display: block; /* Remove any space below the image */
-}
+ .d_card .d_bgcard2 {
+     background-image: url('./../d_img/cardbg2.png');
+ }
+
+ .d_card .d_bgcard3 {
+     background-image: url('./../d_img/cardbg3.png');
+ }
+
+ .d_card .d_title {
+     max-width: 260px;
+ }
+
+ .d_card h5 {
+     font-size: 44px;
+     font-weight: 700;
+     color: #262626;
+ }
+
+ .d_card h5 span {
+     color: #6B63DD;
+ }
+
+ @media(max-width:1680px) {
+     .d_cardimg {
+         border-top-right-radius: 60px;
+     }
+ }
+
+ @media(max-width:1440px) {
+     .d_cardimg {
+         padding: 0 0 0 30px;
+     }
+
+     .d_card .d_bgcard1 {
+         background-position-x: -120px;
+     }
+
+     .d_card .d_bgcard2 {
+         background-position-x: -130px;
+     }
+
+     .d_card .d_bgcard3 {
+         background-position-x: -130px;
+     }
+
+     .d_card h5 {
+         font-size: 38px;
+     }
+ }
+
+ @media(max-width:1199px) {
+     .d_card h5 {
+         font-size: 32px;
+     }
+
+     .d_card .d_cardimg {
+         background-position-x: -220px;
+     }
+ }
+
+ @media(max-width:991px) {
+     .d_card h5 {
+         font-size: 27px;
+     }
+
+     .d_cardimg {
+         padding: 0 0 0 15px;
+     }
+
+     .d_card .d_title {
+
+         max-width: 230px;
+     }
+ }
+
+ @media(max-width:575px) {
+     .d_cardimg {
+         height: 375px;
+     }
+
+     .d_card .d_cardimg {
+         background-position-x: -260px;
+     }
+ }
+
+ @media(max-width:375px) {
+     .d_card .d_title {
+         max-width: 150px;
+     }
+
+     .d_card h5 {
+         font-size: 24px;
+     }
+
+     .d_cardimg {
+         height: 375px;
+     }
+
+     .d_card .d_cardimg {
+         background-position-x: -255px;
+     }
+ }
+
+ @media(max-width:320px) {
+     .d_card .d_cardimg {
+         background-position-x: -300px;
+     }
+ }

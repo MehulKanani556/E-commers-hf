@@ -46,7 +46,7 @@
 
 .d_womenbannerbg .d_img {
     height: 850px;
-    width: 900px;
+    width: 954px;
 }
 
 .d_womenbannerbg .d_img img {
@@ -245,6 +245,29 @@
     font-weight: 500;
     color: #fff;
 }
+/* .d_culbg{
+    background-image: url('./../d_img/culture.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 36px 0;
+}
+.d_culbg .d_heading{
+    max-width: 640px;
+}
+.d_culbg .d_heading h5{
+    font-size: 70px;
+    color: #2B221E;
+    font-weight: 800;
+}
+.d_culbg .d_imgcol img{
+    width: 200px;
+    height: 450px;
+    object-fit: cover;
+} */
+ .d_imgcol img{
+    position: absolute;
+ }
 
 /* Banner section css end */
 
