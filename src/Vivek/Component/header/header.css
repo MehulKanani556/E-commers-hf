@@ -18,19 +18,48 @@
     white-space: nowrap;
 }
 
-ul {
-    overflow-x: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
 
+
+/* offcanvas */
+.header_accoridan .accordion-button {
+    box-shadow: none !important;
+    background-color: white !important;
+    color: black !important;
 }
 
-ul::-webkit-scrollbar {
-    display: none;
+.header_accoridan .accordion-item {
+    border: none !important;
 }
 
-.VK_nav_btn{
-    border: none;
+
+/* nav bar */
+
+.VK_sub_menu {
+    position: relative;
+}
+
+.VK_sub_menu:hover .VK_mega_menu {
+    opacity: 1;
+    display: block;
+}
+
+.header_color {
+    color: #2B221E;
+}
+
+.header_light{
+    color: #6A6A6A;
+}
+
+.VK_mega_menu {
+    position: fixed;
+    width: 100vw;
+    /* opacity: 0; */
+    /* display: none; */
+    padding: 30px 30px 50px 50px;
+    left: 0%;
+    background-color: white;
+    z-index: 3;
 }
 
 /* -------------------------------------------------------- media query -------------------------------------------------------- */
