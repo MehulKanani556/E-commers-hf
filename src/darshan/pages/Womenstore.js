@@ -6,6 +6,8 @@ import '../css/style.css';
 import Minisider from '../components/Minisider';
 import Card from '../components/Card';
 import Trending from '../components/Trending';
+import Post from '../components/Post';
+import Popularbrands from '../components/Popularbrands';
 
 const Womenstore = () => {
 
@@ -158,90 +160,46 @@ const Womenstore = () => {
 
       {/* Trendign section start */}
 
-      {/* <Trending /> */}
+      <Trending />
 
       {/* Trendign section end */}
 
       {/* Culture section start */}
 
-      {/* <section>
+      <section className='my-5'>
         <div className="d_culbg">
           <div className="d_container">
             <div className="row align-items-center">
-              <div className="col-12 col-lg-6">
-                <div className="d_heading">
-                  <h5 className='mb-0'>Where culture and style unite</h5>
-                </div>
+              <div className="col-12 col-lg-5 col-xl-4 col-xxl-6">
+                <h2>Where culture and style unite</h2>
               </div>
-              <div className="col-12 col-lg-6">
-                <div className="d_imgcol">
-                  <div className="row">
-                    <div className="col-2">
-                      <img src={require('./../d_img/fashion1.png')} alt="" />
-                    </div>
-                    <div className="col-2">
-                      <img src={require('./../d_img/fashion2.png')} alt="" />
-                    </div>
-                    <div className="col-2">
-                      <img src={require('./../d_img/fashion3.png')} alt="" />
-                    </div>
-                    <div className="col-2">
-                      <img src={require('./../d_img/fashion4.png')} alt="" />
-                    </div>
-                    <div className="col-2">
-                      <img src={require('./../d_img/fashion5.png')} alt="" />
-                    </div>
-                  </div>
+              <div className="col-12 col-lg-7 col-xl-8 col-xxl-6">
+                <div className="d_imgcol position-relative ">
+                  <img src={require('./../d_img/fashion1.png')} alt="Fashion 1" className="d_fimg1" />
+                  <img src={require('./../d_img/fashion2.png')} alt="Fashion 2" className="d_fimg2" />
+                  <img src={require('./../d_img/fashion3.png')} alt="Fashion 3" className="d_fimg3" />
+                  <img src={require('./../d_img/fashion4.png')} alt="Fashion 4" className="d_fimg4" />
+                  <img src={require('./../d_img/fashion5.png')} alt="Fashion 5" className="d_fimg5" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section> */}
-
-
-      <div className="container-fluid p-0">
-        <div className="row no-gutters">
-          <div className="col-12">
-            <div className="position-relative" style={{
-              backgroundColor: '#FFC0CB',
-              backgroundImage: 'radial-gradient(circle, #FFD1DC 20%, transparent 20%)',
-              backgroundSize: '40px 40px',
-              height: '300px',
-              overflow: 'hidden'
-            }}>
-              <div className="container h-100">
-                <div className="row h-100">
-                  <div className="col-12 col-lg-6 d-flex align-items-center">
-                    <h2 className="text-dark font-italic" style={{
-                      fontWeight: 'bold',
-                      fontSize: '2rem',
-                      lineHeight: '1.2',
-                      position: 'relative',
-                      zIndex: 2
-                    }}>
-                      Where culture and<br />style unite
-                    </h2>
-                  </div>
-                  <div className="col-12 col-lg-6">
-                    <div className="d_imgcol position-relative h-100">
-                      <img src={require('./../d_img/fashion1.png')} alt="Fashion 1" className="fashion-img" style={{ left: '0%', height: '95%', zIndex: 5 }} />
-                      <img src={require('./../d_img/fashion2.png')} alt="Fashion 2" className="fashion-img" style={{ left: '20%', height: '100%', zIndex: 4 }} />
-                      <img src={require('./../d_img/fashion3.png')} alt="Fashion 3" className="fashion-img" style={{ left: '40%', height: '97%', zIndex: 3 }} />
-                      <img src={require('./../d_img/fashion4.png')} alt="Fashion 4" className="fashion-img" style={{ left: '60%', height: '93%', zIndex: 2 }} />
-                      <img src={require('./../d_img/fashion5.png')} alt="Fashion 5" className="fashion-img" style={{ left: '80%', height: '90%', zIndex: 1 }} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </section>
 
       {/* Culture section end */}
 
+      {/* Post section Start */}
 
+      <Post />
+
+      {/* Post section End */}
+
+      {/* Popular Brands Section Start */}
+
+      <Popularbrands />
+
+      {/* Popular Brands Section End */}
 
     </>
   )

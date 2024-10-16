@@ -25,7 +25,7 @@ const Card = () => {
     return (
         <>
 
-            <section className='d_p-80 pt-0'>
+            <section className='d_p-80 pt-0 pb-0'>
                 <div className="container-fluid">
                     <div className="row gy-1">
                         {cardData.map((card) => (
