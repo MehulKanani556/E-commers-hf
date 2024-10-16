@@ -2,12 +2,12 @@
     background-color: #2B221E;
 }
 
-.VK_footer_par{
+.VK_footer_par {
     position: relative;
     z-index: 1;
 }
 
-.VK_footer_net img{
+.VK_footer_net{
     position: absolute;
     bottom: 0%;
     right: 0%;

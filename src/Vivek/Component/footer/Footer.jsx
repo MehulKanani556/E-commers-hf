@@ -105,7 +105,7 @@ const Footer = () => {
                 </Row>
             </div>
             <div className='VK_footer_net'>
-                <img src={require('../../assets/net.png')} alt="" />
+                <img src={require('../../assets/net.png')} className='w-100' alt="" />
             </div>
         </footer>
     );

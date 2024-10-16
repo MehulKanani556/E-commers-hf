@@ -109,21 +109,33 @@
     color: black;
 }
 
-/* register model */
-
-.VK_underline {
-    text-decoration: underline;
-    text-underline-offset: 5px;
-}
-
-.register_model .modal-content {
-    border-radius: 0px;
-}
-
 .modal-dialog {
     width: 600px;
     margin: 0px auto;
 }
+
+.model_theme {
+    background-color: #2B221E;
+    color: white;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    font-weight: 500;
+    letter-spacing: 1px;
+    border-radius: 5px;
+}
+
+/* register model */
+
+.VK_underline {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.modal-content {
+    border-radius: 0px !important;
+}
+
 
 .model_input {
     background-color: #EDEDED;
@@ -148,20 +160,22 @@
     transform: translateY(-50%);
 }
 
-.model_theme {
-    background-color: #2B221E;
-    color: white;
-    padding: 12px;
-    font-size: 18px;
-    border: none;
-    font-weight: 500;
-    letter-spacing: 1px;
-    border-radius: 5px;
-}
 
 /* login model */
-.VK_forget_link{
+.VK_forget_link {
     color: #DB4444;
+}
+
+
+/* otp model */
+.VK_otp_input {
+    height: 46px;
+    width: 46px;
+    background-color: #EDEDED;
+    border: 2px solid #EDEDED;
+    border-radius: 5px;
+    outline: none;
+    text-align: center;
 }
 
 /* -------------------------------------------------------- media query -------------------------------------------------------- */
@@ -183,11 +197,11 @@
         padding: 10px;
     }
 
-    .model_p{
+    .model_p {
         font-size: 14px;
     }
 
-    .model_heading{
+    .model_heading {
         font-size: 20px;
     }
 
@@ -203,6 +217,11 @@
     .login_model .modal-dialog {
         width: 100%;
     }
+
+    .otp_model .modal-dialog {
+        width: 100%;
+    }
+
 
     .model_padding {
         padding: 20px 20px;
@@ -227,6 +246,10 @@
     }
 
     .login_model .modal-dialog {
+        width: 400px;
+    }
+
+    .otp_model .modal-dialog {
         width: 400px;
     }
 
@@ -256,6 +279,10 @@
         width: 450px;
     }
 
+    .otp_model .modal-dialog {
+        width: 450px;
+    }
+
     .model_padding {
         padding: 30px 30px;
     }
@@ -280,6 +307,10 @@
 
     .login_model .modal-dialog {
         width: 500px;
+    }
+
+    .otp_model .modal-dialog {
+        width: 550px;
     }
 
     .model_padding {
@@ -313,6 +344,10 @@
         width: 500px;
     }
 
+    .otp_model .modal-dialog {
+        width: 500px;
+    }
+
     .model_padding {
         padding: 40px 50px;
     }
@@ -340,6 +375,10 @@
     }
 
     .login_model .modal-dialog {
+        width: 500px;
+    }
+
+    .otp_model .modal-dialog {
         width: 500px;
     }
 
@@ -372,6 +411,10 @@
 
     .login_model .modal-dialog {
         width: 600px;
+    }
+
+    .otp_model .modal-dialog {
+        width: 500px;
     }
 
     .model_padding {

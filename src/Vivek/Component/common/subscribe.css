@@ -1,0 +1,274 @@
+.VK_subscribe_poster {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.589), rgba(255, 255, 255, 0.589)), url('../../assets/subscribe_poster.jfif');
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    z-index: 3;
+}
+
+.VK_sub_10 {
+    position: absolute;
+    right: 40px;
+    bottom: 30px;
+    width: 500px;
+    z-index: -1;
+}
+
+.VK_sub_net {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 500px;
+    z-index: -1;
+}
+
+
+.subscribe_hd {
+    font-size: 25px;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.subscribe_heading {
+    font-size: 48px;
+    font-weight: 600;
+}
+
+.VK_light {
+    color: #6A6A6A;
+}
+
+.VK_sub_input {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+.VK_sub_btn {
+    background-color: #2B221E;
+    color: white;
+    font-size: 15px;
+    line-height: 1.1;
+    border: none;
+    padding: 15px 40px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+
+.font_18 {
+    font-size: 18px;
+}
+
+.light_color {
+    color: #6a6a6a;
+}
+
+
+/* -------------------------------------------------------- media query -------------------------------------------------------- */
+
+
+/*  extra small device */
+@media (max-width:480px) {
+    .subscribe_hd {
+        font-size: 16px;
+        text-align: center;
+        letter-spacing: 2px;
+        font-weight: 600;
+    }
+
+    .subscribe_heading {
+        font-size: 22px;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .VK_sub_txt {
+        text-align: center;
+    }
+
+    .VK_sub_btn {
+        padding: 15px 20px;
+    }
+
+    .VK_sub_10 {
+        width: 250px;
+    }
+
+    .VK_sub_net {
+        width: 200px;
+    }
+}
+
+
+/* small device */
+@media (max-width:575px) and (min-width:481px) {
+    .subscribe_hd {
+        font-size: 18px;
+        text-align: center;
+        letter-spacing: 2px;
+        font-weight: 600;
+    }
+
+    .subscribe_heading {
+        font-size: 28px;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .VK_sub_txt {
+        text-align: center;
+    }
+
+    .VK_sub_btn {
+        padding: 15px 30px;
+    }
+
+    .VK_sub_10 {
+        width: 300px;
+    }
+
+    .VK_sub_net {
+        width: 200px;
+    }
+
+}
+
+
+/* medium device */
+@media (max-width:767px) and (min-width:576px) {
+    .subscribe_hd {
+        font-size: 20px;
+        text-align: center;
+        letter-spacing: 2px;
+        font-weight: 600;
+    }
+
+    .subscribe_heading {
+        font-size: 32px;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .VK_sub_txt {
+        text-align: center;
+    }
+
+    .VK_sub_btn {
+        padding: 15px 30px;
+    }
+
+    .VK_sub_net {
+        width: 200px;
+    }
+}
+
+
+/* lg device */
+@media (max-width:991px) and (min-width:768px) {
+    .subscribe_hd {
+        font-size: 20px;
+        letter-spacing: 2px;
+        font-weight: 600;
+    }
+
+    .subscribe_heading {
+        font-size: 32px;
+        font-weight: 600;
+    }
+
+    .VK_sub_btn {
+        padding: 15px 30px;
+    }
+}
+
+
+/* xl device */
+@media (max-width:1199px) and (min-width:992px) {
+    .subscribe_hd {
+        font-size: 20px;
+        letter-spacing: 2px;
+        font-weight: 600;
+    }
+
+    .subscribe_heading {
+        font-size: 38px;
+        font-weight: 600;
+    }
+}
+
+
+/* 2xl device */
+@media (max-width:1440px) and (min-width:1200px) {
+    .subscribe_hd {
+        font-size: 25px;
+        letter-spacing: 2px;
+        font-weight: 600;
+    }
+
+    .subscribe_heading {
+        font-size: 48px;
+        font-weight: 600;
+    }
+}
+
+
+/* 3xl device */
+@media (min-width:1441px) {
+    .subscribe_hd {
+        font-size: 25px;
+        letter-spacing: 2px;
+        font-weight: 600;
+    }
+
+    .subscribe_heading {
+        font-size: 48px;
+        font-weight: 600;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* -------------------------------------------------------- media query -------------------------------------------------------- */
+
+
+/*  extra small device */
+@media (max-width:480px) {}
+
+
+/* small device */
+@media (max-width:575px) and (min-width:481px) {}
+
+
+/* medium device */
+@media (max-width:766px) and (min-width:576px) {}
+
+
+/* lg device */
+@media (max-width:991px) and (min-width:767px) {}
+
+
+/* xl device */
+@media (max-width:1199px) and (min-width:992px) {}
+
+
+/* 2xl device */
+@media (max-width:1440px) and (min-width:1200px) {}
+
+
+/* 3xl device */
+@media (min-width:1441px) {}
