@@ -1,28 +1,149 @@
-.font_22{
+.font_22 {
     font-size: 22px;
 }
 
-.font_20{
+.font_20 {
     font-size: 20px;
 }
 
-.font_18{
+.font_18 {
     font-size: 18px;
 }
 
+.font_16 {
+    font-size: 16px;
+}
+.font_14{
+    font-size: 14px;
+}
 
-.fw-400{
+.primary_color{
+    color: #2C7AA6;
+}
+
+
+.fw-400 {
     font-weight: 400;
 }
 
-.fw-500{
+.fw-500 {
     font-weight: 500;
 }
 
-.fw-600{
+.fw-600 {
     font-weight: 600;
 }
 
-.light_color{
+.light_color {
     color: #6a6a6a;
+}
+
+
+.object_cover {
+    object-fit: cover;
+}
+
+.object_contain{
+    object-fit: contain;
+}
+
+.object_top{
+    object-position: top;
+}
+
+
+.section_title {
+    font-size: 28px;
+}
+
+
+.white_space {
+    white-space: nowrap;
+}
+
+
+/* --------------------------------------------------- media query ----------------------------------------------------- */
+
+
+/*  extra small device */
+@media (max-width:480px) {
+    .VK_sec_padding {
+        padding: 40px 0px;
+    }
+
+    .section_title {
+        font-size: 20px;
+    }
+}
+
+
+/* small device */
+@media (max-width:575px) and (min-width:481px) {
+    .VK_sec_padding {
+        padding: 40px 0px;
+    }
+
+    .section_title {
+        font-size: 24px;
+    }
+}
+
+
+/* medium device */
+@media (max-width:766px) and (min-width:576px) {
+    .VK_sec_padding {
+        padding: 40px 0px;
+    }
+
+    .section_title {
+        font-size: 24px;
+    }
+}
+
+
+/* lg device */
+@media (max-width:991px) and (min-width:767px) {
+    .VK_sec_padding {
+        padding: 50px 0px;
+    }
+
+    .section_title {
+        font-size: 24px;
+    }
+}
+
+
+/* xl device */
+@media (max-width:1199px) and (min-width:992px) {
+    .VK_sec_padding {
+        padding: 50px 0px;
+    }
+
+    .section_title {
+        font-size: 24px;
+    }
+}
+
+
+/* 2xl device */
+@media (max-width:1440px) and (min-width:1200px) {
+    .VK_sec_padding {
+        padding: 80px 0px;
+    }
+
+    .section_title {
+        font-size: 28px;
+    }
+}
+
+
+/* 3xl device */
+@media (min-width:1441px) {
+    .VK_sec_padding {
+        padding: 80px 0px;
+    }
+
+    .section_title {
+        font-size: 28px;
+    }
 }

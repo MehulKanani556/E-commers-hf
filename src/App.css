@@ -3,7 +3,7 @@
     font-family: "inter", sans-serif;
 }
 
-.inter{
+.inter {
     font-family: "inter", sans-serif;
 }
 
@@ -66,14 +66,77 @@ body{
 .outline_none {
     outline: none;
 }
-.d_p-80{
+
+.d_p-80 {
     padding: 80px 0;
 }
-.d_cur{
+
+.d_cur {
     cursor: pointer;
 }
-@media(max-width:991px){
-    .d_p-80{
+
+@media(max-width:991px) {
+    .d_p-80 {
         padding: 30px 0;
+    }
+}
+
+
+
+/* --------------------------------------------------- media query ----------------------------------------------------- */
+
+
+/*  extra small device */
+@media (max-width:480px) {
+    .VK_sec_padding {
+        padding: 40px 0px;
+    }
+}
+
+
+/* small device */
+@media (max-width:575px) and (min-width:481px) {
+    .VK_sec_padding {
+        padding: 40px 0px;
+    }
+}
+
+
+/* medium device */
+@media (max-width:766px) and (min-width:576px) {
+    .VK_sec_padding {
+        padding: 40px 0px;
+    }
+}
+
+
+/* lg device */
+@media (max-width:991px) and (min-width:767px) {
+    .VK_sec_padding {
+        padding: 50px 0px;
+    }
+}
+
+
+/* xl device */
+@media (max-width:1199px) and (min-width:992px) {
+    .VK_sec_padding {
+        padding: 50px 0px;
+    }
+}
+
+
+/* 2xl device */
+@media (max-width:1440px) and (min-width:1200px) {
+    .VK_sec_padding {
+        padding: 80px 0px;
+    }
+}
+
+
+/* 3xl device */
+@media (min-width:1441px) {
+    .VK_sec_padding {
+        padding: 80px 0px;
     }
 }
