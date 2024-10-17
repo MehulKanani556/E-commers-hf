@@ -1,7 +1,7 @@
 import React from 'react'
 import './home.css'
 import '../common.css'
-// import Header from '../header/Header'
+import Header from '../header/Header'
 import Footer from '../footer/Footer'
 import Electronicsessiental from './Electronicsessiental'
 import Bestsellers from './Bestsellers'
@@ -9,12 +9,18 @@ import Toptoys from './Toptoys'
 import Relateditems from './Relateditems'
 import Subscribe from '../common/Subscribe'
 import Process from '../common/Process'
+import ShoesSlider from '../Slider/ShoesSlider'
 
 const Home = () => {
     return (
         <React.Fragment>
 
-            {/* <Header/> */}
+            {/* sldier */}
+            <ShoesSlider/>
+
+
+            {/* header */}
+            <Header/>
 
 
             {/* ELECTONICS essentials  */}

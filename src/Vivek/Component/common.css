@@ -42,6 +42,9 @@
 .object_cover {
     object-fit: cover;
 }
+.object_fill {
+    object-fit: fill;
+}
 
 .object_contain{
     object-fit: contain;
@@ -49,6 +52,10 @@
 
 .object_top{
     object-position: top;
+}
+
+.object_center{
+    object-position: center;
 }
 
 
@@ -72,7 +79,7 @@
     }
 
     .section_title {
-        font-size: 20px;
+        font-size: 18px;
     }
 }
 
@@ -84,7 +91,7 @@
     }
 
     .section_title {
-        font-size: 24px;
+        font-size: 18px;
     }
 }
 
@@ -96,7 +103,7 @@
     }
 
     .section_title {
-        font-size: 24px;
+        font-size: 18px;
     }
 }
 
@@ -108,7 +115,7 @@
     }
 
     .section_title {
-        font-size: 24px;
+        font-size: 20px;
     }
 }
 
@@ -132,7 +139,7 @@
     }
 
     .section_title {
-        font-size: 28px;
+        font-size: 26px;
     }
 }
 
