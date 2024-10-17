@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Col, Row, Card, Badge } from 'react-bootstrap';
 import './Electronic.css';
-// import { FaRegHeart } from "react-icons/fa";
-// import { BsCart3 } from "react-icons/bs";
+import ElectronicSlider from '../Electronics/ElectronicSlider'
+
 
 function Electronics() {
 
@@ -27,7 +27,7 @@ function Electronics() {
     },
     {
       id: 2,
-      bestSeller: true,
+      bestSeller: false,
       name: "CANON",
       description: " Canon EOS R5  mark II",
       image: require('../../assets/Canon.png'), // Replace with actual image URL
@@ -51,7 +51,7 @@ function Electronics() {
       id: 4,
       bestSeller: true,
       name: "ASUS",
-      description: "ROG Zephyrus G14,AI Powered Gaming Lapt...",
+      description: "ROG ZephyrusG14,AI Powered Gaming Lapt..",
       image: require('../../assets/ASUS.png'), // Replace with actual image URL
       price: "$120",
       actualPrice: "$140",
@@ -108,7 +108,7 @@ function Electronics() {
     <>
       <section className='V_gradient text-white w-100 V_lion_padding'>
         <div className='d_container'>
-          <Row className=''>
+          <Row className='m-0'>
             <Col lg={6} className='align-self-center'>
               <div className='pe-xxl-5'>
                 <h1 className='V_lion_skin pe-xxl-5'>Laptop <b>Skin</b> Cover Laminated Black <b>The Lion</b></h1>
@@ -156,11 +156,14 @@ function Electronics() {
       </section>
 
 
+      <ElectronicSlider />
+
+
 
       <section className='text-white'>
         <div className=''>
-          <Row className='py-5 px-3 p-lg-5'>
-            <Col lg={4} className='mt-lg-3 pt-3'>
+          <Row className='py-5 px-3 p-lg-5 m-0'>
+            <Col sm={6} lg={4} className='mt-lg-3 pt-3'>
               <div className='text-white V_best_img V_best_img_1'>
                 <div className='V_laptop pt-lg-3'>
                   <h3 className='v_mega pt-5 '>
@@ -170,8 +173,8 @@ function Electronics() {
               </div>
             </Col>
 
-            <Col lg={4} className='pt-3'>
-              <div className='text-white V_best_img V_best_img_2'>
+            <Col sm={6} lg={4} className='mt-lg-3 pb-0'>
+              <div className='text-white V_best_img V_best_img_2 pb-3'>
                 <div className='V_laptop pt-lg-3'>
                   <h3 className='v_mega pt-5'>
                     MEGA SALE
@@ -181,7 +184,7 @@ function Electronics() {
               </div>
             </Col>
 
-            <Col lg={4} className='mt-lg-3 pt-3'>
+            <Col sm={6} lg={4} className='mt-lg-3 pt-3'>
               <div className='text-white V_best_img V_best_img_3'>
                 <div className='V_laptop1 pt-lg-3'>
                   <p className='V_on1 pt-5'>Galaxy S24</p>
@@ -201,8 +204,8 @@ function Electronics() {
 
       <section className='pt-lg-5 pb-3'>
         <div className='d_container pt-lg-5'>
-          <Row className='pt-5'>
-            <Col className=''>
+          <Row className='pt-5 m-0'>
+            <Col className='p-0'>
               <div className='d-flex justify-content-between'>
                 <h1 className='V_new'>
                   NEW COLLECTION OF ELECTRONICS
@@ -217,28 +220,20 @@ function Electronics() {
       </section>
 
       <section className='pb-5'>
-        <div className='d_container '>
-          <Row className=''>
+        <div className='d_container justify-content-between'>
+          <Row className='m-0'>
             {products.map(product => (
-              <Col md={6} lg={6} xl={4} xxl={3} className="gap-3 pb-5" key={product.id}>
-                <Card className="V_card">
+              <Col sm={6} md={6} lg={4} xl={4} xxl={3} className="gap-3 pb-5 d-flex justify-content-center" key={product.id}>
+                <Card className="V_card align-content-center">
                   {product.bestSeller && (
                     <Badge className="V_best_seller_tag py-3 px-5" bg="dark">
                       Best Seller
                     </Badge>
                   )}
-                   {/* <div className=' d-flex justify-content-between pt-3 px-3'>
-                    <div>
-                      <FaRegHeart className='V_heart' />
-                    </div>
-                    <div>
-                      <BsCart3 className='V_heart' />
-                    </div>
-                  </div> */}
                   <Card.Img
                     variant="top"
                     src={product.image} // Dynamically setting image URL
-                    className="V_product_image pt-3"
+                    className="V_product_image pt-5"
                     alt={product.name}
                   />
                   <Card.Body className="px-0">
@@ -256,7 +251,7 @@ function Electronics() {
                     </Card.Text>
                     <Row>
                       <Col className="text-end">
-                        <div className="V_price d-flex justify-content-between px-3 pt-2">
+                        <div className="V_price d-flex justify-content-between px-3">
                           {/* Mapping through colors */}
                           <div className="d-flex">
                             {product.colors.map((color, index) => (
@@ -267,23 +262,20 @@ function Electronics() {
                               ></div>
                             ))}
                           </div>
-                          <div className="V_price_container pt-2">
+                          <div className="V_price_container">
                             <span className="V_discounted_price">{product.price}</span>
                             <span><strike className="original-price">{product.actualPrice}</strike></span>
                           </div>
                         </div>
-                      {/* <div className=' bg-black text-white  py-2'>
-                          <p className='V_buynow py-5'>Buy Now</p>
-                        </div> */}
-                    </Col>
-                  </Row>
-                </Card.Body>
-              </Card>
+                      </Col>
+                    </Row>
+                  </Card.Body>
+                </Card>
               </Col>
             ))}
-        </Row>
-      </div>
-    </section >
+          </Row>
+        </div>
+      </section >
 
 
 
@@ -292,8 +284,8 @@ function Electronics() {
 
       <section className='pb-5'>
         <div className=''>
-          <Row className=''>
-            <Col className=''>
+          <Row className='m-0'>
+            <Col className='p-0'>
               <div className='V_back_spe_off d-flex align-items-center'>
                 <div className="d_container">
                   <div className='V_special '>
@@ -315,7 +307,7 @@ function Electronics() {
 
       <section className='pb-5'>
         <div className='d_container'>
-          <Row className=''>
+          <Row className='m-0'>
             <Col className='d-flex flex-wrap'>
               <div className='V_five_pro px-3 py-2'>
                 <img src={require('../../assets/five_air.png')} alt="" className='w-100 V_five' />
@@ -342,7 +334,7 @@ function Electronics() {
 
       <section className=' pb-3'>
         <div className='d_container'>
-          <Row className='pt-5'>
+          <Row className='pt-5 m-0'>
             <Col className=''>
               <div className=''>
                 <h1 className='V_new'>
@@ -355,42 +347,42 @@ function Electronics() {
       </section>
 
 
-      <section className=''>
+      {/* <section className=''>
         <div className="d_container">
-          <Row className=''>
+          <Row className='m-0'>
             <div className="V_grid_container ">
               <div className="V_eat">
                 <img src={require('../../assets/eat_sleep.png')} alt="Eat Sleep Game Repeat" className='' />
-                {/* <h3>Eat Sleep Game Repeat</h3> */}
+                <h3>Eat Sleep Game Repeat</h3>
               </div>
               <div className="V_unleshing">
                 <img src={require('../../assets/unlashing.png')} alt="Unleashing Creativity" className='' />
-                {/* <h3>Unleashing Creativity, one keystroke at a time</h3> */}
+                <h3>Unleashing Creativity, one keystroke at a time</h3>
               </div>
               <div className="V_build">
                 <img src={require('../../assets/build for.png')} alt="Build for Intelligence" className='' />
-                {/* <h3>Build for Intelligence</h3> */}
+                <h3>Build for Intelligence</h3>
               </div>
               <div className="V_watch">
                 <img src={require('../../assets/dont watch.png')} alt="Don't watch the clock" className='' />
-                {/* <h3>Don't watch the clock, do what it does: keep going</h3> */}
+                <h3>Don't watch the clock, do what it does: keep going</h3>
               </div>
               <div className="V_same">
                 <img src={require('../../assets/dont be the same.png')} alt="Don't be the same, be better" className='' />
-                {/* <h3>Don't be the same, be better</h3> */}
+                <h3>Don't be the same, be better</h3>
               </div>
               <div className="V_plugin">
                 <img src={require('../../assets/plug in.png')} alt="Plug in, tune out, and enjoy the beats" className='' />
-                {/* <h3>Plug in, tune out, and enjoy the beats</h3> */}
+                <h3>Plug in, tune out, and enjoy the beats</h3>
               </div>
               <div className="V_lost">
                 <img src={require('../../assets/lost in the rythem.png')} alt="Lost in the rhythm" className='' />
-                {/* <h3>Lost in the rhythm of my favorite tunes</h3> */}
+                <h3>Lost in the rhythm of my favorite tunes</h3>
               </div>
             </div>
           </Row>
         </div>
-      </section>
+      </section> */}
 
     </>
   )

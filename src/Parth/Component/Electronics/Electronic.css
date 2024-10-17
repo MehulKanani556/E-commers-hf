@@ -79,7 +79,6 @@
 .V_back_spe_off {
     background-image: url('../../assets/special_offer.png');
     height: 576px;
-    width: 100%;
     background-position: center;
     background-size: cover;
 }
@@ -193,14 +192,7 @@ img {
     overflow: hidden;
 }
 
-.V_card:hover {
-    width: 340px;
-    height: 475px;
-    position: relative;
-    border-radius: 0px;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
+
 
 .V_best_seller_tag {
     position: absolute;
@@ -275,44 +267,7 @@ img {
 
 
 
-.V_heart {
-    height: 26px;
-    width: 26px;
-}
 
-.V_buynow {
-    font-size: 16px;
-    font-weight: 500;
-    text-align: center;
-}
-
-
-
-/* Initially show these elements */
-/* .V_card .V_best_seller_tag,
-.V_card .V_price_container,
-.V_card .V_color {
-  display: block;
-} */
-
-/* Initially hide these elements */
-/* .V_card .V_heart,
-.V_card .V_buynow {
-  display: none;
-} */
-
-/* On hover, hide the badge, price container, and color */
-/* .V_card:hover .V_best_seller_tag,
-.V_card:hover .V_price_container,
-.V_card:hover .V_color {
-  display: none;
-} */
-
-/* On hover, show the heart, cart, and "Buy Now" button */
-/* .V_card:hover .V_heart,
-.V_card:hover .V_buynow {
-  display: flex;
-} */
 
 
 /* ///////////////////////////////////////////////////////// container ////////////////////////////////////////////////// */
@@ -377,6 +332,11 @@ img {
         width: 280px;
         height: 356px;
     }
+
+    .V_product_image {
+        height: 343px;
+        width: 100%;
+    }
 }
 
 @media (min-width: 1440px) and (max-width: 1649px) {
@@ -437,6 +397,11 @@ img {
     .V_five {
         width: 280px;
         height: 356px;
+    }
+
+    .V_product_image {
+        height: 343px;
+        width: 100%;
     }
 }
 
@@ -504,6 +469,11 @@ img {
         width: 280px;
         height: 320px;
     }
+
+    .V_product_image {
+        height: 343px;
+        width: 100%;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -569,6 +539,11 @@ img {
     .V_five {
         width: 230px;
         height: 260px;
+    }
+
+    .V_product_image {
+        height: 100%;
+        width: 100%;
     }
 }
 
@@ -640,6 +615,11 @@ img {
         width: 250px;
         height: 300px;
     }
+
+    .V_product_image {
+        height: 100%;
+        width: 100%;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 767px) {
@@ -709,6 +689,15 @@ img {
     .V_five {
         width: 250px;
         height: 300px;
+    }
+
+    .V_card {
+        width: 280px;
+    }
+
+    .V_product_image {
+        height: 343px;
+        width: 100%;
     }
 }
 
@@ -780,6 +769,11 @@ img {
         width: 180px;
         height: 210px;
     }
+
+    .V_product_image {
+        height: 343px;
+        width: 100%;
+    }
 }
 
 @media (min-width: 300px) and (max-width: 479px) {
@@ -842,7 +836,12 @@ img {
     }
 
     .V_card {
-        width: 320px;
+        height: 478px;
+    }
+
+    .V_product_image {
+        height: 343px;
+        width: 100%;
     }
 
     .V_five_pro {
