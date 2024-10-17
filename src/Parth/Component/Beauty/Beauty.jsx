@@ -3,6 +3,7 @@ import { Row, Col, Card, Badge } from 'react-bootstrap';
 import './Beauty.css'
 // import Minisider from '../../../darshan/components/Minisider';
 import BeautySlider from './BeautySlider.jsx'
+import BeautyPost from '../../Component/Beauty/BeautyPost.jsx'
 
 function Beauty() {
 
@@ -227,6 +228,10 @@ function Beauty() {
                     </Row>
                 </div>
             </section>
+
+
+
+            <BeautyPost />
 
 
         </>

@@ -8,15 +8,18 @@
     position: relative;
     background-image: url('../../assets/healthskinrequire.png');
     background-size: cover;
-    height: 576px;
+   
 }
 
-.V_healty_skincare::before {
-    display: block;
-    padding-top: 56.25%;
-    height: 576px;
-    background-image: url('../../assets/healthskinrequire.png');
-
+.V_healty_skincare::after {
+    content: '';
+    background-color: black;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
     background-size: cover;
     background-position: center;
 }
@@ -28,20 +31,14 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0);
-    /* Initially transparent */
+   
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 0;
-    transition: background-color 0.3s ease, opacity 0.3s ease;
+   
 }
 
-.V_healty_skincare:hover .V_overlay {
-    background-color: rgba(0, 0, 0, 0.5);
-    /* Black transparent on hover */
-    opacity: 1;
-    /* Show the overlay */
-}
+
 
 .V_overlay_text {
     color: white;
@@ -55,6 +52,7 @@
     text-align: center;
     width: 639px;
     height: 240px;
+    z-index: 1;
 }
 
 .V_lipstic {
@@ -284,6 +282,7 @@
         padding-top: 9rem !important;
         padding-left: 30px;
     }
+
     .V_healty_skincare {
         background-size: cover;
         background-repeat: no-repeat;
