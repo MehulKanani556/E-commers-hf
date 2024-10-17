@@ -74,10 +74,16 @@ body{
 .d_cur {
     cursor: pointer;
 }
+.d_margin{
+    margin: 0 50px;
+}
 
 @media(max-width:991px) {
     .d_p-80 {
         padding: 30px 0;
+    }
+    .d_margin{
+        margin: 0;
     }
 }
 

@@ -7,7 +7,19 @@
     height: 100%;
     object-fit: cover;
 }
+.d_post .d_box .d_img::after{
+    content: "";
+    background-color: #000;
+    opacity: 0.4;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
 .d_post .d_box .d_text{
+    z-index: 2;
     padding: 0 0 10px 20px;
     position: absolute;
     bottom: 0;

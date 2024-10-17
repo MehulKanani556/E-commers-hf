@@ -1,6 +1,4 @@
-.d_margin {
-    margin: 0 15px;
-}
+
 
 .d_trend .d_head {
     margin-bottom: 30px;
@@ -186,9 +184,6 @@
 }
 @media(max-width:575px)
 {
-    .d_margin{
-        margin: 0;
-    }
     .d_trend .d_box .d_content .d_desc{
     }
     .d_trend .d_head{
