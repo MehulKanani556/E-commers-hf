@@ -1,0 +1,30 @@
+.V_contact {
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.V_any {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.V_shadow {
+    box-shadow: 0px 4px 14px 0px #8F8F8F40;
+    width: 1480px;
+    height: 560px;
+}
+
+.V_img {
+    width: 690px;
+    height: 460px;
+}
+
+.V_head_text {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.V_lorem {
+    font-size: 18px;
+    font-weight: 400;
+}
