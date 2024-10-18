@@ -29,12 +29,12 @@ const Minisider = () => {
     };
 
     const images = [
-        {  main: require('./../d_img/minisiderimg1.png'), category: "Western Wear" },
-        {  main: require('./../d_img/minisiderimg2.png'), category: "Indian Wear" },
-        {  main: require('./../d_img/minisiderimg3.png'), category: "Sports Wear" },
-        {  main: require('./../d_img/minisiderimg4.png'), category: "Footwear" },
-        {  main: require('./../d_img/minisiderimg5.png'), category: "Jewellery" },
-        {  main: require('./../d_img/minisiderimg6.png'), category: "Handbags & Wallet" },
+        {  main: "minisiderimg1.png", category: "Western Wear" },
+        {  main: "minisiderimg2.png", category: "Indian Wear" },
+        {  main: "minisiderimg3.png", category: "Sports Wear" },
+        {  main: "minisiderimg4.png", category: "Footwear" },
+        {  main: "minisiderimg5.png", category: "Jewellery" },
+        {  main: "minisiderimg6.png", category: "Handbags & Wallet" },
     ];
 
     return (
@@ -50,7 +50,7 @@ const Minisider = () => {
                                 <div className="d_mini">
                                     <div className="d_bgimg">
                                         <div className="d_img">
-                                            <img src={image.main} alt="" />
+                                            <img src={require(`./../d_img/${image.main}`)} alt="" />
                                         </div>
                                     </div>
                                     <p className='mb-0 d_category-label'>{image.category}</p>

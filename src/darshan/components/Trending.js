@@ -9,7 +9,7 @@ const Trending = () => {
   const trendingItems = [
     {
       id: 1,
-      image: require('./../d_img/trend1.png'),
+      image: "trend1.png",
       isBestSeller: true,
       name: "Traditional Chaniya choli",
       rating: 4.5,
@@ -25,7 +25,7 @@ const Trending = () => {
     },
     {
       id: 2,
-      image: require('./../d_img/trend2.png'),
+      image: "trend2.png",
       isBestSeller: false,
       name: "Traditional Chaniya choli",
       rating: 4.7,
@@ -41,7 +41,7 @@ const Trending = () => {
     },
     {
       id: 3,
-      image: require('./../d_img/trend3.png'),
+      image: "trend3.png",
       isBestSeller: true,
       name: "Traditional Chaniya choli",
       rating: 4.7,
@@ -57,7 +57,7 @@ const Trending = () => {
     },
     {
       id: 4,
-      image: require('./../d_img/trend4.png'),
+      image: "trend4.png",
       isBestSeller: true,
       name: "Traditional Chaniya choli",
       rating: 4.7,
@@ -73,7 +73,7 @@ const Trending = () => {
     },
     {
       id: 5,
-      image: require('./../d_img/trend5.png'),
+      image: "trend5.png",
       isBestSeller: true,
       name: "Traditional Chaniya choli",
       rating: 4.5,
@@ -86,7 +86,7 @@ const Trending = () => {
     },
     {
       id: 6,
-      image: require('./../d_img/trend6.png'),
+      image: "trend6.png",
       isBestSeller: true,
       name: "Traditional Chaniya choli",
       rating: 4.5,
@@ -102,7 +102,7 @@ const Trending = () => {
     },
     {
       id: 7,
-      image: require('./../d_img/trend7.png'),
+      image: "trend7.png",
       isBestSeller: true,
       name: "Traditional Chaniya choli",
       rating: 4.5,
@@ -115,7 +115,7 @@ const Trending = () => {
     },
     {
       id: 8,
-      image: require('./../d_img/trend8.png'),
+      image: "trend8.png",
       isBestSeller: true,
       name: "Traditional Chaniya choli",
       rating: 4.5,
@@ -147,7 +147,7 @@ const Trending = () => {
                   <div key={item.id} className="col-12 col-sm-6 col-lg-4 col-xl-3">
                     <div className="d_box mx-2">
                       <div className="d_img">
-                        <img src={item.image} alt="" />
+                        <img src={require(`./../d_img/${item.image}`)} alt="" />
                         {item.isBestSeller &&
                           (<div className="d_seller">Best Seller</div>)}
                         <div className="d_trendicon d-flex justify-content-center align-items-center">

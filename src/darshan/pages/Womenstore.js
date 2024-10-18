@@ -11,14 +11,6 @@ import Popularbrands from '../components/Popularbrands';
 
 const Womenstore = () => {
 
-  const fashionImages = [
-    { src: require('./../d_img/fashion1.png'), alt: "Woman in floral saree" },
-    { src: "/api/placeholder/120/300", alt: "Woman in floral gown" },
-    { src: "/api/placeholder/120/290", alt: "Woman in white and floral dress" },
-    { src: "/api/placeholder/120/270", alt: "Woman in mauve hijab and outfit" },
-    { src: "/api/placeholder/120/260", alt: "Woman in pink dress" }
-  ];
-
 
   return (
     <>

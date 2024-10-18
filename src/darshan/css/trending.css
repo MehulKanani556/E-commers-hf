@@ -67,6 +67,15 @@
     position: absolute;
     top: 0;
 }
+.d_trend .d_box .d_arrival {
+    padding: 5px 24px;
+    background-color: #B42E54;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    position: absolute;
+    top: 0;
+}
 
 .d_trend .d_box .d_content {
     position: absolute;
@@ -140,6 +149,17 @@
     font-weight: 500;
 }
 
+/* Women filter card */
+.d_womenfilter .d_right .d_trend .d_box .d_content{
+    height: 170px;
+}
+
+@media(max-width:1680px){
+    .d_womenfilter .d_right .d_trend .d_box .d_content{
+        height: 183px;
+    }
+}
+
 @media(max-width:1440px) {
     .d_trend .d_box .d_content {
         height: 150px;
@@ -172,6 +192,9 @@
         height: 40px;
         margin-bottom: 6px;
     }
+    .d_womenfilter .d_right .d_trend .d_box .d_content{
+        height: 150px;
+    }
 }
 @media(max-width:991px){
     .d_trend .d_head h4{
@@ -181,10 +204,20 @@
         width: 18px;
         height: 18px;
     }
+    .d_womenfilter .d_right .d_trend .d_box .d_img{
+        height: 380px;
+    }
+    .d_trend .d_box .d_content .d_desc {
+        line-height: 16px;
+    }
 }
 @media(max-width:575px)
 {
-    .d_trend .d_box .d_content .d_desc{
+    .d_womenfilter .d_right .d_trend .d_box .d_img{
+        height: 500px;
+    }
+    .d_womenfilter .d_right .d_trend .d_box .d_content{
+        height: 130px;
     }
     .d_trend .d_head{
         display: inline-block !important;

@@ -5,6 +5,8 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 import Womenstore from './darshan/pages/Womenstore';
 import Home from './Vivek/Component/Home/Home'
 import Electronics from './Parth/Component/Electronics/Electronics';
+import ContactUs from './Parth/Component/ContactUs/ContactUs';
+import AboutUs from './Parth/Component/ContactUs/AboutUs';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Beauty from './Parth/Component/Beauty/Beauty';
 import Womenfilter from './darshan/pages/Womenfilter';
@@ -16,7 +18,8 @@ function App() {
 
       <BrowserRouter>
         <Routes>
-          <Route path='/darshan' element={<Womenfilter />} />
+          <Route path='/womenfilter' element={<Womenfilter />} />
+          <Route path='/womenstore' element={<Womenstore />} />
           <Route path='/parth' element={<Beauty />} />
           <Route path='/vivek' element={<Home />} />
           <Route path="/parth/Beauty" element={<Beauty />} />

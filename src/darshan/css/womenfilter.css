@@ -13,6 +13,10 @@
     font-family: "Arima", system-ui;
 }
 
+.d_filtermargin {
+    margin: 0 40px;
+}
+
 .d_womenfilter .d_left {
     box-shadow: 0px 4px 14px 0px #8F8F8F40;
 }
@@ -40,7 +44,6 @@
 .d_womenfilter .d_left .d_category {}
 
 .d_womenfilter .d_left .d_filterlist {
-    margin-bottom: 24px;
     padding: 20px 30px;
 }
 
@@ -81,7 +84,7 @@
 }
 
 .d_acc .d_acctitle {
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 
 .d_acc .d_acctitle .d_title {
@@ -203,7 +206,8 @@
     color: #6A6A6A;
 }
 
-.d_categorylist .d_acc a span,.d_categorylist p span {
+.d_categorylist .d_acc a span,
+.d_categorylist p span {
     font-size: 12px;
     font-weight: 400;
     color: #6A6A6A;
@@ -235,15 +239,107 @@
     border-bottom: 1px solid #2B221E;
 }
 
-
-
-.d_search .d_searchicon{
+.d_search .d_searchicon {
 
     position: absolute;
     top: 14px;
     left: 4px;
     font-size: 20px;
     color: #6A6A6A;
+}
+
+.d_categorylist .d_acc .d_color {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: black;
+    margin-right: 6px;
+}
+
+.d_categorylist .d_acc .d_staricon {
+    color: #F8A120;
+    margin-top: -5px;
+}
+
+.d_womenfilter .d_btn {
+    outline: none !important;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 5px 20px;
+    border: 1px solid #2B221E;
+    border-radius: 4px;
+    background-color: transparent;
+    margin-bottom: 12px;
+}
+
+.d_womenfilter .d_btn img {
+    width: 20px;
+    height: 20px;
+}
+
+.d_womenfilter .d_right .d_heading h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #2B221E;
+    text-transform: uppercase;
+}
+
+.d_womenfilter .d_right .d_dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.d_womenfilter .d_right .d_dropbtn {
+    background-color: transparent;
+    font-weight: 600;
+    font-size: 16px;
+    color: #2A221E;
+    border: 1px solid #2B221E;
+    border-radius: 4px;
+    padding: 8px 36px;
+}
+
+.d_womenfilter .d_right .d_dropcon {
+    display: block;
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 4px 14px 0px #8F8F8F40;
+    z-index: 1;
+    border-radius: 4px;
+    padding: 14px 18px;
+}
+
+.d_womenfilter .d_right .d_dropcon a {
+    color: black;
+    text-decoration: none;
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: #727272;
+    margin-bottom: 10px;
+}
+.d_womenfilter .d_right .d_dropcon a:last-child{
+    margin-bottom: 0;
+}
+
+.d_womenfilter .d_right .d_dropcon a:hover {
+    color: #2A221E;
+}
+
+@media(max-width:1450px) {
+    .d_filtermargin {
+        margin: 0 20px;
+    }
+    .d_womenfilter .d_right .d_heading h2{
+        font-size: 26px;
+    }
+    .d_womenfilter .d_right .d_dropbtn{
+        padding: 8px 30px;
+    }
+    .d_womenfilter .d_right .d_dropcon{
+        min-width: 145px;
+    }
 }
 
 @media(max-width:1199px) {
@@ -253,6 +349,16 @@
 
     .d_bannerbg h2 {
         font-size: 38px;
+    }
+    .d_womenfilter .d_right .d_heading h2{
+        font-size: 24px;
+    }
+    .d_womenfilter .d_right .d_dropbtn{
+        padding: 8px 24px;
+    }
+    .d_womenfilter .d_right .d_dropcon{
+        padding: 14px;
+        min-width: 135px;
     }
 }
 
@@ -264,6 +370,15 @@
     .d_bannerbg h2 {
         font-size: 30px;
     }
+
+    .d_womenfilter .d_left .d_head,
+    .d_womenfilter .d_left .d_categorylist,
+    .d_womenfilter .d_left .d_filterlist {
+        padding: 15px 20px;
+    }
+    .d_womenfilter .d_right .d_heading h2{
+        font-size: 22px;
+    }
 }
 
 @media(max-width:575px) {
@@ -273,5 +388,50 @@
 
     .d_bannerbg h2 {
         font-size: 24px;
+    }
+
+    .d_filtermargin {
+        margin: 0 20px;
+    }
+
+    .d_womenfilter .d_left .d_head h5 {
+        font-size: 18px;
+    }
+
+    .d_womenfilter .d_left .d_head .d_cta a {
+        padding: 3px 15px;
+        font-size: 12px;
+    }
+
+    .d_cuscheckbox p {
+        font-size: 13px;
+    }
+
+    .d_cuscheckbox {
+        margin-bottom: 8px;
+    }
+
+    .d_checkmark {
+        width: 18px;
+        height: 18px;
+    }
+    .d_womenfilter .d_right .d_heading h2{
+        font-size: 20px;
+    }
+    .d_womenfilter .d_right .d_dropbtn{
+        padding: 5px 10px;
+    }
+    .d_womenfilter .d_right .d_dropcon{
+        left: -30%;
+        min-width: -1px;
+    }
+}
+
+@media (max-width:321px) {
+    .offcanvas {
+        width: 275px !important;
+    }
+    .d_filtermargin {
+        margin: 0 10px;
     }
 }

@@ -137,15 +137,13 @@
 
 .d_womenbannerbg .d_pls3 {
     position: absolute;
-    top: 85%;
+    top: 80%;
     left: 42%;
 }
 
 .d_womenbannerbg .d_popup_par {
     position: relative;
 }
-
-
 
 .d_womenbannerbg .d_popup {
     position: absolute;
@@ -224,6 +222,7 @@
 }
 
 .d_bannersilder3 .d_text h6 {
+    font-family: "Redressed";
     font-size: 32px;
     font-weight: 400;
     color: #818181;
@@ -231,6 +230,7 @@
 }
 
 .d_bannersilder3 .d_text h2 {
+    font-family: "Italiana", sans-serif;
     font-size: 72px;
     font-weight: 400;
     color: #000;
@@ -373,12 +373,15 @@
     .d_imgcol .d_fimg1 {
         left: -10%;
     }
-    .d_imgcol .d_fimg2{
+
+    .d_imgcol .d_fimg2 {
         left: 12%;
     }
-    .d_imgcol .d_fimg4{
+
+    .d_imgcol .d_fimg4 {
         left: 58%;
     }
+
     .d_imgcol .d_fimg5 {
         left: 78%;
     }
@@ -418,37 +421,48 @@
         font-size: 18px;
         line-height: 26px;
     }
-    .d_culbg{
+
+    .d_culbg {
         height: 440px;
         padding: 0;
     }
-    .d_imgcol{
+
+    .d_imgcol {
         padding: 82px 0;
         height: 440px;
     }
+
     .d_culbg h2 {
         font-size: 36px;
     }
+
     .d_imgcol img {
         height: 300px;
         width: 150px;
     }
-    .d_imgcol .d_fimg2,.d_imgcol .d_fimg4{
+
+    .d_imgcol .d_fimg2,
+    .d_imgcol .d_fimg4 {
         top: 12%;
     }
+
     .d_imgcol .d_fimg1 {
         left: -12%;
     }
-    .d_imgcol .d_fimg2{
+
+    .d_imgcol .d_fimg2 {
         left: 10%;
     }
-    .d_imgcol .d_fimg3{
+
+    .d_imgcol .d_fimg3 {
         left: 33%;
     }
-    .d_imgcol .d_fimg4{
+
+    .d_imgcol .d_fimg4 {
         left: 56%;
     }
-    .d_imgcol .d_fimg5{
+
+    .d_imgcol .d_fimg5 {
         left: 76%;
     }
 }
@@ -510,36 +524,45 @@
         line-height: 20px;
         max-width: 400px;
     }
-    .d_culbg{
+
+    .d_culbg {
         padding: 40px 0;
     }
-    .d_culbg h2{
+
+    .d_culbg h2 {
         margin-bottom: 20px;
         text-align: center;
     }
-    .d_imgcol{
+
+    .d_imgcol {
         padding: 0;
     }
-    .d_imgcol img{
+
+    .d_imgcol img {
         width: 175px;
     }
-    .d_imgcol .d_fimg1{
+
+    .d_imgcol .d_fimg1 {
         left: 0;
         top: 6%;
     }
-    .d_imgcol .d_fimg2{
-       top: 0;
-       left: 18%;
+
+    .d_imgcol .d_fimg2 {
+        top: 0;
+        left: 18%;
     }
-    .d_imgcol .d_fimg3{
+
+    .d_imgcol .d_fimg3 {
         left: 36%;
         top: 6%;
     }
-    .d_imgcol .d_fimg4{
+
+    .d_imgcol .d_fimg4 {
         top: 0;
-       left: 54%;
+        left: 54%;
     }
-    .d_imgcol .d_fimg5{
+
+    .d_imgcol .d_fimg5 {
         left: 73%;
         top: 6%;
     }
@@ -587,12 +610,12 @@
     }
 
     .d_womenbannerbg .d_pls .d_popup {
-        right: 260px;
+        right: 75%;
     }
 
-    .d_womenbannerbg .d_pls .d_popbox::after {
+    /* .d_womenbannerbg .d_pls .d_popbox::after {
         left: -8px;
-    }
+    } */
 
     .d_bannersilder2 .d_content h2 {
         font-size: 50px;
@@ -622,14 +645,17 @@
     .d_bannersilder3 .d_text h6 {
         font-size: 22px;
     }
-    .d_culbg h2{
+
+    .d_culbg h2 {
         font-size: 26px;
         text-align: center;
     }
+
     .d_imgcol img {
         height: 180px;
         width: 100px;
     }
+
     .d_culbg {
         height: 335px;
     }
@@ -642,35 +668,42 @@
     }
 
     .d_womenbannerbg .d_pls .d_popup {
-        right: 215px;
+        right: -170px;
     }
 
+    .d_womenbannerbg .d_pls .d_popbox::after {
+        left: -8px;
+    }
     .owl_height {
         height: 580px;
     }
+
     .d_imgcol img {
         width: 95px;
-}
-.d_culbg h2{
-    font-size: 22px;
-}
+    }
+
+    .d_culbg h2 {
+        font-size: 22px;
+    }
 }
 
 @media(max-width:320px) {
     .d_womenbannerbg .d_pls .d_popup {
-        right: 165px;
+        /* left: 0%; */
     }
-
     .owl_height {
         height: 610px;
     }
-    .d_imgcol img{
+
+    .d_imgcol img {
         width: 80px;
         height: 140px;
     }
-    .d_culbg h2{
+
+    .d_culbg h2 {
         font-size: 20px;
     }
+
     .d_culbg {
         height: 295px;
     }
