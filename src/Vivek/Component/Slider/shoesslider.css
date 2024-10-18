@@ -1,0 +1,39 @@
+.VK_slider_parent{
+    overflow: hidden;
+    height: 800px;
+    background: linear-gradient(to right, rgba(60, 61, 65, 1),rgba(29, 30, 37, 1),rgba(24, 24, 32, 1));
+    position: relative;
+}
+
+
+/* nike text */
+.VK_slider_back_txt{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+}
+
+.VK_slider_back_txt h1{
+    color: rgba(19, 19, 24, 0.596);
+    font-weight: 700;
+    font-size: 500px;
+}
+
+/* nike logo */
+.VK_slider_nike_logo{
+    position: absolute;
+    bottom: -5%;
+    left: -2%;
+    width: 60%;
+}
+
+
+/* description */
+.VK_slider_shoes_description{
+    position: absolute;
+}
+
+.font_18{
+    font-size: 18px;
+}

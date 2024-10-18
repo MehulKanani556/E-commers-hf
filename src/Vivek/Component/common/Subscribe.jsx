@@ -6,7 +6,7 @@ const Subscribe = () => {
     return (
         <React.Fragment>
             <section className='VK_subscribe_poster py-5'>
-                <div className='d_container inter py-5 p-0'>
+                <div className='d_container inter py-3 p-0'>
                     <Row className='m-0 justify-content-md-between justify-content-center'>
                         <Col xxl={5} md={6} className='mb-4'>
                             <h5 className='subscribe_hd'>

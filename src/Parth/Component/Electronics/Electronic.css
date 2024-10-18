@@ -164,11 +164,6 @@
     padding: 10px;
 }
 
-img {
-    display: block;
-    width: 100%;
-    height: auto;
-}
 
 
 
@@ -851,5 +846,213 @@ img {
     .V_five {
         width: 150px;
         height: 178px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ------------------------------------- css ------------------------------------- */
+
+.VK_card_imgs {
+    height: 350px;
+}
+
+
+.VK_shadow {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.VK_ele_card_per {
+    position: relative;
+}
+
+.VK_ele_card_per:hover .VK_wishlist_icn {
+    opacity: 1;
+    visibility: visible;
+}
+
+.VK_best-seller {
+    position: absolute;
+    width: 100%;
+}
+
+.VK_sellter_tag {
+    background-color: #2B221E;
+    color: white;
+    font-size: 12px;
+    height: 25px;
+    width: 100px;
+    margin: auto;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.VK_wishlist_icn {
+    transition: 0.5s ease;
+    opacity: 0;
+    visibility: hidden;
+    font-size: 20px;
+    height: 30px;
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.VK_ele_product_comp {
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.icn {
+    position: relative;
+    top: -2px;
+}
+
+.VK_product_name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: block;
+}
+
+.VK_product_col_dot {
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+.VK_btn_shadow {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.VK_three_col {
+    position: relative;
+}
+
+.VK_three_child {
+    padding: 30px 40px;
+    width: 50%;
+    position: absolute;
+    top: 10%;
+    left: 0%;
+}
+
+.VK_three_child h3 {
+    font-size: 26px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.VK_margig {
+    margin-top: -25px;
+}
+
+
+/* -------------------------------------------------------- media query -------------------------------------------------------- */
+
+
+/*  extra small device */
+@media (max-width:480px) {
+    .VK_three_child {
+        padding: 10px 0px 0px 20px;
+        width: 70%;
+    }
+
+    .VK_three_child h3 {
+        font-size: 18px;
+    }
+}
+
+
+/* small device */
+@media (max-width:575px) and (min-width:481px) {
+    .VK_three_child {
+        padding: 10px 0px 0px 20px;
+        width: 100%;
+    }
+
+    .VK_three_child h3 {
+        font-size: 18px;
+    }
+}
+
+
+/* medium device */
+@media (max-width:766px) and (min-width:576px) {
+    .VK_three_child {
+        padding: 10px 0px 0px 20px;
+        width: 70%;
+    }
+
+    .VK_three_child h3 {
+        font-size: 18px;
+    }
+}
+
+
+/* lg device */
+@media (max-width:991px) and (min-width:767px) {
+    .VK_three_child {
+        padding: 10px 0px 0px 20px;
+        width: 70%;
+    }
+
+    .VK_three_child h3 {
+        font-size: 18px;
+    }
+}
+
+
+/* xl device */
+@media (max-width:1199px) and (min-width:992px) {
+    .VK_three_child {
+        padding: 10px 0px 30px 20px;
+        width: 70%;
+    }
+
+    .VK_three_child h3 {
+        font-size: 20px;
+    }
+}
+
+
+/* 2xl device */
+@media (max-width:1440px) and (min-width:1200px) {
+    .VK_three_child {
+        padding: 30px 0px 30px 20px;
+        width: 60%;
+    }
+
+    .VK_three_child h3 {
+        font-size: 24px;
+    }
+}
+
+
+/* 3xl device */
+@media (min-width:1441px) {
+    .VK_three_child {
+        padding: 30px 40px;
+        width: 50%;
+        position: absolute;
+        top: 10%;
+        left: 0%;
     }
 }

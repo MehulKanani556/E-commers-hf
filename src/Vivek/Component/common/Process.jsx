@@ -10,10 +10,10 @@ const Process = () => {
                     <Row className='justify-content-xl-evenly justify-content-between m-0'>
                         <Col lg={2} md={3} xs={6} className='my-3'>
                             <div className='text-center'>
-                                <div>
-                                    <img src={require('../../assets/curear.png')} alt="" />
+                                <div className='VK_process_img mx-auto'>
+                                    <img src={require('../../assets/curear.png')} className='w-100 h-100' alt="" />
                                 </div>
-                                <div className='mt-2'>
+                                <div className='mt-3'>
                                     <p className='mb-1 fw-600 text-black font_18'>
                                         10 Days
                                     </p>
@@ -25,10 +25,10 @@ const Process = () => {
                         </Col>
                         <Col lg={2} md={3} xs={6} className='my-3'>
                             <div className='text-center'>
-                                <div>
-                                    <img src={require('../../assets/payment.png')} alt="" />
+                                <div className='VK_process_img mx-auto'>
+                                    <img src={require('../../assets/payment.png')} className='w-100 h-100' alt="" />
                                 </div>
-                                <div className='mt-2'>
+                                <div className='mt-3'>
                                     <p className='mb-1 fw-600 text-black font_18'>
                                         Payment
                                     </p>
@@ -40,10 +40,10 @@ const Process = () => {
                         </Col>
                         <Col lg={2} md={3} xs={6} className='my-3'>
                             <div className='text-center'>
-                                <div>
-                                    <img src={require('../../assets/review.png')} alt="" />
+                                <div className='VK_process_img mx-auto'>
+                                    <img src={require('../../assets/review.png')} className='w-100 h-100' alt="" />
                                 </div>
-                                <div className='mt-2'>
+                                <div className='mt-3'>
                                     <p className='mb-1 fw-600 text-black font_18'>
                                         99% Customer
                                     </p>
@@ -55,10 +55,10 @@ const Process = () => {
                         </Col>
                         <Col lg={2} md={3} xs={6} className='my-3'>
                             <div className='text-center'>
-                                <div>
-                                    <img src={require('../../assets/247.png')} alt="" />
+                                <div className='VK_process_img mx-auto'>
+                                    <img src={require('../../assets/247.png')} className='w-100 h-100' alt="" />
                                 </div>
-                                <div className='mt-2'>
+                                <div className='mt-3'>
                                     <p className='mb-1 fw-600 text-black font_18'>
                                         24/7*
                                     </p>

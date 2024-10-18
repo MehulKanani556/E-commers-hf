@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
-import { Button, Col, Row, Card, Badge } from 'react-bootstrap';
+// import { Button, Col, Row, Card, Badge } from 'react-bootstrap';
 import './Electronic.css';
 import ElectronicSlider from '../Electronics/ElectronicSlider'
-
+import Elecroniccollection from './Elecroniccollection';
+import Header from '../../../Vivek/Component/header/Header';
+import Subscribe from '../../../Vivek/Component/common/Subscribe';
+import Process from '../../../Vivek/Component/common/Process';
+import Footer from '../../../Vivek/Component/footer/Footer';
+import Gridcomponent from '../gridcomponent/Gridcomponent';
+import Threeview from './Threeview';
 
 function Electronics() {
 
@@ -106,7 +112,34 @@ function Electronics() {
 
   return (
     <>
-      <section className='V_gradient text-white w-100 V_lion_padding'>
+
+      {/* header */}
+      <Header />
+
+      {/* sldier */}
+      <ElectronicSlider />
+
+      {/* product best deal */}
+      <Threeview />
+
+      {/* Electronics collection */}
+      <Elecroniccollection />
+
+
+      {/* grid view */}
+      <Gridcomponent />
+
+      {/* new sletter */}
+      <Subscribe />
+
+      {/* process */}
+      <Process />
+
+      {/* footer */}
+      <Footer />
+
+
+      {/* <section className='V_gradient text-white w-100 V_lion_padding'>
         <div className='d_container'>
           <Row className='m-0'>
             <Col lg={6} className='align-self-center'>
@@ -120,11 +153,11 @@ function Electronics() {
             </Col>
             <Col lg={6} className='pt-5 pt-lg-0'>
               <div>
-                {/* Display the dynamically updated main image */}
+                Display the dynamically updated main image
                 <img src={mainImage} alt="Main laptop skin" className='w-100' />
               </div>
               <div className='d-flex flex-wrap justify-content-between pt-5 mt-lg-5'>
-                {/* Thumbnails that update the main image on click */}
+                Thumbnails that update the main image on click
                 <img
                   src={require('../../assets/V_lion_laptop_2.png')}
                   alt="Laptop skin option 1"
@@ -153,14 +186,19 @@ function Electronics() {
             </Col>
           </Row>
         </div>
-      </section>
-
-
-      <ElectronicSlider />
+      </section> */}
 
 
 
-      <section className='text-white'>
+      {/* sldier */}
+      {/* <ElectronicSlider /> */}
+
+
+
+
+
+
+      {/* <section className='text-white'>
         <div className=''>
           <Row className='py-5 px-3 p-lg-5 m-0'>
             <Col sm={6} lg={4} className='mt-lg-3 pt-3'>
@@ -196,13 +234,13 @@ function Electronics() {
             </Col>
           </Row>
         </div>
-      </section>
+      </section> */}
 
 
 
 
 
-      <section className='pt-lg-5 pb-3'>
+      {/* <section className='pt-lg-5 pb-3'>
         <div className='d_container pt-lg-5'>
           <Row className='pt-5 m-0'>
             <Col className='p-0'>
@@ -217,9 +255,9 @@ function Electronics() {
             </Col>
           </Row>
         </div>
-      </section>
+      </section> */}
 
-      <section className='pb-5'>
+      {/* <section className='pb-5'>
         <div className='d_container justify-content-between'>
           <Row className='m-0'>
             {products.map(product => (
@@ -252,7 +290,7 @@ function Electronics() {
                     <Row>
                       <Col className="text-end">
                         <div className="V_price d-flex justify-content-between px-3">
-                          {/* Mapping through colors */}
+                          Mapping through colors
                           <div className="d-flex">
                             {product.colors.map((color, index) => (
                               <div
@@ -275,14 +313,14 @@ function Electronics() {
             ))}
           </Row>
         </div>
-      </section >
+      </section > */}
 
 
 
 
 
 
-      <section className='pb-5'>
+      {/* <section className='pb-5'>
         <div className=''>
           <Row className='m-0'>
             <Col className='p-0'>
@@ -301,10 +339,10 @@ function Electronics() {
             </Col>
           </Row>
         </div>
-      </section>
+      </section> */}
 
 
-
+      {/* 
       <section className='pb-5'>
         <div className='d_container'>
           <Row className='m-0'>
@@ -327,12 +365,12 @@ function Electronics() {
             </Col>
           </Row>
         </div>
-      </section>
+      </section> */}
 
 
 
 
-      <section className=' pb-3'>
+      {/* <section className=' pb-3'>
         <div className='d_container'>
           <Row className='pt-5 m-0'>
             <Col className=''>
@@ -344,7 +382,7 @@ function Electronics() {
             </Col>
           </Row>
         </div>
-      </section>
+      </section> */}
 
 
       {/* <section className=''>
