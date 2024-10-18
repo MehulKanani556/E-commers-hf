@@ -1,4 +1,4 @@
-.VK_home_slider{
+.VK_home_slider {
     background-image: url('/src/Vivek/assets/home_slider.png');
     height: 900px;
     background-position: center;
@@ -10,22 +10,60 @@
 
 /* ELECTONICS essentials  */
 
-.electronc_img{
+.electronc_img {
     height: 250px;
 }
 
 
 /* best seller */
-.best_seller_img{
+.best_seller_img {
     height: 420px;
 }
+
+
+/*  */
+.VK_jewery_cont {
+    height: 450px;
+}
+
+.VK_jewery_cont img {
+    object-fit: fill;
+}
+
+.VK_jewery_div {
+    position: relative;
+}
+
+.VK_jewery_text_1 {
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    transform: translateY(-50%) translateX(-50%);
+}
+
+.VK_jewery_text_1 p {
+    font-family: "Roboto Serif", serif;
+    letter-spacing: 2px;
+    font-weight: 500;
+}
+
+.VK_white_btn {
+    background-color: white;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 30px;
+}
+
+
 
 /* -------------------------------------------------------- media query -------------------------------------------------------- */
 
 
 /*  extra small device */
 @media (max-width:480px) {
-    .VK_sec_padding{
+    .VK_sec_padding {
         padding: 40px 0px;
     }
 }

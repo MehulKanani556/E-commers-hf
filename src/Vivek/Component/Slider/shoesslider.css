@@ -1,39 +1,182 @@
-.VK_slider_parent{
+.VK_slider_parent {
     overflow: hidden;
     height: 800px;
-    background: linear-gradient(to right, rgba(60, 61, 65, 1),rgba(29, 30, 37, 1),rgba(24, 24, 32, 1));
+    background: linear-gradient(to right, rgba(60, 61, 65, 1), rgba(29, 30, 37, 1), rgba(24, 24, 32, 1));
     position: relative;
 }
 
 
 /* nike text */
-.VK_slider_back_txt{
+.VK_slider_back_txt {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
 }
 
-.VK_slider_back_txt h1{
+.VK_slider_back_txt h1 {
     color: rgba(19, 19, 24, 0.596);
     font-weight: 700;
     font-size: 500px;
 }
 
 /* nike logo */
-.VK_slider_nike_logo{
+.VK_slider_nike_logo {
     position: absolute;
     bottom: -5%;
     left: -2%;
-    width: 60%;
+    width: 68%;
 }
 
 
 /* description */
-.VK_slider_shoes_description{
+.VK_slider_shoes_description {
     position: absolute;
+    bottom: 22%;
 }
 
-.font_18{
+.font_18 {
     font-size: 18px;
+}
+
+
+.VK_clr_dots {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.VK_slider_size {
+    height: 40px;
+    width: 40px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 50%;
+    color: black;
+}
+
+.VK_slider_active_size {
+    background-color: #D9D9D9;
+    border: 2px solid white;
+}
+
+.VK_slider_buy_btn {
+    background-color: #ED3B6B;
+    border: none;
+    padding: 10px 40px;
+    color: white;
+    font-size: 20px;
+    font-weight: 900;
+    border-radius: 5px;
+}
+
+/* Shoes display img CSS */
+.VK_shoes_img_par {
+    position: absolute;
+    z-index: 3;
+    left: calc(20% - 20px);
+    width: 45%;
+    height: 100%;
+    overflow-y: hidden;
+    scroll-snap-type: y mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+
+.VK_shoes_img_par::-webkit-scrollbar {
+    display: none;
+}
+
+.VK_shoes_img_box {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    scroll-snap-align: start;
+}
+
+.VK_shoes_img_box img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(calc(-50% - 50px), calc(-50% - 50px)) rotate(-44deg);
+}
+
+
+/* mini preview */
+.VK_mini_preview {
+    position: absolute;
+    width: 500px;
+    height: 400px;
+    top: calc(65%);
+    right: calc(30% - 50px);
+    z-index: 0;
+    transform: translateY(-60%);
+}
+
+.VK_mini_grid {
+    position: relative;
+    height: 100%;
+}
+
+.VK_mimi_prv_div {
+    width: 200px;
+    height: 33.33%;
+
+}
+
+.VK_preview_1 {
+    position: absolute;
+    top: 0%;
+    right: 10%;
+}
+
+.VK_preview_2 {
+    position: absolute;
+    top: calc(33.33% + 10px);
+    right: calc(40% - 5px);
+}
+
+.VK_preview_3 {
+    position: absolute;
+    top: calc(66.66% + 20px);
+    right: calc(65% + 15px);
+}
+
+.VK_mini_img_box {
+    position: relative;
+}
+
+.VK_mini_img_cont {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: -10px;
+    left: 10%;
+    overflow-y: hidden;
+    scroll-snap-type: y mandatory;
+    z-index: 2;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+
+.VK_mini_img_cont::-webkit-scrollbar {
+    display: none;
+}
+
+.VK_mini_img_cont img {
+    scroll-snap-align: start;
+    margin-bottom: 10px;
+}
+
+.VK_mini_img1{
+    top: calc(10% - 12px);
+    left: calc(10% + 20px) !important;
 }
