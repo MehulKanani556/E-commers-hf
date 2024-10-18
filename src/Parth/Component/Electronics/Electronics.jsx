@@ -5,10 +5,12 @@ import ElectronicSlider from '../Electronics/ElectronicSlider'
 import Elecroniccollection from './Elecroniccollection';
 import Header from '../../../Vivek/Component/header/Header';
 import Subscribe from '../../../Vivek/Component/common/Subscribe';
+import ElectronicPost from './ElectronicPost'
 import Process from '../../../Vivek/Component/common/Process';
 import Footer from '../../../Vivek/Component/footer/Footer';
-import Gridcomponent from '../gridcomponent/Gridcomponent';
+import Gridcomponent from './Gridcomponent';
 import Threeview from './Threeview';
+import { Row, Col, Button } from 'react-bootstrap'
 
 function Electronics() {
 
@@ -19,127 +21,15 @@ function Electronics() {
     setMainImage(imageSrc);
   };
 
-  const products = [
-    {
-      id: 1,
-      bestSeller: true,
-      name: "SONY",
-      description: " Bravia 2 127 cm (50 inch) 4K Ultra HD LED...",
-      image: require('../../assets/sony tv.png'), // Replace with actual image URL
-      price: "$120",
-      actualPrice: "$140",
-      rating: "4.5",
-      colors: ["#000000"]
-    },
-    {
-      id: 2,
-      bestSeller: false,
-      name: "CANON",
-      description: " Canon EOS R5  mark II",
-      image: require('../../assets/Canon.png'), // Replace with actual image URL
-      price: "$120",
-      actualPrice: "$140",
-      rating: "4.5",
-      colors: ["#000000"]
-    },
-    {
-      id: 3,
-      bestSeller: true,
-      name: "JBL",
-      description: "JBL Live 770NC",
-      image: require('../../assets/JBL_Headphone.png'), // Replace with actual image URL
-      price: "$120",
-      actualPrice: "$140",
-      rating: "4.5",
-      colors: ["#1D1D1E", "#16325B"]
-    },
-    {
-      id: 4,
-      bestSeller: true,
-      name: "ASUS",
-      description: "ROG ZephyrusG14,AI Powered Gaming Lapt..",
-      image: require('../../assets/ASUS.png'), // Replace with actual image URL
-      price: "$120",
-      actualPrice: "$140",
-      rating: "4.5",
-      colors: ["#000000", "#989898"]
-    },
-    {
-      id: 5,
-      bestSeller: true,
-      name: "SAMSUNG",
-      description: " Samsung S24 Ultra 5G",
-      image: require('../../assets/samsung.png'), // Replace with actual image URL
-      price: "$120",
-      actualPrice: "$140",
-      rating: "4.5",
-      colors: ["#DFD1A2", "#000000"]
-    },
-    {
-      id: 6,
-      bestSeller: false,
-      name: "REALME",
-      description: "Realme techlife T300",
-      image: require('../../assets/Realme.png'), // Replace with actual image URL
-      price: "$120",
-      actualPrice: "$140",
-      rating: "4.5",
-      colors: ["#C6C7C6", "#9FBF9F", "#BCEFEF"]
-    },
-    {
-      id: 7,
-      bestSeller: false,
-      name: "BOAT",
-      description: " Boat smart watch",
-      image: require('../../assets/boat.png'), // Replace with actual image URL
-      price: "$120",
-      actualPrice: "$140",
-      rating: "4.5",
-      colors: ["#BD9590", "#333134", "#EDC285"]
-    },
-    {
-      id: 8,
-      bestSeller: false,
-      name: "LG",
-      description: "655L Side-by-Side Refrigerator with Smart...",
-      image: require('../../assets/LG.png'), // Replace with actual image URL
-      price: "$120",
-      actualPrice: "$140",
-      rating: "4.5",
-      colors: ["#18181A", "#C5C3C3"]
-    }
-  ];
 
   return (
     <>
-
       {/* header */}
       <Header />
 
-      {/* sldier */}
-      <ElectronicSlider />
-
-      {/* product best deal */}
-      <Threeview />
-
-      {/* Electronics collection */}
-      <Elecroniccollection />
 
 
-      {/* grid view */}
-      <Gridcomponent />
-
-      {/* new sletter */}
-      <Subscribe />
-
-      {/* process */}
-      <Process />
-
-      {/* footer */}
-      <Footer />
-
-
-      {/* <section className='V_gradient text-white w-100 V_lion_padding'>
+      <section className='V_gradient text-white w-100 V_lion_padding'>
         <div className='d_container'>
           <Row className='m-0'>
             <Col lg={6} className='align-self-center'>
@@ -153,11 +43,11 @@ function Electronics() {
             </Col>
             <Col lg={6} className='pt-5 pt-lg-0'>
               <div>
-                Display the dynamically updated main image
+                {/* Display the dynamically updated main image */}
                 <img src={mainImage} alt="Main laptop skin" className='w-100' />
               </div>
               <div className='d-flex flex-wrap justify-content-between pt-5 mt-lg-5'>
-                Thumbnails that update the main image on click
+                {/* Thumbnails that update the main image on click */}
                 <img
                   src={require('../../assets/V_lion_laptop_2.png')}
                   alt="Laptop skin option 1"
@@ -186,7 +76,58 @@ function Electronics() {
             </Col>
           </Row>
         </div>
-      </section> */}
+      </section>
+
+
+      {/* sldier */}
+      <ElectronicSlider />
+
+      {/* product best deal */}
+      <Threeview />
+
+      {/* Electronics collection */}
+      <Elecroniccollection />
+
+
+      <section className='pb-5'>
+        <div className=''>
+          <Row className='m-0'>
+            <Col className='p-0'>
+              <div className='V_back_spe_off d-flex align-items-center'>
+                <div className="d_container">
+                  <div className='V_special '>
+                    <p className='px-3 py-2 text-white text-center'>Special Offer</p>
+                  </div>
+                  <div>
+                    <h1 className='V_sale'>On Mobile Phones
+                      Sale Up To
+                      <span className='V_thirty30'> 30%</span> Off</h1>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </div>
+      </section>
+
+
+      {/* Electronic post */}
+      <ElectronicPost />
+
+      {/* grid view */}
+      <Gridcomponent />
+
+      {/* new sletter */}
+      <Subscribe />
+
+      {/* process */}
+      <Process />
+
+      {/* footer */}
+      <Footer />
+
+
+
 
 
 
@@ -320,26 +261,7 @@ function Electronics() {
 
 
 
-      {/* <section className='pb-5'>
-        <div className=''>
-          <Row className='m-0'>
-            <Col className='p-0'>
-              <div className='V_back_spe_off d-flex align-items-center'>
-                <div className="d_container">
-                  <div className='V_special '>
-                    <p className='px-3 py-2 text-white text-center'>Special Offer</p>
-                  </div>
-                  <div>
-                    <h1 className='V_sale'>On Mobile Phones
-                      Sale Up To
-                      <span className='V_thirty30'> 30%</span> Off</h1>
-                  </div>
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </div>
-      </section> */}
+
 
 
       {/* 
