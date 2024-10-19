@@ -56,9 +56,9 @@ const CommSlider = () => {
         <>
 
             <section className='d_p-80 d_minisider'>
-                <div className="d_container">
-                    <div className="row justify-content-center">
-                        <div className="col-10">
+                <div className="d_container p-0">
+                    <div className="row m-0 justify-content-center">
+                        <div className="col-10 p-0">
                             <OwlCarousel className='owl-theme d_minisider' items={6} {...settings}>
                                 {images.map((image, index) => (
                                     <div key={index} className="d-flex justify-content-center">

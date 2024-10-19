@@ -34,10 +34,14 @@
 
 /* nav bar */
 
+.VK_nav_bar {
+    background-color: #F5F5F7;
+}
+
 .VK_sub_scroll_bar {
-    /* -ms-overflow-style: none; */
+    -ms-overflow-style: none;
     scrollbar-width: none;
-    overflow-x: auto;
+    overflow-x: hidden;
 }
 
 .VK_sub_scroll_bar::-webkit-scrollbar {
@@ -45,7 +49,7 @@
 }
 
 .VK_mega_menu {
-    /* transition: all 0.5s ease; */
+    transition: opacity 0.5s ease;
 }
 
 .header_color {
@@ -57,25 +61,21 @@
 }
 
 .VK_mega_menu_div_parent {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: 1fr;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .VK_menu_list {
     margin: 15px 10px;
     padding: 0px 10px;
     flex-grow: 1;
-    flex-basis: calc(33.33% - 20px);
     box-sizing: border-box;
 }
 
 
 .VK_mega_menu {
     position: absolute;
-    width: 100vw;
+    width: 100%;
     padding: 30px 30px 50px 50px;
     left: 0%;
     opacity: 0;
@@ -92,8 +92,10 @@
 }
 
 
-.VK_sub_menu:hover {
-    background-color: #f0eded !important;
+.VK_sub_menu {
+    display: inline-block;
+    padding: 15px 20px;
+    cursor: pointer;
 }
 
 
@@ -322,12 +324,12 @@
 /* xl device */
 @media (max-width:1199px) and (min-width:992px) {
 
-    .VK_header_nav {
+    /* .VK_header_nav {
         padding: 0px 50px;
-    }
+    } */
 
-    .VK_mega_menu_div_parent {
-        grid-template-columns: repeat(4, 1fr);
+    .VK_menu_list {
+        width: 20%;
     }
 
     .VK_mega_menu {
@@ -356,12 +358,12 @@
 
 /* 2xl device */
 @media (max-width:1440px) and (min-width:1200px) {
-    .VK_header_nav {
+    /* .VK_header_nav {
         padding: 0px 50px;
-    }
+    } */
 
-    .VK_mega_menu_div_parent {
-        grid-template-columns: repeat(5, 1fr);
+    .VK_menu_list {
+        width: 18%;
     }
 
     .VK_mega_menu {
@@ -403,6 +405,11 @@
         padding: 30px 20px 50px 50px;
     }
 
+    .VK_menu_list {
+        width: 13%;
+        text-wrap: wrap;
+    }
+
     /* model */
 
     .register_model .modal-dialog {
@@ -427,8 +434,12 @@
 
 }
 
-@media (max-width:1660px) and (min-width:1442px) {
-    .VK_mega_menu_div_parent {
-        grid-template-columns: repeat(6, 1fr);
+@media (min-width:1650px) {
+    .VK_header_nav {
+        padding: 0px 0px;
+    }
+
+    .VK_sub_scroll_bar {
+        width: 80% !important;
     }
 }

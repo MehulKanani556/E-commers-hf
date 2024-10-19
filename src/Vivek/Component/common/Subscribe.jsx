@@ -17,7 +17,7 @@ const Subscribe = () => {
                                 <br className=''/>
                                 10% Off On Your First Order
                             </h2>
-                            <p className='font_18 VK_sub_txt'>
+                            <p className='font_18 VK_sub_txt m-0'>
                                 Keep up with our latest news and Sales.
                             </p>
                         </Col>
