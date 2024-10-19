@@ -47,7 +47,7 @@
 }
 
 .object_contain{
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .object_top{

@@ -29,10 +29,7 @@
     font-weight: 400;
 }
 
-.V_world_map {
-    width: 1920px;
-    height: 1001px;
-}
+
 
 .V_back {
     background-image: url('../../assets/The Quickcart Culture.png');
@@ -55,12 +52,46 @@
     left: 0;
 }
 
+.V_back1 {
+    background-image: url('../../assets/Technology Innovation.png');
+    width: 100%;
+    height: 560px;
+    position: relative;
+    background-position: center;
+    background-size: cover;
+    background-position-y: -520px;
+}
+
+.V_back1::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.3;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 
 .V_text_white {
     z-index: 1;
 }
 
+.V_jal {
+    background-image: url('../../assets/Jali.png');
+    background-size: cover;
+}
 
+.V_quick {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.V_ipsum{
+font-size: 16px;
+font-weight: 400;
+color: #6A6A6A;
+}
 
 
 
@@ -101,10 +132,6 @@
         font-size: 16px;
     }
 
-    .V_world_map {
-        width: 100%;
-        height: 100%;
-    }
 
     .V_back {
         width: 100%;
@@ -112,6 +139,14 @@
         background-position: top;
         background-size: cover;
         align-self: end;
+    }
+
+    .V_back1 {
+        width: 100%;
+        height: 300px;
+        align-self: end;
+        background-position: top;
+        background-size: cover;
     }
 }
 
@@ -136,10 +171,6 @@
         font-size: 16px;
     }
 
-    .V_world_map {
-        width: 100%;
-        height: 100%;
-    }
 
     .V_back {
         width: 100%;
@@ -148,10 +179,19 @@
         background-size: cover;
         background-position-y: 0px;
     }
+
+    .V_back1 {
+        width: 100%;
+        height: 300px;
+        position: relative;
+        background-position: top;
+        background-size: cover;
+        background-position-y: 0px;
+    }
 }
 
 /* medium device */
-@media (max-width:766px) and (min-width:576px) {
+@media (max-width:767px) and (min-width:576px) {
     .V_shadow {
         width: 100%;
         height: auto;
@@ -170,10 +210,6 @@
         font-size: 16px;
     }
 
-    .V_world_map {
-        width: 100%;
-        height: 100%;
-    }
 
     .V_back {
         width: 100%;
@@ -182,11 +218,20 @@
         background-size: cover;
         background-position-y: 0px;
     }
+
+    .V_back1 {
+        width: 100%;
+        height: 400px;
+        position: relative;
+        background-position: top;
+        background-size: cover;
+        background-position-y: 0px;
+    }
 }
 
 
 /* lg device */
-@media (max-width:991px) and (min-width:767px) {
+@media (max-width:991px) and (min-width:768px) {
     .V_shadow {
         width: 100%;
         height: auto;
@@ -205,10 +250,6 @@
         font-size: 18px;
     }
 
-    .V_world_map {
-        width: 100%;
-        height: 100%;
-    }
 
     .V_back {
         width: 100%;
@@ -216,6 +257,15 @@
         background-position: top;
         background-size: cover;
         background-position-y: 0px;
+    }
+
+    .V_back1 {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        background-position: top;
+        background-size: cover;
+        background-position-y: -140px;
     }
 }
 
@@ -240,10 +290,6 @@
         font-size: 16px;
     }
 
-    .V_world_map {
-        width: 100%;
-        height: 100%;
-    }
 
     .V_back {
         width: 100%;
@@ -251,6 +297,15 @@
         background-position: top;
         background-size: cover;
         background-position-y: 0px;
+    }
+
+    .V_back1 {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        background-position: top;
+        background-size: cover;
+        background-position-y: -320px;
     }
 }
 
@@ -275,10 +330,6 @@
         font-size: 18px;
     }
 
-    .V_world_map {
-        width: 100%;
-        height: 100%;
-    }
 
     .V_back {
         width: 100%;
@@ -287,11 +338,20 @@
         background-size: cover;
         background-position-y: -100px;
     }
+
+    .V_back1 {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        background-position: top;
+        background-size: cover;
+        background-position-y: -420px;
+    }
 }
 
 
 /* 3xl device */
-@media  (min-width:1441px) {
+@media (min-width:1441px) and (max-width:1649px) {
     .V_shadow {
         width: 100%;
         height: auto;
@@ -310,17 +370,41 @@
         font-size: 18px;
     }
 
-    .V_world_map {
-        width: 100%;
-        height: 100%;
-    }
 
     .V_back {
         width: 100%;
-        height: 560px;
+        height: 500px;
         background-position: top;
         background-size: cover;
-        background-position-y: -120px;
+        background-position-y: -30px;
+    }
+
+    .V_back1 {
+        width: 100%;
+        height: 500px;
+        position: relative;
+        background-position: top;
+        background-size: cover;
+        background-position-y: -350px;
     }
 }
 
+@media (min-width:1650px) {
+
+    .V_back {
+        width: 100%;
+        height: 600px;
+        background-position: center;
+        background-size: cover;
+        background-position-y: -80px;
+    }
+
+    .V_back1 {
+        width: 100%;
+        height: 600px;
+        position: relative;
+        background-position: center;
+        background-size: cover;
+        background-position-y: -520px;
+    }
+}

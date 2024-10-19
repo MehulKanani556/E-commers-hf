@@ -1,0 +1,680 @@
+.V_fresh {
+    background-image: url('../../assets/the fresh product.png');
+    background-size: cover;
+    height: 916px;
+}
+
+.V_healty_skincare {
+    position: relative;
+    background-image: url('../../assets/healthskinrequire.png');
+    background-size: cover;
+   
+}
+
+.V_healty_skincare::after {
+    content: '';
+    background-color: black;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+    background-size: cover;
+    background-position: center;
+}
+
+.V_overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+
+
+.V_overlay_text {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    font-weight: 600;
+    text-align: center;
+    width: 639px;
+    height: 240px;
+    z-index: 1;
+}
+
+.V_lipstic {
+    width: 803px;
+    height: 334px;
+}
+
+.V_try_fresh {
+    font-size: 70px;
+    font-weight: 600;
+    font-size: 72px;
+    background: -webkit-linear-gradient(334deg, #353535 3.41%, #BA3CBB 42.9%, #FF377F 79.99%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+
+.V_beauty_product_1 {
+    background-image: url('../../assets/make your.png');
+
+}
+
+.V_beauty_product_2 {
+    background-image: url('../../assets/Dry skin.png');
+
+}
+
+.V_beauty_product_3 {
+    background-image: url('../../assets/Glowing skin.png');
+
+}
+
+.V_skin_care {
+    border-top-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+}
+
+.v_Dry {
+    font-size: 38px;
+    width: 292px;
+    padding-top: 9rem !important;
+    padding-left: 30px;
+}
+
+.v_make {
+    font-size: 38px;
+    width: 250px;
+    padding-top: 9rem !important;
+    padding-left: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.V_card {
+    width: 340px;
+    height: 475px;
+    position: relative;
+    border-radius: 0px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+
+.V_best_seller_tag {
+    position: absolute;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 0px;
+}
+
+.V_product_image {
+    height: 340px;
+    width: 340px;
+}
+
+.V_product_image:hover {
+    padding: 0px;
+}
+
+.V_brand {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24.2px;
+    letter-spacing: 0.02em;
+    text-align: left;
+
+}
+
+.V_description {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.94px;
+    letter-spacing: 0.02em;
+    text-align: left;
+
+}
+
+.V_rating {
+    display: flex;
+    align-items: center;
+}
+
+.V_star {
+    color: #ffcc00;
+}
+
+.V_rating_value {
+    margin-left: 4px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.V_price_container {
+    display: flex;
+    align-items: center;
+}
+
+.V_discounted_price {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24.2px;
+    letter-spacing: 0.02em;
+    text-align: right;
+
+}
+
+.V_original_price {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16.94px;
+    text-align: right;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ///////////////////////////////////////////////////////// container ////////////////////////////////////////////////// */
+
+
+
+@media (min-width: 1650px) {
+    .V_fresh {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 916px;
+    }
+
+    .V_try_fresh {
+        font-size: 70px;
+        font-weight: 600;
+    }
+
+    .V_lipstic {
+        width: 803px;
+        height: auto;
+    }
+
+    .V_try {
+        font-size: 20px;
+    }
+
+    .V_skin_care {
+        height: 300px;
+    }
+
+    .v_Dry {
+        font-size: 38px;
+        width: 292px;
+        padding-top: 9rem !important;
+        padding-left: 30px;
+    }
+
+    .v_make {
+        font-size: 38px;
+        width: 250px;
+        padding-top: 9rem !important;
+        padding-left: 30px;
+    }
+
+    .V_healty_skincare {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 576px;
+        width: 100%;
+    }
+
+    .V_overlay_text {
+        width: 600px;
+        height: 240px;
+        font-size: 50px;
+    }
+}
+
+
+@media (min-width: 1440px) and (max-width: 1649px) {
+    .V_fresh {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 800px;
+    }
+
+    .V_try_fresh {
+        font-size: 70px;
+        font-weight: 600;
+    }
+
+    .V_lipstic {
+        width: 750px;
+        height: auto;
+    }
+
+    .V_try {
+        font-size: 20px;
+    }
+
+    .V_skin_care {
+        height: 280px;
+
+    }
+
+    .v_Dry {
+        font-size: 34px;
+        width: 240px;
+        padding-top: 8rem !important;
+        padding-left: 15px;
+    }
+
+    .v_make {
+        font-size: 34px;
+        width: 220px;
+        padding-top: 8rem !important;
+        padding-left: 15px;
+    }
+
+    .V_healty_skincare {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 500px;
+        width: 100%;
+    }
+
+    .V_overlay_text {
+        width: 600px;
+        height: 240px;
+        font-size: 50px;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1439px) {
+
+    .V_fresh {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 800px;
+    }
+
+    .V_try_fresh {
+        font-size: 62px;
+        font-weight: 600;
+    }
+
+    .V_lipstic {
+        width: 700px;
+        height: auto;
+    }
+
+    .V_try {
+        font-size: 20px;
+    }
+
+    .V_skin_care {
+        height: 250px;
+
+    }
+
+    .v_Dry {
+        font-size: 30px;
+        width: 212px;
+        padding-top: 7rem !important;
+        padding-left: 15px;
+    }
+
+    .v_make {
+        font-size: 30px;
+        width: 220px;
+        padding-top: 7rem !important;
+        padding-left: 15px;
+    }
+
+    .V_healty_skincare {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 450px;
+        width: 100%;
+    }
+
+    .V_overlay_text {
+        width: 600px;
+        height: 240px;
+        font-size: 50px;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .V_fresh {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 700px;
+    }
+
+    .V_try_fresh {
+        font-size: 56px;
+        font-weight: 600;
+    }
+
+    .V_lipstic {
+        width: 600px;
+        height: auto;
+    }
+
+    .V_try {
+        font-size: 20px;
+    }
+
+    .V_skin_care {
+        height: 200px;
+
+    }
+
+    .v_Dry {
+        font-size: 22px;
+        width: 212px;
+        padding-top: 6rem !important;
+        padding-left: 15px;
+    }
+
+    .v_make {
+        font-size: 22px;
+        width: 170px;
+        padding-top: 6rem !important;
+        padding-left: 15px;
+    }
+
+    .V_healty_skincare {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 350px;
+        width: 100%;
+    }
+
+    .V_overlay_text {
+        width: 500px;
+        height: 240px;
+        font-size: 44px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+    .V_fresh {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 600px;
+    }
+
+    .V_try_fresh {
+        font-size: 50px;
+        font-weight: 600;
+    }
+
+    .V_lipstic {
+        width: 500px;
+        height: auto;
+    }
+
+    .V_try {
+        font-size: 20px;
+    }
+
+    .V_skin_care {
+        height: 250px;
+
+    }
+
+    .v_Dry {
+        font-size: 28px;
+        width: 250px;
+        padding-top: 8rem !important;
+        padding-left: 30px;
+    }
+
+    .v_make {
+        font-size: 28px;
+        width: 250px;
+        padding-top: 8rem !important;
+        padding-left: 30px;
+    }
+
+    .V_healty_skincare {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 350px;
+        width: 100%;
+    }
+
+    .V_overlay_text {
+        width: 380px;
+        height: 200px;
+        font-size: 38px;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+    .V_fresh {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 500px;
+    }
+
+    .V_try_fresh {
+        font-size: 36px;
+        font-weight: 600;
+    }
+
+    .V_lipstic {
+        width: 425px;
+        height: auto;
+    }
+
+    .V_skin_care {
+        height: 220px;
+    }
+
+    .v_Dry {
+        font-size: 26px;
+        width: 250px;
+        padding-top: 7rem !important;
+        padding-left: 30px;
+    }
+
+    .v_make {
+        font-size: 26px;
+        width: 250px;
+        padding-top: 7rem !important;
+        padding-left: 30px;
+    }
+
+    .V_healty_skincare {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 300px;
+        width: 100%;
+    }
+
+    .V_overlay_text {
+        width: 350px;
+        height: 180px;
+        font-size: 34px;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 575px) {
+    .V_fresh {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 400px;
+    }
+
+    .V_try_fresh {
+        font-size: 30px;
+        font-weight: 600;
+    }
+
+    .V_lipstic {
+        width: 300px;
+        height: auto;
+    }
+
+    .V_skin_care {
+        height: 200px;
+    }
+
+    .v_Dry {
+        font-size: 24px;
+        width: 200px;
+        padding-top: 7rem !important;
+        padding-left: 30px;
+    }
+
+    .v_make {
+        font-size: 24px;
+        width: 200px;
+        padding-top: 7rem !important;
+        padding-left: 30px;
+    }
+
+
+    .V_healty_skincare {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 300px;
+        width: 100%;
+    }
+
+    .V_overlay_text {
+        width: 300px;
+        height: 150px;
+        font-size: 30px;
+    }
+}
+
+@media (min-width: 300px) and (max-width: 479px) {
+    .V_fresh {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 400px;
+    }
+
+    .V_try_fresh {
+        font-size: 26px;
+        font-weight: 600;
+    }
+
+    .V_lipstic {
+        width: 200px;
+        height: auto;
+    }
+
+    .V_skin_care {
+        height: 180px;
+    }
+
+    .v_Dry {
+        font-size: 20px;
+        width: 170px;
+        padding-top: 6rem !important;
+        padding-left: 30px;
+    }
+
+    .v_make {
+        font-size: 20px;
+        width: 170px;
+        padding-top: 6rem !important;
+        padding-left: 30px;
+    }
+
+    .V_healty_skincare {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 300px;
+        width: 100%;
+    }
+
+    .V_overlay_text {
+        width: 250px;
+        height: 120px;
+        font-size: 24px;
+    }
+}

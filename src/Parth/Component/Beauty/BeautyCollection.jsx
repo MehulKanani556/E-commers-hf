@@ -99,7 +99,7 @@ const Elecroniccollection = () => {
             bestseller: false,
             price: 120,
             old_price: 140,
-            image: "Maclipstick.png"
+            image: "Maclipstic.png"
         },
     ]
 
@@ -127,7 +127,7 @@ const Elecroniccollection = () => {
                     <Row className='m-0'>
                         <Map data={electronicProduct}>
                             {(item) => (
-                                <div className='col-xl-3 col-md-4 col-sm-6 my-3'>
+                                <div className='col-xl-3 col-md-4 col-sm-6 my-3 px-4'>
                                     <div className='VK_shadow VK_ele_card_per'>
                                         <div>
                                             <div className='VK_best-seller d-flex'>
@@ -148,10 +148,10 @@ const Elecroniccollection = () => {
                                                     </button>
                                                 </div>
                                             </div>
-                                            <div className='VK_card_imgs pt-3'>
+                                            <div className='VK_card_imgs'>
                                                 <img src={require(`../../assets/${item.image}`)} className='w-100 h-100 object_contain' alt="" />
                                             </div>
-                                            <div className='product_desc p-3 mt-3'>
+                                            <div className='product_desc p-3'>
                                                 <div className='d-flex justify-content-between align-items-center'>
                                                     <div>
                                                         <h5 className='VK_ele_product_comp fw-600 text-black'>
@@ -167,7 +167,7 @@ const Elecroniccollection = () => {
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <div className='mt-3'>
+                                                <div className=''>
                                                     <p className='VK_product_name'>
                                                         {item.name}
                                                     </p>
