@@ -9,39 +9,52 @@ import Toptoys from './Toptoys'
 import Relateditems from './Relateditems'
 import Subscribe from '../common/Subscribe'
 import Process from '../common/Process'
-import ShoesSlider from '../Slider/ShoesSlider'
+// import ShoesSlider from '../Slider/ShoesSlider'
+import CommSlider from './CommSlider'
+import Jewery from './Jewery'
 
 const Home = () => {
     return (
         <React.Fragment>
 
             {/* sldier */}
-            <ShoesSlider/>
+            {/* <ShoesSlider/> */}
 
 
             {/* header */}
             <Header/>
 
 
+            {/* minislider */}
+            <CommSlider/>
+
+
             {/* ELECTONICS essentials  */}
             <Electronicsessiental/>
+
 
             {/* BEst SeLLERS */}
             <Bestsellers/>
 
 
+            {/* jewelry collection */}
+            <Jewery/>
+
+
             {/* Toys & Games */}
             <Toptoys/>
+
 
             {/* Related to items you've viewed */}
             <Relateditems/>
 
+
             {/* New Seetter */}
             <Subscribe/>
 
+
             {/* process */}
             <Process/>
-
 
 
             {/* footer */}
