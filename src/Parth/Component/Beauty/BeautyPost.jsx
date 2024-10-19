@@ -47,7 +47,7 @@ const Post = () => {
                                 return (
                                     <div key={item.id} className="col-12 col-sm-4 col-lg-3 V_col-20">
                                         <div className="V_box">
-                                            <div className="V_img">
+                                            <div className="V_img1">
                                                 <img src={item.image} alt="" />
                                                 <div className="V_text">
                                                     <p className='mb-0'>{item.title}</p>

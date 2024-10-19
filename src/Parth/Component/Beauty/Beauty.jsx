@@ -1,108 +1,28 @@
 import React from 'react';
-import { Row, Col, Card, Badge } from 'react-bootstrap';
+import { Row, Col, } from 'react-bootstrap';
 import './Beauty.css'
 // import Minisider from '../../../darshan/components/Minisider';
 import BeautySlider from './BeautySlider.jsx'
 import BeautyPost from '../../Component/Beauty/BeautyPost.jsx'
+import BeautyCollection from '../../Component/Beauty/BeautyCollection.jsx'
+import GridBeautycomponent from '../../Component/Beauty/GridBeautycomponent.jsx';
+import Header from '../../../Vivek/Component/header/Header.jsx'
+import Subscribe from '../../../Vivek/Component/common/Subscribe.jsx';
+import Footer from '../../../Vivek/Component/footer/Footer.jsx'
+import Process from '../../../Vivek/Component/common/Process.jsx';
 
 function Beauty() {
 
 
-    const products = [
-        {
-            id: 1,
-            bestSeller: true,
-            name: "RENEE",
-            description: "Everyday Matte Lipstick ",
-            image: require('../../assets/Renee.png'), // Replace with actual image URL
-            price: "$120",
-            actualPrice: "$140",
-            rating: "4.5",
-            colors: ["#F8EE72", "#000000"]
-        },
-        {
-            id: 2,
-            bestSeller: true,
-            name: "SUGAR",
-            description: "Ace Of Face Foundation Stick-07 Vanilla Latte",
-            image: require('../../assets/Sugar.png'), // Replace with actual image URL
-            price: "$120",
-            actualPrice: "$140",
-            rating: "4.5",
-            colors: ["#000000", "#DFBCA3"]
-        },
-        {
-            id: 3,
-            bestSeller: true,
-            name: "ICONIC",
-            description: "Flawless Finish Duo Bundle",
-            image: require('../../assets/iconic.png'), // Replace with actual image URL
-            price: "$120",
-            actualPrice: "$140",
-            rating: "4.5",
-            colors: ["#000000", "#DFBCA3"]
-        },
-        {
-            id: 4,
-            bestSeller: true,
-            name: "MAC",
-            description: "Connect In Colour Eye Shadow Palette: Rose",
-            image: require('../../assets/Mac.png'), // Replace with actual image URL
-            price: "$120",
-            actualPrice: "$140",
-            rating: "4.5",
-            colors: ["#000000", "#ED9AD1"]
-        },
-        {
-            id: 5,
-            bestSeller: true,
-            name: "FACESCANADA",
-            description: "Perfect Blush",
-            image: require('../../assets/Facescanada.png'), // Replace with actual image URL
-            price: "$120",
-            actualPrice: "$140",
-            rating: "4.5",
-            colors: ["#F59D96", "#F3C0F8"]
-        },
-        {
-            id: 6,
-            bestSeller: false,
-            name: "COLORBAR",
-            description: "Luxe Arteffects Nail Lacquer",
-            image: require('../../assets/Colorbar.png'), // Replace with actual image URL
-            price: "$120",
-            actualPrice: "$140",
-            rating: "4.5",
-            colors: ["#C6C7C6", "#9FBF9F", "#BCEFEF"]
-        },
-        {
-            id: 7,
-            bestSeller: false,
-            name: "RENEE",
-            description: "Eau De Parfum Bloom ",
-            image: require('../../assets/ReneePerfum.png'), // Replace with actual image URL
-            price: "$120",
-            actualPrice: "$140",
-            rating: "4.5",
-            colors: ["#410F29", "#4EBABA", "#EDC285"]
-        },
-        {
-            id: 8,
-            bestSeller: false,
-            name: "MAC",
-            description: "Locked Kiss 24hr Lipstick",
-            image: require('../../assets/Maclipstick.png'), // Replace with actual image URL
-            price: "$120",
-            actualPrice: "$140",
-            rating: "4.5",
-            colors: ["#A5535D", "#DC3D3D", "#BB7423"]
-        }
-    ];
+
 
 
 
     return (
         <>
+
+            <Header />
+
             <section className='V_fresh'>
                 <div className='d_container h-100'>
                     <Row className='h-100'>
@@ -158,7 +78,7 @@ function Beauty() {
 
 
 
-            <section className='pb-5'>
+            {/* <section className='pb-5'>
                 <div className='d_container justify-content-between'>
                     <Row className=''>
                         {products.map(product => (
@@ -171,7 +91,7 @@ function Beauty() {
                                     )}
                                     <Card.Img
                                         variant="top"
-                                        src={product.image} // Dynamically setting image URL
+                                        src={product.image} 
                                         className="V_product_image"
                                         alt={product.name}
                                     />
@@ -191,7 +111,7 @@ function Beauty() {
                                         <Row>
                                             <Col className="text-end">
                                                 <div className="V_price d-flex justify-content-between px-3">
-                                                    {/* Mapping through colors */}
+                                                    
                                                     <div className="d-flex">
                                                         {product.colors.map((color, index) => (
                                                             <div
@@ -214,8 +134,9 @@ function Beauty() {
                         ))}
                     </Row>
                 </div>
-            </section >
+            </section > */}
 
+            <BeautyCollection />
 
             <section className='pb-5'>
                 <div className='V_healty_skincare'>
@@ -233,6 +154,17 @@ function Beauty() {
 
             <BeautyPost />
 
+            <GridBeautycomponent />
+
+
+            {/* new sletter */}
+            <Subscribe />
+
+            {/* process */}
+            <Process />
+
+            {/* footer */}
+            <Footer />
 
         </>
     )

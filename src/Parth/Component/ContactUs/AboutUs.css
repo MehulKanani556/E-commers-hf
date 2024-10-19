@@ -28,3 +28,299 @@
     font-size: 18px;
     font-weight: 400;
 }
+
+.V_world_map {
+    width: 1920px;
+    height: 1001px;
+}
+
+.V_back {
+    background-image: url('../../assets/The Quickcart Culture.png');
+    width: 100%;
+    height: 560px;
+    position: relative;
+    background-position: top;
+    background-size: cover;
+    background-position-y: -80px;
+}
+
+.V_back::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.3;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+.V_text_white {
+    z-index: 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* -------------------------------------------------------- media query -------------------------------------------------------- */
+
+
+/*  extra small device */
+@media (max-width:480px) {
+    .V_shadow {
+        width: 100%;
+        height: auto;
+    }
+
+    .V_img {
+        width: 100%;
+        height: auto;
+    }
+
+    .V_head_text {
+        font-size: 20px;
+    }
+
+    .V_lorem {
+        font-size: 16px;
+    }
+
+    .V_world_map {
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_back {
+        width: 100%;
+        height: 300px;
+        background-position: top;
+        background-size: cover;
+        align-self: end;
+    }
+}
+
+
+/* small device */
+@media (max-width:575px) and (min-width:481px) {
+    .V_shadow {
+        width: 100%;
+        height: auto;
+    }
+
+    .V_img {
+        width: 100%;
+        height: auto;
+    }
+
+    .V_head_text {
+        font-size: 20px;
+    }
+
+    .V_lorem {
+        font-size: 16px;
+    }
+
+    .V_world_map {
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_back {
+        width: 100%;
+        height: 300px;
+        background-position: top;
+        background-size: cover;
+        background-position-y: 0px;
+    }
+}
+
+/* medium device */
+@media (max-width:766px) and (min-width:576px) {
+    .V_shadow {
+        width: 100%;
+        height: auto;
+    }
+
+    .V_img {
+        width: 100%;
+        height: auto;
+    }
+
+    .V_head_text {
+        font-size: 24px;
+    }
+
+    .V_lorem {
+        font-size: 16px;
+    }
+
+    .V_world_map {
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_back {
+        width: 100%;
+        height: 400px;
+        background-position: top;
+        background-size: cover;
+        background-position-y: 0px;
+    }
+}
+
+
+/* lg device */
+@media (max-width:991px) and (min-width:767px) {
+    .V_shadow {
+        width: 100%;
+        height: auto;
+    }
+
+    .V_img {
+        width: 100%;
+        height: auto;
+    }
+
+    .V_head_text {
+        font-size: 28px;
+    }
+
+    .V_lorem {
+        font-size: 18px;
+    }
+
+    .V_world_map {
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_back {
+        width: 100%;
+        height: 100%;
+        background-position: top;
+        background-size: cover;
+        background-position-y: 0px;
+    }
+}
+
+
+/* xl device */
+@media (max-width:1199px) and (min-width:992px) {
+    .V_shadow {
+        width: 100%;
+        height: auto;
+    }
+
+    .V_img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_head_text {
+        font-size: 24px;
+    }
+
+    .V_lorem {
+        font-size: 16px;
+    }
+
+    .V_world_map {
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_back {
+        width: 100%;
+        height: 100%;
+        background-position: top;
+        background-size: cover;
+        background-position-y: 0px;
+    }
+}
+
+
+/* 2xl device */
+@media (max-width:1440px) and (min-width:1200px) {
+    .V_shadow {
+        width: 100%;
+        height: auto;
+    }
+
+    .V_img {
+        width: 690px;
+        height: 460px;
+    }
+
+    .V_head_text {
+        font-size: 28px;
+    }
+
+    .V_lorem {
+        font-size: 18px;
+    }
+
+    .V_world_map {
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_back {
+        width: 100%;
+        height: 100%;
+        background-position: top;
+        background-size: cover;
+        background-position-y: -100px;
+    }
+}
+
+
+/* 3xl device */
+@media  (min-width:1441px) {
+    .V_shadow {
+        width: 100%;
+        height: auto;
+    }
+
+    .V_img {
+        width: 690px;
+        height: 460px;
+    }
+
+    .V_head_text {
+        font-size: 28px;
+    }
+
+    .V_lorem {
+        font-size: 18px;
+    }
+
+    .V_world_map {
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_back {
+        width: 100%;
+        height: 560px;
+        background-position: top;
+        background-size: cover;
+        background-position-y: -120px;
+    }
+}
+

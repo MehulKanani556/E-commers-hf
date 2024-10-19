@@ -1,8 +1,8 @@
-.V_post .V_box .V_img{
+.V_post .V_box .V_img1{
     width: 100%;
     position: relative;
 }
-.V_post .V_box .V_img img{
+.V_post .V_box .V_img1 img{
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -48,10 +48,10 @@
 }
 @media(max-width:425px)
 {
-    .V_post .V_box .V_img{
+    .V_post .V_box .V_img1{
         height: 200px;   
     }
-    .V_post .V_box .V_img img{
+    .V_post .V_box .V_img1 img{
         object-position: top;
     }
 }
