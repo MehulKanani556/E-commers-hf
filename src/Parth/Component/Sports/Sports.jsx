@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, } from 'react-bootstrap';
+import { Row, Col, Button, } from 'react-bootstrap';
 import './Sports.css'
 // import Minisider from '../../../darshan/components/Minisider';
 import SportsSlider from './SportsSlider.jsx'
@@ -23,50 +23,56 @@ function Luggage() {
 
             <Header />
 
-            {/* <section className='V_fresh'>
+            <section className='V_sports'>
                 <div className='d_container h-100'>
                     <Row className='h-100'>
-                        <Col lg={6} className='align-self-center'>
-                            <div className='V_lipstic pe-xxl-5'>
-                                <h1 className='V_try_fresh '>TRY FRESH PRODUCT
-                                    FOR YOUR LIPS</h1>
-                                <p className='V_try'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.</p>
+                        <Col lg={6} className='align-self-center p-3'>
+                            <div className='V_future pe-xxl-5'>
+                                <h1 className='V_combine_text'> <span className='V_text_white'>Redefining Motion:</span> <span className='V_text_green'> The Future of Footwear is Here</span></h1>
+                                <p className='V_experience'>Experience unparalleled comfort and innovative design with our state-of-the-art, futuristic sports shoes. Built for champions, designed for you.</p>
+                            </div>
+                            <div className='pt-3'>
+                                <Button className='py-2 px-5 text-white'>Buy Now</Button>
                             </div>
                         </Col>
                     </Row>
                 </div>
-            </section> */}
+            </section>
 
             <SportsSlider />
 
-            <section className='text-white py-5'>
+            <section className='text-white pb-5'>
                 <div className=''>
                     <Row className='p-md-5 m-0'>
                         <Col lg={4} className=' pt-3'>
-                            <div className=' V_skin_care V_beauty_product_1'>
+                            <div className=' V_sports_accessories V_sport_product_1'>
                                 <div className=' pt-lg-3'>
-                                    <h3 className='v_make text-dark '>
-                                        Make your skin the best
+                                    <h3 className='V_Get text-dark '>
+                                        <p className='m-0'>Get <span className='V_red'>50% </span>off on </p>
+                                        <p className='V_sub_text'>Sports Accessories</p>
                                     </h3>
                                 </div>
                             </div>
                         </Col>
 
                         <Col lg={4} className=' pt-3'>
-                            <div className=' V_skin_care V_beauty_product_2'>
+                            <div className=' V_sports_accessories V_sport_product_2'>
                                 <div className=' pt-lg-3'>
-                                    <h3 className='v_Dry text-dark'>
-                                        Dry skins lack mosturiser
+                                    <h3 className='v_Women text-white'>
+                                        Women
+                                        Sportwear
+                                        Collection
                                     </h3>
                                 </div>
                             </div>
                         </Col>
 
-                        <Col lg={4} className=' pt-3'>
-                            <div className=' V_skin_care V_beauty_product_3'>
-                                <div className=' pt-lg-3'>
-                                    <h3 className='v_Dry text-white'>
-                                        Glowing skin always in
+                        <Col lg={4} className=' pt-3 align-self-center'>
+                            <div className=' V_sports_accessories V_sport_product_3'>
+                                <div className=' pt-lg-3 a'>
+                                    <h3 className='V_kids text-white'>
+                                    Kids
+                                    Collection
                                     </h3>
                                 </div>
                             </div>
@@ -78,63 +84,6 @@ function Luggage() {
 
 
 
-            {/* <section className='pb-5'>
-                <div className='d_container justify-content-between'>
-                    <Row className=''>
-                        {products.map(product => (
-                            <Col sm={6} md={6} lg={4} xl={4} xxl={3} className="gap-3 pb-5 d-flex justify-content-center" key={product.id}>
-                                <Card className="V_card align-content-center">
-                                    {product.bestSeller && (
-                                        <Badge className="V_best_seller_tag py-3 px-5" bg="dark">
-                                            Best Seller
-                                        </Badge>
-                                    )}
-                                    <Card.Img
-                                        variant="top"
-                                        src={product.image} 
-                                        className="V_product_image"
-                                        alt={product.name}
-                                    />
-                                    <Card.Body className="px-0">
-                                        <Card.Title>
-                                            <div className="d-flex justify-content-between  align-self-center px-3">
-                                                <h1 className="V_brand">{product.name}</h1>
-                                                <div className="V_rating">
-                                                    <span className="V_star align-self-center">⭐</span>
-                                                    <span className="V_rating_value ">{product.rating}</span>
-                                                </div>
-                                            </div>
-                                        </Card.Title>
-                                        <Card.Text className="V_description px-3">
-                                            {product.description}
-                                        </Card.Text>
-                                        <Row>
-                                            <Col className="text-end">
-                                                <div className="V_price d-flex justify-content-between px-3">
-                                                    
-                                                    <div className="d-flex">
-                                                        {product.colors.map((color, index) => (
-                                                            <div
-                                                                key={index}
-                                                                className=" align-self-center me-2"
-                                                                style={{ backgroundColor: color, width: '20px', height: '20px', borderRadius: '50%' }}
-                                                            ></div>
-                                                        ))}
-                                                    </div>
-                                                    <div className="V_price_container">
-                                                        <span className="V_discounted_price">{product.price}</span>
-                                                        <span><strike className="original-price">{product.actualPrice}</strike></span>
-                                                    </div>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        ))}
-                    </Row>
-                </div>
-            </section > */}
 
             <SportsCollection />
 
