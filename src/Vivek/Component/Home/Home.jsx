@@ -12,6 +12,7 @@ import Process from '../common/Process'
 // import ShoesSlider from '../Slider/ShoesSlider'
 import CommSlider from './CommSlider'
 import Jewery from './Jewery'
+import Collection from './Collection'
 
 const Home = () => {
     return (
@@ -27,6 +28,10 @@ const Home = () => {
 
             {/* minislider */}
             <CommSlider/>
+
+
+            {/* watch collection */}
+            <Collection/>
 
 
             {/* ELECTONICS essentials  */}

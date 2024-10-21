@@ -1,0 +1,67 @@
+.VK_user_sidebar {
+    box-sizing: border-box;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.user_profile_menu li {
+    color: #6A6A6A;
+    font-weight: 600;
+}
+
+.user_profile_menu .icon {
+    fill: #6A6A6A;
+}
+
+
+.VK_user_heading {
+    font-size: 22px;
+    font-weight: 600;
+    color: #2A221E;
+}
+
+
+/* active */
+.VK_user_active {
+    background-color: #2B221E;
+    color: white !important;
+}
+
+.VK_user_active .icon {
+    fill: white !important;
+}
+
+.VK_payment_acoridan button {
+    box-shadow: none !important;
+    background-color: white !important;
+    padding: 0;
+}
+
+
+/* logout */
+.VK_logout_txt {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.VK_logut_cancle {
+    width: 100%;
+    padding: 14px 0px;
+    border-radius: 5px;
+    border: 1px solid #2B221E;
+    background-color: white;
+    color: #2B221E;
+    font-weight: 600;
+}
+
+.VK_logout_ok {
+    width: 100%;
+    padding: 14px 0px;
+    border-radius: 5px;
+    background-color: #2B221E;
+    border: 1px solid white;
+    color: white;
+    font-weight: 600;
+}
+
+/* -------------------------------------------------------- media query -------------------------------------------------------- */

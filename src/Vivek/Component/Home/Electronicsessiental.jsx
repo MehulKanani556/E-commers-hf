@@ -45,8 +45,8 @@ const Electronicsessiental = () => {
 
     return (
         <React.Fragment>
-            <section className='py-5'>
-                <div className='d_container inter p-0'>
+            <div className='py-5'>
+                <div className='d_container p-0 inter'>
                     <Row className='m-0 mb-4'>
                         <Col className='d-flex justify-content-between align-items-center'>
                             <h2 className='section_title m-0'>Electronic Accessories</h2>
@@ -77,7 +77,7 @@ const Electronicsessiental = () => {
                         </Map>
                     </Row>
                 </div>
-            </section>
+            </div>
         </React.Fragment>
     )
 }

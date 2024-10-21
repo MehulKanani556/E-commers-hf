@@ -55,8 +55,8 @@ const Bestsellers = () => {
 
     return (
         <React.Fragment>
-            <section className='VK_sec_padding'>
-                <div className='d_container inter p-0'>
+            <div className='VK_sec_padding'>
+                <div className='d_container inter'>
                     <Row className='m-0 mb-4'>
                         <Col className='d-flex justify-content-between align-items-center'>
                             <h2 className='section_title m-0'>
@@ -86,7 +86,7 @@ const Bestsellers = () => {
                         </Map>
                     </Row>
                 </div>
-            </section>
+            </div>
         </React.Fragment>
     )
 }

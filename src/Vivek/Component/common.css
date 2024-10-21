@@ -53,6 +53,9 @@
 .object_top{
     object-position: top;
 }
+.object_bottom{
+    object-position: bottom;
+}
 
 .object_center{
     object-position: center;
