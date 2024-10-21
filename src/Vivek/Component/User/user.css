@@ -4,7 +4,7 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
-.user_profile_menu li {
+.user_profile_menu a{
     color: #6A6A6A;
     font-weight: 600;
 }
@@ -37,6 +37,10 @@
     padding: 0;
 }
 
+.VK_ul{
+    list-style-type: disc !important;
+}
+
 
 /* logout */
 .VK_logout_txt {
@@ -64,4 +68,118 @@
     font-weight: 600;
 }
 
+/* user profile */
+.VK_profile_heading {
+    font-size: 28px;
+}
+
+.VK_profile_div {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.154);
+}
+
+.VK_proflie_logo {
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.VK_proflie_img {
+    height: 60px;
+    width: 60px;
+    background-image: linear-gradient(#DBDEF6, #B0B3EF);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.VK_profile_det {
+    font-size: 18px;
+}
+
+.VK_from_input {
+    outline: none;
+    background-color: #EDEDED;
+    border: none;
+    border-radius: 5px;
+}
+
+.VK_input_label {
+    color: #6A6A6A;
+}
+
+.VK_model_heading {
+    font-size: 20px;
+}
+
+
+/* edit model */
+
+
+.form-check-input:checked {
+    background-color: black !important;
+    border-color: black !important;
+}
+
+.form-check-input:focus {
+    box-shadow: none !important;
+}
+
+.VK_edit_radio .form-check-label {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.form-check-input {
+    border: 1px solid black !important;
+}
+
+.VK_edit_submit {
+    padding: 10px 60px;
+    color: white;
+    background-color: #2B221E;
+    border: none;
+    border-radius: 3px;
+    font-size: 18px;
+}
+
 /* -------------------------------------------------------- media query -------------------------------------------------------- */
+
+
+/*  extra small device */
+@media (max-width:480px) {
+    .VK_edit_profile_model .modal-dialog {
+        width: 100% !important;
+    }
+}
+
+
+/* small device */
+@media (max-width:575px) and (min-width:481px) {
+    .VK_edit_profile_model .modal-dialog {
+        width: 100% !important;
+    }
+}
+
+
+/* medium device */
+@media (max-width:766px) and (min-width:576px) {}
+
+
+/* lg device */
+@media (max-width:991px) and (min-width:767px) {}
+
+
+/* xl device */
+@media (max-width:1199px) and (min-width:992px) {}
+
+
+/* 2xl device */
+@media (max-width:1440px) and (min-width:1200px) {}
+
+
+/* 3xl device */
+@media (min-width:1441px) {}

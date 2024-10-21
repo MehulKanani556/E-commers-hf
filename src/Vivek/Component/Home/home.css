@@ -119,6 +119,41 @@
     font-weight: 500;
 }
 
+/* poster */
+.VK_poster_img {
+    background-image: url('../../assets/Baneer.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    height: 500px;
+}
+
+
+.VK_poster_exclusive {
+    font-family: "Itim", cursive;
+    font-style: normal;
+    font-size: 35px;
+    font-weight: 700;
+}
+
+.VK_poster_product {
+    font-family: "Vast Shadow", serif;
+    font-size: 50px;
+    font-weight: 600;
+    color: #0B004B;
+}
+
+.VK_poster_txt {
+    color: #6A6A6A;
+}
+
+.VK_poster_btn {
+    padding: 10px 30px;
+    border-radius: 3px;
+    border: none;
+    color: white;
+    background-color: #0B004B;
+}
 
 
 /* -------------------------------------------------------- media query -------------------------------------------------------- */
@@ -168,6 +203,19 @@
     .VK_watch_h3 {
         font-size: 28px;
     }
+
+    .VK_poster_img {
+        background-position: center;
+        height: 400px;
+    }
+
+    .VK_poster_product {
+        font-size: 30px;
+    }
+
+    .VK_poster_exclusive {
+        font-size: 20px;
+    }
 }
 
 
@@ -211,6 +259,19 @@
     .VK_watch_h3 {
         font-size: 28px;
     }
+
+    .VK_poster_img {
+        background-position: center;
+        height: 400px;
+    }
+
+    .VK_poster_product {
+        font-size: 30px;
+    }
+
+    .VK_poster_exclusive {
+        font-size: 20px;
+    }
 }
 
 
@@ -250,6 +311,19 @@
     .VK_watch_h3 {
         font-size: 28px;
     }
+
+    .VK_poster_img {
+        background-position: center;
+        height: 400px;
+    }
+
+    .VK_poster_product {
+        font-size: 35px;
+    }
+
+    .VK_poster_exclusive {
+        font-size: 25px;
+    }
 }
 
 
@@ -284,6 +358,24 @@
     .VK_watch_h3 {
         font-size: 28px;
     }
+
+    .VK_poster_txt {
+        width: auto;
+    }
+
+    .VK_poster_img {
+        background-position: right;
+        height: 400px;
+    }
+
+    .VK_poster_product {
+        font-size: 40px;
+    }
+
+    .VK_poster_exclusive {
+        font-size: 30px;
+    }
+
 }
 
 
@@ -315,6 +407,16 @@
         font-size: 28px;
     }
 
+
+    .VK_poster_txt {
+        width: auto;
+    }
+
+    .VK_poster_img {
+        background-position: right;
+        height: 400px;
+    }
+
 }
 
 
@@ -341,6 +443,15 @@
     .VK_watch_h3 {
         font-size: 30px;
     }
+
+    .VK_poster_txt {
+        width: auto;
+    }
+
+    .VK_poster_img {
+        background-position: right;
+    }
+
 }
 
 
@@ -348,5 +459,10 @@
 @media (min-width:1441px) {
     .VK_sec_padding {
         padding: 80px 0px;
+    }
+
+    .VK_poster_txt {
+        color: #6A6A6A;
+        width: 650px;
     }
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../header/Header'
 import Footer from '../footer/Footer'
 import './user.css';
@@ -6,12 +6,19 @@ import '../common.css'
 import { Col, Row } from 'react-bootstrap';
 import LogoutModel from './LogoutModel';
 import UserSidebar from './UserSidebar';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 const User = () => {
 
     const [modalShow, setModalShow] = React.useState(false);
+    const location = useLocation();
+    const navigate = useNavigate(); 
 
+    useEffect(() => {
+        if (location.pathname === '/user') { 
+            navigate('/user/profile'); 
+        }
+    }, [location, navigate]); 
     return (
         <React.Fragment>
             {/* header */}
@@ -22,7 +29,7 @@ const User = () => {
                         <div className='d_container'>
                             <Row>
                                 {/* user Side Bar */}
-                                <Col lg={3} md={4} className='pe-4'>
+                                <Col lg={3} md={4} className='pe-4 pb-5 pb-md-0'>
                                     <UserSidebar setModalShow={setModalShow} />
                                 </Col>
                                 <Col>
@@ -33,7 +40,7 @@ const User = () => {
                     </aside>
                 </div>
             </section>
-            
+
 
 
             {/* footer */}

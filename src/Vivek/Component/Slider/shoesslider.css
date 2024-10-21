@@ -14,7 +14,7 @@
     transform: translateY(-50%) translateX(-50%);
 }
 
-.VK_slider_back_txt h1 {
+.VK_slider_back_txt h2 {
     color: rgba(19, 19, 24, 0.596);
     font-weight: 700;
     font-size: 500px;
@@ -30,6 +30,48 @@
 
 
 /* description */
+.VK_slider_product_name {
+    height: 60px;
+    overflow-y: hidden;
+    scroll-snap-type: y mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+
+.VK_slider_product_name::-webkit-scrollbar {
+    display: none;
+}
+
+.VK_slider_product_name h3 {
+    scroll-snap-align: start;
+    height: 60px;
+    font-size: 45px;
+    font-family: "Jockey One", sans-serif;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.VK_product_price {
+    height: 45px;
+    overflow-y: hidden;
+    scroll-snap-type: y mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+
+.VK_product_price::-webkit-scrollbar {
+    display: none;
+}
+
+.VK_product_price h4 {
+    font-size: 35px;
+    letter-spacing: 2px;
+    scroll-snap-align: start;
+    height: 45px;
+}
+
 .VK_slider_shoes_description {
     position: absolute;
     bottom: 22%;
@@ -128,7 +170,6 @@
 .VK_mimi_prv_div {
     width: 200px;
     height: 33.33%;
-
 }
 
 .VK_preview_1 {
@@ -176,7 +217,343 @@
     margin-bottom: 10px;
 }
 
-.VK_mini_img1{
+.VK_mini_img1 {
     top: calc(10% - 12px);
     left: calc(10% + 20px) !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* -------------------------------------------------------- media query -------------------------------------------------------- */
+
+
+/*  extra small device */
+@media (max-width:480px) {}
+
+
+/* small device */
+@media (max-width:575px) and (min-width:481px) {}
+
+
+/* medium device */
+@media (max-width:766px) and (min-width:576px) {
+    .VK_slider_parent {
+        height: 550px;
+    }
+
+    .VK_slider_back_txt h2 {
+        font-size: 300px;
+    }
+
+    .VK_slider_shoes_description {
+        top: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+    }
+
+    .VK_color_size {
+        justify-content: center;
+    }
+
+
+    .VK_shoes_img_par {
+        left: calc(20% - 10px);
+        width: 70%;
+        height: 100%;
+    }
+}
+
+/*  */
+@media (max-width:850px) and (min-width:767px) {
+    .VK_slider_parent {
+        height: 700px;
+    }
+
+    .VK_slider_back_txt h2 {
+        font-size: 300px;
+    }
+
+    .VK_slider_shoes_description {
+        top: 15%;
+    }
+
+    .VK_slider_nike_logo {
+        bottom: -5%;
+        left: 3%;
+        width: 90%;
+        height: 100%;
+    }
+
+    .VK_shoes_img_par {
+        left: calc(35% - 10px);
+        width: 55%;
+        height: 100%;
+        top: -10%;
+    }
+
+    .VK_shoes_img_box img {
+        transform: translate(calc(-50% - 50px), calc(-50% - 30px)) rotate(-42deg);
+    }
+
+    /* mini preview */
+    .VK_mini_preview {
+        top: 100%;
+        height: auto;
+        transform: translateY(calc(-100% - 20px)) translateX(-50%);
+        left: 50%;
+        width: 100%;
+    }
+
+    .VK_mini_grid {
+        gap: 20px;
+        display: flex;
+    }
+
+    .VK_mimi_prv_div {
+        width: 200px;
+        height: 150px;
+    }
+
+    .VK_preview_1 {
+        position: unset;
+    }
+
+    .VK_preview_2 {
+        position: unset;
+    }
+
+    .VK_preview_3 {
+        position: unset;
+    }
+
+}
+
+/* lg device */
+@media (max-width:991px) and (min-width:851px) {
+    .VK_slider_parent {
+        height: 650px;
+    }
+
+    .VK_slider_back_txt h2 {
+        font-size: 350px;
+    }
+
+    .VK_slider_nike_logo {
+        bottom: -5%;
+        left: 3%;
+        width: 90%;
+        height: 80%;
+    }
+
+    .VK_shoes_img_par {
+        left: calc(35% - 10px);
+        top: 50px;
+        width: 55%;
+        height: 100%;
+    }
+
+    .VK_shoes_img_box img {
+        transform: translate(calc(-50% - 50px), calc(-50% - 30px)) rotate(-42deg);
+    }
+}
+
+/*  */
+@media (max-width:1100px) and (min-width:992px) {
+    .VK_slider_parent {
+        height: 700px;
+    }
+
+    .VK_slider_back_txt h2 {
+        font-size: 400px;
+    }
+
+    .VK_mimi_prv_div {
+        width: 150px;
+        height: 33.33%;
+    }
+
+    .VK_bg_preview {
+        width: 250px !important;
+    }
+
+    .VK_preview_1 {
+        right: calc(10% + 20px);
+    }
+
+    .VK_preview_2 {
+        right: calc(40% + 2px);
+    }
+
+    .VK_preview_3 {
+        right: calc(65% + 5px);
+    }
+
+    .VK_shoes_img_par {
+        left: calc(30% - 20px);
+        top: 30px;
+        width: 50%;
+        height: 100%;
+    }
+
+    .VK_shoes_img_box img {
+        transform: translate(calc(-50% - 50px), calc(-50% - 30px)) rotate(-45deg);
+    }
+
+    .VK_slider_nike_logo {
+        bottom: -5%;
+        left: -5%;
+        width: 85%;
+        transform: rotate(-5deg);
+    }
+
+    .VK_mini_preview {
+        width: 500px;
+        height: 300px;
+        top: calc(60% + 15px);
+        right: calc(12% - 50px);
+    }
+}
+
+/* xl device */
+@media (max-width:1199px) and (min-width:1101px) {
+
+    .VK_slider_parent {
+        height: 700px;
+    }
+
+    .VK_slider_back_txt h2 {
+        font-size: 400px;
+    }
+
+    .VK_mimi_prv_div {
+        width: 150px;
+        height: 33.33%;
+    }
+
+    .VK_bg_preview {
+        width: 250px !important;
+    }
+
+    .VK_preview_1 {
+        right: calc(10% + 20px);
+    }
+
+    .VK_preview_2 {
+        right: calc(40% + 2px);
+    }
+
+    .VK_preview_3 {
+        right: calc(65% + 5px);
+    }
+
+    .VK_shoes_img_par {
+        left: calc(25% - 20px);
+        /* top: 100px; */
+        width: 45%;
+        height: 100%;
+    }
+
+    .VK_shoes_img_box img {
+        transform: translate(calc(-50% - 50px), calc(-50% - 30px)) rotate(-45deg);
+    }
+
+    .VK_slider_nike_logo {
+        bottom: -5%;
+        left: -5%;
+        width: 80%;
+        transform: rotate(-5deg);
+    }
+
+    .VK_mini_preview {
+        width: 500px;
+        height: 300px;
+        top: calc(60% + 15px);
+        right: calc(20% - 50px);
+    }
+}
+
+/*  */
+@media (max-width:1299px) and (min-width:1200px) {
+    .VK_shoes_img_par {
+        left: calc(30% + 10px);
+        top: 20px;
+    }
+
+    .VK_slider_nike_logo {
+        bottom: -5%;
+        left: -2%;
+        width: 80%;
+    }
+
+    .VK_shoes_img_box img {
+        transform: translate(calc(-50% - 50px), calc(-50% - 30px)) rotate(-43deg);
+    }
+
+    .VK_mini_preview {
+        width: 500px;
+        height: 400px;
+        top: calc(65%);
+        right: calc(15% - 50px);
+    }
+}
+
+/* 2xl device */
+@media (max-width:1440px) and (min-width:1300px) {
+    .VK_shoes_img_par {
+        left: calc(25% + 20px);
+    }
+
+    .VK_slider_nike_logo {
+        bottom: -5%;
+        left: -2%;
+        width: 75%;
+    }
+
+    .VK_shoes_img_box img {
+        transform: translate(calc(-50% - 50px), calc(-50% - 30px)) rotate(-43deg);
+    }
+
+    .VK_mini_preview {
+        width: 500px;
+        height: 400px;
+        top: calc(60%);
+        right: calc(20% - 50px);
+    }
+}
+
+/* 3xl device */
+@media (max-width:1650px) and (min-width:1441px) {
+    .VK_shoes_img_par {
+        left: calc(20% - 10px);
+        top: 0px;
+    }
+
+    .VK_shoes_img_box img {
+        transform: translate(calc(-50% - 50px), calc(-50% - 30px)) rotate(-43deg);
+    }
+}
+
+/* 4xl device */
+@media (min-width:1651px) {
+    .VK_shoes_img_par {
+        left: calc(20% - 50px);
+        top: -20px;
+    }
+
+    .VK_shoes_img_box img {
+        transform: translate(calc(-50% - 50px), calc(-50% - 30px)) rotate(-43deg);
+    }
+
 }
