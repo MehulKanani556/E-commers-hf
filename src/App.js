@@ -2,6 +2,8 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import Womenstore from './darshan/pages/Womenstore';
 import Home from './Vivek/Component/Home/Home'
 import Electronics from './Parth/Component/Electronics/Electronics';
@@ -16,6 +18,7 @@ import User from './Vivek/Component/User/User';
 import UserProfile from './Vivek/Component/User/UserProfile'
 import MyOrder from './Vivek/Component/User/MyOrder';
 import UserFaq from './Vivek/Component/User/UserFaq';
+import WomenDetails from './darshan/pages/WomenDetails';
 
 function App() {
   return (
@@ -36,6 +39,7 @@ function App() {
           {/* women */}
           <Route path='/women' element={<Womenstore />} />
           <Route path='/womenstore' element={<Womenfilter />} />
+          <Route path='/womendetails' element={<WomenDetails />} />
 
           {/* about us */}
           <Route path="/about" element={<AboutUs />} />
