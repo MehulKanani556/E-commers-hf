@@ -150,7 +150,7 @@ const Elecroniccollection = () => {
                                                 </div>
                                             </div>
                                             <div className='VK_card_imgs '>
-                                                <img src={require(`../../assets/${item.image}`)} className='w-100 h-100 object_contain' alt="" />
+                                                <img src={require(`../../assets/${item.image}`)} className='w-100 h-100' alt="" />
                                             </div>
                                             <div className='product_desc p-3'>
                                                 <div className='d-flex justify-content-between align-items-center'>

@@ -43,30 +43,32 @@ function Luggage() {
                 <div className=''>
                     <Row className='p-md-5 m-0'>
                         <Col lg={4} className=' pt-3'>
-                            <div className=' V_skin_care V_beauty_product_1'>
+                            <div className=' V_luggage V_luggage_product_1'>
                                 <div className=' pt-lg-3'>
-                                    <h3 className='v_make text-dark '>
-                                        Make your skin the best
+                                    <h3 className='V_upto text-dark'>
+                                        Upto <span className='V_20_red'>20%</span> Discount
                                     </h3>
                                 </div>
                             </div>
                         </Col>
 
                         <Col lg={4} className=' pt-3'>
-                            <div className=' V_skin_care V_beauty_product_2'>
+                            <div className=' V_luggage V_luggage_product_2'>
                                 <div className=' pt-lg-3'>
-                                    <h3 className='v_Dry text-dark'>
-                                        Dry skins lack mosturiser
+                                    <h3 className='V_school text-white'>
+                                        Back to
+                                        School
                                     </h3>
                                 </div>
                             </div>
                         </Col>
 
                         <Col lg={4} className=' pt-3'>
-                            <div className=' V_skin_care V_beauty_product_3'>
+                            <div className=' V_luggage V_luggage_product_3'>
                                 <div className=' pt-lg-3'>
-                                    <h3 className='v_Dry text-white'>
-                                        Glowing skin always in
+                                    <h3 className='V_trendy text-white'>
+                                    Trendy
+                                    Backpacks
                                     </h3>
                                 </div>
                             </div>
@@ -139,14 +141,14 @@ function Luggage() {
             <LuggageCollection />
 
             <section className='pb-5'>
-                <div className='V_healty_skincare'>
-                    <Row className=''>
-                        <Col className=''>
-                            <div className="V_overlay">
-                                <p className="V_overlay_text">Healthy skin requires commitment, not a miracle.</p>
+                <div className='V_carry_your_load'>
+                    <div className='row m-0'>
+                        <div className='col-6'>
+                            <div className="d_container">
+                                <p className="V_carry ">CARRY YOUR LOAD WITH COMFORT AND STYLE</p>
                             </div>
-                        </Col>
-                    </Row>
+                        </div>
+                    </div>
                 </div>
             </section>
 

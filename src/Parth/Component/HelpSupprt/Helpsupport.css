@@ -1,0 +1,248 @@
+.V_help {
+    font-size: 40px;
+    font-weight: 400;
+}
+
+.V_hii {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.V_help_shadow {
+    box-shadow: 0px 4px 14px 0px #8F8F8F40;
+    width: 100%;
+    height: 100%;
+}
+
+.V_manage {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.V_p_text {
+    font-size: 14px;
+    font-weight: 400;
+    color: #6A6A6A;
+}
+
+.accordion {
+    border: 0px;
+    --bs-accordion-border-color: none;
+}
+
+
+.accordion-item{
+    box-shadow: 0px 4px 14px 0px #BBBBBB40;
+}
+
+.accordion-item:active{
+    -bs-accordion-active-bg: none;
+}
+.accordion-item .accordion-header .accordion-button {
+    border-top-left-radius: 0px; 
+     border-top-right-radius: 0px;
+}
+.V_header {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.V_body {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* -------------------------------------------------------- media query -------------------------------------------------------- */
+
+
+/*  extra small device */
+@media (max-width:480px) {
+    .V_help {
+        font-size: 32px;
+
+    }
+
+    .V_manage {
+        font-size: 18px;
+    }
+
+    .V_p_text {
+        font-size: 12px;
+    }
+}
+
+
+/* small device */
+@media (max-width:575px) and (min-width:481px) {
+    .V_help {
+        font-size: 32px;
+
+    }
+
+    .V_help_img {
+        width: 75%;
+        height: 75%;
+    }
+
+    .V_manage {
+        font-size: 18px;
+    }
+
+    .V_p_text {
+        font-size: 12px;
+    }
+
+}
+
+/* medium device */
+@media (max-width:767px) and (min-width:576px) {
+
+    .V_manage {
+        font-size: 20px;
+    }
+
+    .V_p_text {
+        font-size: 12px;
+    }
+
+    .V_help {
+        font-size: 34px;
+
+    }
+
+    .V_help_img {
+        width: 50%;
+        height: 50%;
+    }
+}
+
+
+/* lg device */
+@media (max-width:991px) and (min-width:768px) {
+
+    .V_manage {
+        font-size: 20px;
+    }
+
+    .V_p_text {
+        font-size: 12px;
+    }
+
+    .V_help {
+        font-size: 34px;
+
+    }
+
+    .V_help_img {
+        width: 75%;
+        height: 75%;
+    }
+}
+
+
+/* xl device */
+@media (max-width:1199px) and (min-width:992px) {
+    .V_manage {
+        font-size: 18px;
+    }
+
+    .V_p_text {
+        font-size: 12px;
+    }
+
+    .V_help {
+        font-size: 40px;
+
+    }
+
+    .V_help_img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
+/* 2xl device */
+@media (max-width:1440px) and (min-width:1200px) {
+
+    .V_manage {
+        font-size: 19px;
+    }
+
+    .V_p_text {
+        font-size: 12px;
+    }
+
+    .V_help {
+        font-size: 40px;
+
+    }
+
+    .V_help_img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
+/* 3xl device */
+@media (min-width:1441px) and (max-width:1649px) {
+
+    .V_manage {
+        font-size: 19px;
+    }
+
+    .V_p_text {
+        font-size: 12px;
+    }
+
+    .V_help {
+        font-size: 40px;
+
+    }
+
+    .V_help_img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@media (min-width:1650px) {
+    .V_manage {
+        font-size: 22px;
+    }
+
+    .V_p_text {
+        font-size: 14px;
+    }
+
+    .V_help {
+        font-size: 40px;
+
+    }
+
+    .V_help_img {
+        width: 100%;
+        height: 100%;
+    }
+}

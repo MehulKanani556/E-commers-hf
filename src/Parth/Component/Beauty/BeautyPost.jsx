@@ -39,19 +39,19 @@ const Post = () => {
     return (
         <>
 
-            <section className='V_post'>
+            <section className='V_postb'>
                 <div className="d_container">
                     <div className="V_margin">
                         <div className="row gy-4">
                             {postItems.map((item, index) => {
                                 return (
-                                    <div key={item.id} className="col-12 col-sm-4 col-lg-3 V_col-20">
-                                        <div className="V_box">
-                                            <div className="V_img1">
+                                    <div key={item.id} className="col-12 col-sm-4 col-lg-3 V_col-20b">
+                                        <div className="V_boxb">
+                                            <div className="V_img1b">
                                                 <img src={item.image} alt="" />
-                                                <div className="V_text">
+                                                <div className="V_textb">
                                                     <p className='mb-0'>{item.title}</p>
-                                                    <div className="V_discounttext">{item.discount}</div>
+                                                    <div className="V_discounttextb">{item.discount}</div>
                                                 </div>
                                             </div>
                                         </div>

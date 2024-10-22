@@ -16,6 +16,7 @@ import User from './Vivek/Component/User/User';
 import UserProfile from './Vivek/Component/User/UserProfile'
 import MyOrder from './Vivek/Component/User/MyOrder';
 import UserFaq from './Vivek/Component/User/UserFaq';
+import HelpSupport from './Parth/Component/HelpSupprt/HelpSupport';
 
 function App() {
   return (
@@ -48,6 +49,9 @@ function App() {
 
           {/* sport */}
           <Route path="/sport" element={<Sports />} />
+
+          {/* HELP  */}
+          <Route path="/help" element={<HelpSupport />} />
 
           {/* user */}
           <Route path="/user" element={<User />}>

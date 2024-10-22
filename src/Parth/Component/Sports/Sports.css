@@ -91,23 +91,104 @@
 
 
 
+.V_slider2 {
+    background-image: url('../../assets/sport head slide 2.png');
+    background-size: cover;
+    height: 916px;
+}
+
+.V_fantastic {
+    font-size: 50px;
+    font-weight: 900;
+}
+
+.V_slide_2_text {
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.V_slide2 {
+    width: 642px;
+}
 
 
 
 
 
 
+.V_slider3 {
+    background-image: url('../../assets/sport slide 3 img.png');
+    background-size: cover;
+    height: 916px;
+}
+
+.V_slid3 {
+    width: 475px;
+}
+
+.V_more_than {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 16.06%, #FFFFFF 86.9%, rgba(255, 255, 255, 0) 106.25%);
+    font-size: 72px;
+    font-weight: 500;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.V_slide_3_text {
+    font-size: 20px;
+    font-weight: 400;
+    color: #FEFEFE;
+}
+
+.V_golf {
+    background-color: #38CB89;
+}
 
 
 
+.V_new_footware {
+    background-image: url('../../assets/new footware sports.png');
+    background-size: cover;
+    height: 576px;
+    width: 1920px;
+}
 
+.V_all {
+    padding-top: 10rem !important;
+    margin-left: 140px;
+}
 
+.V_all_width {
+    width: 333px;
+}
 
+.V_new_foot {
+    font-size: 64px;
+    font-weight: 300;
+    color: #DAEE14;
+}
 
+.V_collection {
+    font-size: 44px;
+    font-weight: 300;
+}
 
+.V_big {
+    margin-top: -11rem !important;
+    margin-left: 300px;
+}
 
+.V_disco {
+    font-size: 34px;
+    font-weight: 300;
+}
 
-
+.V_30 {
+    font-size: 126px;
+    font-weight: 300;
+    color: #DAEE14;
+    padding-left: 20px;
+}
 
 
 
@@ -125,7 +206,7 @@
     .V_sports {
         background-size: cover;
         background-position-x: 95%;
-        height: 916px;
+        height: 100%;
     }
 
     .V_future {
@@ -141,7 +222,7 @@
         font-size: 20px;
     }
 
-   
+
     .V_sports_accessories {
         height: 300px;
     }
@@ -174,6 +255,49 @@
         padding-top: 5rem !important;
         padding-left: 30px;
     }
+
+
+
+
+
+    .V_new_footware {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 576px;
+        width: 100%;
+    }
+    
+    .V_all {
+        padding-top: 10rem !important;
+        margin-left: 140px;
+    }
+    
+    .V_all_width {
+        width: 333px;
+    }
+    
+    .V_new_foot {
+        font-size: 64px;
+    }
+    
+    .V_collection {
+        font-size: 44px;
+    }
+    
+    .V_big {
+        margin-top: -11rem !important;
+        margin-left: 300px;
+    }
+    
+    .V_disco {
+        font-size: 34px;
+    }
+    
+    .V_30 {
+        font-size: 126px;
+        padding-left: 20px;
+    }
 }
 
 
@@ -181,7 +305,7 @@
     .V_sports {
         background-size: cover;
         background-position-x: 95%;
-        height: 800px;
+        height: 100%;
     }
 
     .V_future {
@@ -229,13 +353,54 @@
         padding-top: 5rem !important;
         padding-left: 30px;
     }
+
+
+
+    .V_new_footware {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 480px;
+        width: 100%;
+    }
+
+    .V_all {
+        padding-top: 8rem !important;
+        margin-left: 120px;
+    }
+
+    .V_all_width {
+        width: 100px;
+    }
+
+    .V_new_foot {
+        font-size: 56px;
+    }
+
+    .V_collection {
+        font-size: 40px;
+    }
+
+    .V_big {
+        margin-top: -11rem !important;
+        margin-left: 260px;
+    }
+
+    .V_disco {
+        font-size: 34px;
+    }
+
+    .V_30 {
+        font-size: 126px;
+        padding-left: 10px;
+    }
 }
 
 @media (min-width: 1200px) and (max-width: 1439px) {
     .V_sports {
         background-size: cover;
         background-position-x: 95%;
-        height: 800px;
+        height: 100%;
     }
 
     .V_future {
@@ -283,13 +448,56 @@
         padding-top: 5rem !important;
         padding-left: 30px;
     }
+
+
+
+
+
+    .V_new_footware {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 400px;
+        width: 100%;
+    }
+
+    .V_all {
+        padding-top: 7rem !important;
+        margin-left: 20px;
+    }
+
+    .V_all_width {
+        width: 100px;
+    }
+
+    .V_new_foot {
+        font-size: 48px;
+    }
+
+    .V_collection {
+        font-size: 38px;
+    }
+
+    .V_big {
+        margin-top: -10rem !important;
+        margin-left: 250px;
+    }
+
+    .V_disco {
+        font-size: 32px;
+    }
+
+    .V_30 {
+        font-size: 116px;
+        padding-left: 10px;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
     .V_sports {
         background-size: cover;
         background-position-x: 95%;
-        height: 700px;
+        height: 100%;
     }
 
     .V_future {
@@ -337,13 +545,56 @@
         padding-top: 5rem !important;
         padding-left: 30px;
     }
+
+
+
+
+
+    .V_new_footware {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 350px;
+        width: 100%;
+    }
+
+    .V_all {
+        padding-top: 7rem !important;
+        margin-left: 20px;
+    }
+
+    .V_all_width {
+        width: 100px;
+    }
+
+    .V_new_foot {
+        font-size: 40px;
+    }
+
+    .V_collection {
+        font-size: 30px;
+    }
+
+    .V_big {
+        margin-top: -8.6rem !important;
+        margin-left: 200px;
+    }
+
+    .V_disco {
+        font-size: 26px;
+    }
+
+    .V_30 {
+        font-size: 100px;
+        padding-left: 10px;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
     .V_sports {
         background-size: cover;
         background-position-x: 95%;
-        height: 600px;
+        height: 100%;
     }
 
     .V_future {
@@ -391,13 +642,55 @@
         padding-top: 5rem !important;
         padding-left: 30px;
     }
+
+
+
+    .V_new_footware {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 300px;
+        width: 100%;
+    }
+
+    .V_all {
+        padding-top: 6rem !important;
+        margin-left: 0px;
+    }
+
+    .V_all_width {
+        width: 100px;
+    }
+
+    .V_new_foot {
+        font-size: 34px;
+    }
+
+    .V_collection {
+        font-size: 26px;
+    }
+
+    .V_big {
+        margin-top: -7.6rem !important;
+        margin-left: 170px;
+    }
+
+    .V_disco {
+        font-size: 22px;
+    }
+
+    .V_30 {
+        font-size: 88px;
+        padding-left: 10px;
+    }
+
 }
 
 @media (min-width: 576px) and (max-width: 767px) {
     .V_sports {
         background-size: cover;
         background-position-x: 95%;
-        height: 500px;
+        height: 100%;
     }
 
     .V_future {
@@ -445,13 +738,60 @@
         padding-top: 5rem !important;
         padding-left: 30px;
     }
+
+
+
+
+
+
+    .V_new_footware {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 250px;
+        width: 100%;
+    }
+
+    .V_all {
+        padding-top: 6rem !important;
+        margin-left: 0px;
+    }
+
+    .V_all_width {
+        width: 100px;
+    }
+
+    .V_new_foot {
+        font-size: 28px;
+    }
+
+    .V_collection {
+        font-size: 20px;
+    }
+
+    .V_big {
+        margin-top: -5.6rem !important;
+        margin-left: 140px;
+    }
+
+    .V_disco {
+        font-size: 16px;
+    }
+
+    .V_30 {
+        font-size: 60px;
+        padding-left: 10px;
+    }
+
+
+
 }
 
 @media (min-width: 480px) and (max-width: 575px) {
     .V_sports {
         background-size: cover;
         background-position-x: 95%;
-        height: 400px;
+        height: 100%;
     }
 
     .V_future {
@@ -499,13 +839,53 @@
         padding-top: 5rem !important;
         padding-left: 30px;
     }
+
+
+    .V_new_footware {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 200px;
+        width: 100%;
+    }
+
+    .V_all {
+        padding-top: 3rem !important;
+        margin-left: 0px;
+    }
+
+    .V_all_width {
+        width: 100px;
+    }
+
+    .V_new_foot {
+        font-size: 22px;
+    }
+
+    .V_collection {
+        font-size: 18px;
+    }
+
+    .V_big {
+        margin-top: -4.6rem !important;
+        margin-left: 118px;
+    }
+
+    .V_disco {
+        font-size: 14px;
+    }
+
+    .V_30 {
+        font-size: 44px;
+        padding-left: 10px;
+    }
 }
 
 @media (min-width: 300px) and (max-width: 479px) {
     .V_sports {
         background-size: cover;
         background-position-x: 95%;
-        height: 400px;
+        height: 100%;
     }
 
     .V_future {
@@ -553,4 +933,49 @@
         padding-top: 4rem !important;
         padding-left: 30px;
     }
+
+
+
+
+
+    .V_new_footware {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 150px;
+        width: 100%;
+    }
+
+    .V_all {
+        padding-top: 4rem !important;
+        margin-left: -15px;
+    }
+
+    .V_all_width {
+        width: 100px;
+    }
+
+    .V_new_foot {
+        font-size: 16px;
+    }
+
+    .V_collection {
+        font-size: 12px;
+    }
+
+    .V_big {
+        margin-top: -3.4rem !important;
+        margin-left: 80px;
+    }
+
+    .V_disco {
+        font-size: 10px;
+    }
+
+    .V_30 {
+        font-size: 30px;
+        padding-left: 10px;
+    }
+
+
 }

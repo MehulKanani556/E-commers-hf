@@ -1,11 +1,74 @@
+.V_luggage_product_1 {
+    background-image: url('../../assets/luggage best deal img 1.png');
+
+}
+
+.V_luggage_product_2 {
+    background-image: url('../../assets/luggage best deal img2.png');
+
+}
+
+.V_luggage_product_3 {
+    background-image: url('../../assets/luggage best deal img 3.png');
+
+}
+
+.V_luggage {
+    border-top-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+}
+
+.V_upto {
+    font-size: 44px;
+    font-weight: 700;
+    padding-top: 9rem !important;
+    padding-left: 30px;
+    width: 292px;
+}
+
+.V_20_red {
+    font-size: 44px;
+    font-weight: 700;
+    color: red;
+}
+
+.V_school {
+    font-size: 44px;
+    font-weight: 700;
+    padding-top: 5rem !important;
+    padding-left: 30px;
+    width: 292px;
+}
+
+.V_trendy {
+    font-size: 44px;
+    font-weight: 700;
+    padding-top: 5rem !important;
+    padding-left: 30px;
+    width: 292px;
+}
 
 
 
+.V_carry_your_load {
+    background-image: url('../../assets/carry your load.png');
+    background-size: cover;
+    height: 576px;
+    width: 1920px;
+}
 
-
-
-
-
+.V_carry {
+    font-size: 62px;
+    font-weight: 800;
+    color: #BD4555;
+    width: 526px;
+    height: 280px;
+    margin-left: 231px;
+    padding-top: 8rem !important;
+}
 
 
 
@@ -21,82 +84,398 @@
 
 
 @media (min-width: 1650px) {
-  
+    .V_luggage {
+        height: 300px;
+    }
+
+    .V_upto {
+        font-size: 44px;
+        padding-top: 9rem !important;
+        padding-left: 30px;
+        width: 292px;
+    }
+
+    .V_20_red {
+        font-size: 44px;
+    }
+
+    .V_school {
+        font-size: 44px;
+        padding-top: 5rem !important;
+        padding-left: 30px;
+        width: 292px;
+    }
+
+    .V_trendy {
+        font-size: 44px;
+        padding-top: 5rem !important;
+        padding-left: 30px;
+        width: 292px;
+    }
+
+
+    .V_carry_your_load {
+        background-size: cover;
+        height: 576px;
+        width: 1920px;
+    }
+    
+    .V_carry {
+        font-size: 62px;
+        font-weight: 800;
+        color: #BD4555;
+        width: 526px;
+        height: 280px;
+        margin-left: 231px;
+        padding-top: 8rem !important;
+    }
+
 }
 
 
 @media (min-width: 1440px) and (max-width: 1649px) {
-
-}
-
-@media (min-width: 1200px) and (max-width: 1439px) {
-
-}
-
-@media (min-width: 992px) and (max-width: 1199px) {
-    
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-
-   
-}
-
-@media (min-width: 576px) and (max-width: 767px) {
-    .V_fresh {
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        height: 500px;
+    .V_luggage {
+        height: 280px;
     }
 
-    .V_try_fresh {
-        font-size: 36px;
-        font-weight: 600;
-    }
-
-    .V_lipstic {
-        width: 425px;
-        height: auto;
-    }
-
-    .V_skin_care {
-        height: 220px;
-    }
-
-    .v_Dry {
-        font-size: 26px;
+    .V_upto {
+        font-size: 38px;
         width: 250px;
-        padding-top: 7rem !important;
+        padding-top: 6rem !important;
         padding-left: 30px;
     }
 
-    .v_make {
-        font-size: 26px;
-        width: 250px;
-        padding-top: 7rem !important;
+    .V_20_red {
+        font-size: 38px;
+    }
+
+    .V_school {
+        font-size: 38px;
+        width: 170px;
+        padding-top: 5rem !important;
         padding-left: 30px;
     }
 
-    .V_healty_skincare {
+    .V_trendy {
+        font-size: 38px;
+        width: 170px;
+        padding-top: 5rem !important;
+        padding-left: 30px;
+    }
+
+    .V_carry_your_load {
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
-        height: 300px;
         width: 100%;
     }
 
-    .V_overlay_text {
-        width: 350px;
-        height: 180px;
+    .V_carry {
+        font-size: 56px;
+        font-weight: 800;
+        color: #BD4555;
+        width: 450px;
+        height: 280px;
+        margin-left: 40px;
+        padding-top: 7rem !important;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1439px) {
+    .V_luggage {
+        height: 250px;
+    }
+
+    .V_upto {
+        font-size: 32px;
+        width: 200px;
+        padding-top: 6rem !important;
+        padding-left: 30px;
+    }
+
+    .V_20_red {
+        font-size: 32px;
+    }
+
+    .V_school {
+        font-size: 32px;
+        width: 170px;
+        padding-top: 5rem !important;
+        padding-left: 30px;
+    }
+
+    .V_trendy {
+        font-size: 32px;
+        width: 170px;
+        padding-top: 5rem !important;
+        padding-left: 30px;
+    }
+
+
+    .V_carry_your_load {
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100%;
+        width: 100%;
+    }
+
+    .V_carry {
+        font-size: 42px;
+        font-weight: 800;
+        color: #BD4555;
+        width: 319px;
+        height: 280px;
+        margin-left: 150px;
+        padding-top: 1rem !important;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .V_luggage {
+        height: 200px;
+    }
+
+    .V_upto {
+        font-size: 24px;
+        width: 170px;
+        padding-top: 6rem !important;
+        padding-left: 30px;
+    }
+
+    .V_20_red {
+        font-size: 24px;
+    }
+
+    .V_school {
+        font-size: 24px;
+        width: 170px;
+        padding-top: 5rem !important;
+        padding-left: 30px;
+    }
+
+    .V_trendy {
+        font-size: 24px;
+        width: 170px;
+        padding-top: 5rem !important;
+        padding-left: 30px;
+    }
+
+
+
+    .V_carry_your_load {
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100%;
+        width: 100%;
+    }
+
+    .V_carry {
+        font-size: 38px;
+        font-weight: 800;
+        color: #BD4555;
+        width: 300px;
+        height: 280px;
+        margin-left: 120px;
+        padding-top: 2rem !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .V_luggage {
+        height: 250px;
+    }
+
+    .V_upto {
         font-size: 34px;
+        width: 170px;
+        padding-top: 6rem !important;
+        padding-left: 30px;
+    }
+
+    .V_20_red {
+        font-size: 34px;
+    }
+
+    .V_school {
+        font-size: 34px;
+        width: 170px;
+        padding-top: 5rem !important;
+        padding-left: 30px;
+    }
+
+    .V_trendy {
+        font-size: 34px;
+        width: 170px;
+        padding-top: 6rem !important;
+        padding-left: 30px;
+    }
+
+    .V_carry_your_load {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 100%;
+        width: 100%;
+    }
+
+    .V_carry {
+        font-size: 40px;
+        font-weight: 800;
+        color: #BD4555;
+        width: 300px;
+        height: 280px;
+        margin-left: 30px;
+        padding-top: 3rem !important;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+    .V_luggage {
+        height: 220px;
+    }
+
+    .V_upto {
+        font-size: 32px;
+        width: 170px;
+        padding-top: 6rem !important;
+        padding-left: 30px;
+    }
+
+    .V_20_red {
+        font-size: 32px;
+    }
+
+    .V_school {
+        font-size: 32px;
+        width: 170px;
+        padding-top: 5rem !important;
+        padding-left: 30px;
+    }
+
+    .V_trendy {
+        font-size: 32px;
+        width: 170px;
+        padding-top: 6rem !important;
+        padding-left: 30px;
+    }
+
+
+
+    .V_carry_your_load {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 100%;
+        width: 100%;
+    }
+
+    .V_carry {
+        font-size: 34px;
+        font-weight: 800;
+        color: #BD4555;
+        width: 300px;
+        height: 280px;
+        margin-left: 20px;
+        padding-top: 4rem !important;
     }
 }
 
 @media (min-width: 480px) and (max-width: 575px) {
-   
+    .V_luggage {
+        height: 200px;
+    }
+
+    .V_upto {
+        font-size: 28px;
+        width: 170px;
+        padding-top: 6rem !important;
+        padding-left: 30px;
+    }
+
+    .V_20_red {
+        font-size: 28px;
+    }
+
+    .V_school {
+        font-size: 28px;
+        width: 170px;
+        padding-top: 5rem !important;
+        padding-left: 30px;
+    }
+
+    .V_trendy {
+        font-size: 28px;
+        width: 170px;
+        padding-top: 6rem !important;
+        padding-left: 30px;
+    }
+
+
+
+    .V_carry_your_load {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 100%;
+        width: 100%;
+    }
+
+    .V_carry {
+        font-size: 28px;
+        font-weight: 800;
+        color: #BD4555;
+        width: 210px;
+        height: 280px;
+        margin-left: 20px;
+        padding-top: 4rem !important;
+    }
 }
 
 @media (min-width: 300px) and (max-width: 479px) {
+    .V_luggage {
+        height: 180px;
+    }
 
+    .V_upto {
+        font-size: 20px;
+        width: 170px;
+        padding-top: 6rem !important;
+        padding-left: 30px;
+    }
+
+    .V_20_red {
+        font-size: 20px;
+    }
+
+    .V_school {
+        font-size: 20px;
+        width: 170px;
+        padding-top: 5rem !important;
+        padding-left: 30px;
+    }
+
+    .V_trendy {
+        font-size: 20px;
+        width: 170px;
+        padding-top: 6rem !important;
+        padding-left: 30px;
+    }
+
+    .V_carry_your_load {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 150px;
+        width: 100%;
+    }
+
+    .V_carry {
+        font-size: 20px;
+        font-weight: 800;
+        color: #BD4555;
+        width: 140px;
+        height: 280px;
+        margin-left: -10px;
+        padding-top: 1rem !important;
+    }
 }
