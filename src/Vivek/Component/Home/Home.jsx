@@ -9,21 +9,22 @@ import Toptoys from './Toptoys'
 import Relateditems from './Relateditems'
 import Subscribe from '../common/Subscribe'
 import Process from '../common/Process'
-// import ShoesSlider from '../Slider/ShoesSlider'
+import ShoesSlider from '../Slider/ShoesSlider'
 import CommSlider from './CommSlider'
 import Jewery from './Jewery'
 import Collection from './Collection'
+import Poster from './Poster'
 
 const Home = () => {
     return (
         <React.Fragment>
 
-            {/* sldier */}
-            {/* <ShoesSlider/> */}
-
-
             {/* header */}
             <Header/>
+
+
+            {/* sldier */}
+            <ShoesSlider/>
 
 
             {/* minislider */}
@@ -36,6 +37,9 @@ const Home = () => {
 
             {/* ELECTONICS essentials  */}
             <Electronicsessiental/>
+
+            {/* poster */}
+            <Poster/>
 
 
             {/* BEst SeLLERS */}
@@ -70,13 +74,3 @@ const Home = () => {
 }
 
 export default Home
-
-
-
-// const Slider = () => {
-//   return (
-//     <div>
-      
-//     </div>
-//   )
-// }
