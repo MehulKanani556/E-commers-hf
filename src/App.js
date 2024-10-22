@@ -16,6 +16,9 @@ import User from './Vivek/Component/User/User';
 import UserProfile from './Vivek/Component/User/UserProfile'
 import MyOrder from './Vivek/Component/User/MyOrder';
 import UserFaq from './Vivek/Component/User/UserFaq';
+import TermOfServices from './Vivek/Component/User/TermOfServices';
+import UserDeactive from './Vivek/Component/User/UserDeactive';
+import UserAddress from './Vivek/Component/User/UserAddress';
 
 function App() {
   return (
@@ -53,7 +56,10 @@ function App() {
           <Route path="/user" element={<User />}>
             <Route path='profile' element={<UserProfile />} />
             <Route path='myorder' element={<MyOrder />} />
-            <Route path='faq' element={<UserFaq />} />
+            <Route path='faqs' element={<UserFaq />} />
+            <Route path='term' element={<TermOfServices />} />
+            <Route path='deactive' element={<UserDeactive />} />
+            <Route path='address' element={<UserAddress />} />
           </Route>
 
         </Routes>

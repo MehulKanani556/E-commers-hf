@@ -32,7 +32,7 @@ const User = () => {
                                 <Col lg={3} md={4} className='pe-4 pb-5 pb-md-0'>
                                     <UserSidebar setModalShow={setModalShow} />
                                 </Col>
-                                <Col>
+                                <Col lg={9} md={8} className='pt-3 px-md-2'>
                                     <Outlet />
                                 </Col>
                             </Row>
