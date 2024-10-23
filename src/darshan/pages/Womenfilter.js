@@ -6,6 +6,7 @@ import { FaMinus, FaPlus, FaStar } from 'react-icons/fa'
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import './../css/trending.css'
+import { Link } from 'react-router-dom';
 
 const Womenfilter = () => {
 
@@ -633,6 +634,7 @@ const Womenfilter = () => {
     // search Filter
 
     const handleSearchChange = (e) => {
+        e.preventDefault();
         const { name, value } = e.target;
 
         if (name === "brand") {
@@ -865,7 +867,6 @@ const Womenfilter = () => {
                                     <div class="d_search">
                                         <IoSearch className='d_searchicon' />
                                         <input type="text" name="brand" value={searchbrand} onChange={handleSearchChange} class="form-control " placeholder="Search" />
-
                                     </div>
                                     {displayedbrands.map((brand, index) => (
                                         <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
@@ -875,9 +876,9 @@ const Womenfilter = () => {
                                         </div>
                                     ))}
                                     {filteredBrands.length > initialDisplayCount && (
-                                        <a href="#" onClick={(e) => handleShowMore(e, 'brand')} className='text-decoration-none'>
+                                        <Link href="#" onClick={(e) => {e.preventDefault(); handleShowMore(e, 'brand')}} className='text-decoration-none'>
                                             {showMore.brand ? 'Show Less' : `Show More (${filteredBrands.length - initialDisplayCount})`}
-                                        </a>
+                                        </Link>
                                     )}
                                 </>
                             }

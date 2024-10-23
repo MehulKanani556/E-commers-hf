@@ -1,0 +1,35 @@
+.d_bought .d_boughtbox .d_boughttotal {
+    font-size: 16px;
+    font-weight: 500;
+    color: #2B221E;
+    margin-bottom: 20px;
+}
+
+.d_bought .d_boughtbox .d_boughttotal span {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.d_bought .d_boughtbox .d_cta a {
+    padding: 14px 0;
+    background-color: #2B221E;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    border-radius: 4px;
+}
+.d_like .slider-item {
+    padding: 0 15px; 
+}
+.d_like .slick-prev:before, .d_like .slick-next:before{
+    font-size: 20px;
+    color: #000;
+}
+.d_like .slick-prev, .d_like .slick-next{
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    box-shadow: 0px 4px 14px 0px #61616140;
+    border-radius: 50%;
+    color: red;
+}
