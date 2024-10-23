@@ -71,10 +71,6 @@
     position: relative;
 }
 
-.d_womendetail .d_mainimg .d_img canvas {
-    height: 100% !important;
-}
-
 .d_womendetail .d_mainimg .d_img img {
     width: 100%;
     height: 100% !important;
@@ -102,45 +98,20 @@
     color: #fff;
 }
 
-#v360-menu-btns {
-    display: none;
-}
-
-/* .v360-viewport{
+#viewer {
+    width: 90vw;
     width: 100%;
-    height: 870px;
-} */
-/* .v360-viewport canvas{
-    width: 100% !important;
-    height: 100% !important;
-} */
-abbr[title] {
-    display: none;
+    position: relative;
+    overflow: hidden;
 }
 
-.d_womendetail .d_mainimg .d_img canvas {
-    aspect-ratio: 580 / 830 !important;
-    /* Maintain aspect ratio */
-    width: 100% !important;
-    height: auto !important;
-    /* Responsive height */
+canvas {
+    height: 830px;
+    display: block;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 }
 
-.d_womendetail .d_mainimg .d_img .v360-viewport {
-    width: 100%;
-    /* Full width */
-    height: auto;
-    /* Automatically adjust height */
-    max-height: 830px;
-    /* Optional max height */
-}
-
-.d_womendetail .d_mainimg .d_img canvas {
-    width: 100% !important;
-    /* Make canvas responsive */
-    height: auto !important;
-    /* Maintain aspect ratio */
-}
 
 /* content */
 
@@ -381,12 +352,15 @@ abbr[title] {
     background-color: #2B221E;
     color: #fff;
 }
+
 .d_womendetail .d_detail .d_size .d_disable {
     border: 1px solid #6A6A6A;
 }
-.d_womendetail .d_detail .d_size .d_disable p{
+
+.d_womendetail .d_detail .d_size .d_disable p {
     color: #6A6A6A;
 }
+
 .d_diagonal-line {
     position: absolute;
     top: 34%;
@@ -396,7 +370,8 @@ abbr[title] {
     transform: rotate(-45deg);
     border-top: 1.25px solid #6A6A6A;
     transform-origin: center;
-  }
+}
+
 .d_womendetail .d_detail .d_qun {
     font-size: 16px;
     font-weight: 500;
@@ -638,96 +613,267 @@ input:focus-visible {
 .d_proinfo .d_review .d_rightbox .progress-bar {
     background-color: #2B221E;
 }
-.d_proinfo .d_review .d_rightbox .d_staricon{
+
+.d_proinfo .d_review .d_rightbox .d_staricon {
     font-size: 10px;
     color: #F8A120;
     margin-top: -5px;
 }
-.d_proinfo .d_review .d_rightbox .d_emptystar{
+
+.d_proinfo .d_review .d_rightbox .d_emptystar {
     font-size: 10px;
     color: #6A6A6A;
     margin-top: -5px;
 }
-.d_proinfo .d_review .d_rightbox .d_percetage{
+
+.d_proinfo .d_review .d_rightbox .d_percetage {
     font-size: 16px;
     font-weight: 500;
     color: #2B221E;
 }
-.d_proinfo .d_review .d_rightbox .d_rating{
+
+.d_proinfo .d_review .d_rightbox .d_rating {
     margin-bottom: 20px;
 }
-.d_proinfo .d_review .d_reviewlist{
-    margin-top: 40px ;
+
+.d_proinfo .d_review .d_reviewlist {
+    margin-top: 40px;
 }
-.d_proinfo .d_review .d_reviewlist .d_head{
+
+.d_proinfo .d_review .d_reviewlist .d_head {
     font-size: 24px;
     font-weight: 600;
     color: #1D2939;
     margin-bottom: 24px;
 }
-.d_proinfo .d_review .d_reviewlist .d_list{
+
+.d_proinfo .d_review .d_reviewlist .d_list {
     padding: 20px 0;
     border-bottom: 0.5px solid #6A6A6A;
 }
-.d_proinfo .d_review .d_reviewlist .d_list:last-child{
+
+.d_proinfo .d_review .d_reviewlist .d_list:last-child {
     border-bottom: none;
 }
-.d_proinfo .d_review .d_reviewlist .d_namecircle{
+
+.d_proinfo .d_review .d_reviewlist .d_namecircle {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     background-color: #164C96;
 }
-.d_proinfo .d_review .d_reviewlist .d_namecircle span{
+
+.d_proinfo .d_review .d_reviewlist .d_namecircle span {
     color: #fff;
     font-size: 16px;
     font-weight: 500;
 }
-.d_proinfo .d_review .d_reviewlist .d_name{
+
+.d_proinfo .d_review .d_reviewlist .d_name {
     font-size: 17px;
     font-weight: 500;
     color: #2B221E;
 }
-.d_proinfo .d_review .d_reviewlist .d_dayago{
+
+.d_proinfo .d_review .d_reviewlist .d_dayago {
     font-size: 13px;
     font-weight: 400;
     color: #6A6A6A;
 }
-.d_proinfo .d_review .d_reviewlist .d_staricon{
+
+.d_proinfo .d_review .d_reviewlist .d_staricon {
     font-size: 10px;
     color: #F8A120;
 }
-.d_proinfo .d_review .d_reviewlist .d_title{
+
+.d_proinfo .d_review .d_reviewlist .d_title {
     font-size: 15px;
     font-weight: 500;
     color: #000;
     margin-bottom: 10px;
 }
-.d_proinfo .d_review .d_reviewlist .d_desc{
+
+.d_proinfo .d_review .d_reviewlist .d_desc {
     font-size: 15px;
     font-weight: 400;
     color: #6A6A6A;
 }
-.d_proinfo .d_review .d_reviewlist .d_like .d_icon{
+
+.d_proinfo .d_review .d_reviewlist .d_like .d_icon {
     font-size: 16px;
     color: #2B221E;
     margin-top: -4px;
 }
-.d_proinfo .d_review .d_reviewlist .d_dislike .d_icon{
+
+.d_proinfo .d_review .d_reviewlist .d_dislike .d_icon {
     font-size: 16px;
     color: #2B221E;
 }
-.d_proinfo .d_review .d_reviewlist .d_img img{
+
+.d_proinfo .d_review .d_reviewlist .d_img img {
     width: 40px;
     height: 50px;
     border-radius: 2px;
     margin-right: 10px;
 }
-.d_delcard .d_head h4{
+
+.d_delcard .d_head h4 {
     font-size: 22px;
     text-transform: capitalize;
 }
 
+
+/* size chart css start */
+
+.d_sizemodal .modal-dialog {
+    width: 750px;
+}
+
+.d_sizemodal .modal-content {
+    border: none;
+}
+
+.d_sizemodal .modal-body {
+    padding: 20px;
+}
+
+.d_sizemodal .d_closeicon .icon {
+    font-size: 26px;
+    color: #6A6A6A;
+}
+
+.d_sizemodal .d_img {
+    width: 100%;
+    height: 295px;
+}
+
+.d_sizemodal .d_img img {
+    width: 100%;
+    height: 100%;
+}
+
+.d_sizemodal .d_text h4 {
+    font-size: 34px;
+    font-weight: 400;
+    color: #2B221E;
+    margin-bottom: 16px;
+}
+
+.d_sizemodal .d_text p {
+    font-weight: 400;
+    font-size: 17px;
+    color: #6A6A6A;
+    line-height: 22px;
+}
+
+.d_sizemodal .d_inch {
+    padding: 28px 58px;
+    border-top: 0.43px solid #6A6A6A80;
+}
+
+.d_sizemodal .d_inch .d_inchbg {
+    background-color: #E6E6E6;
+    color: #6A6A6A;
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.d_sizemodal thead tr th {
+    font-size: 20px;
+    font-weight: 600;
+    color: #6A6A6A;
+}
+
+.d_sizemodal tbody tr th {
+    font-size: 20px;
+    font-weight: 400;
+    color: #000;
+    text-align: start;
+}
+
+.d_sizemodal tbody tr td {
+    font-size: 17px;
+    font-weight: 400;
+    color: #000000;
+}
+
+.d_sizemodal thead .d_yr td {
+    font-size: 17px;
+    font-weight: 400;
+    color: #6A6A6A;
+}
+
+.d_sizemodal .table-bordered>:not(caption)>*>*,
+.d_sizemodal .table-bordered>:not(caption)>* {
+    border: none;
+}
+
+.d_sizemodal .table>:not(caption)>*>* {
+    padding: 3px;
+}
+
+
+/* size chart css end */
+
+/* offer modal css start */
+
+.d_offermodal .modal-body {
+    padding: 0;
+}
+
+.d_offermodal .modal-content {
+    box-shadow: 0px 4px 14px 0px #8F8F8F40;
+    border-radius: 4px !important;
+}
+
+.d_offermodal .d_topsec {
+    border-bottom: 0.5px solid #6A6A6A;
+    padding: 25px 20px;
+}
+
+.d_offermodal .d_topsec h4 {
+    font-size: 20px;
+    font-weight: 500;
+    color: #000;
+}
+
+.d_offermodal .icon {
+    font-size: 26px;
+    color: #6A6A6A;
+}
+
+.d_offermodal .d_offercon {
+    padding: 20px 20px;
+    border-bottom: 0.5px solid #6A6A6A;
+}
+
+.d_offermodal .d_offercon:last-child {
+    border-bottom: none;
+}
+
+.d_offermodal .d_offercon .d_text .d_title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+}
+
+.d_offermodal .d_offercon .d_text .d_saveprice {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+}
+
+.d_offermodal .d_offercon .d_text p {
+    font-size: 14px;
+    font-weight: 400;
+    color: #6A6A6A;
+}
+
+.d_offermodal .modal-dialog {
+    width: 670px;
+}
+
+/* offer modal css end */
 
 
 @media(max-width:1440px) {
@@ -827,14 +973,21 @@ input:focus-visible {
     .d_proinfo .d_proshipping p {
         font-size: 17px;
     }
-    .d_proinfo .d_review .d_reviewlist .d_head{
+
+    .d_proinfo .d_review .d_reviewlist .d_head {
         margin-bottom: 15px;
     }
-    .d_proinfo .d_review .d_reviewlist{
+
+    .d_proinfo .d_review .d_reviewlist {
         margin-top: 15px;
     }
-    .d_proinfo .d_review .d_rightbox .progress{
+
+    .d_proinfo .d_review .d_rightbox .progress {
         width: 80%;
+    }
+    
+    canvas{
+        height: 685px;
     }
 }
 
@@ -894,14 +1047,37 @@ input:focus-visible {
     .d_proinfo .d_prodesc .d_con .d_conhead {
         font-size: 16px;
     }
-    .d_proinfo .d_review .d_leftbox .d_number{
+
+    .d_proinfo .d_review .d_leftbox .d_number {
         font-size: 40px;
     }
-    .d_proinfo .d_review .d_rightbox .d_rating{
+
+    .d_proinfo .d_review .d_rightbox .d_rating {
         margin-bottom: 10px;
     }
+
     .d_proinfo .d_review .d_rightbox .progress {
         width: 77%;
+    }
+
+    .d_sizemodal .modal-body {
+        padding: 10px;
+    }
+
+    .d_sizemodal .d_inch {
+        padding: 14px 24px;
+    }
+
+    .d_offermodal .d_topsec {
+        padding: 18px;
+    }
+
+    .d_offermodal .d_offercon {
+        padding: 15px;
+    }
+
+    canvas{
+        height: 685px;
     }
 }
 
@@ -934,24 +1110,82 @@ input:focus-visible {
         margin-bottom: 5px;
         line-height: 22px;
     }
-    .d_proinfo .d_review .d_reviewlist .d_list{
+
+    .d_proinfo .d_review .d_reviewlist .d_list {
         padding: 10px 0;
     }
-    .d_proinfo .d_review .d_reviewlist .d_namecircle{
+
+    .d_proinfo .d_review .d_reviewlist .d_namecircle {
         width: 35px;
         height: 35px;
     }
-    .d_proinfo .d_review .d_reviewlist .d_namecircle span{
+
+    .d_proinfo .d_review .d_reviewlist .d_namecircle span {
         font-size: 14px;
     }
-    .d_proinfo .d_review .d_reviewlist .d_desc{
+
+    .d_proinfo .d_review .d_reviewlist .d_desc {
         font-size: 14px;
     }
-    .d_proinfo .d_review .d_reviewlist .d_title{
+
+    .d_proinfo .d_review .d_reviewlist .d_title {
         margin-bottom: 5px;
     }
+
     .d_proinfo .d_review .d_rightbox .progress {
         width: 68%;
+    }
+
+    .d_sizemodal .modal-dialog {
+        width: 800px;
+    }
+
+    .d_sizemodal .d_text h4 {
+        font-size: 26px;
+    }
+
+    .d_sizemodal .d_img {
+        height: 220px;
+    }
+
+    .d_sizemodal .d_text p {
+        font-size: 15px;
+    }
+
+    .d_sizemodal thead tr th {
+        font-size: 16px;
+    }
+
+    .d_sizemodal .d_inch .d_inchbg {
+        font-size: 15px;
+    }
+
+    .d_sizemodal tbody tr th {
+        font-size: 16px;
+    }
+
+    .d_sizemodal tbody tr td {
+        font-size: 15px;
+    }
+
+    .d_sizemodal thead .d_yr td {
+        font-size: 15px;
+    }
+
+    .d_offermodal .modal-dialog {
+        width: 700px;
+    }
+
+    .d_offermodal .d_topsec h4 {
+        font-size: 18px;
+    }
+
+    .d_offermodal .icon {
+        font-size: 20px;
+    }
+   
+    canvas{
+        height: 645px;
     }
 }
 
@@ -1045,11 +1279,42 @@ input:focus-visible {
     .d_proinfo .d_prodesc .d_con p {
         font-size: 12px;
     }
+
     .d_proinfo .d_review .d_rightbox .progress {
         width: 55%;
     }
-    .d_proinfo .accordion-item{
+
+    .d_proinfo .accordion-item {
         margin-bottom: 15px;
+    }
+
+    .d_sizemodal .modal-dialog {
+        width: 400px;
+    }
+
+    .d_sizemodal .d_img {
+        height: 250px;
+    }
+
+    .d_sizemodal thead .d_yr td {
+        font-size: 12px;
+    }
+
+    .d_sizemodal .modal {
+        padding-left: 0 !important;
+        margin: 0px -5px;
+    }
+    .d_offermodal .modal-dialog{
+        width: 400px;
+    }
+    .d_offermodal .d_offercon .d_text .d_title{
+        font-size: 14px;
+    }
+    .d_offermodal .d_offercon .d_text p {
+        font-size: 12px;
+    }
+    canvas{
+        height: 500px;
     }
 }
 
@@ -1079,10 +1344,31 @@ input:focus-visible {
     .d_womendetail .d_feabg:last-child {
         margin-top: 5px;
     }
-    .d_proinfo .d_review .d_rightbox .progress{
+
+    .d_proinfo .d_review .d_rightbox .progress {
         width: 47%;
     }
-    
+
+    .d_sizemodal .modal-dialog {
+        width: 350px;
+    }
+
+    .d_sizemodal .d_inch {
+        padding: 14px;
+    }
+
+    .d_sizemodal tbody tr td,
+    .d_sizemodal .d_inch .d_inchbg,
+    .d_sizemodal thead tr th {
+        font-size: 13px;
+    }
+
+    .d_sizemodal tbody tr th {
+        font-size: 11px;
+    }
+    .d_offermodal .modal-dialog{
+        width: 350px;
+    }
 }
 
 @media(max-width:320px) {
@@ -1101,7 +1387,18 @@ input:focus-visible {
     .d_womendetail .d_delbtn .d_addcartbtn {
         width: 110px;
     }
+
     .d_proinfo .d_review .d_rightbox .progress {
         width: 34%;
+    }
+
+    .d_sizemodal .modal-dialog {
+        width: 300px;
+    }
+    .d_offermodal .modal-dialog{
+        width: 300px;
+    }
+    canvas{
+        height: 400px;
     }
 }

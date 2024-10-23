@@ -5,6 +5,7 @@ import { FaStar } from 'react-icons/fa';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import './../css/trending.css'
 import './../css/Bought.css'
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const Like = () => {
 
@@ -102,21 +103,42 @@ const Like = () => {
               breakpoint: 480,
               settings: {
                 slidesToShow: 1,
-                slidesToScroll: 1
+                slidesToScroll: 1,
+                arrows:false,
+                dots: true,
               }
             }
           ]
     };
 
+    const CustomPrevArrow = (props) => {
+        const { className, onClick } = props;
+        return (
+            <div className={className} onClick={onClick}>
+                <IoIosArrowBack className="custom-arrow" />
+            </div>
+        );
+    };
+    
+    const CustomNextArrow = (props) => {
+        const { className, onClick } = props;
+        return (
+            <div className={className} onClick={onClick}>
+                <IoIosArrowForward className="custom-arrow" />
+            </div>
+        );
+    };
+
     return (
         <>
 
-            <section className='d_p-80 d_trend d_like'>
+            <section className='d_p-50 pb-0 d_trend d_like'>
                 <div className="d_container">
-                    <div className="d_head d-flex justify-content-between align-items-center">
-                        <h4 className='mb-0'>trending Navratri Collection for you</h4>
+                    <div className="d_head px-3 d-flex justify-content-between align-items-center">
+                        <h4 className='mb-0'>You may also like this</h4>
                     </div>
-                    <Slider {...settings}>
+                    <Slider {...settings} prevArrow={<CustomPrevArrow />}
+    nextArrow={<CustomNextArrow />}>
                         {filterItems.map((item, index) => {
                             console.log(item.length)
                             return (
@@ -164,11 +186,6 @@ const Like = () => {
                     </Slider>
                 </div>
             </section>
-
-
-            <div className="d_trend">
-
-            </div>
 
         </>
     )

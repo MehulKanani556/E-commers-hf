@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ImageView360 from 'react-360-view';
-import { IoLocationSharp, IoShareSocialSharp } from 'react-icons/io5';
+import { IoClose, IoLocationSharp, IoShareSocialSharp } from 'react-icons/io5';
 import ReactImageMagnify from 'react-image-magnify';
 import detailImg1 from './../d_img/detailimg1.png';
 import detailImg2 from './../d_img/detailimg2.png';
@@ -18,8 +18,14 @@ import Accordion from 'react-bootstrap/Accordion';
 import { AiFillDislike, AiFillLike, AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
 import Bought from '../components/Bought';
 import Like from '../components/Like';
+import Recentlyviewed from '../components/Recentlyviewed';
+import Customerlike from '../components/Customerlike';
+import { Modal, Table } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { ReactImageTurntable } from 'react-image-turntable';
 
 const WomenDetails = () => {
+
 
 
     // Initialize with the properly imported main image
@@ -28,10 +34,18 @@ const WomenDetails = () => {
         src: detailImg4
     });
     const [is360Active, setIs360Active] = useState(false);
-    const [isActivecategory, setIsActivecategory] = useState(true)
     const [isquantityOpen, setIsquantityOpen] = useState(false);
+    const [sizemodalShow, setsizeModalShow] = useState(false);
+    const [offermodalShow, setofferModalShow] = useState(false);
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
+    const viewerRef = useRef(null);
+    const [currentFrame, setCurrentFrame] = useState(0);
+    const [dragging, setDragging] = useState(false);
+    const [lastX, setLastX] = useState(0);
+    const imageCount = 4; // Number of images (adjust as needed)
+    const images = useRef([]);
+    const dragThreshold = 30; // Increase this value to slow down the image change speed
 
     // Use the imported images/video in the subImages array
     const subImages = [
@@ -70,6 +84,105 @@ const WomenDetails = () => {
         setIsquantityOpen(!isquantityOpen);
     };
 
+    // Function to load images from the public folder
+    const loadImages = () => {
+        return Array.from({ length: imageCount }, (_, i) => {
+            const img = new Image();
+            img.src = `/360-images/detailimg${i + 1}.png`; // Access images in public/360-images
+            return img;
+        });
+    };
+
+    // Preload all images on component mount
+    useEffect(() => {
+        images.current = loadImages(); // Load images into the ref array
+    }, []);
+
+    // Resize canvas on window resize
+    useEffect(() => {
+        const handleResize = () => {
+            const canvas = canvasRef.current;
+            const viewer = viewerRef.current;
+
+            if (viewer && canvas) {
+                // Set canvas width to match viewer's width
+                canvas.width = viewer.clientWidth;
+
+                // Calculate height based on aspect ratio
+                const aspectRatio = images.current[currentFrame].naturalWidth / images.current[currentFrame].naturalHeight;
+                canvas.height = canvas.width / aspectRatio;
+
+                renderImage();
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Initial resize
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [currentFrame]); // Also update when the current frame changes
+
+    // Render the current image on the canvas
+    const renderImage = () => {
+        const canvas = canvasRef.current;
+
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Ensure the image is loaded
+            const img = images.current[currentFrame];
+            if (img?.complete) {
+                // Draw the image with original aspect ratio
+                const aspectRatio = img.naturalWidth / img.naturalHeight;
+                const newHeight = canvas.width / aspectRatio;
+
+                ctx.drawImage(img, 0, 0, canvas.width, newHeight);
+            }
+        }
+    };
+
+    // Handle mouse and touch drag logic
+    const startDragging = (pageX) => {
+        setDragging(true);
+        setLastX(pageX);
+    };
+
+    const stopDragging = () => {
+        setDragging(false);
+    };
+
+    const handleClick = () => {
+        // Ensure rendering is triggered on click as well
+        renderImage();
+    };
+
+    const handleDrag = (pageX) => {
+        if (dragging) {
+            const dx = pageX - lastX;
+
+            // Change image only when the drag exceeds the threshold value
+            if (Math.abs(dx) > dragThreshold) {
+                if (dx > 0) {
+                    setCurrentFrame((prev) => (prev + 1) % imageCount); // Next frame
+                } else if (dx < 0) {
+                    setCurrentFrame((prev) => (prev - 1 + imageCount) % imageCount); // Previous frame
+                }
+
+                // Reset the lastX to avoid continuous frame changes
+                setLastX(pageX);
+            }
+        }
+    };
+
+    // Re-render the image when the current frame changes
+    useEffect(() => {
+        renderImage();
+    }, [currentFrame]);
 
     return (
         <>
@@ -128,7 +241,11 @@ const WomenDetails = () => {
                                                         <img
                                                             src={icon360}
                                                             alt="360 View"
-                                                            onClick={toggle360View}
+                                                            onClick={() => {
+                                                                toggle360View()
+                                                                setCurrentFrame(1)
+                                                            }}
+
                                                             style={{ cursor: 'pointer' }}
                                                         />
                                                         <IoShareSocialSharp
@@ -151,16 +268,32 @@ const WomenDetails = () => {
                                         )}
 
                                         {is360Active && (
-                                            <div className="d_img ">
-                                                <ImageView360
-                                                    amount={3}
-                                                    imagePath="/360-images/"
-                                                    fileName="detailimg{index}.png"
-                                                    ref={canvasRef}
-                                                    height={830}
-                                                    dragSpeed={3}
-                                                />
-                                                <div className="d_delicon">
+                                            <div className=" ">
+                                                <div
+                                                    id="viewer"
+                                                    ref={viewerRef}
+                                                // style={{ width: '90vw', maxWidth: '600px', position: 'relative', overflow: 'hidden' }}
+                                                >
+                                                    <canvas
+                                                        className='w-100'
+                                                        ref={canvasRef}
+                                                        onMouseDown={(e) => startDragging(e.pageX)}
+                                                        onMouseUp={stopDragging}
+                                                        onMouseMove={(e) => handleDrag(e.pageX)}
+                                                        onClick={handleClick} // Add click event
+                                                        onTouchStart={(e) => startDragging(e.touches[0].pageX)}
+                                                        onTouchEnd={stopDragging}
+                                                        onTouchMove={(e) => {
+                                                            e.preventDefault();
+                                                            handleDrag(e.touches[0].pageX);
+                                                        }}
+                                                        // style={{ width: '100%', display: 'block', height: 'auto' }}
+                                                    ></canvas>
+                                                </div>
+
+
+
+                                                {/* <div className="d_delicon">
                                                     <div className="d-flex justify-content-between align-items-center">
                                                         <img
                                                             src={icon360}
@@ -173,7 +306,7 @@ const WomenDetails = () => {
                                                             onClick={handleShare}
                                                         />
                                                     </div>
-                                                </div>
+                                                </div> */}
                                             </div>
                                         )}
                                     </div>
@@ -203,24 +336,20 @@ const WomenDetails = () => {
                                 <div className="d_offer">
                                     <div className="d_acc">
                                         <div className="d_accitem">
-                                            <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActivecategory(!isActivecategory)}>
+                                            <div className="d_acctitle d-flex justify-content-between">
                                                 <div className='d_title'>Best Offers</div>
-                                                <div className='d_icon d_cur'>{isActivecategory ? 'View More ' : "View Less "}</div>
+                                                <div className='d_icon d_cur' onClick={() => setofferModalShow(true)}>View More</div>
                                             </div>
-                                            {isActivecategory &&
-                                                <>
-                                                    <div className="d_acccon">
-                                                        <div className="d-flex align-items-center">
-                                                            <img src={require('./../d_img/offer.png')} alt="" className='me-2' />
-                                                            <div className="d-flex justify-content-between w-100 aling-items-center">
-                                                                <div className="d_offertitle">NEW100</div>
-                                                                <div className="d_savepri">Save $100 </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="d_offerdesc ms-4">Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque iaculis habitant congue est blandit amet. </div>
+                                            <div className="d_acccon">
+                                                <div className="d-flex align-items-center">
+                                                    <img src={require('./../d_img/offer.png')} alt="" className='me-2' />
+                                                    <div className="d-flex justify-content-between w-100 aling-items-center">
+                                                        <div className="d_offertitle">NEW100</div>
+                                                        <div className="d_savepri">Save $100 </div>
                                                     </div>
-                                                </>
-                                            }
+                                                </div>
+                                                <div className="d_offerdesc ms-4">Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque iaculis habitant congue est blandit amet. </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -254,7 +383,7 @@ const WomenDetails = () => {
                                         <div className="col-12 col-sm-6 col-lg-12 col-xl-6">
                                             <div className="d-flex justify-content-between">
                                                 <div className="d_title">Size :</div>
-                                                <a href="">Size chart</a>
+                                                <Link className='text-decoration-underline d_cur' onClick={(e) => { e.preventDefault(); setsizeModalShow(true) }}>Size chart</Link>
                                             </div>
                                             <div className="d-flex">
                                                 <div className="d_sizebox d_disable d-flex justify-content-center align-items-center">
@@ -565,7 +694,7 @@ const WomenDetails = () => {
                                                         <AiOutlineLike className='d_icon me-1' /> Liked
                                                     </div>
                                                     <div className="d_dislike">
-                                                        <AiFillDislike  className='d_icon me-1' /> Dislike
+                                                        <AiFillDislike className='d_icon me-1' /> Dislike
                                                     </div>
                                                 </div>
                                             </div>
@@ -604,7 +733,7 @@ const WomenDetails = () => {
                                                         <AiOutlineLike className='d_icon me-1' /> Liked
                                                     </div>
                                                     <div className="d_dislike">
-                                                        <AiOutlineDislike   className='d_icon me-1' /> Dislike
+                                                        <AiOutlineDislike className='d_icon me-1' /> Dislike
                                                     </div>
                                                 </div>
                                             </div>
@@ -643,7 +772,7 @@ const WomenDetails = () => {
                                                         <AiOutlineLike className='d_icon me-1' /> Liked
                                                     </div>
                                                     <div className="d_dislike">
-                                                        <AiOutlineDislike   className='d_icon me-1' /> Dislike
+                                                        <AiOutlineDislike className='d_icon me-1' /> Dislike
                                                     </div>
                                                 </div>
                                             </div>
@@ -669,6 +798,520 @@ const WomenDetails = () => {
             <Like />
 
             {/* You may also like this section end */}
+
+            {/* Recently Viewed items section start */}
+
+            <Recentlyviewed />
+
+            {/* Recently Viewed items section end */}
+
+            {/* Customer also like this section start */}
+
+            <Customerlike />
+
+            {/* Customer also like this section end */}
+
+            {/* Size chart Women section start */}
+
+            <Modal className="d_sizemodal"
+                show={sizemodalShow}
+                onHide={() => setsizeModalShow(false)}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Body>
+                    <div className="d_closeicon d-flex justify-content-end d_cur" onClick={() => setsizeModalShow(false)}>
+                        <IoClose className='icon' />
+                    </div>
+                    <div className="row align-items-center">
+                        <div className="col-12 col-sm-6">
+                            <div className="d_img">
+                                <img src={require('./../d_img/womensize.png')} alt="" />
+                            </div>
+                        </div>
+                        <div className="col-12 col-sm-6">
+                            <div className="d_text">
+                                <h4>Size Chart for Women </h4>
+                                <p className='mb-0'>This size chart shows product measurements taken when products are laid flat.</p>
+                                <p className='mb-0'>Actual product measurements may vary by up to 1".</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="d_inch">
+                        <div className="table-responsive">
+                            <Table bordered className="text-center mb-0 align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div className='d_inchbg'>Inch</div>
+                                        </th>
+                                        <th>S</th>
+                                        <th>M</th>
+                                        <th>L</th>
+                                        <th>XL</th>
+                                        <th>2XL</th>
+                                        <th>3XL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>A Length</th>
+                                        <td>25.2</td>
+                                        <td>26</td>
+                                        <td>26.6</td>
+                                        <td>27.2</td>
+                                        <td>27.6</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <th>B Bust</th>
+                                        <td>34.6</td>
+                                        <td>36.6</td>
+                                        <td>38.6</td>
+                                        <td>40.6</td>
+                                        <td>42.5</td>
+                                        <td>44.5</td>
+                                    </tr>
+                                    <tr>
+                                        <th>C Shoulder</th>
+                                        <td>14.9</td>
+                                        <td>15.4</td>
+                                        <td>15.8</td>
+                                        <td>16.3</td>
+                                        <td>17.2</td>
+                                        <td>17.7</td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                        </div>
+                    </div>
+                    <div className="d_inch">
+                        <div className="table-responsive">
+                            <Table bordered className="text-center mb-0 align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div className='d_inchbg'>Centimetre</div>
+                                        </th>
+                                        <th>S</th>
+                                        <th>M</th>
+                                        <th>L</th>
+                                        <th>XL</th>
+                                        <th>2XL</th>
+                                        <th>3XL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>A Length</th>
+                                        <td>64</td>
+                                        <td>66</td>
+                                        <td>67.5</td>
+                                        <td>69</td>
+                                        <td>70</td>
+                                        <td>71</td>
+                                    </tr>
+                                    <tr>
+                                        <th>B Bust</th>
+                                        <td>88</td>
+                                        <td>93</td>
+                                        <td>98</td>
+                                        <td>103</td>
+                                        <td>108</td>
+                                        <td>113</td>
+                                    </tr>
+                                    <tr>
+                                        <th>C Shoulder</th>
+                                        <td>37.8</td>
+                                        <td>39</td>
+                                        <td>40.2</td>
+                                        <td>41.4</td>
+                                        <td>42.6</td>
+                                        <td>43.8</td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
+
+            {/* Size chart women section End */}
+
+            {/* Size chart Men section start */}
+
+            <Modal className="d_sizemodal d-none"
+                show={sizemodalShow}
+                onHide={() => setsizeModalShow(false)}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Body>
+                    <div className="d_closeicon d-flex justify-content-end d_cur" onClick={() => setsizeModalShow(false)}>
+                        <IoClose className='icon' />
+                    </div>
+                    <div className="row align-items-center">
+                        <div className="col-12 col-sm-6">
+                            <div className="d_img">
+                                <img src={require('./../d_img/womensize.png')} alt="" />
+                            </div>
+                        </div>
+                        <div className="col-12 col-sm-6">
+                            <div className="d_text">
+                                <h4>Size Chart for Men </h4>
+                                <p className='mb-0'>This size chart shows product measurements taken when products are laid flat.</p>
+                                <p className='mb-0'>Actual product measurements may vary by up to 1".</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="d_inch">
+                        <div className="table-responsive">
+                            <Table bordered className="text-center mb-0 align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div className='d_inchbg'>Inch</div>
+                                        </th>
+                                        <th>S</th>
+                                        <th>M</th>
+                                        <th>L</th>
+                                        <th>XL</th>
+                                        <th>2XL</th>
+                                        <th>3XL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>A Length</th>
+                                        <td>28</td>
+                                        <td>29.1</td>
+                                        <td>29.9</td>
+                                        <td>31.1</td>
+                                        <td>31.9</td>
+                                        <td>33.1</td>
+                                    </tr>
+                                    <tr>
+                                        <th>B Bust</th>
+                                        <td>36.2</td>
+                                        <td>40.2</td>
+                                        <td>44.1</td>
+                                        <td>48</td>
+                                        <td>52</td>
+                                        <td>55.9</td>
+                                    </tr>
+                                    <tr>
+                                        <th>C Shoulder</th>
+                                        <td>15.7</td>
+                                        <td>16.9</td>
+                                        <td>18.1</td>
+                                        <td>19.3</td>
+                                        <td>20.5</td>
+                                        <td>21.7</td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                        </div>
+                    </div>
+                    <div className="d_inch">
+                        <div className="table-responsive">
+                            <Table bordered className="text-center mb-0 align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div className='d_inchbg'>Centimetre</div>
+                                        </th>
+                                        <th>S</th>
+                                        <th>M</th>
+                                        <th>L</th>
+                                        <th>XL</th>
+                                        <th>2XL</th>
+                                        <th>3XL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>A Length</th>
+                                        <td>71</td>
+                                        <td>74</td>
+                                        <td>76</td>
+                                        <td>79</td>
+                                        <td>80</td>
+                                        <td>84</td>
+                                    </tr>
+                                    <tr>
+                                        <th>B Bust</th>
+                                        <td>82</td>
+                                        <td>92</td>
+                                        <td>102</td>
+                                        <td>112</td>
+                                        <td>122</td>
+                                        <td>132</td>
+                                    </tr>
+                                    <tr>
+                                        <th>C Shoulder</th>
+                                        <td>37</td>
+                                        <td>40</td>
+                                        <td>43</td>
+                                        <td>46</td>
+                                        <td>49</td>
+                                        <td>52</td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
+
+            {/* Size chart Men section End */}
+
+            {/* Size chart kids section start */}
+
+            <Modal className="d_sizemodal d-none"
+                show={sizemodalShow}
+                onHide={() => setsizeModalShow(false)}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Body>
+                    <div className="d_closeicon d-flex justify-content-end d_cur" onClick={() => setsizeModalShow(false)}>
+                        <IoClose className='icon' />
+                    </div>
+                    <div className="row align-items-center">
+                        <div className="col-12 col-sm-6">
+                            <div className="d_img">
+                                <img src={require('./../d_img/womensize.png')} alt="" />
+                            </div>
+                        </div>
+                        <div className="col-12 col-sm-6">
+                            <div className="d_text">
+                                <h4>Size Chart for Kid </h4>
+                                <p className='mb-0'>This size chart shows product measurements taken when products are laid flat.</p>
+                                <p className='mb-0'>Actual product measurements may vary by up to 1".</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="d_inch">
+                        <div className="table-responsive">
+                            <Table bordered className="text-center mb-0 align-middle">
+                                <thead>
+                                    <tr className='d_yr'>
+                                        <td></td>
+                                        <td>5-6 yr</td>
+                                        <td>7-8 yr</td>
+                                        <td>9-10 yr</td>
+                                        <td>11-12 yr</td>
+                                        <td>13-14 yr</td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <div className='d_inchbg'>Inch</div>
+                                        </th>
+                                        <th>XS</th>
+                                        <th>S</th>
+                                        <th>M</th>
+                                        <th>L</th>
+                                        <th>XL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>A Length</th>
+                                        <td>18.1</td>
+                                        <td>20.1</td>
+                                        <td>22</td>
+                                        <td>24</td>
+                                        <td>26</td>
+                                    </tr>
+                                    <tr>
+                                        <th>B Bust</th>
+                                        <td>23.6</td>
+                                        <td>27.6</td>
+                                        <td>31.5</td>
+                                        <td>35.4</td>
+                                        <td>40.2</td>
+                                    </tr>
+                                    <tr>
+                                        <th>C Shoulder</th>
+                                        <td>10.2</td>
+                                        <td>11.8</td>
+                                        <td>13.4</td>
+                                        <td>15.0</td>
+                                        <td>16.5</td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                        </div>
+                    </div>
+                    <div className="d_inch">
+                        <div className="table-responsive">
+                            <Table bordered className="text-center mb-0 align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div className='d_inchbg'>Centimetre</div>
+                                        </th>
+                                        <th>XS</th>
+                                        <th>S</th>
+                                        <th>M</th>
+                                        <th>L</th>
+                                        <th>XL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>A Length</th>
+                                        <td>46</td>
+                                        <td>51</td>
+                                        <td>56</td>
+                                        <td>61</td>
+                                        <td>66</td>
+                                    </tr>
+                                    <tr>
+                                        <th>B Bust</th>
+                                        <td>60</td>
+                                        <td>70</td>
+                                        <td>80</td>
+                                        <td>90</td>
+                                        <td>102</td>
+                                    </tr>
+                                    <tr>
+                                        <th>C Shoulder</th>
+                                        <td>26</td>
+                                        <td>30</td>
+                                        <td>34</td>
+                                        <td>38</td>
+                                        <td>42</td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
+
+            {/* Size chart Men section End */}
+
+            {/* Offer Modal section start */}
+
+            <Modal className='d_offermodal'
+                show={offermodalShow}
+                onHide={() => setofferModalShow(false)}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Body>
+                    <div className="d_topsec">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <h4 className='mb-0'>Best Offers</h4>
+                            <IoClose className='icon d_cur' onClick={() => setofferModalShow(false)} />
+                        </div>
+                    </div>
+                    <div className="d_offercon">
+                        <div className="d-flex">
+                            <div>
+                                <div className="d_img me-2">
+                                    <img src={require('./../d_img/offer.png')} alt="" />
+                                </div>
+                            </div>
+                            <div className="d_text ms-3">
+                                <div className="d-flex align-items-center justify-content-between">
+                                    <div className="d_title">NEW100</div>
+                                    <div className="d_saveprice">Save $100 </div>
+                                </div>
+                                <p className='mb-0'>Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque iaculis habitant congue est blandit amet.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="d_offercon">
+                        <div className="d-flex">
+                            <div>
+                                <div className="d_img me-2">
+                                    <img src={require('./../d_img/offer.png')} alt="" />
+                                </div>
+                            </div>
+                            <div className="d_text ms-3">
+                                <div className="d-flex align-items-center justify-content-between">
+                                    <div className="d_title">NEW100</div>
+                                    <div className="d_saveprice">Save $100 </div>
+                                </div>
+                                <p className='mb-0'>Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque iaculis habitant congue est blandit amet.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="d_offercon">
+                        <div className="d-flex">
+                            <div>
+                                <div className="d_img me-2">
+                                    <img src={require('./../d_img/td.png')} alt="" />
+                                </div>
+                            </div>
+                            <div className="d_text ms-3">
+                                <div className="d-flex align-items-center justify-content-between">
+                                    <div className="d_title">TD Bank</div>
+                                    {/* <div className="d_saveprice">Save $100 </div> */}
+                                </div>
+                                <p className='mb-0'>Extra ₹500 off on TD Bank Pixel Credit Card EMI Transactions. Min Txn Value: ₹5,000</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="d_offercon">
+                        <div className="d-flex">
+                            <div>
+                                <div className="d_img me-2">
+                                    <img src={require('./../d_img/cob.png')} alt="" />
+                                </div>
+                            </div>
+                            <div className="d_text ms-3">
+                                <div className="d-flex align-items-center justify-content-between">
+                                    <div className="d_title">Capital One bank</div>
+                                    {/* <div className="d_saveprice">Save $100 </div> */}
+                                </div>
+                                <p className='mb-0'>Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque iaculis habitant congue est blandit amet.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="d_offercon">
+                        <div className="d-flex">
+                            <div>
+                                <div className="d_img me-2">
+                                    <img src={require('./../d_img/wfb.png')} alt="" />
+                                </div>
+                            </div>
+                            <div className="d_text ms-3">
+                                <div className="d-flex align-items-center justify-content-between">
+                                    <div className="d_title">Wells Fargo Bank</div>
+                                    {/* <div className="d_saveprice">Save $100 </div> */}
+                                </div>
+                                <p className='mb-0'>Extra ₹500 off on TD Bank Pixel Credit Card EMI Transactions. Min Txn Value: ₹5,000</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="d_offercon">
+                        <div className="d-flex">
+                            <div>
+                                <div className="d_img me-2">
+                                    <img src={require('./../d_img/citi.png')} alt="" />
+                                </div>
+                            </div>
+                            <div className="d_text ms-3">
+                                <div className="d-flex align-items-center justify-content-between">
+                                    <div className="d_title">Citi Bank</div>
+                                    {/* <div className="d_saveprice">Save $100 </div> */}
+                                </div>
+                                <p className='mb-0'>Extra ₹500 off on TD Bank Pixel Credit Card EMI Transactions. Min Txn Value: ₹5,000</p>
+                            </div>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
+
+            {/* Offer Modal section end */}
+
 
         </>
     );

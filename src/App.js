@@ -5,6 +5,7 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Womenstore from './darshan/pages/Womenstore';
+import WomenDetails from './darshan/pages/WomenDetails';
 import Home from './Vivek/Component/Home/Home'
 import Electronics from './Parth/Component/Electronics/Electronics';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -61,9 +62,9 @@ function App() {
             <Route path='profile' element={<UserProfile />} />
             <Route path='myorder' element={<MyOrder />} />
             <Route path='faqs' element={<UserFaq />} />
-            <Route path='term' element={<TermOfServices />} />
+            {/* <Route path='term' element={<TermOfServices />} />
             <Route path='deactive' element={<UserDeactive />} />
-            <Route path='address' element={<UserAddress />} />
+            <Route path='address' element={<UserAddress />} /> */}
           </Route>
 
         </Routes>
