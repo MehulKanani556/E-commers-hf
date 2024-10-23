@@ -27,12 +27,12 @@ function Luggage() {
             <Header />
             <section className=''>
                 <OwlCarousel className='owl-theme' loop items={1}>
-                    <div className='item owl_height'>
+                    <div className='item V_slider_height'>
                         <div className='V_sports'>
                             <div className='d_container h-100'>
                                 <Row className='h-100'>
                                     <Col lg={6} className='align-self-center p-3'>
-                                        <div className='V_future pe-xxl-5'>
+                                        <div className='V_future'>
                                             <h1 className='V_combine_text'> <span className='V_text_white'>Redefining Motion:</span> <span className='V_text_green'> The Future of Footwear is Here</span></h1>
                                             <p className='V_experience'>Experience unparalleled comfort and innovative design with our state-of-the-art, futuristic sports shoes. Built for champions, designed for you.</p>
                                         </div>
@@ -44,12 +44,12 @@ function Luggage() {
                             </div>
                         </div>
                     </div>
-                    <div className='item owl_height'>
+                    <div className='item V_slider_height'>
                         <div className='V_slider2'>
                             <div className='d_container h-100'>
                                 <Row className=' d-flex h-100'>
                                     <Col lg={6} className='align-self-center p-3'>
-                                        <div className='V_slide2 pe-xxl-5'>
+                                        <div className='V_slide2 '>
                                             <h1 className='V_fantastic'>Fantastic Features That Makes You Look Cool</h1>
                                             <p className='V_slide_2_text'>Phasellus risus turpis, pretium sit amet magna non, molestie ultricies enim. Nullam pulvinar felis at metus.</p>
                                         </div>
@@ -61,12 +61,12 @@ function Luggage() {
                             </div>
                         </div>
                     </div>
-                    <div className='item owl_height'>
+                    <div className='item V_slider_height'>
                         <div className='V_slider3'>
                             <div className='d_container h-100'>
                                 <Row className=' d-flex h-100'>
                                     <Col lg={6} className='align-self-center p-3'>
-                                        <div className='V_slid3 pe-xxl-5'>
+                                        <div className='V_slid3'>
                                             <h1 className='V_more_than'>More than
                                                 just a game.
                                                 It’s a lifestyle.</h1>
@@ -82,22 +82,6 @@ function Luggage() {
                     </div>
                 </OwlCarousel>
             </section >
-
-            {/* <section className='V_sports'>
-                <div className='d_container h-100'>
-                    <Row className='h-100'>
-                        <Col lg={6} className='align-self-center p-3'>
-                            <div className='V_future pe-xxl-5'>
-                                <h1 className='V_combine_text'> <span className='V_text_white'>Redefining Motion:</span> <span className='V_text_green'> The Future of Footwear is Here</span></h1>
-                                <p className='V_experience'>Experience unparalleled comfort and innovative design with our state-of-the-art, futuristic sports shoes. Built for champions, designed for you.</p>
-                            </div>
-                            <div className='pt-3'>
-                                <Button className='py-2 px-5 text-white'>Buy Now</Button>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
-            </section> */}
 
             < SportsSlider />
 
@@ -150,13 +134,15 @@ function Luggage() {
             <section className='pb-5'>
                 <div className='V_new_footware'>
                     <div className='row m-0'>
-                        <div className='col-6'>
-                            <div className="d_container V_all">
-                                <p className='V_all_width'><span className='V_new_foot'>NEW FOOTWEAR</span> <span className='V_collection text-white'>COLLECTION</span></p>
-                                <p className='V_big'>
-                                    <span className='V_disco text-white'>discount</span> 
-                                    <span className='V_30'>30%</span>
-                                </p>
+                        <div className='col-6 p-0'>
+                            <div className="d_container  p-0">
+                                <div className='V_all'>
+                                    <p className='V_all_width'><span className='V_new_foot'>NEW FOOTWEAR</span> <span className='V_collection text-white'>COLLECTION</span></p>
+                                    <p className='V_big p-0'>
+                                        <span className='V_disco text-white'>discount</span>
+                                        <span className='V_30'>30%</span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -97,6 +97,10 @@
     height: 916px;
 }
 
+.V_slide2 {
+    width: 642px;
+}
+
 .V_fantastic {
     font-size: 50px;
     font-weight: 900;
@@ -107,9 +111,6 @@
     font-weight: 400;
 }
 
-.V_slide2 {
-    width: 642px;
-}
 
 
 
@@ -203,6 +204,11 @@
 
 
 @media (min-width: 1650px) {
+
+    .V_slider_height {
+        height: 916px;
+    }
+
     .V_sports {
         background-size: cover;
         background-position-x: 95%;
@@ -221,6 +227,61 @@
     .V_experience {
         font-size: 20px;
     }
+
+
+
+
+
+    .V_slider2 {
+        background-size: cover;
+        background-position-x: 80%;
+        height: 100%;
+    }
+
+    .V_slide2 {
+        width: 642px;
+    }
+
+    .V_fantastic {
+        font-size: 50px;
+    }
+
+    .V_slide_2_text {
+        font-size: 17px;
+    }
+
+
+
+
+
+
+
+
+
+    .V_slider3 {
+        background-size: cover;
+        background-position-x: 70%;
+        height: 100%;
+    }
+
+    .V_slid3 {
+        width: 450px;
+    }
+
+    .V_more_than {
+        font-size: 72px;
+    }
+
+    .V_slide_3_text {
+        font-size: 20px;
+    }
+
+
+
+
+
+
+
 
 
     .V_sports_accessories {
@@ -267,41 +328,49 @@
         height: 576px;
         width: 100%;
     }
-    
+
     .V_all {
-        padding-top: 10rem !important;
-        margin-left: 140px;
+        padding-top: 8rem !important;
+        margin-left: 120px;
     }
-    
+
     .V_all_width {
-        width: 333px;
+        width: 100px;
     }
-    
+
     .V_new_foot {
         font-size: 64px;
     }
-    
+
     .V_collection {
         font-size: 44px;
     }
-    
+
     .V_big {
         margin-top: -11rem !important;
-        margin-left: 300px;
+        margin-left: 280px;
     }
-    
+
     .V_disco {
         font-size: 34px;
     }
-    
+
     .V_30 {
         font-size: 126px;
-        padding-left: 20px;
+        padding-left: 10px;
     }
 }
 
 
 @media (min-width: 1440px) and (max-width: 1649px) {
+
+    .V_slider_height {
+        height: 750px;
+    }
+
+
+
+
     .V_sports {
         background-size: cover;
         background-position-x: 95%;
@@ -320,6 +389,51 @@
     .V_experience {
         font-size: 20px;
     }
+
+
+
+
+    .V_slider2 {
+        background-size: cover;
+        background-position-x: 80%;
+        height: 100%;
+    }
+
+    .V_slide2 {
+        width: 642px;
+    }
+
+    .V_fantastic {
+        font-size: 50px;
+    }
+
+    .V_slide_2_text {
+        font-size: 17px;
+    }
+
+
+
+
+    .V_slider3 {
+        background-size: cover;
+        background-position-x: 70%;
+        height: 100%;
+    }
+
+    .V_slid3 {
+        width: 450px;
+    }
+
+    .V_more_than {
+        font-size: 72px;
+    }
+
+    .V_slide_3_text {
+        font-size: 20px;
+    }
+
+
+
 
     .V_sports_accessories {
         height: 280px;
@@ -365,8 +479,8 @@
     }
 
     .V_all {
-        padding-top: 8rem !important;
-        margin-left: 120px;
+        padding-top: 11rem !important;
+        margin-left: 100px;
     }
 
     .V_all_width {
@@ -397,6 +511,11 @@
 }
 
 @media (min-width: 1200px) and (max-width: 1439px) {
+    .V_slider_height {
+        height: 600px;
+    }
+
+
     .V_sports {
         background-size: cover;
         background-position-x: 95%;
@@ -415,6 +534,51 @@
     .V_experience {
         font-size: 20px;
     }
+
+
+
+
+
+    .V_slider2 {
+        background-size: cover;
+        background-position-x: 80%;
+        height: 100%;
+    }
+
+    .V_slide2 {
+        width: 642px;
+    }
+
+    .V_fantastic {
+        font-size: 50px;
+    }
+
+    .V_slide_2_text {
+        font-size: 17px;
+    }
+
+
+
+
+
+    .V_slider3 {
+        background-size: cover;
+        background-position-x: 70%;
+        height: 100%;
+    }
+
+    .V_slid3 {
+        width: 380px;
+    }
+
+    .V_more_than {
+        font-size: 64px;
+    }
+
+    .V_slide_3_text {
+        font-size: 20px;
+    }
+
 
     .V_sports_accessories {
         height: 250px;
@@ -462,8 +626,8 @@
     }
 
     .V_all {
-        padding-top: 7rem !important;
-        margin-left: 20px;
+        padding-top: 9rem !important;
+        margin-left: 50px;
     }
 
     .V_all_width {
@@ -494,6 +658,11 @@
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
+
+    .V_slider_height {
+        height: 600px;
+    }
+
     .V_sports {
         background-size: cover;
         background-position-x: 95%;
@@ -512,6 +681,54 @@
     .V_experience {
         font-size: 20px;
     }
+
+
+
+
+
+
+
+
+    .V_slider2 {
+        background-size: cover;
+        background-position-x: 80%;
+        height: 100%;
+    }
+
+    .V_slide2 {
+        width: 550px;
+    }
+
+    .V_fantastic {
+        font-size: 46px;
+    }
+
+    .V_slide_2_text {
+        font-size: 17px;
+    }
+
+
+
+    .V_slider3 {
+        background-size: cover;
+        background-position-x: 70%;
+        height: 100%;
+    }
+
+    .V_slid3 {
+        width: 360px;
+    }
+
+    .V_more_than {
+        font-size: 60px;
+    }
+
+    .V_slide_3_text {
+        font-size: 20px;
+    }
+
+
+
 
     .V_sports_accessories {
         height: 200px;
@@ -559,8 +776,8 @@
     }
 
     .V_all {
-        padding-top: 7rem !important;
-        margin-left: 20px;
+        padding-top: 8rem !important;
+        margin-left: 40px;
     }
 
     .V_all_width {
@@ -591,6 +808,12 @@
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
+
+
+    .V_slider_height {
+        height: 550px;
+    }
+
     .V_sports {
         background-size: cover;
         background-position-x: 95%;
@@ -609,6 +832,49 @@
     .V_experience {
         font-size: 20px;
     }
+
+
+
+    .V_slider2 {
+        background-size: cover;
+        background-position-x: 80%;
+        height: 100%;
+    }
+
+    .V_slide2 {
+        width: 370px;
+    }
+
+    .V_fantastic {
+        font-size: 40px;
+    }
+
+    .V_slide_2_text {
+        font-size: 17px;
+    }
+
+
+
+    .V_slider3 {
+        background-size: cover;
+        background-position-x: 70%;
+        height: 100%;
+    }
+
+    .V_slid3 {
+        width: 300px;
+    }
+
+    .V_more_than {
+        font-size: 48px;
+    }
+
+    .V_slide_3_text {
+        font-size: 18px;
+    }
+
+
+
 
     .V_sports_accessories {
         height: 250px;
@@ -655,7 +921,7 @@
 
     .V_all {
         padding-top: 6rem !important;
-        margin-left: 0px;
+        margin-left: 30px;
     }
 
     .V_all_width {
@@ -687,6 +953,12 @@
 }
 
 @media (min-width: 576px) and (max-width: 767px) {
+
+
+    .V_slider_height {
+        height: 500px;
+    }
+
     .V_sports {
         background-size: cover;
         background-position-x: 95%;
@@ -704,6 +976,47 @@
 
     .V_experience {
         font-size: 18px;
+    }
+
+
+
+
+    .V_slider3 {
+        background-size: cover;
+        background-position-x: 70%;
+        height: 100%;
+    }
+
+    .V_slid3 {
+        width: 240px;
+    }
+
+    .V_more_than {
+        font-size: 38px;
+    }
+
+    .V_slide_3_text {
+        font-size: 16px;
+    }
+
+
+
+    .V_slider2 {
+        background-size: cover;
+        background-position-x: 80%;
+        height: 100%;
+    }
+
+    .V_slide2 {
+        width: 280px;
+    }
+
+    .V_fantastic {
+        font-size: 30px;
+    }
+
+    .V_slide_2_text {
+        font-size: 17px;
     }
 
     .V_sports_accessories {
@@ -754,7 +1067,7 @@
 
     .V_all {
         padding-top: 6rem !important;
-        margin-left: 0px;
+        margin-left: 30px;
     }
 
     .V_all_width {
@@ -788,6 +1101,11 @@
 }
 
 @media (min-width: 480px) and (max-width: 575px) {
+
+    .V_slider_height {
+        height: 400px;
+    }
+
     .V_sports {
         background-size: cover;
         background-position-x: 95%;
@@ -806,6 +1124,56 @@
     .V_experience {
         font-size: 16px;
     }
+
+
+
+
+    .V_slider3 {
+        background-size: cover;
+        background-position-x: 70%;
+        height: 100%;
+    }
+
+    .V_slid3 {
+        width: 180px;
+    }
+
+    .V_more_than {
+        font-size: 28px;
+    }
+
+    .V_slide_3_text {
+        font-size: 14px;
+    }
+
+
+
+
+
+    .V_slider2 {
+        background-size: cover;
+        background-position-x: 80%;
+        height: 100%;
+    }
+
+    .V_slide2 {
+        width: 230px;
+    }
+
+    .V_fantastic {
+        font-size: 24px;
+    }
+
+    .V_slide_2_text {
+        font-size: 17px;
+    }
+
+
+
+
+
+
+
 
     .V_sports_accessories {
         height: 200px;
@@ -850,8 +1218,8 @@
     }
 
     .V_all {
-        padding-top: 3rem !important;
-        margin-left: 0px;
+        padding-top: 5rem !important;
+        margin-left: 30px;
     }
 
     .V_all_width {
@@ -882,6 +1250,12 @@
 }
 
 @media (min-width: 300px) and (max-width: 479px) {
+
+
+    .V_slider_height {
+        height: 400px;
+    }
+
     .V_sports {
         background-size: cover;
         background-position-x: 95%;
@@ -904,6 +1278,58 @@
     .V_sports_accessories {
         height: 180px;
     }
+
+
+
+
+
+
+    .V_slider2 {
+        background-size: cover;
+        background-position-x: 80%;
+        height: 100%;
+    }
+
+    .V_slide2 {
+        width: 120px;
+    }
+
+    .V_fantastic {
+        font-size: 20px;
+    }
+
+    .V_slide_2_text {
+        font-size: 14px;
+    }
+
+
+
+
+
+
+    .V_slider3 {
+        background-size: cover;
+        background-position-x: 53%;
+        height: 100%;
+    }
+
+    .V_slid3 {
+        width: 150px;
+    }
+
+    .V_more_than {
+        font-size: 24px;
+    }
+
+    .V_slide_3_text {
+        font-size: 14px;
+    }
+
+
+
+
+
+
 
     .V_Get {
         font-size: 20px;
@@ -948,7 +1374,7 @@
 
     .V_all {
         padding-top: 4rem !important;
-        margin-left: -15px;
+        margin-left: 20px;
     }
 
     .V_all_width {

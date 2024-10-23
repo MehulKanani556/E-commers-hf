@@ -39,7 +39,7 @@ function App() {
           {/* women */}
           <Route path='/women' element={<Womenstore />} />
           <Route path='/womenstore' element={<Womenfilter />} />
-          <Route path='/womendetails' element={<WomenDetails />} />
+          {/* <Route path='/womendetails' element={<WomenDetails />} /> */}
 
           {/* about us */}
           <Route path="/about" element={<AboutUs />} />
@@ -61,9 +61,9 @@ function App() {
             <Route path='profile' element={<UserProfile />} />
             <Route path='myorder' element={<MyOrder />} />
             <Route path='faqs' element={<UserFaq />} />
-            <Route path='term' element={<TermOfServices />} />
+            {/* <Route path='term' element={<TermOfServices />} />
             <Route path='deactive' element={<UserDeactive />} />
-            <Route path='address' element={<UserAddress />} />
+            <Route path='address' element={<UserAddress />} /> */}
           </Route>
 
         </Routes>
