@@ -18,7 +18,7 @@ const LogoutModel = (props) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <div className='d-flex flex-column p-5'>
+                <div className='d-flex flex-column p-md-5 p-2'>
                     <p className='text-center VK_logout_txt m-0'>
                         Are you sure you want to logout?
                     </p>

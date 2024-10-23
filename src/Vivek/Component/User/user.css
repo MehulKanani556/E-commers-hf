@@ -4,7 +4,7 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
-.user_profile_menu a{
+.user_profile_menu a {
     color: #6A6A6A;
     font-weight: 600;
 }
@@ -23,7 +23,7 @@
 
 /* active */
 .VK_user_active {
-    background-color: #2B221E;
+    background-color: #2B221E !important;
     color: white !important;
 }
 
@@ -37,7 +37,7 @@
     padding: 0;
 }
 
-.VK_ul{
+.VK_ul {
     list-style-type: disc !important;
 }
 
@@ -70,7 +70,7 @@
 
 /* user profile */
 .VK_profile_heading {
-    font-size: 28px;
+    font-size: 24px;
 }
 
 .VK_profile_div {
@@ -108,6 +108,7 @@
 }
 
 .VK_input_label {
+    font-size: 15px;
     color: #6A6A6A;
 }
 
@@ -146,40 +147,460 @@
     font-size: 18px;
 }
 
+.VK_edit_radio input[type="radio"] {
+    margin-top: 7px;
+}
+
+
+
+
+
+
+
+
+/* faq models */
+.VK_faq_accordians .accordion-item {
+    margin-bottom: 30px;
+    border: none !important;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.154);
+}
+
+.VK_faq_acco_txt {
+    color: black;
+    font-weight: 600;
+}
+
+.VK_faq_acco_desc {
+    color: #6A6A6A;
+    font-size: 15px;
+}
+
+.VK_faq_accordians .accordion-button {
+    border: none !important;
+    padding: 20px;
+}
+
+.VK_faq_accordians .accordion-collapse {
+    border-top: 1px solid #ddd !important;
+}
+
+.VK_faq_accordians .accordion-button:focus {
+    box-shadow: none !important;
+}
+
+.VK_faq_accordians .accordion-button:not(.collapsed) {
+    color: black;
+    background-color: white !important;
+}
+
+.VK_faq_accordians .accordion-button::after {
+    display: none !important;
+}
+
+.VK_faq_accordians .accordion-button {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+
+
+
+/* term of condition */
+.VK_Term_of_use {
+    padding: 30px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.154);
+}
+
+.VK_term_ul li {
+    color: #6A6A6A;
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+.VK_dactive {
+    padding: 30px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.154);
+}
+
+.VK_deactive_ul li {
+    font-weight: 500;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.VK_dactive_btn {
+    background-color: #2B221E;
+    color: white;
+    border: 0px;
+    border-radius: 4px;
+    padding: 12px 40px;
+}
+
+/* deactive model */
+.VK_dactive_model {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.VK_deactive_num {
+    background-color: #EDEDED;
+}
+
+.VK_otp_box {
+    height: 50px;
+    width: 50px;
+    text-align: center;
+}
+
+.VK_send_otp_btn {
+    text-decoration: underline;
+    font-size: 12px;
+}
+
+.VK_deactive_tct {
+    color: #6A6A6A;
+    font-size: 14px;
+}
+
+.VK_stay {
+    background-color: white;
+    color: #2A221E;
+    border: 1px solid #2A221E;
+    border-radius: 4px;
+    width: 100%;
+    padding: 12px;
+}
+
+.VK_dactivete {
+    background-color: #2A221E;
+    color: white;
+    border: 1px solid #2A221E;
+    border-radius: 4px;
+    width: 100%;
+    padding: 12px;
+}
+
+
+
+
+/* myorder */
+
+.VK_empty_order_btn {
+    background-color: #2B221E;
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 4px;
+}
+
+
+/* myorders */
+.VK_order_detail {
+    width: 35%;
+}
+
+.VK_order_card {
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.154);
+}
+
+.VK_order_product {
+    min-height: 150px;
+}
+
+.VK_order_price p {
+    font-size: 20px;
+    line-height: 1.5;
+    color: black;
+    margin-top: 5px;
+    font-weight: 700;
+}
+
+.VK_order_status {
+    font-size: 22px;
+}
+
+.VK_order_dots {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background-color: black;
+}
+
+.VK_order_stu {
+    font-size: 18px;
+}
+
+.VK_order_date {
+    font-size: 16px;
+    color: #6A6A6A;
+}
+
+.VK_track {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.VK_order_btn_active {
+    background-color: #2B221E !important;
+    color: white !important;
+}
+
+.VK_order_btn {
+    background-color: white;
+    color: #2B221E;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid #2B221E;
+    font-weight: 600;
+}
+
+
+/* address */
+.VK_add_address {
+    background-color: #2B221E;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 12px 40px;
+}
+
+.VK_address_parent {
+    padding: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.154);
+}
+
+.VK_address_div {
+    border: 1px solid #272727;
+}
+
+.VK_address_typ {
+    background-color: #E7E4DA;
+}
+
+.VK_address_drop_down .dropdown-toggle::after {
+    display: none;
+}
+
+.Address_header {
+    border-bottom: 1px solid #6A6A6A;
+}
+
+.VK_add_address_model_heading {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0px;
+}
+
+.VK_address_form input {
+    font-size: 14px;
+}
+
+.VK_address_form input {
+    font-size: 14px;
+}
+
+.VK_add_address_submit {
+    background-color: #2B221E;
+    color: white;
+    border: none;
+    padding: 10px 50px;
+    border-radius: 5px;
+}
+
 /* -------------------------------------------------------- media query -------------------------------------------------------- */
 
 
 /*  extra small device */
 @media (max-width:480px) {
+
+    .VK_add_address {
+        padding: 8px 20px;
+    }
+
     .VK_edit_profile_model .modal-dialog {
         width: 100% !important;
+    }
+
+    .VK_deactive_model .modal-dialog {
+        width: 100% !important;
+    }
+
+    .VK_logout_model .modal-dialog {
+        width: 100%;
+    }
+
+    .VK_add_address_model_ .modal-dialog {
+        max-width: 100% !important;
+    }
+
+    .VK_logut_cancle {
+        padding: 7px 0px;
+    }
+
+    .VK_logout_ok {
+        padding: 7px 0px;
+    }
+
+    .VK_otp_box {
+        height: 38px;
+        width: 16% !important;
+        text-align: center;
+    }
+
+    .VK_dactive_btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .VK_Term_of_use {
+        padding: 30px 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.154);
+    }
+
+    .VK_order_detail {
+        width: 100%;
+    }
+
+    .VK_order_images {
+        width: 100%;
+        object-position: top;
+        max-height: 170px;
+    }
+
+    .VK_order_stu {
+        font-size: 17px;
+    }
+
+    .VK_order_price {
+        width: 100%;
+    }
+
+    .VK_order_date {
+        font-size: 15px;
     }
 }
 
 
 /* small device */
 @media (max-width:575px) and (min-width:481px) {
+
+    .VK_add_address {
+        padding: 8px 20px;
+    }
+
     .VK_edit_profile_model .modal-dialog {
         width: 100% !important;
+    }
+
+    .VK_deactive_model .modal-dialog {
+        width: 100% !important;
+    }
+
+    .VK_logout_model .modal-dialog {
+        width: 100%;
+    }
+
+    .VK_dactive_btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .VK_order_detail {
+        width: 100%;
+    }
+
+    .VK_order_price {
+        margin: auto 0px;
+    }
+
+    .VK_order_price {
+        width: auto;
+    }
+
+    .VK_order_images {
+        width: 100%;
+        max-height: 170px;
+        object-position: top;
     }
 }
 
 
 /* medium device */
-@media (max-width:766px) and (min-width:576px) {}
+@media (max-width:766px) and (min-width:576px) {
+
+    .VK_add_address {
+        padding: 8px 20px;
+    }
+
+    .VK_order_detail {
+        width: 88%;
+    }
+
+    .VK_order_images {
+        width: 150px;
+        max-height: 170px !important;
+        object-position: top;
+    }
+}
 
 
 /* lg device */
-@media (max-width:991px) and (min-width:767px) {}
+@media (max-width:991px) and (min-width:767px) {
+
+    .VK_add_address {
+        padding: 8px 20px;
+    }
+
+    .VK_order_detail {
+        width: 88%;
+    }
+
+    .VK_order_images {
+        width: 150px;
+    }
+}
 
 
 /* xl device */
-@media (max-width:1199px) and (min-width:992px) {}
+@media (max-width:1199px) and (min-width:992px) {
+    .VK_order_detail {
+        width: 90%;
+    }
+
+    .VK_order_images {
+        width: 120px;
+    }
+
+}
 
 
 /* 2xl device */
-@media (max-width:1440px) and (min-width:1200px) {}
+@media (max-width:1440px) and (min-width:1200px) {
+    .VK_order_detail {
+        width: 40%;
+    }
+
+    .VK_order_images {
+        width: 120px;
+    }
+}
 
 
 /* 3xl device */
-@media (min-width:1441px) {}
+@media (min-width:1441px) {
+
+    .VK_order_detail {
+        width: 40%;
+    }
+
+    .VK_order_images {
+        width: 120px;
+    }
+
+    .VK_add_address_model_ .modal-dialog {
+        max-width: 33.33% !important;
+    }
+
+}

@@ -60,7 +60,10 @@ function App() {
           <Route path="/user" element={<User />}>
             <Route path='profile' element={<UserProfile />} />
             <Route path='myorder' element={<MyOrder />} />
-            <Route path='faq' element={<UserFaq />} />
+            <Route path='faqs' element={<UserFaq />} />
+            <Route path='term' element={<TermOfServices />} />
+            <Route path='deactive' element={<UserDeactive />} />
+            <Route path='address' element={<UserAddress />} />
           </Route>
 
         </Routes>
