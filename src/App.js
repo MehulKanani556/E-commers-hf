@@ -19,10 +19,19 @@ import UserProfile from './Vivek/Component/User/UserProfile'
 import MyOrder from './Vivek/Component/User/MyOrder';
 import UserFaq from './Vivek/Component/User/UserFaq';
 import HelpSupport from './Parth/Component/HelpSupprt/HelpSupport';
+import UserAddress from './Vivek/Component/User/UserAddress';
+import UserDeactive from './Vivek/Component/User/UserDeactive';
+import TermOfServices from './Vivek/Component/User/TermOfServices'
+import UserpaymentMethod from './Vivek/Component/User/UserpaymentMethod';
+import UserUpiPayment from './Vivek/Component/User/UserUpiPayment';
+import Wishlist from './Vivek/Component/Wishlist/Wishlist';
+// import WomenDetails from './darshan/pages/WomenDetails';
+
 
 function App() {
   return (
     <div className="App">
+
 
       <BrowserRouter>
         <Routes>
@@ -39,7 +48,7 @@ function App() {
           {/* women */}
           <Route path='/women' element={<Womenstore />} />
           <Route path='/womenstore' element={<Womenfilter />} />
-          <Route path='/womendetails' element={<WomenDetails />} />
+          {/* <Route path='/womendetails' element={<WomenDetails />} /> */}
 
           {/* about us */}
           <Route path="/about" element={<AboutUs />} />
@@ -56,6 +65,9 @@ function App() {
           {/* HELP  */}
           <Route path="/help" element={<HelpSupport />} />
 
+          {/* wishlist */}
+          <Route path="/wishlist" element={<Wishlist />} />
+
           {/* user */}
           <Route path="/user" element={<User />}>
             <Route path='profile' element={<UserProfile />} />
@@ -64,6 +76,8 @@ function App() {
             <Route path='term' element={<TermOfServices />} />
             <Route path='deactive' element={<UserDeactive />} />
             <Route path='address' element={<UserAddress />} />
+            <Route path='payment/card' element={<UserpaymentMethod />} />
+            <Route path='payment/upi' element={<UserUpiPayment />} />
           </Route>
 
         </Routes>

@@ -1,0 +1,58 @@
+.VK_empty_wishlist{
+    height: 600px;
+}
+
+.VK_icns{
+    position: relative;
+    top: -2px;
+}
+
+.vk_IN{
+    position: relative;
+    top: 1px;
+}
+
+.VK_revire_desc{
+    min-width: auto;    
+}
+
+.VK_wishlist_cart_tit{
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.VK_wishlist_color_span{
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+.VK_wishlist_img{
+    height: 400px;
+
+}
+
+.VK_wishlist_parent{
+    position: relative;
+}
+
+.VK_wishlist_bt{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.VK_wishlist_btn{
+    height: 35px;
+    width: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 50%;
+}
+
+

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Accordion, Nav, Offcanvas } from 'react-bootstrap'
+import { Accordion, Offcanvas } from 'react-bootstrap'
 import { FaBars } from 'react-icons/fa'
 import { Link, NavLink } from 'react-router-dom';
 
@@ -71,7 +71,7 @@ const UserSidebar = ({ setModalShow }) => {
                                 </li>
                             </NavLink>
                             <hr className='m-0' />
-                            <NavLink to={"/user/myorder"} className={({ isActive }) => `text-decoration-none d-block ${isActive ? 'VK_user_active' : ''}`}>
+                            <NavLink to={"/user/payment"} className={({ isActive }) => `text-decoration-none d-block ${isActive ? 'VK_user_active' : ''}`}>
                                 <li>
                                     <Accordion className='border-0'>
                                         <Accordion.Item eventKey="0" className='px-4 border-0'>

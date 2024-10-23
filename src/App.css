@@ -7,7 +7,7 @@
     font-family: "inter", sans-serif;
 }
 
-body{
+body {
     font-family: "inter", sans-serif !important;
 }
 
@@ -74,7 +74,8 @@ body{
 .d_cur {
     cursor: pointer;
 }
-.d_margin{
+
+.d_margin {
     margin: 0 50px;
 }
 
@@ -82,7 +83,8 @@ body{
     .d_p-80 {
         padding: 30px 0;
     }
-    .d_margin{
+
+    .d_margin {
         margin: 0;
     }
 }
