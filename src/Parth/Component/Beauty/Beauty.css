@@ -1,3 +1,8 @@
+@import url('https://fonts.cdnfonts.com/css/dahlia');
+
+
+
+
 .V_fresh {
     background-image: url('../../assets/the fresh product.png');
     background-size: cover;
@@ -8,7 +13,7 @@
     position: relative;
     background-image: url('../../assets/healthskinrequire.png');
     background-size: cover;
-   
+
 }
 
 .V_healty_skincare::after {
@@ -31,11 +36,11 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0);
-   
+
     display: flex;
     justify-content: center;
     align-items: center;
-   
+
 }
 
 
@@ -110,12 +115,31 @@
 
 
 
+.V_hair_width {
+    width: 1341px;
+    height: 916px;
+}
 
+.V_green_part {
+    background-image: url('../../assets/green part.png');
+    background-size: cover;
+    width: 579px;
+    height: 916px;
+}
 
+.V_hair_natura_oil {
+    width: 559px;
+}
 
+.V_enhance {
+    font-size: 48px;
+    font-weight: 700;
+}
 
-
-
+.V_glow_shine {
+    font-size: 20px;
+    font-weight: 200;
+}
 
 
 
@@ -216,6 +240,38 @@
         height: 240px;
         font-size: 50px;
     }
+
+
+
+    .V_hair_width {
+        width: 100%;
+        height: 916px;
+    }
+    
+    .V_green_part {
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .VK_obj{
+        object-fit: cover;
+        object-position: center;
+        height: 100%;
+    }
+
+    .V_hair_natura_oil {
+        width: 460px;
+    }
+
+    .V_enhance {
+        font-size: 48px;
+    }
+
+    .V_glow_shine {
+        font-size: 20px;
+    }
 }
 
 
@@ -233,7 +289,7 @@
     }
 
     .V_lipstic {
-        width: 750px;
+        width: 770px;
         height: auto;
     }
 
@@ -273,6 +329,38 @@
         height: 240px;
         font-size: 50px;
     }
+
+
+    .V_hair_width {
+        width: 100%;
+        height: 750px;
+    }
+    
+    .V_green_part {
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .VK_obj{
+        object-fit: cover;
+        object-position: center;
+        height: 100%;
+    }
+
+    .V_hair_natura_oil {
+        width: 350px;
+    }
+
+    .V_enhance {
+        font-size: 44px;
+    }
+
+    .V_glow_shine {
+        font-size: 20px;
+    }
+
 }
 
 @media (min-width: 1200px) and (max-width: 1439px) {
@@ -330,6 +418,38 @@
         height: 240px;
         font-size: 50px;
     }
+
+
+    .V_hair_width {
+        width: 100%;
+        height: 600px;
+    }
+    
+    .V_green_part {
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .VK_obj{
+        object-fit: cover;
+        object-position: center;
+        height: 100%;
+    }
+
+    .V_hair_natura_oil {
+        width: 320px;
+        align-items: center;
+    }
+
+    .V_enhance {
+        font-size: 40px;
+    }
+
+    .V_glow_shine {
+        font-size: 20px;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -386,6 +506,38 @@
         height: 240px;
         font-size: 44px;
     }
+
+
+    .V_hair_width {
+        width: 100%;
+        height: 600px;
+    }
+    
+    .V_green_part {
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .VK_obj{
+        object-fit: cover;
+        object-position: center;
+        height: 100%;
+    }
+
+    .V_hair_natura_oil {
+        width: 270px;
+        align-items: center;
+    }
+
+    .V_enhance {
+        font-size: 34px;
+    }
+
+    .V_glow_shine {
+        font-size: 20px;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -403,7 +555,7 @@
     }
 
     .V_lipstic {
-        width: 500px;
+        width: 400px;
         height: auto;
     }
 
@@ -442,6 +594,39 @@
         width: 380px;
         height: 200px;
         font-size: 38px;
+    }
+
+
+
+    .V_hair_width {
+        width: 100%;
+        height: 550px;
+    }
+    
+    .V_green_part {
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .VK_obj{
+        object-fit: cover;
+        object-position: center;
+        height: 100%;
+    }
+
+    .V_hair_natura_oil {
+        width: 235px;
+        align-items: center;
+    }
+
+    .V_enhance {
+        font-size: 30px;
+    }
+
+    .V_glow_shine {
+        font-size: 18px;
     }
 }
 
@@ -494,6 +679,37 @@
         height: 180px;
         font-size: 34px;
     }
+
+
+    .V_hair_width {
+        width: 100%;
+        height: 260px !important;
+    }
+    
+    .V_green_part {
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 100%;
+        
+    }
+    
+    .VK_obj{
+        object-fit: cover;
+        object-position: center;
+        height: 100%;
+    }
+
+    .V_hair_natura_oil {
+        width: 100%;
+    }
+
+    .V_enhance {
+        font-size: 26px;
+    }
+
+    .V_glow_shine {
+        font-size: 18px;
+    }
 }
 
 @media (min-width: 480px) and (max-width: 575px) {
@@ -510,7 +726,7 @@
     }
 
     .V_lipstic {
-        width: 300px;
+        width: 230px;
         height: auto;
     }
 
@@ -545,6 +761,38 @@
         width: 300px;
         height: 150px;
         font-size: 30px;
+    }
+
+
+
+    .V_hair_width {
+        width: 100%;
+        height: 190px !important;
+    }
+    
+    .V_green_part {
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 100%;
+        
+    }
+    
+    .VK_obj{
+        object-fit: cover;
+        object-position: center;
+        height: 100%;
+    }
+
+    .V_hair_natura_oil {
+        width: 100%;
+    }
+
+    .V_enhance {
+        font-size: 20px;
+    }
+
+    .V_glow_shine {
+        font-size: 16px;
     }
 }
 
@@ -597,4 +845,37 @@
         height: 120px;
         font-size: 24px;
     }
+
+
+
+    .V_hair_width {
+        width: 100%;
+        height: 210px !important;
+    }
+    
+    .V_green_part {
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 100%;
+        
+    }
+    
+    .VK_obj{
+        object-fit: cover;
+        object-position: center;
+        height: 100%;
+    }
+
+    .V_hair_natura_oil {
+        width: 100%;
+    }
+
+    .V_enhance {
+        font-size: 16px;
+    }
+
+    .V_glow_shine {
+        font-size: 12px;
+    }
+
 }
