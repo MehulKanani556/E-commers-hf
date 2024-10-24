@@ -52,8 +52,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 50px;
-    font-weight: 600;
+    font-size: 44px;
+    font-weight: 700;
     text-align: center;
     width: 639px;
     height: 240px;
@@ -142,10 +142,57 @@
 }
 
 
+.V_unlock{
+    background-image: url('../../assets/unlock your natural glow.png');
+    position: relative;
+    background-size: cover;
+    width: 1920px;
+    height: 916px;
+}
+
+.V_unlock::after {
+    content: '';
+    background-color: black;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+    background-size: cover;
+    background-position: center;
+}
+
+.V_overlay_unlock {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
 
 
 
-
+.V_overlay_text_unlock {
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    font-weight: 600;
+    text-align: center;
+    width: 572px;
+    height: 62px;
+    z-index: 1;
+}
 
 
 
@@ -241,6 +288,19 @@
         font-size: 50px;
     }
 
+    .V_unlock{
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
+        height: 100%;        
+    }
+
+    .V_overlay_text_unlock {
+        font-size: 44px;
+        width: 100%;
+        height: 100%;
+    }
 
 
     .V_hair_width {
@@ -328,6 +388,23 @@
         width: 600px;
         height: 240px;
         font-size: 50px;
+    }
+
+
+
+    
+    .V_unlock{
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
+        height: 100%;        
+    }
+
+    .V_overlay_text_unlock {
+        font-size: 44px;
+        width: 100%;
+        height: 100%;
     }
 
 
@@ -420,6 +497,20 @@
     }
 
 
+    .V_unlock{
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
+        height: 100%;        
+    }
+
+    .V_overlay_text_unlock {
+        font-size: 44px;
+        width: 100%;
+        height: 100%;
+    }
+
     .V_hair_width {
         width: 100%;
         height: 600px;
@@ -505,6 +596,21 @@
         width: 500px;
         height: 240px;
         font-size: 44px;
+    }
+
+
+    .V_unlock{
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
+        height: 100%;        
+    }
+
+    .V_overlay_text_unlock {
+        font-size: 44px;
+        width: 100%;
+        height: 100%;
     }
 
 
@@ -597,6 +703,20 @@
     }
 
 
+    .V_unlock{
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
+        height: 100%;        
+    }
+
+    .V_overlay_text_unlock {
+        font-size: 44px;
+        width: 100%;
+        height: 100%;
+    }
+
 
     .V_hair_width {
         width: 100%;
@@ -678,6 +798,22 @@
         width: 350px;
         height: 180px;
         font-size: 34px;
+    }
+
+
+
+    .V_unlock{
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
+        height: 100%;        
+    }
+
+    .V_overlay_text_unlock {
+        font-size: 36px;
+        width: 100%;
+        height: 100%;
     }
 
 
@@ -764,6 +900,20 @@
     }
 
 
+    .V_unlock{
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
+        height: 100%;        
+    }
+
+    .V_overlay_text_unlock {
+        font-size: 30px;
+        width: 100%;
+        height: 100%;
+    }
+
 
     .V_hair_width {
         width: 100%;
@@ -845,6 +995,23 @@
         height: 120px;
         font-size: 24px;
     }
+
+
+
+    .V_unlock{
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
+        height: 100%;        
+    }
+
+    .V_overlay_text_unlock {
+        font-size: 26px;
+        width: 100%;
+        height: 100%;
+    }
+
 
 
 

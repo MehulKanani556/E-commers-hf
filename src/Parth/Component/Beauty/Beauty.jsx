@@ -60,40 +60,14 @@ function Beauty() {
                                 </div>
                             </div>
                         </div>
-                        {/* <div className='V_hair_oil'>
-                            <div className='h-100'>
-                                <div className=' d-flex h-100'>
-                                    <div className='V_hair_width h-100'>
-                                        <img src={require('../../assets/enhance your natyural hair.png')} alt="" className='h-100' />
-                                    </div>
-                                    <div className="V_green_part d-flex align-items-stretch align-items-center">
-                                        <div className=''>
-                                            <div className="V_hair_natura_oil px-5 text-white h-100">
-                                                <h1 className='V_enhance'>Enhance Your Natural Hair with Our Premium Products</h1>
-                                                <p className='V_glow_shine'>Glow & Shine natural hair care products are made with natural, plant-based ingredients and do not contain harsh chemicals or synthetic additives. </p>
-                                            </div>
-                                            <div className='px-5 pt-5'>
-                                                <Button className='py-2 px-5 text-white bg-dark'>Buy Now</Button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
                     </div>
                     <div className='item V_slider_height'>
-                        <div className='V_slider3'>
-                            <div className='d_container h-100'>
-                                <Row className=' d-flex h-100'>
-                                    <Col lg={6} className='align-self-center p-3'>
-                                        <div className='V_slid3'>
-                                            <h1 className='V_more_than'>More than
-                                                just a game.
-                                                It’s a lifestyle.</h1>
-                                            <p className='V_slide_3_text'>Whether you’re just starting out, have played your whole life or you're a Tour pro, your swing is like a fingerprint.</p>
-                                        </div>
-                                        <div className='pt-3'>
-                                            <Button className='py-2 px-5 text-dark V_golf'>Buy Now</Button>
+                        <div className='V_unlock'>
+                            <div className=''>
+                                <Row className=''>
+                                    <Col className=''>
+                                        <div className='V_overlay_unlock'>
+                                            <p className="V_overlay_text_unlock">unlock your natural glow </p>
                                         </div>
                                     </Col>
                                 </Row>
@@ -159,63 +133,7 @@ function Beauty() {
 
 
 
-            {/* <section className='pb-5'>
-                <div className='d_container justify-content-between'>
-                    <Row className=''>
-                        {products.map(product => (
-                            <Col sm={6} md={6} lg={4} xl={4} xxl={3} className="gap-3 pb-5 d-flex justify-content-center" key={product.id}>
-                                <Card className="V_card align-content-center">
-                                    {product.bestSeller && (
-                                        <Badge className="V_best_seller_tag py-3 px-5" bg="dark">
-                                            Best Seller
-                                        </Badge>
-                                    )}
-                                    <Card.Img
-                                        variant="top"
-                                        src={product.image} 
-                                        className="V_product_image"
-                                        alt={product.name}
-                                    />
-                                    <Card.Body className="px-0">
-                                        <Card.Title>
-                                            <div className="d-flex justify-content-between  align-self-center px-3">
-                                                <h1 className="V_brand">{product.name}</h1>
-                                                <div className="V_rating">
-                                                    <span className="V_star align-self-center">⭐</span>
-                                                    <span className="V_rating_value ">{product.rating}</span>
-                                                </div>
-                                            </div>
-                                        </Card.Title>
-                                        <Card.Text className="V_description px-3">
-                                            {product.description}
-                                        </Card.Text>
-                                        <Row>
-                                            <Col className="text-end">
-                                                <div className="V_price d-flex justify-content-between px-3">
-                                                    
-                                                    <div className="d-flex">
-                                                        {product.colors.map((color, index) => (
-                                                            <div
-                                                                key={index}
-                                                                className=" align-self-center me-2"
-                                                                style={{ backgroundColor: color, width: '20px', height: '20px', borderRadius: '50%' }}
-                                                            ></div>
-                                                        ))}
-                                                    </div>
-                                                    <div className="V_price_container">
-                                                        <span className="V_discounted_price">{product.price}</span>
-                                                        <span><strike className="original-price">{product.actualPrice}</strike></span>
-                                                    </div>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        ))}
-                    </Row>
-                </div>
-            </section > */}
+
 
             <BeautyCollection />
 

@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Stick+No+Bills:wght@200..800&display=swap');
+
+
+
 .V_luggage_product_1 {
     background-image: url('../../assets/luggage best deal img 1.png');
 
@@ -71,11 +75,40 @@
 }
 
 
+.V_pack {
+    background-image: url('../../assets/luggage slider main img 1.png');
+    background-size: cover;
+    width: 1920px;
+    height: 916px;
+}
 
+.V_get_packsack{
+    padding-top: 25rem !important;
+    width: 540px;
+    margin-left: -70px;
+}
 
+.V_get_your {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: -30px;
+}
 
+.V_packsack {
+    font-family: "Stick No Bills", serif;
+    font-size: 140px;
+    font-weight: 800;
+    letter-spacing: 0.4em;
+}
 
+.V_child_text {
+    font-size: 18px;
+    font-weight: 500;
+}
 
+.V_luggage_buy_now_button{
+    background-color:#1D80A6;
+}
 
 
 
@@ -117,9 +150,9 @@
     .V_carry_your_load {
         background-size: cover;
         height: 576px;
-        width: 1920px;
+        width: 100%;
     }
-    
+
     .V_carry {
         font-size: 62px;
         font-weight: 800;
@@ -128,6 +161,33 @@
         height: 280px;
         margin-left: 231px;
         padding-top: 8rem !important;
+    }
+
+    .V_pack {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .V_get_packsack{
+        padding-top: 25rem !important;
+        width: 550px;
+        margin-left: -140px;
+    }
+    
+    .V_get_your {
+        font-size: 32px;
+        margin-bottom: -5px;
+    }
+    
+    .V_packsack {
+        font-size: 140px;
+    }
+    
+    .V_child_text {
+        font-size: 18px;
     }
 
 }
@@ -179,6 +239,34 @@
         margin-left: 40px;
         padding-top: 7rem !important;
     }
+
+
+    .V_pack {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .V_get_packsack{
+        padding-top: 17rem !important;
+        width: 550px;
+        margin-left: -90px;
+    }
+    
+    .V_get_your {
+        font-size: 32px;
+        margin-bottom: -5px;
+    }
+    
+    .V_packsack {
+        font-size: 116px;
+    }
+    
+    .V_child_text {
+        font-size: 18px;
+    }
 }
 
 @media (min-width: 1200px) and (max-width: 1439px) {
@@ -227,6 +315,34 @@
         height: 280px;
         margin-left: 150px;
         padding-top: 1rem !important;
+    }
+
+    
+    .V_pack {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .V_get_packsack{
+        padding-top: 10rem !important;
+        width: 500px;
+        margin-left: 10px;
+    }
+    
+    .V_get_your {
+        font-size: 28px;
+        margin-bottom: -5px;
+    }
+    
+    .V_packsack {
+        font-size: 94px;
+    }
+    
+    .V_child_text {
+        font-size: 18px;
     }
 }
 
@@ -278,6 +394,35 @@
         margin-left: 120px;
         padding-top: 2rem !important;
     }
+
+
+    
+    .V_pack {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .V_get_packsack{
+        padding-top: 13rem !important;
+        width: 450px;
+        margin-left: -40px;
+    }
+    
+    .V_get_your {
+        font-size: 26px;
+        margin-bottom: -5px;
+    }
+    
+    .V_packsack {
+        font-size: 76px;
+    }
+    
+    .V_child_text {
+        font-size: 18px;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -326,6 +471,34 @@
         height: 280px;
         margin-left: 30px;
         padding-top: 3rem !important;
+    }
+
+
+    .V_pack {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .V_get_packsack{
+        padding-top: 11rem !important;
+        width: 400px;
+        margin-left: -90px;
+    }
+    
+    .V_get_your {
+        font-size: 22px;
+        margin-bottom: -5px;
+    }
+    
+    .V_packsack {
+        font-size: 68px;
+    }
+    
+    .V_child_text {
+        font-size: 16px;
     }
 }
 
@@ -378,6 +551,35 @@
         margin-left: 20px;
         padding-top: 4rem !important;
     }
+
+
+
+    .V_pack {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .V_get_packsack{
+        padding-top: 11rem !important;
+        width: 330px;
+        margin-left: -120px;
+    }
+    
+    .V_get_your {
+        font-size: 18px;
+        margin-bottom: -5px;
+    }
+    
+    .V_packsack {
+        font-size: 56px;
+    }
+    
+    .V_child_text {
+        font-size: 14px;
+    }
 }
 
 @media (min-width: 480px) and (max-width: 575px) {
@@ -429,6 +631,34 @@
         margin-left: 20px;
         padding-top: 4rem !important;
     }
+
+
+    .V_pack {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .V_get_packsack{
+        padding-top: 6rem !important;
+        width: 250px;
+        margin-left: -100px;
+    }
+    
+    .V_get_your {
+        font-size: 14px;
+        margin-bottom: -5px;
+    }
+    
+    .V_packsack {
+        font-size: 48px;
+    }
+    
+    .V_child_text {
+        font-size: 12px;
+    }
 }
 
 @media (min-width: 300px) and (max-width: 479px) {
@@ -478,4 +708,35 @@
         margin-left: -10px;
         padding-top: 1rem !important;
     }
+
+
+
+
+    .V_pack {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .V_get_packsack{
+        padding-top: 7rem !important;
+        width: 200px;
+        margin-left: -110px;
+    }
+    
+    .V_get_your {
+        font-size: 12px;
+        margin-bottom: -5px;
+    }
+    
+    .V_packsack {
+        font-size: 40px;
+    }
+    
+    .V_child_text {
+        font-size: 10px;
+    }
+    
 }
