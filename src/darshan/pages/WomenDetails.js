@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import ImageView360 from 'react-360-view';
 import { IoClose, IoLocationSharp, IoShareSocialSharp } from 'react-icons/io5';
-import ReactImageMagnify from 'react-image-magnify';
 import detailImg1 from './../d_img/detailimg1.png';
 import detailImg2 from './../d_img/detailimg2.png';
 import detailImg3 from './../d_img/detailimg3.png';
@@ -23,6 +21,8 @@ import Customerlike from '../components/Customerlike';
 import { Modal, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { ReactImageTurntable } from 'react-image-turntable';
+import OwlCarousel from 'react-owl-carousel';
+import { GlassMagnifier } from 'react-image-magnifiers';
 
 const WomenDetails = () => {
 
@@ -37,6 +37,7 @@ const WomenDetails = () => {
     const [isquantityOpen, setIsquantityOpen] = useState(false);
     const [sizemodalShow, setsizeModalShow] = useState(false);
     const [offermodalShow, setofferModalShow] = useState(false);
+    const [imagemodalShow, setimageModalShow] = useState(false);
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
     const viewerRef = useRef(null);
@@ -184,6 +185,76 @@ const WomenDetails = () => {
         renderImage();
     }, [currentFrame]);
 
+    const [activeIndex, setActiveIndex] = React.useState(0); // To track the current slide
+    const slidervideoRef = useRef(null); // Ref to control video playback
+
+    const mediaItems = [
+        { id: 1, type: 'image', src: require('./../d_img/detailimg1.png') },
+        { id: 2, type: 'image', src: require('./../d_img/detailimg2.png') },
+        { id: 3, type: 'image', src: require('./../d_img/detailimg3.png') },
+        { id: 4, type: 'video', src: require('./../d_img/detailvideo.mp4') },
+        { id: 5, type: 'image', src: require('./../d_img/detailimg5.png') },
+    ];
+
+
+    const carouselSettings = {
+        items: 1,
+        center: true,
+        nav: false,
+        dots: false,
+        loop: true,
+        margin: -15,
+        stagePadding: 400,
+        // URLhashListener: true,
+        startPosition: activeIndex,
+        responsive: {
+            300: {
+                items: 1,
+                stagePadding: 30,
+            },
+            350: {
+                items: 1,
+                stagePadding: 45,
+            },
+            400: {
+                items: 1,
+                stagePadding: 95,
+                margin: -15
+            },
+            750: {
+                items: 1,
+                stagePadding: 180
+            },
+            1000: {
+                items: 1,
+                stagePadding: 250
+            },
+            1440: {
+                items: 1,
+                stagePadding: 350,
+                margin: -25,
+            }
+        },
+        onChange: (event) => {
+            setActiveIndex(event.item.index);
+        }
+    };
+
+    // Function to handle thumbnail click
+    const handleThumbnailClick = (index) => {
+        setActiveIndex(index);
+        if (mediaItems[index].type === 'video' && slidervideoRef.current) {
+            slidervideoRef.current.play();
+        }
+    };
+
+    // Whenever activeIndex changes, reset video playback (for videos)
+    useEffect(() => {
+        if (mediaItems[activeIndex]?.type !== 'video' && slidervideoRef.current) {
+            slidervideoRef.current.pause();
+        }
+    }, [activeIndex, mediaItems]);
+
     return (
         <>
 
@@ -230,11 +301,14 @@ const WomenDetails = () => {
 
                                         {mainContent.type === 'image' && !is360Active && (
                                             <div className="d_img ">
-                                                <img
-                                                    src={mainContent.src}
-                                                    alt="Main content"
-                                                    className="w-100"
-                                                    style={{ height: "830px" }}
+                                                <GlassMagnifier className="d_glass"
+                                                    imageSrc={mainContent.src} // Use the image source
+                                                    imageAlt="Main content"    // Provide an alt text
+                                                    largeImageSrc={mainContent.src} // Use the same or a larger image for magnification
+                                                    magnifierSize="200"  // Adjust the magnifier size (you can change this)
+                                                    magnifierBorderSize={3} // Optional: adjust border thickness
+                                                    magnifierBorderColor="rgba(255,255,255,0.5)" // Optional: adjust border color
+                                                    // style={{ width: "100%", height: "830px" }} // Set the image size
                                                 />
                                                 <div className="d_delicon">
                                                     <div className="d-flex justify-content-between align-items-center">
@@ -257,6 +331,8 @@ const WomenDetails = () => {
                                             </div>
                                         )}
 
+                                        
+
                                         {mainContent.type === 'video' && (
                                             <video
                                                 ref={videoRef}
@@ -272,7 +348,6 @@ const WomenDetails = () => {
                                                 <div
                                                     id="viewer"
                                                     ref={viewerRef}
-                                                // style={{ width: '90vw', maxWidth: '600px', position: 'relative', overflow: 'hidden' }}
                                                 >
                                                     <canvas
                                                         className='w-100'
@@ -287,26 +362,8 @@ const WomenDetails = () => {
                                                             e.preventDefault();
                                                             handleDrag(e.touches[0].pageX);
                                                         }}
-                                                        // style={{ width: '100%', display: 'block', height: 'auto' }}
                                                     ></canvas>
                                                 </div>
-
-
-
-                                                {/* <div className="d_delicon">
-                                                    <div className="d-flex justify-content-between align-items-center">
-                                                        <img
-                                                            src={icon360}
-                                                            alt="360 View"
-                                                            onClick={toggle360View}
-                                                            style={{ cursor: 'pointer' }}
-                                                        />
-                                                        <IoShareSocialSharp
-                                                            className='d_shareicon'
-                                                            onClick={handleShare}
-                                                        />
-                                                    </div>
-                                                </div> */}
                                             </div>
                                         )}
                                     </div>
@@ -1311,6 +1368,67 @@ const WomenDetails = () => {
             </Modal>
 
             {/* Offer Modal section end */}
+
+            {/* Images modal section Start */}
+
+            {/* <Modal className="d_imagemodal"
+                show={imagemodalShow}
+                onHide={() => setimageModalShow(false)}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Body>
+                    <div className="d_closeicon d-flex justify-content-end d_cur me-3" onClick={() => setimageModalShow(false)}>
+                        <IoClose className='icon' />
+                    </div>
+                    <OwlCarousel className='owl-theme'   {...carouselSettings}>
+                        {mediaItems.map((item, index) => (
+                            <div className="d_item" key={item.id}>
+                                {item.type === 'image' ? (
+                                    <>
+                                        <img src={item.src} alt={`media-${index}`} className="img-fluid" />
+                                        <img
+                                            className='d_360view'
+                                            src={icon360}
+                                            alt="360 View"
+                                            onClick={() => {
+                                                toggle360View()
+                                                setCurrentFrame(1)
+                                            }}
+
+                                            style={{ cursor: 'pointer' }}
+                                        />
+                                    </>
+                                ) : (
+                                    <video ref={slidervideoRef} controls>
+                                        <source src={item.src} type="video/mp4" />
+                                    </video>
+                                )}
+                            </div>
+                        ))}
+                    </OwlCarousel>
+                    <div className="d_thumbnails w-100 d-flex justify-content-center mt-3 ">
+                        <div className='d_overflowx'>
+                        <div className='d-flex  flex-nowrap'>
+                            {mediaItems.map((item, index) => (
+                                <div className="d_img" key={item.id} onClick={() => handleThumbnailClick(index)} style={{ cursor: 'pointer' }}>
+                                    {item.type === 'image' ? (
+                                        <img src={item.src} alt={`thumb-${index}`} className="img-fluid small-img" />
+                                    ) : (
+                                        <video className="small-img">
+                                            <source src={item.src} type="video/mp4" />
+                                        </video>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                     </div>
+                    </div>
+                </Modal.Body>
+            </Modal> */}
+
+            {/* Images modal section end */}
 
 
         </>

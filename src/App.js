@@ -49,7 +49,7 @@ function App() {
           {/* women */}
           <Route path='/women' element={<Womenstore />} />
           <Route path='/womenstore' element={<Womenfilter />} />
-          {/* <Route path='/womendetails' element={<WomenDetails />} /> */}
+          <Route path='/womendetails' element={<WomenDetails />} />
 
           {/* about us */}
           <Route path="/about" element={<AboutUs />} />
