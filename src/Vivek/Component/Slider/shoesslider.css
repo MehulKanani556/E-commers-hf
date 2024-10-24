@@ -225,6 +225,90 @@
 
 
 
+/* slider*/
+
+.VK_watch_slider_size {
+    width: 88%;
+    margin: 0px auto;
+}
+
+.VK_watch_heading {
+    color: white;
+    font-size: 56px;
+    font-weight: 700;
+    font-family: "Sofia Sans", sans-serif;
+}
+
+.VK_watch_sub {
+    font-size: 30px;
+    font-weight: 700;
+    font-family: "Sofia Sans", sans-serif;
+}
+
+.VK_watch_desc {
+    font-size: 18px;
+    line-height: 2;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    width: 39%;
+    color: #1c1415;
+}
+
+.VK_watch_price {
+    font-size: 60px;
+    font-weight: 900;
+    font-family: "Poppins", sans-serif;
+}
+
+
+/* slider */
+.VK_watch_container {
+    width: 400px;
+    height: 500px;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.VK_watch_container::-webkit-scrollbar {
+    display: none;
+}
+
+.VK_watch_container div {
+    flex: 0 0 100%;
+    height: 100%;
+    scroll-snap-align: start;
+}
+
+.VK_slider_nav{
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 50%;
+    color: white;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.VK_watch_slider{
+    position: relative;
+}
+
+.VK_slider_controls{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    width: 110%;
+    transform: translateY(-50%) translateX(-50%);
+    justify-content: space-between;
+}
 
 
 
@@ -239,16 +323,37 @@
 
 
 /*  extra small device */
-@media (max-width:480px) {}
+@media (max-width:480px) {
+    .VK_slider_parent {
+        height: 550px;
+    }
+
+    .VK_owl_item {
+        height: 550px;
+    }
+}
 
 
 /* small device */
-@media (max-width:575px) and (min-width:481px) {}
+@media (max-width:575px) and (min-width:481px) {
+
+    .VK_slider_parent {
+        height: 550px;
+    }
+
+    .VK_owl_item {
+        height: 550px;
+    }
+}
 
 
 /* medium device */
 @media (max-width:766px) and (min-width:576px) {
     .VK_slider_parent {
+        height: 550px;
+    }
+
+    .VK_owl_item {
         height: 550px;
     }
 
@@ -278,7 +383,11 @@
 /*  */
 @media (max-width:850px) and (min-width:767px) {
     .VK_slider_parent {
-        height: 700px;
+        height: 650px;
+    }
+
+    .VK_owl_item {
+        height: 650px;
     }
 
     .VK_slider_back_txt h2 {
@@ -346,6 +455,10 @@
         height: 650px;
     }
 
+    .VK_owl_item {
+        height: 650px;
+    }
+
     .VK_slider_back_txt h2 {
         font-size: 350px;
     }
@@ -372,6 +485,10 @@
 /*  */
 @media (max-width:1100px) and (min-width:992px) {
     .VK_slider_parent {
+        height: 700px;
+    }
+
+    .VK_owl_item {
         height: 700px;
     }
 
@@ -433,6 +550,10 @@
         height: 700px;
     }
 
+    .VK_owl_item {
+        height: 700px;
+    }
+
     .VK_slider_back_txt h2 {
         font-size: 400px;
     }
@@ -460,7 +581,6 @@
 
     .VK_shoes_img_par {
         left: calc(25% - 20px);
-        /* top: 100px; */
         width: 45%;
         height: 100%;
     }
@@ -507,6 +627,10 @@
         top: calc(65%);
         right: calc(15% - 50px);
     }
+
+    .VK_owl_item {
+        height: 800px;
+    }
 }
 
 /* 2xl device */
@@ -531,6 +655,10 @@
         top: calc(60%);
         right: calc(20% - 50px);
     }
+
+    .VK_owl_item {
+        height: 800px;
+    }
 }
 
 /* 3xl device */
@@ -542,6 +670,10 @@
 
     .VK_shoes_img_box img {
         transform: translate(calc(-50% - 50px), calc(-50% - 30px)) rotate(-43deg);
+    }
+
+    .VK_owl_item {
+        height: 800px;
     }
 }
 
@@ -555,5 +687,10 @@
     .VK_shoes_img_box img {
         transform: translate(calc(-50% - 50px), calc(-50% - 30px)) rotate(-43deg);
     }
+
+    .VK_owl_item {
+        height: 800px;
+    }
+
 
 }

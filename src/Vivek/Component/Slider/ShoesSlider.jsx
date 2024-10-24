@@ -1,5 +1,7 @@
-import React, { useRef, useState } from 'react'
-import './shoesslider.css'
+import React, { useEffect, useRef, useState } from 'react';
+import './shoesslider.css';
+import OwlCarousel from 'react-owl-carousel';
+import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
 const ShoesSlider = () => {
 
@@ -43,10 +45,42 @@ const ShoesSlider = () => {
     };
 
 
+    // main slider controll
+    const slider_control = {
+        items: 1,
+        dots: true,
+    }
+
+
+    // watch slider controller
+    const containerRef = useRef(null);
+
+    const handle_change_watch = (direction) => {
+        if (containerRef.current) {
+            const scrollAmount = containerRef.current.clientWidth;
+            if (direction === 'left') {
+                containerRef.current.scrollBy({
+                    top: 0,
+                    left: -scrollAmount,
+                    behavior: 'smooth'
+                });
+            } else if (direction === 'right') {
+                containerRef.current.scrollBy({
+                    top: 0,
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    };
+
+
 
     return (
         <React.Fragment>
-            <section className='VK_slider_parent inter'>
+
+            {/* display none */}
+            <section className='VK_slider_parent d-none inter'>
                 <button onClick={() => { handleNextClick() }} className='position-absolute'>
                     scroll
                 </button>
@@ -232,6 +266,69 @@ const ShoesSlider = () => {
                 </div>
 
             </section>
+
+            <OwlCarousel className="owl-theme" {...slider_control}>
+                <div className="item VK_owl_item">
+                    <div className="VK_slider_gradient h-100" style={{
+                        background: 'linear-gradient(to right,#ADB0B0,#E1E1E1)'
+                    }}>
+                        <div className="d-flex h-100 align-items-center VK_watch_slider_size">
+                            <div>
+                                <div>
+                                    <h2 className='VK_watch_heading'>
+                                        Exquisite Watches
+                                    </h2>
+                                    <h5 className='text-white VK_watch_sub'>
+                                        Choose Luxury,
+                                        <span className='text-black ps-2'>
+                                            Choose Us
+                                        </span>
+                                    </h5>
+                                </div>
+                                <div className='mt-5'>
+                                    <p className='VK_watch_desc'>
+                                        Discover the Perfect Watch for Every O  ccasion and Elevate Your Style with Timeless Elegance and Precision Craftsmanship - watch
+                                    </p>
+                                </div>
+                                <div className='mt-5'>
+                                    <h2 className='VK_watch_price text-white'>
+                                        $430.00
+                                    </h2>
+                                </div>
+                                <div className='mt-4'>
+                                    <button className='VK_theme_btn'>
+                                        Order Now
+                                    </button>
+                                </div>
+                            </div>
+                            <div className='VK_watch_slider'>
+                                <div className='VK_watch_container overflow d-flex flex-nowrap' ref={containerRef}>
+                                    <div className='w-100 h-100'>
+                                        <img src={require('../../assets/watch1.png')} className='w-100 h-100' alt="" />
+                                    </div>
+                                    <div className='w-100 h-100'>
+                                        <img src={require('../../assets/watch2.png')} className='w-100 h-100' alt="" />
+                                    </div>
+                                    <div className='w-100 h-100'>
+                                        <img src={require('../../assets/watch3.png')} className='w-100 h-100' alt="" />
+                                    </div>
+                                    <div className='w-100 h-100'>
+                                        <img src={require('../../assets/watch4.png')} className='w-100 h-100' alt="" />
+                                    </div>
+                                </div>
+                                <div className='VK_slider_controls'>
+                                    <button className='VK_slider_nav' onClick={() => handle_change_watch('left')}>
+                                        <FaAngleLeft />
+                                    </button>
+                                    <button className='VK_slider_nav' onClick={() => handle_change_watch('right')}>
+                                        <FaAngleRight />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </OwlCarousel>
 
 
 
