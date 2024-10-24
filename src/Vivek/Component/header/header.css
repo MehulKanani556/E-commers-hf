@@ -12,6 +12,49 @@
     width: 880px;
 }
 
+.VK_search_parent {
+    position: relative;
+}
+
+.VK_input_suggestion {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0%;
+    z-index: 10;
+    width: 100%;
+    max-height: 500px;
+    border-radius: 5px;
+    padding: 0px 10px;
+    background-color: white;
+}
+
+
+/* image search */
+.VK_image_search_heading {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.VK_or_line {
+    height: 2px;
+    width: 45%;
+    background-color: #6a6a6a6b;
+}
+
+.VK_from_input {
+    outline: none;
+    background-color: #EDEDED;
+    border: none;
+    border-radius: 5px;
+}
+
+.VK_image_btn {
+    background-color: #2B221E;
+    color: white;
+    border: 0px;
+    border-radius: 5px;
+    padding: 10px 40px;
+}
 
 /* header */
 .white_space {
@@ -224,6 +267,10 @@
         width: 100%;
     }
 
+    .VK_image_search_model .modal-dialog {
+        width: 100%;
+    }
+
 
     .model_padding {
         padding: 20px 20px;
@@ -253,6 +300,11 @@
 
     .otp_model .modal-dialog {
         width: 400px;
+    }
+
+
+    .VK_image_search_model .modal-dialog {
+        width: 100%;
     }
 
     .model_padding {

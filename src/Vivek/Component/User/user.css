@@ -409,6 +409,52 @@
     border-radius: 5px;
 }
 
+
+
+
+/* payment method */
+.VK_border_bottom {
+    border-bottom: 1px solid #6A6A6A;
+}
+
+.VK_card_box {
+    background-image: linear-gradient(#0E1624, #000000);
+    border-radius: 10px;
+    height: 220px;
+}
+
+.VK_card_num {
+    font-size: 28px;
+    color: white;
+    font-weight: 600;
+}
+
+.VK_card_del_tit {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.425);
+}
+
+
+.VK_empty_card{
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* upi card */
+.VK_upi_card{
+    border: 2px solid #9C9C9C;
+    border-radius: 5px;
+    padding: 10px 15px;
+}
+
+.VK_theme_bg{
+    background-color: #EDEDED !important;
+}
+
 /* -------------------------------------------------------- media query -------------------------------------------------------- */
 
 
@@ -480,6 +526,14 @@
     .VK_order_date {
         font-size: 15px;
     }
+
+    .VK_card_num {
+        font-size: 20px;
+    }
+
+    .VK_card_box {
+        height: 180px;
+    }
 }
 
 
@@ -524,6 +578,14 @@
         max-height: 170px;
         object-position: top;
     }
+
+    .VK_card_num {
+        font-size: 20px;
+    }
+
+    .VK_card_box {
+        height: 180px;
+    }
 }
 
 
@@ -542,6 +604,14 @@
         width: 150px;
         max-height: 170px !important;
         object-position: top;
+    }
+
+    .VK_card_num {
+        font-size: 22px;
+    }
+
+    .VK_card_box {
+        height: 180px;
     }
 }
 

@@ -90,7 +90,7 @@ const UserAddress = () => {
                                                                         Edit
                                                                     </button>
                                                                 </Dropdown.Item>
-                                                                <Dropdown.Item href="#/action-2">
+                                                                <Dropdown.Item>
                                                                     <button className='bg-transparent border-0' onClick={() => { setdelete_model(true) }}>
                                                                         delete
                                                                     </button>
@@ -164,7 +164,7 @@ const UserAddress = () => {
                                 </span>
                                 <input type="text" className='VK_from_input w-100 py-2 px-3' placeholder='Enter Landmark' />
                             </div>
-                            <div className='d-flex flex-wrap my-3 gap-3'>
+                            <div className='d-flex flex-sm-nowrap flex-wrap my-3 gap-3'>
                                 <div className='w-100'>
                                     <span className='VK_input_label pb-1'>
                                         Pincode

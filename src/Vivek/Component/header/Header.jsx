@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './header.css'
-import { Accordion, Button, Col, Container, Dropdown, Offcanvas, Row } from 'react-bootstrap'
+import { Accordion, Button, Col, Container, Dropdown, Modal, Offcanvas, Row } from 'react-bootstrap'
 import { FaAngleDown, FaAngleLeft, FaAngleRight, FaBars, FaLocationCrosshairs, FaLocationDot, FaPlus, FaRegHeart, FaUser } from 'react-icons/fa6'
 import { IoSearch } from 'react-icons/io5'
 import { BsCart3 } from 'react-icons/bs'
@@ -54,6 +54,34 @@ const Header = () => {
             navListRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         }
     };
+
+
+    // search suggestions
+
+    let [suggestion, setsuggestion] = useState(null);
+
+    let search_sug = [
+        "iphone 16 pro max",
+        "Samsung Galaxy S23 Ultra 5G AI Smartphone ",
+        "iphone 16 pro max",
+        "Samsung Galaxy S23 Ultra 5G AI Smartphone ",
+        "Samsung Galaxy S23 Ultra 5G AI Smartphone ",
+        "Samsung Galaxy S23 Ultra 5G AI Smartphone "
+    ]
+
+    const handle_serachSuggestion = (event) => {
+        let search_text = event.target.value;
+        if (search_text.length > 1) {
+            setsuggestion(search_sug);
+        } else {
+            setsuggestion(null);
+        }
+    }
+
+
+    // image search model
+    const [imagemodel, setimagemodel] = React.useState(false);
+
 
 
 
@@ -158,15 +186,45 @@ const Header = () => {
                                 </div>
                             </Col>
                             <Col xs={12} sm={6} lg={6} className='d-none d-md-flex'>
-                                <div className='VK_header_search d-flex align-items-center bg-white rounded-2 overflow-hidden px-3'>
-                                    <span>
-                                        <img src={require("../../assets/zoom.png")} alt="" />
-                                    </span>
-                                    <input type="text" placeholder='Search for products, styles and more'
-                                        className='VK_header_search_bar bg-transparent outline_none border-0 py-2 ps-3' />
-                                    <span>
-                                        <img src={require("../../assets/Frame.png")} alt="" />
-                                    </span>
+                                <div className='VK_search_parent w-100'>
+                                    <div className='VK_header_search d-flex align-items-center bg-white rounded-2 overflow-hidden px-3'>
+                                        <span>
+                                            <img src={require("../../assets/zoom.png")} alt="" />
+                                        </span>
+                                        <input type="text" placeholder='Search for products, styles and more'
+                                            className='VK_header_search_bar bg-transparent outline_none border-0 py-2 ps-3' onChange={(e) => { handle_serachSuggestion(e) }} />
+                                        <span>
+                                            <button className='bg-transparent border-0' onClick={() => { setimagemodel(true) }}>
+                                                <img src={require("../../assets/Frame.png")} alt="" />
+                                            </button>
+                                        </span>
+                                        <div className='VK_input_suggestion'>
+                                            {
+                                                suggestion != null &&
+                                                <ul className='VK_search_suggestion list-unstyled'>
+                                                    {
+                                                        suggestion.map((item, index) => {
+                                                            return (
+                                                                <li key={index} className='py-2'>
+                                                                    <div className='d-flex align-items-center w-100'>
+                                                                        <div>
+                                                                            <img src={require('../../assets/zoom.png')} height="22px" width="22px" alt="" />
+                                                                        </div>
+                                                                        <div className='ps-3'>
+                                                                            {item}
+                                                                        </div>
+                                                                        <div className='ms-auto'>
+                                                                            <img src={require('../../assets/arrow.png')} height="20px" width="20px" alt="" />
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            )
+                                                        })
+                                                    }
+                                                </ul>
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                             </Col>
                             <Col sm={2} lg={2} className='text-white p-0 pe-lg-3'>
@@ -1673,12 +1731,62 @@ const Header = () => {
             </Container>
 
             {/* models */}
-
             {
                 login ? (
                     <Models onHide={() => setModalShow(false)} show={modalShow} setmodel={setModalShow} />
                 ) : (null)
             }
+
+
+            {/* image search model */}
+            <Modal
+                show={imagemodel}
+                onHide={() => { setimagemodel(false) }}
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                className='VK_image_search_model'
+            >
+                <Modal.Header>
+                    <div className='d-flex w-100 align-items-center'>
+                        <div className='w-100 text-center'>
+                            <p className='m-0 VK_image_search_heading'>
+                                Search a product by image
+                            </p>
+                        </div>
+                        <div>
+                            <button onClick={() => { setimagemodel(false) }} className='bg-transparent border-0'>
+                                <img src={require('../../assets/close.png')} alt="" />
+                            </button>
+                        </div>
+                    </div>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className='p-sm-4 p-2'>
+                        <div>
+                            <div className='mb-5'>
+                                <p className='m-0 text-center fw-600'>
+                                    Drag an image here or <span className='text-decoration-underline'>upload a file</span>
+                                </p>
+                            </div>
+                            <div className='d-flex gap-4 justify-content-between align-items-center mb-4'>
+                                <span className='VK_or_line'></span>
+                                <span className='fw-600 light_color'>OR</span>
+                                <span className='VK_or_line'></span>
+                            </div>
+                            <div className='mb-5'>
+                                <input type="text" className='VK_from_input w-100 py-2 px-3' placeholder='Enter image url' />
+                            </div>
+                            <div className='text-center'>
+                                <button className='VK_image_btn'>
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
+
+
 
 
         </React.Fragment >

@@ -13,11 +13,12 @@
 .font_16 {
     font-size: 16px;
 }
-.font_14{
+
+.font_14 {
     font-size: 14px;
 }
 
-.primary_color{
+.primary_color {
     color: #2C7AA6;
 }
 
@@ -42,22 +43,24 @@
 .object_cover {
     object-fit: cover;
 }
+
 .object_fill {
     object-fit: fill;
 }
 
-.object_contain{
+.object_contain {
     object-fit: contain;
 }
 
-.object_top{
+.object_top {
     object-position: top;
 }
-.object_bottom{
+
+.object_bottom {
     object-position: bottom;
 }
 
-.object_center{
+.object_center {
     object-position: center;
 }
 
@@ -69,6 +72,15 @@
 
 .white_space {
     white-space: nowrap;
+}
+
+
+.VK_theme_btn {
+    background-color: #2B221E;
+    color: white;
+    border-radius: 5px;
+    border: 0px;
+    padding: 12px 40px;
 }
 
 
@@ -88,6 +100,10 @@
     .section_title {
         font-size: 18px;
     }
+
+    .VK_theme_btn {
+        padding: 10px 20px;
+    }
 }
 
 
@@ -99,6 +115,10 @@
 
     .section_title {
         font-size: 18px;
+    }
+
+    .VK_theme_btn {
+        padding: 10px 20px;
     }
 }
 
@@ -112,6 +132,10 @@
     .section_title {
         font-size: 18px;
     }
+
+    .VK_theme_btn {
+        padding: 10px 20px;
+    }
 }
 
 
@@ -124,6 +148,10 @@
     .section_title {
         font-size: 20px;
     }
+
+    .VK_theme_btn {
+        padding: 10px 30px;
+    }
 }
 
 
@@ -135,6 +163,10 @@
 
     .section_title {
         font-size: 24px;
+    }
+
+    .VK_theme_btn {
+        padding: 10px 30px;
     }
 }
 
