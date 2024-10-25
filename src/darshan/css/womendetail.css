@@ -73,7 +73,7 @@
 
 .d_womendetail .d_mainimg .d_img img {
     width: 100%;
-    height: 100% !important;
+    /* height: 100% !important; */
     object-fit: cover;
 }
 
@@ -875,6 +875,72 @@ input:focus-visible {
 
 /* offer modal css end */
 
+/* Image modal css start */
+
+/* .d_imagemodal .modal-dialog {
+    box-shadow: 0px 4px 14px 0px #8F8F8F40;
+    width: 1480px;
+}
+
+.d_imagemodal .modal-body {
+    padding: 30px 0;
+}
+
+.d_imagemodal .d_closeicon {
+    font-size: 26px;
+    color: #6A6A6A;
+}
+
+.d_imagemodal .owl-item {
+    width: 600px !important;
+}
+
+.d_imagemodal .d_item {
+    position: relative;
+    width: 100%;
+    height: 650px;
+}
+
+.d_imagemodal .d_item .d_360view {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 2%;
+    right: 10%;
+}
+
+.d_imagemodal .d_item img,
+.d_imagemodal .d_item video {
+    width: 100%;
+    height: 100%;
+    transform: scale(0.8);
+}
+
+.d_imagemodal .d_thumbnails .d_img {
+    width: 100px;
+    height: 130px;
+    margin-right: 10px;
+}
+
+.d_imagemodal .d_thumbnails .d_img img,
+.d_imagemodal .d_thumbnails .d_img video {
+    width: 100px;
+    height: 100%;
+}
+
+.d_imagemodal .center .d_item img {
+    transform: scale(1);
+} 
+
+/* Image modal css end */
+
+.d_mainimg .d_img:hover .d_glass div{
+    visibility: visible !important;;
+}
+.d_mainimg .d_img:hover .d_glass div img{
+    visibility: visible !important;
+}
+
 
 @media(max-width:1440px) {
 
@@ -985,10 +1051,18 @@ input:focus-visible {
     .d_proinfo .d_review .d_rightbox .progress {
         width: 80%;
     }
-    
-    canvas{
+
+    canvas {
         height: 685px;
     }
+
+    /* .d_imagemodal .modal-lg {
+        --bs-modal-width: 1200px;
+    }
+
+    .d_imagemodal .d_item {
+        height: 600px;
+    } */
 }
 
 @media(max-width:1199px) {
@@ -1076,8 +1150,26 @@ input:focus-visible {
         padding: 15px;
     }
 
-    canvas{
+    canvas {
         height: 685px;
+    }
+
+    .d_imagemodal .modal-lg {
+        --bs-modal-width: 900px;
+    }
+
+    /* .d_imagemodal .d_item {
+        height: 700px;
+    }
+
+    .d_imagemodal .d_item {
+        height: 500px;
+    } */
+}
+
+@media(min-width: 992px) {
+    .modal-lg {
+        --bs-modal-width: 1400px;
     }
 }
 
@@ -1183,10 +1275,18 @@ input:focus-visible {
     .d_offermodal .icon {
         font-size: 20px;
     }
-   
-    canvas{
+
+    canvas {
         height: 645px;
     }
+
+    /* .d_imagemodal .d_item {
+        height: 450px;
+    }
+
+    .d_imagemodal .modal-lg {
+        width: 700px;
+    } */
 }
 
 @media(max-width:575px) {
@@ -1304,18 +1404,45 @@ input:focus-visible {
         padding-left: 0 !important;
         margin: 0px -5px;
     }
-    .d_offermodal .modal-dialog{
+
+    .d_offermodal .modal-dialog {
         width: 400px;
     }
-    .d_offermodal .d_offercon .d_text .d_title{
+
+    .d_offermodal .d_offercon .d_text .d_title {
         font-size: 14px;
     }
+
     .d_offermodal .d_offercon .d_text p {
         font-size: 12px;
     }
-    canvas{
+
+    canvas {
         height: 500px;
     }
+
+    /* .d_imagemodal .modal-lg {
+        width: 400px;
+    }
+
+    .d_imagemodal .d_item {
+        height: 350px;
+    }
+
+    .d_imagemodal .d_thumbnails .d_img {
+        height: 100px;
+        width: 80px;
+        margin: 0 5px;
+    }
+    .d_imagemodal .d_thumbnails .d_img{
+        min-width: 80px;
+    }
+    ::-webkit-scrollbar{
+        display: none;
+    }
+    .d_overflowx{
+        overflow-x: auto;
+    } */
 }
 
 @media(max-width:399px) {
@@ -1338,7 +1465,7 @@ input:focus-visible {
     }
 
     .d_womendetail .d_delbtn .d_addcartbtn {
-        width: 160px;
+        width: 150px;
     }
 
     .d_womendetail .d_feabg:last-child {
@@ -1366,9 +1493,18 @@ input:focus-visible {
     .d_sizemodal tbody tr th {
         font-size: 11px;
     }
-    .d_offermodal .modal-dialog{
+
+    .d_offermodal .modal-dialog {
         width: 350px;
     }
+
+    /* .d_imagemodal .modal-lg {
+        width: 350px;
+    }
+
+    .d_imagemodal .d_thumbnails .d_img {
+        height: 80px;
+    } */
 }
 
 @media(max-width:320px) {
@@ -1395,10 +1531,16 @@ input:focus-visible {
     .d_sizemodal .modal-dialog {
         width: 300px;
     }
-    .d_offermodal .modal-dialog{
+
+    .d_offermodal .modal-dialog {
         width: 300px;
     }
-    canvas{
+
+    canvas {
         height: 400px;
     }
+
+    /* .d_imagemodal .modal-dialog {
+        width: 300px;
+    } */
 }
