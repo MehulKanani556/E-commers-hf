@@ -1,107 +1,51 @@
-.V_contact {
-    font-size: 40px;
-    font-weight: 600;
+/* {******************* Contact Us *****************} */
+.ds_us-box{
+    box-shadow: 0px 4px 14px 0px rgba(143, 143, 143, 0.25);
+    padding: 20px;
 }
-
-.V_any {
-    font-size: 18px;
-    font-weight: 500;
+.ds_us-text{
+    color: rgba(106, 106, 106, 1);
 }
-
-.V_shadow {
-    box-shadow: 0px 4px 14px 0px #8F8F8F40;
-
-}
-
-.V_back_img {
-    width: 491px;
-    height: 647px;
-    background-image: url('../../assets/contactusbackimg.png');
+.ds_us-img{
+    background-image: url(../../assets/contactusbackimg.png);
+    background-position: center;
     background-size: cover;
+    width: 100%;
+    height: 600px;
+    border-radius: 20px;
 }
-
-.V_label {
-    font-size: 14px;
-    font-weight: 500;
+.ds_us-padding{
+    padding-top: 30px;
+    padding-left: 35px;
 }
-
-.V_input {
-    width: 874px;
-    height: 48px;
-    background-color: #EDEDED;
-    border: 0px;
-    border-radius: 4px;
+.ds_us-muted{
+    color: rgba(106, 106, 106, 1);
 }
-
-.V_textarea {
-    width: 874px;
-    height: 80px;
-    border-radius: 4px;
-    background-color: #EDEDED;
-    border: 0px;
+.ds_us-email{
+    border: none !important;
+    background: rgba(237, 237, 237, 1);
+    padding: 0 !important;
 }
-
-.V_redio_text {
-    font-size: 16px;
-    font-weight: 500;
+.ds_us-email:focus{
+    background: rgba(237, 237, 237, 1);
 }
-
-
-.V_submit {
-    font-size: 16px;
-    font-weight: 500;
+.ds_label{
+    color: rgba(106, 106, 106, 1);
 }
-
-.V_submit_button {
-    width: Fixed (190px)px;
-    height: Fixed (48px)px;
-    background-color: black;
+.ds_us-textarea{
+    background: rgba(237, 237, 237, 1);
+    border: none !important;
+    height: 85px !important;
+    padding: 10px 0px 0px 0px !important;
 }
-
-.V_main_text {
-    font-size: 28px;
-    font-weight: 600;
+.ds_us-textarea:focus{
+    background: rgba(237, 237, 237, 1);
+    border: none !important;   
 }
-
-.V_feel_free {
-    font-size: 18px;
-    font-weight: 400;
-    color: #6A6A6A;
-}
-
-.V_call {
-    width: 24px;
-    height: 24px;
-}
-
-.V_contact_no {
-    font-size: 16px;
-    font-weight: 400;
-}
-
-.custom-radio .form-check-input {
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border: 2px solid black;
-    border-radius: 50%;
-    position: relative;
-}
-
-.custom-radio .form-check-input:checked {
-    background-color: black;
-}
-
-.custom-radio .form-check-input:checked::before {
-    content: '';
-    width: 10px;
-    height: 10px;
-    background-color: white;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.ds_us-submit{
+    background: #2B221E;
+    color: white;
+    padding: 10px 60px;
 }
 
 
@@ -114,52 +58,29 @@
 
 
 
-
-
-/* ------------------------------------------ media query ------------------------------------------ */
-
-
-/*  extra small device */
-@media (max-width:480px) {
-    .V_contact {
-        font-size: 28px;
+@media (max-width:992px) {
+    .ds_us-img{
+        height: 450px;
     }
+}
 
-    .V_back_img {
-        width: 100%;
-        height: 400px;
-        background-size: cover;
-        background-position: bottom;
+@media (max-width:768px) {
+    .ds_us-margin{
+       margin-right: 13px;
     }
+}
 
-    .V_main_text {
-        font-size: 24px;
+@media (max-width:550px) {
+    .ds_us-padding{
+        padding-left: 20px;
     }
+}
 
-    .V_feel_free {
-        font-size: 16px;
+@media (max-width:530px) {
+    .ds_us-margin{
+       margin-left: 0px;
     }
-
-    .V_call {
-        width: 20px;
-        height: 20px;
-    }
-
-    .V_label {
-        font-size: 20px;
-    }
-
-    .V_input {
-        width: 100% !important;
-        height: 40px;
-    }
-
-    .V_textarea {
-        width: 100%;
-        height: 70px;
-    }
-
-    .V_redio_text {
-        font-size: 16px;
+    .ds_us-img{
+        height: 430px;
     }
 }

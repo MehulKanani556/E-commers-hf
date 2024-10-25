@@ -52,7 +52,25 @@
     font-weight: 400;
 }
 
+.V_header button::after{
+    background-image: url(../../assets/plus-icon.png);
+    transform: none;
+}
 
+.V_header button:focus{
+    box-shadow: none;
+}
+.V_header button:not(.collapsed){
+    color: inherit;
+    background-color: inherit;
+}
+.V_header button:not(.collapsed)::after{
+    background-image: url(../../assets/minus-icon.png);
+    transform: none;
+}
+.accordion-collapse{
+    border-top: 0.5px solid #d4d2d2
+}
 
 
 

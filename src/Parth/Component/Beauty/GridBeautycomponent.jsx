@@ -10,7 +10,8 @@ const Gridcomponent = () => {
             title: "Blend your beauty",
             image: "blend your beauty.png",
             logo: "iconic logo.png",
-            offer: "Upto 20% OFF"
+            offer: "Upto 20% OFF",
+            status:true,
         },
         {
             title: "Your skin tells a story. Make it a good one.",
@@ -40,7 +41,8 @@ const Gridcomponent = () => {
             title: "Flawless skin requires daily commitment",
             image: "flawless skin.png",
             logo: "renee logo.png",
-            offer: "Upto 20% OFF"
+            offer: "Upto 20% OFF",
+            status:true
         },
         {
             title: "Lost in the rhythm of my favorite tunes.",
@@ -76,6 +78,7 @@ const Gridcomponent = () => {
                                     <Map data={gridview}>
                                         {(item) => (
                                             <div class={`div${cnt++} VK_grid_parent`}>
+                                              <div className={`${item.status ? 'me-lg-3 h-100 position-relative' : "h-100 position-relative"}`}>
                                                 <img src={require(`../../assets/${item.image}`)} className='w-100 h-100 object_center' alt="" />
                                                 <div className='VK_grid_child'>
                                                     <div className='h-100 d-flex flex-column'>
@@ -99,6 +102,7 @@ const Gridcomponent = () => {
                                                         </div>
                                                     </div>
                                                 </div>
+                                              </div>
                                             </div>
                                         )}
                                     </Map>

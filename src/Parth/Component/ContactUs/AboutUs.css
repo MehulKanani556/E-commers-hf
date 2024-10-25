@@ -11,13 +11,6 @@ color: black;
 
 
 
-
-
-
-
-
-
-
 .V_contact {
     font-size: 40px;
     font-weight: 600;
@@ -113,8 +106,23 @@ font-weight: 400;
 color: #6A6A6A;
 }
 
-
-
+/* {*********************** The Quickcart *****************} */
+.ds_bg-color{
+    padding: 40px 0px;
+    background-color: rgba(0, 0, 0, 1);
+}
+.ds_para{
+    color: rgba(106, 106, 106, 1);
+    line-height: 20px;
+}
+.ds_curve-text{
+    font-family: 'Gabriola';
+    font-size: 80px;
+    color: black;
+    -webkit-text-fill-color: black; 
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: white;
+}
 
 
 
@@ -426,5 +434,22 @@ color: #6A6A6A;
         background-position: center;
         background-size: cover;
         background-position-y: -520px;
+    }
+}
+
+@media (max-width:768px) {
+/* {*********************** The Quickcart *****************} */
+    .ds_padding{
+        padding-left: 20px;
+    }
+}
+
+@media (max-width:550px) {
+/* {*********************** The Quickcart *****************} */ 
+    .ds_curve-text {
+        font-size: 50px;
+    }
+    .ds_text{
+        font-size: 14px;
     }
 }

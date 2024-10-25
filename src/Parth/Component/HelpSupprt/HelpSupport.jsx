@@ -142,7 +142,7 @@ function Help() {
 
 
 
-            <section className='py-5'>
+            <section className='py-sm-5'>
                 <div className="d_container">
                     <Accordion>
                         <Accordion.Item eventKey="0" className='my-3'>
