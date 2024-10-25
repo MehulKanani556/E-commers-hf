@@ -1,81 +1,3 @@
-.V_gradient {
-    background: linear-gradient(261.7deg, #051524 24.8%, #000000 133.72%);
-
-}
-
-.V_lion_skin {
-    font-size: 50px;
-    font-weight: 400;
-}
-
-.V_lion_ptag {
-    font-size: 25px;
-    font-weight: 400;
-}
-
-.V_img_height {
-    width: 150px;
-    height: 105.4px;
-    gap: 20px;
-}
-
-.V_laptop {
-    width: 188px;
-    padding-left: 30px;
-}
-
-.V_laptop1 {
-    width: 230px;
-    padding-left: 30px;
-}
-
-.v_mega {
-    font-size: 30px;
-    width: 173px;
-}
-
-.v_mega1 {
-    font-size: 24px;
-    width: 230px;
-}
-
-.V_on {
-    font-size: 20px;
-    width: 188px;
-}
-
-.V_on1 {
-    font-size: 20px;
-    width: 101px;
-}
-
-.V_best_img {
-    border-top-left-radius: 30px;
-    border-bottom-right-radius: 30px;
-    background-size: cover;
-    background-position: center;
-}
-
-.V_best_img_1 {
-    background-image: url('../../assets/V_best_deal_img_1.png');
-    height: 300px;
-}
-
-.V_best_img_2 {
-    background-image: url('../../assets/V_best_deal_img_2.png');
-    height: 315px;
-}
-
-.V_best_img_3 {
-    background-image: url('../../assets/V_best_deal_img_3.png');
-    height: 300px;
-}
-
-.V_view {
-    color: #2C7AA6;
-    font-size: 15px;
-}
-
 .V_back_spe_off {
     background-image: url('../../assets/special_offer.png');
     height: 576px;
@@ -101,274 +23,102 @@
     color: #434377;
 }
 
-.V_five_pro {
-    width: 20%;
+
+.V_ele_slider_2_back {
+    background: linear-gradient(261.7deg, #051524 24.8%, #000000 133.72%);
+    width: 1920px;
+    height: 916px;
 }
 
-.V_five_pro:hover {
-    opacity: 0.5;
-}
-
-.V_five {
-    width: 280px;
-    height: 356px;
-}
-
-
-.V_eat {
-    grid-column: 1;
-    width: 511px;
-    height: 397px;
-}
-
-.V_unleshing {
-    grid-column: 2 / span 2;
-    width: 929px;
-    height: 397px;
-}
-
-.V_build {
-    grid-column: 1;
-    width: 480px;
-    height: 480px;
-}
-
-.V_watch {
-    grid-column: 2;
-    width: 480px;
-    height: 480px;
-}
-
-.V_same {
-    grid-column: 3;
-    width: 480px;
-    height: 480px;
-}
-
-.V_plugin {
-    grid-column: 1 / span 2;
-    width: 929px;
-    height: 397px;
-}
-
-.V_lost {
-    grid-column: 3;
-    width: 511px;
-    height: 397px;
-}
-
-.V_grid_container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    padding: 10px;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.V_card {
-    width: 340px;
-    height: 475px;
-    position: relative;
-    border-radius: 0px;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-
-
-
-.V_best_seller_tag {
-    position: absolute;
-    font-size: 12px;
-    font-weight: 500;
-    border-radius: 0px;
-}
-
-.V_product_image {
-    height: 340px;
-    width: 340px;
-}
-
-.V_product_image:hover {
-    padding: 0px;
-}
-
-.V_brand {
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 24.2px;
-    letter-spacing: 0.02em;
-    text-align: left;
-
-}
-
-.V_description {
-    font-size: 14px;
+.V_the_lion {
+    font-size: 50px;
     font-weight: 400;
-    line-height: 16.94px;
-    letter-spacing: 0.02em;
-    text-align: left;
-
-}
-
-.V_rating {
-    display: flex;
-    align-items: center;
-}
-
-.V_star {
-    color: #ffcc00;
-}
-
-.V_rating_value {
-    margin-left: 4px;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.V_price_container {
-    display: flex;
-    align-items: center;
-}
-
-.V_discounted_price {
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 24.2px;
-    letter-spacing: 0.02em;
-    text-align: right;
-
-}
-
-.V_original_price {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 16.94px;
-    text-align: right;
-
 }
 
 
+.V_story_stickers {
+    font-size: 25px;
+    font-weight: 400;
+}
+
+.V_laptop_text_width {
+    width: 650px;
+}
 
 
+.V_main_img {
+    width: 583px;
+    height: 500px;
+}
 
+.V_child_img {
+    width: 210px !important;
+    height: 150px;
+    top: 689.47px;
+    left: 997px;
+    gap: 0px;
+    opacity: 0px;
+
+}
 
 /* ///////////////////////////////////////////////////////// container ////////////////////////////////////////////////// */
 
 
 
 @media (min-width: 1650px) {
-    .V_img_height {
-        width: 150px;
-        height: 105.4px;
-        gap: 20px;
+
+
+    .V_sale {
+        width: 538px;
+        font-size: 58px;
     }
 
-    .V_lion_skin {
+    .V_thirty30 {
+        font-size: 58px;
+
+    }
+
+    .V_back_spe_off {
+        height: 576px;
+        width: 100%;
+    }
+
+
+    .V_ele_slider_2_back {
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_the_lion {
         font-size: 50px;
         font-weight: 400;
     }
 
-    .V_lion_ptag {
+
+    .V_story_stickers {
         font-size: 25px;
-        font-weight: 400;
     }
 
-    .V_lion_padding {
-        padding: 100px 0px;
+    .V_laptop_text_width {
+        width: 650px;
     }
 
-    .v_mega {
-        font-size: 30px;
+
+    .V_main_img {
+        width: 550px !important;
+        height: 440px;
     }
 
-    .V_best_img_1,
-    .V_best_img_3 {
-        height: 300px;
-        width: 100%;
+    .V_child_img {
+        width: 200px !important;
+        height: 130px;
     }
 
-    .V_new {
-        font-size: 28px;
-    }
-
-    .V_sale {
-        width: 538px;
-        font-size: 58px;
-    }
-
-    .V_thirty30 {
-        font-size: 58px;
-
-    }
-
-    .V_back_spe_off {
-        height: 576px;
-        width: 100%;
-    }
-
-    .V_five_pro {
-        width: 20%;
-    }
-
-    .V_five {
-        width: 280px;
-        height: 356px;
-    }
-
-    .V_product_image {
-        height: 343px;
-        width: 100%;
-    }
 }
 
 @media (min-width: 1440px) and (max-width: 1649px) {
 
-    .V_img_height {
-        width: 140px;
-        height: 105.4px;
-        gap: 20px;
-    }
 
-    .V_lion_skin {
-        font-size: 48px;
-        font-weight: 400;
-    }
-
-    .V_lion_ptag {
-        font-size: 25px;
-        font-weight: 400;
-    }
-
-    .V_lion_padding {
-        padding: 100px 0px;
-    }
-
-    .v_mega {
-        font-size: 30px;
-    }
-
-    .V_best_img_1,
-    .V_best_img_3 {
-        height: 300px;
-        width: 100%;
-    }
-
-    .V_new {
-        font-size: 28px;
-    }
 
     .V_sale {
         width: 538px;
@@ -385,61 +135,41 @@
         width: 100%;
     }
 
-    .V_five_pro {
-        width: 20%;
-    }
-
-    .V_five {
-        width: 280px;
-        height: 356px;
-    }
-
-    .V_product_image {
-        height: 343px;
+    .V_ele_slider_2_back {
         width: 100%;
+        height: 100%;
     }
+
+    .V_the_lion {
+        font-size: 44px;
+        font-weight: 400;
+    }
+
+
+    .V_story_stickers {
+        font-size: 22px;
+    }
+
+    .V_laptop_text_width {
+        width: 572px;
+    }
+
+
+    .V_main_img {
+        width: 500px !important;
+        height: 380px;
+    }
+
+    .V_child_img {
+        width: 150px !important;
+        height: 120px;
+    }
+
 }
 
 @media (min-width: 1200px) and (max-width: 1439px) {
 
-    .V_img_height {
-        width: 140px;
-        height: 105.4px;
-        gap: 20px;
-    }
 
-    .V_lion_skin {
-        font-size: 48px;
-        font-weight: 400;
-    }
-
-    .V_lion_ptag {
-        font-size: 25px;
-        font-weight: 400;
-    }
-
-    .V_lion_padding {
-        padding: 100px 0px;
-    }
-
-    .v_mega {
-        font-size: 30px;
-    }
-
-    .V_best_img_1,
-    .V_best_img_3 {
-        height: 300px;
-        width: 100%;
-    }
-
-    .V_best_img_2 {
-        height: 315px;
-        width: 100%;
-    }
-
-    .V_new {
-        font-size: 28px;
-    }
 
     .V_sale {
         width: 538px;
@@ -456,61 +186,40 @@
         width: 100%;
     }
 
-    .V_five_pro {
-        width: 20%;
-    }
-
-    .V_five {
-        width: 280px;
-        height: 320px;
-    }
-
-    .V_product_image {
-        height: 343px;
+    .V_ele_slider_2_back {
         width: 100%;
+        height: 100%;
+    }
+
+    .V_the_lion {
+        font-size: 36px;
+        font-weight: 400;
+    }
+
+
+    .V_story_stickers {
+        font-size: 20px;
+    }
+
+    .V_laptop_text_width {
+        width: 470px;
+    }
+
+
+    .V_main_img {
+        width: 390px !important;
+        height: 240px;
+    }
+
+    .V_child_img {
+        width: 145px !important;
+        height: 110px;
     }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
 
-    .V_img_height {
-        width: 110px;
-        height: 105.4px;
-        gap: 20px;
-    }
 
-    .V_lion_skin {
-        font-size: 40px;
-        font-weight: 400;
-    }
-
-    .V_lion_ptag {
-        font-size: 24px;
-        font-weight: 400;
-    }
-
-    .V_lion_padding {
-        padding: 100px 0px;
-    }
-
-    .v_mega {
-        font-size: 30px;
-    }
-
-    .V_best_img_1,
-    .V_best_img_3 {
-        height: 200px;
-        width: 100%;
-    }
-
-    .V_best_img_2 {
-        height: 215px;
-        width: 100%;
-    }
-
-    .V_new {
-        font-size: 26px;
-    }
 
     .V_sale {
         width: 400px;
@@ -527,60 +236,39 @@
         width: 100%;
     }
 
-    .V_five_pro {
-        width: 20%;
-    }
 
-    .V_five {
-        width: 230px;
-        height: 260px;
-    }
-
-    .V_product_image {
-        height: 100%;
+    .V_ele_slider_2_back {
         width: 100%;
+        height: 100%;
     }
+
+    .V_the_lion {
+        font-size: 30px;
+    }
+
+
+    .V_story_stickers {
+        font-size: 16px;
+    }
+
+    .V_laptop_text_width {
+        width: 395px;
+    }
+
+
+    .V_main_img {
+        width: 320px !important;
+        height: 230px;
+    }
+
+    .V_child_img {
+        width: 115px !important;
+        height: 100px;
+    }
+
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-    .V_img_height {
-        width: 150px;
-        height: 105.4px;
-        gap: 20px;
-    }
-
-    .V_lion_skin {
-        font-size: 38px;
-        font-weight: 400;
-    }
-
-    .V_lion_ptag {
-        font-size: 22px;
-        font-weight: 400;
-    }
-
-    .V_lion_padding {
-        padding: 50px 0px;
-    }
-
-    .v_mega {
-        font-size: 24px;
-    }
-
-    .V_best_img_1,
-    .V_best_img_3 {
-        height: 250px;
-        width: 100%;
-    }
-
-    .V_best_img_2 {
-        height: 250px;
-        width: 100%;
-    }
-
-    .V_new {
-        font-size: 24px;
-    }
 
     .V_sale {
         width: 320px;
@@ -602,60 +290,38 @@
 
     }
 
-    .V_five_pro {
-        width: 33%;
-    }
-
-    .V_five {
-        width: 250px;
-        height: 300px;
-    }
-
-    .V_product_image {
-        height: 100%;
+    .V_ele_slider_2_back {
         width: 100%;
+        height: 100%;
     }
+
+    .V_the_lion {
+        font-size: 22px;
+    }
+
+
+    .V_story_stickers {
+        font-size: 14px;
+    }
+
+    .V_laptop_text_width {
+        width: 300px;
+    }
+
+
+    .V_main_img {
+        width: 320px !important;
+        height: 240px;
+    }
+
+    .V_child_img {
+        width: 90px !important;
+        height: 90px;
+    }
+
 }
 
 @media (min-width: 576px) and (max-width: 767px) {
-    .V_img_height {
-        width: 150px;
-        height: 105.4px;
-        gap: 20px;
-    }
-
-    .V_lion_skin {
-        font-size: 38px;
-        font-weight: 400;
-    }
-
-    .V_lion_ptag {
-        font-size: 22px;
-        font-weight: 400;
-    }
-
-    .V_lion_padding {
-        padding: 50px 0px;
-    }
-
-    .v_mega {
-        font-size: 24px;
-    }
-
-    .V_best_img_1,
-    .V_best_img_3 {
-        height: 200px;
-        width: 100%;
-    }
-
-    .V_best_img_2 {
-        height: 200px;
-        width: 100%;
-    }
-
-    .V_new {
-        font-size: 22px;
-    }
 
     .V_sale {
         width: 290px;
@@ -677,65 +343,39 @@
 
     }
 
-    .V_five_pro {
-        width: 33%;
-    }
 
-    .V_five {
-        width: 250px;
-        height: 300px;
-    }
 
-    .V_card {
-        width: 280px;
-    }
-
-    .V_product_image {
-        height: 343px;
+    .V_ele_slider_2_back {
         width: 100%;
+        height: 100%;
+    }
+
+    .V_the_lion {
+        font-size: 22px;
+    }
+
+
+    .V_story_stickers {
+        font-size: 14px;
+    }
+
+    .V_laptop_text_width {
+        width: 100%;
+    }
+
+
+    .V_main_img {
+        width: 300px !important;
+        height: 220px;
+    }
+
+    .V_child_img {
+        width: 120px !important;
+        height: 110px;
     }
 }
 
 @media (min-width: 480px) and (max-width: 575px) {
-    .V_img_height {
-        width: 150px;
-        height: 105.4px;
-        gap: 20px;
-    }
-
-    .V_lion_skin {
-        font-size: 36px;
-        font-weight: 400;
-    }
-
-    .V_lion_ptag {
-        font-size: 20px;
-        font-weight: 400;
-    }
-
-    .V_lion_padding {
-        padding: 50px 0px;
-    }
-
-    .v_mega {
-        font-size: 24px;
-    }
-
-    .V_best_img_1,
-    .V_best_img_3 {
-        height: 180px;
-        width: 100%;
-    }
-
-    .V_best_img_2 {
-        height: 180px;
-        width: 100%;
-    }
-
-    .V_new {
-        font-size: 22px;
-    }
-
     .V_sale {
         width: 250px;
         font-size: 30px;
@@ -756,60 +396,39 @@
 
     }
 
-    .V_five_pro {
-        width: 50%;
-    }
 
-    .V_five {
-        width: 180px;
-        height: 210px;
-    }
 
-    .V_product_image {
-        height: 343px;
+    .V_ele_slider_2_back {
         width: 100%;
+        height: 100%;
+    }
+
+    .V_the_lion {
+        font-size: 20px;
+    }
+
+
+    .V_story_stickers {
+        font-size: 12px;
+    }
+
+    .V_laptop_text_width {
+        width: 100%;
+    }
+
+
+    .V_main_img {
+        width: 180px !important;
+        height: 140px;
+    }
+
+    .V_child_img {
+        width: 115px !important;
+        height: 70px;
     }
 }
 
 @media (min-width: 300px) and (max-width: 479px) {
-    .V_img_height {
-        width: 130px;
-        height: 105.4px;
-        gap: 20px;
-    }
-
-    .V_lion_skin {
-        font-size: 36px;
-        font-weight: 400;
-    }
-
-    .V_lion_ptag {
-        font-size: 20px;
-        font-weight: 400;
-    }
-
-    .V_lion_padding {
-        padding: 50px 0px;
-    }
-
-    .v_mega {
-        font-size: 24px;
-    }
-
-    .V_best_img_1,
-    .V_best_img_3 {
-        height: 180px;
-        width: 100%;
-    }
-
-    .V_best_img_2 {
-        height: 180px;
-        width: 100%;
-    }
-
-    .V_new {
-        font-size: 22px;
-    }
 
     .V_sale {
         width: 150px;
@@ -830,22 +449,35 @@
         width: 140px;
     }
 
-    .V_card {
-        height: 478px;
+
+
+    .V_ele_slider_2_back {
+        width: 100%;
+        height: 100%;
     }
 
-    .V_product_image {
-        height: 343px;
+    .V_the_lion {
+        font-size: 18px;
+    }
+
+
+    .V_story_stickers {
+        font-size: 10px;
+    }
+
+    .V_laptop_text_width {
         width: 100%;
     }
 
-    .V_five_pro {
-        width: 50%;
+
+    .V_main_img {
+        width: 160px !important;
+        height: 160px;
     }
 
-    .V_five {
-        width: 150px;
-        height: 178px;
+    .V_child_img {
+        width: 70px !important;
+        height: 70px;
     }
 }
 

@@ -11,6 +11,7 @@ import Footer from '../../../Vivek/Component/footer/Footer';
 import Gridcomponent from './Gridcomponent';
 import Threeview from './Threeview';
 import { Row, Col, Button } from 'react-bootstrap'
+import OwlCarousel from 'react-owl-carousel';
 
 function Electronics() {
 
@@ -18,8 +19,12 @@ function Electronics() {
 
   // Function to handle image click and update the main image
   const handleImageClick = (imageSrc) => {
+
     setMainImage(imageSrc);
+    console.log(handleImageClick);
+    console.log(imageSrc);
   };
+
 
 
   return (
@@ -28,7 +33,7 @@ function Electronics() {
       <Header />
 
 
-
+      {/* 
       <section className='V_gradient text-white w-100 V_lion_padding'>
         <div className='d_container'>
           <Row className='m-0'>
@@ -43,11 +48,9 @@ function Electronics() {
             </Col>
             <Col lg={6} className='pt-5 pt-lg-0'>
               <div>
-                {/* Display the dynamically updated main image */}
                 <img src={mainImage} alt="Main laptop skin" className='w-100' />
               </div>
               <div className='d-flex flex-wrap justify-content-between pt-5 mt-lg-5'>
-                {/* Thumbnails that update the main image on click */}
                 <img
                   src={require('../../assets/V_lion_laptop_2.png')}
                   alt="Laptop skin option 1"
@@ -76,7 +79,109 @@ function Electronics() {
             </Col>
           </Row>
         </div>
-      </section>
+      </section> */}
+
+
+
+      <section className=''>
+        <OwlCarousel className='owl-theme' loop items={1}>
+          <div className='item V_slider_height'>
+            <div className='V_ele_slider_2_back'>
+              <div className="d_container h-100">
+                <div className="row m-0 h-100 d-flex justify-content-center flex-md-column-reverse flex-column-reverse">
+                  <div className='col-md-6 text-white align-self-center'>
+                    <div className='text-white V_laptop_text_width'>
+                      <h1 className='V_the_lion'>Laptop <strong>Skin</strong> Cover Laminated Black <strong>The Lion</strong></h1>
+                      <p className='V_story_stickers'>Story Stickers and Free Track pad Skin Girls Boys Kids Students Office Vinyl Printed Multicolored Sticker 14 Inches (MC 7)</p>
+                    </div>
+                    <div className='pt-2 pt-sm-3 pt-lg-5'>
+                      <Button className='py-2 px-5 text-dark bg-white'>Buy Now</Button>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className='d-flex justify-content-between flex-md-column flex-row'>
+                      <div className="py-2 py-sm-3 py-md-5 mt-lg-5 d-flex justify-content-center">
+                        {/* Main image that changes on click */}
+                        <img src={mainImage} alt="Main laptop skin" className='w-100 V_main_img' />
+                      </div>
+                      <div className="py-2 py-sm-3 py-md-5 d-flex justify-content-between">
+                        <div className='d-flex'>
+                          <div className='d-flex flex-md-row flex-column'>
+                            {/* Child images that update the main image on click */}
+                            <img
+                              src={require('../../assets/V_lion_laptop_2.png')}
+                              alt="Laptop skin option 1"
+                              className='V_child_img px-xl-3 px-2'
+                              onClick={() => handleImageClick(require('../../assets/V_lion_laptop_2.png'))}
+                            />
+                            <img
+                              src={require('../../assets/V_lion_laptop_3.png')}
+                              alt="Laptop skin option 2"
+                              className='V_child_img px-xl-3 px-2'
+                              onClick={() => handleImageClick(require('../../assets/V_lion_laptop_3.png'))}
+                            />
+                          </div>
+                          <div className='d-flex flex-md-row flex-column'>
+                            <img
+                              src={require('../../assets/V_lion_laptop_4.png')}
+                              alt="Laptop skin option 3"
+                              className='V_child_img px-xl-3 px-2'
+                              onClick={() => handleImageClick(require('../../assets/V_lion_laptop_4.png'))}
+                            />
+                            <img
+                              src={require('../../assets/V_lion_laptop_5.png')}
+                              alt="Laptop skin option 4"
+                              className='V_child_img px-xl-3 px-2'
+                              onClick={() => handleImageClick(require('../../assets/V_lion_laptop_5.png'))}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='item V_slider_height'>
+            <div className="row m-0">
+              <div className="col-12 col-md-8 p-0">
+                <div className='V_hair_width p-0'>
+                  <img src={require('../../assets/enhance your natyural hair.png')} alt="" className='VK_obj' />
+                </div>
+              </div>
+              <div className="col-12 col-md-4 p-0">
+                <div className="V_green_part">
+                  <div className='p-3 p-lg-5 d-md-flex flex-md-column h-100'>
+                    <div className='my-auto'>
+                      <div className="V_hair_natura_oil  text-white ">
+                        <h1 className='V_enhance '>Enhance Your Natural Hair with Our Premium Products</h1>
+                        <p className='V_glow_shine'>Glow & Shine natural hair care products are made with natural, plant-based ingredients and do not contain harsh chemicals or synthetic additives. </p>
+                      </div>
+                      <div className='pt-sm-1 pt-md-5'>
+                        <Button className='py-2 px-5 text-white bg-dark'>Buy Now</Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='item V_slider_height'>
+            <div className='V_unlock'>
+              <div className=''>
+                <Row className=''>
+                  <Col className=''>
+                    <div className='V_overlay_unlock'>
+                      <p className="V_overlay_text_unlock">unlock your natural glow </p>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+            </div>
+          </div>
+        </OwlCarousel>
+      </section >
 
 
       {/* sldier */}
@@ -130,219 +235,6 @@ function Electronics() {
 
 
 
-
-      {/* sldier */}
-      {/* <ElectronicSlider /> */}
-
-
-
-
-
-
-      {/* <section className='text-white'>
-        <div className=''>
-          <Row className='py-5 px-3 p-lg-5 m-0'>
-            <Col sm={6} lg={4} className='mt-lg-3 pt-3'>
-              <div className='text-white V_best_img V_best_img_1'>
-                <div className='V_laptop pt-lg-3'>
-                  <h3 className='v_mega pt-5 '>
-                    Best Deal On Laptops
-                  </h3>
-                </div>
-              </div>
-            </Col>
-
-            <Col sm={6} lg={4} className='mt-lg-3 pb-0'>
-              <div className='text-white V_best_img V_best_img_2 pb-3'>
-                <div className='V_laptop pt-lg-3'>
-                  <h3 className='v_mega pt-5'>
-                    MEGA SALE
-                  </h3>
-                  <p className='V_on'>On Home Appliances</p>
-                </div>
-              </div>
-            </Col>
-
-            <Col sm={6} lg={4} className='mt-lg-3 pt-3'>
-              <div className='text-white V_best_img V_best_img_3'>
-                <div className='V_laptop1 pt-lg-3'>
-                  <p className='V_on1 pt-5'>Galaxy S24</p>
-                  <h3 className='v_mega1 '>
-                    BEST SAMSUNG MOBILE PHONES
-                  </h3>
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </div>
-      </section> */}
-
-
-
-
-
-      {/* <section className='pt-lg-5 pb-3'>
-        <div className='d_container pt-lg-5'>
-          <Row className='pt-5 m-0'>
-            <Col className='p-0'>
-              <div className='d-flex justify-content-between'>
-                <h1 className='V_new'>
-                  NEW COLLECTION OF ELECTRONICS
-                </h1>
-                <p className='align-item-center V_view'>
-                  Viwe More
-                </p>
-              </div>
-            </Col>
-          </Row>
-        </div>
-      </section> */}
-
-      {/* <section className='pb-5'>
-        <div className='d_container justify-content-between'>
-          <Row className='m-0'>
-            {products.map(product => (
-              <Col sm={6} md={6} lg={4} xl={4} xxl={3} className="gap-3 pb-5 d-flex justify-content-center" key={product.id}>
-                <Card className="V_card align-content-center">
-                  {product.bestSeller && (
-                    <Badge className="V_best_seller_tag py-3 px-5" bg="dark">
-                      Best Seller
-                    </Badge>
-                  )}
-                  <Card.Img
-                    variant="top"
-                    src={product.image} // Dynamically setting image URL
-                    className="V_product_image pt-5"
-                    alt={product.name}
-                  />
-                  <Card.Body className="px-0">
-                    <Card.Title>
-                      <div className="d-flex justify-content-between  align-self-center px-3">
-                        <h1 className="V_brand">{product.name}</h1>
-                        <div className="V_rating">
-                          <span className="V_star align-self-center">⭐</span>
-                          <span className="V_rating_value ">{product.rating}</span>
-                        </div>
-                      </div>
-                    </Card.Title>
-                    <Card.Text className="V_description px-3">
-                      {product.description}
-                    </Card.Text>
-                    <Row>
-                      <Col className="text-end">
-                        <div className="V_price d-flex justify-content-between px-3">
-                          Mapping through colors
-                          <div className="d-flex">
-                            {product.colors.map((color, index) => (
-                              <div
-                                key={index}
-                                className=" align-self-center me-2"
-                                style={{ backgroundColor: color, width: '20px', height: '20px', borderRadius: '50%' }}
-                              ></div>
-                            ))}
-                          </div>
-                          <div className="V_price_container">
-                            <span className="V_discounted_price">{product.price}</span>
-                            <span><strike className="original-price">{product.actualPrice}</strike></span>
-                          </div>
-                        </div>
-                      </Col>
-                    </Row>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </div>
-      </section > */}
-
-
-
-
-
-
-
-
-
-      {/* 
-      <section className='pb-5'>
-        <div className='d_container'>
-          <Row className='m-0'>
-            <Col className='d-flex flex-wrap'>
-              <div className='V_five_pro px-3 py-2'>
-                <img src={require('../../assets/five_air.png')} alt="" className='w-100 V_five' />
-              </div>
-              <div className='V_five_pro px-3 py-2'>
-                <img src={require('../../assets/five_smart.png')} alt="" className='w-100 V_five' />
-              </div>
-              <div className='V_five_pro px-3 py-2'>
-                <img src={require('../../assets/five_head.png')} alt="" className='w-100 V_five' />
-              </div>
-              <div className='V_five_pro px-3 py-2'>
-                <img src={require('../../assets/five_mac.png')} alt="" className='w-100 V_five' />
-              </div>
-              <div className='V_five_pro px-3 py-2'>
-                <img src={require('../../assets/five_iphone.png')} alt="" className='w-100 V_five' />
-              </div>
-            </Col>
-          </Row>
-        </div>
-      </section> */}
-
-
-
-
-      {/* <section className=' pb-3'>
-        <div className='d_container'>
-          <Row className='pt-5 m-0'>
-            <Col className=''>
-              <div className=''>
-                <h1 className='V_new'>
-                  EXPLORE POPULAR BRANDS
-                </h1>
-              </div>
-            </Col>
-          </Row>
-        </div>
-      </section> */}
-
-
-      {/* <section className=''>
-        <div className="d_container">
-          <Row className='m-0'>
-            <div className="V_grid_container ">
-              <div className="V_eat">
-                <img src={require('../../assets/eat_sleep.png')} alt="Eat Sleep Game Repeat" className='' />
-                <h3>Eat Sleep Game Repeat</h3>
-              </div>
-              <div className="V_unleshing">
-                <img src={require('../../assets/unlashing.png')} alt="Unleashing Creativity" className='' />
-                <h3>Unleashing Creativity, one keystroke at a time</h3>
-              </div>
-              <div className="V_build">
-                <img src={require('../../assets/build for.png')} alt="Build for Intelligence" className='' />
-                <h3>Build for Intelligence</h3>
-              </div>
-              <div className="V_watch">
-                <img src={require('../../assets/dont watch.png')} alt="Don't watch the clock" className='' />
-                <h3>Don't watch the clock, do what it does: keep going</h3>
-              </div>
-              <div className="V_same">
-                <img src={require('../../assets/dont be the same.png')} alt="Don't be the same, be better" className='' />
-                <h3>Don't be the same, be better</h3>
-              </div>
-              <div className="V_plugin">
-                <img src={require('../../assets/plug in.png')} alt="Plug in, tune out, and enjoy the beats" className='' />
-                <h3>Plug in, tune out, and enjoy the beats</h3>
-              </div>
-              <div className="V_lost">
-                <img src={require('../../assets/lost in the rythem.png')} alt="Lost in the rhythm" className='' />
-                <h3>Lost in the rhythm of my favorite tunes</h3>
-              </div>
-            </div>
-          </Row>
-        </div>
-      </section> */}
 
     </>
   )
