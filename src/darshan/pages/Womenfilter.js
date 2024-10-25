@@ -634,10 +634,11 @@ const Womenfilter = () => {
     // search Filter
 
     const handleSearchChange = (e) => {
-        e.preventDefault();
+        e.preventDefault()
         const { name, value } = e.target;
 
         if (name === "brand") {
+            console.log(value);
             setSearchbrand(value);
         } else if (name === "material") {
             setSearchmaterial(value);
@@ -645,7 +646,9 @@ const Womenfilter = () => {
         else if (name === "style") {
             setSearchstyle(value);
         }
+
     };
+
 
     // Brands 
     const filteredBrands = brands.filter(brand =>
@@ -716,378 +719,377 @@ const Womenfilter = () => {
     }, [isDropdownOpen]);
 
 
-    const FilterContent = () => (
-        <div className="d_left">
-            <div className="d_head d-flex justify-content-between">
-                <h5 className='mb-0'>Filters</h5>
-                <div className="d_cta">
-                    <a href="" className='text-decoration-none'>Clear All</a>
-                </div>
-            </div>
-            <div className="d_category">
-                <div className="d_filterlist d-flex flex-wrap">
-                    <div className="d_close">30% & more <IoClose className="d_closeicon" /></div>
-                    <div className="d_close">M <IoClose className="d_closeicon" /></div>
-                    <div className="d_close">BIBA <IoClose className="d_closeicon" /></div>
-                    <div className="d_close">
-                        <div className="d-flex align-items-center">
-                            <div className="d_circle"></div>
-                            Orange <IoClose className="d_closeicon" />
-                        </div>
-                    </div>
-                    <div className="d_close">2 <FaStar className=" d_staricon" /> & above<IoClose className="d_closeicon" /></div>
-                    <div className="d_close">Cotton Silk <IoClose className="d_closeicon" /></div>
-                    <div className="d_close">Polka Print <IoClose className="d_closeicon" /></div>
-                    <div className="d_close">Party <IoClose className="d_closeicon" /></div>
-                    <div className="d_close">Daily Wear <IoClose className="d_closeicon" /></div>
-                </div>
-                <div className="d_categorylist">
-                    <div className="d_acc">
-                        <div className="d_accitem">
-                            <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActivecategory(!isActivecategory)}>
-                                <div className='d_title'>Categories</div>
-                                <div className='d_icon'>{isActivecategory ? <FaMinus /> : <FaPlus />}</div>
-                            </div>
-                            {isActivecategory &&
-                                <>
-                                    <div className='mt-3'>
-                                        {categories.map((category, index) => (
-                                            <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
-                                                <input type="checkbox" onChange={() => handleCheckboxChange('categories', category.id)} checked={!!checkedFilters.categories[category.id]} id={`category-${category.id}`} />
-                                                <label htmlFor={`category-${category.id}`} class="d_checkmark"></label>
-                                                <p class="mb-0">{category.label}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div className="d_categorylist">
-                    <div className="d_acc">
-                        <div className="d_accitem">
-                            <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveDiscounts(!isActiveDiscounts)}>
-                                <div className='d_title'>Discount</div>
-                                <div className='d_icon'>{isActiveDiscounts ? <FaMinus /> : <FaPlus />}</div>
-                            </div>
+    // const FilterContent = () => (
+    //     <div className="d_left">
+    //         <div className="d_head d-flex justify-content-between">
+    //             <h5 className='mb-0'>Filters</h5>
+    //             <div className="d_cta">
+    //                 <a href="" className='text-decoration-none'>Clear All</a>
+    //             </div>
+    //         </div>
+    //         <div className="d_category">
+    //             <div className="d_filterlist d-flex flex-wrap">
+    //                 <div className="d_close">30% & more <IoClose className="d_closeicon" /></div>
+    //                 <div className="d_close">M <IoClose className="d_closeicon" /></div>
+    //                 <div className="d_close">BIBA <IoClose className="d_closeicon" /></div>
+    //                 <div className="d_close">
+    //                     <div className="d-flex align-items-center">
+    //                         <div className="d_circle"></div>
+    //                         Orange <IoClose className="d_closeicon" />
+    //                     </div>
+    //                 </div>
+    //                 <div className="d_close">2 <FaStar className=" d_staricon" /> & above<IoClose className="d_closeicon" /></div>
+    //                 <div className="d_close">Cotton Silk <IoClose className="d_closeicon" /></div>
+    //                 <div className="d_close">Polka Print <IoClose className="d_closeicon" /></div>
+    //                 <div className="d_close">Party <IoClose className="d_closeicon" /></div>
+    //                 <div className="d_close">Daily Wear <IoClose className="d_closeicon" /></div>
+    //             </div>
+    //             <div className="d_categorylist">
+    //                 <div className="d_acc">
+    //                     <div className="d_accitem">
+    //                         <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActivecategory(!isActivecategory)}>
+    //                             <div className='d_title'>Categories</div>
+    //                             <div className='d_icon'>{isActivecategory ? <FaMinus /> : <FaPlus />}</div>
+    //                         </div>
+    //                         {isActivecategory &&
+    //                             <>
+    //                                 <div className='mt-3'>
+    //                                     {categories.map((category, index) => (
+    //                                         <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+    //                                             <input type="checkbox" onChange={() => handleCheckboxChange('categories', category.id)} checked={!!checkedFilters.categories[category.id]} id={`category-${category.id}`} />
+    //                                             <label htmlFor={`category-${category.id}`} class="d_checkmark"></label>
+    //                                             <p class="mb-0">{category.label}</p>
+    //                                         </div>
+    //                                     ))}
+    //                                 </div>
+    //                             </>
+    //                         }
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <div className="d_categorylist">
+    //                 <div className="d_acc">
+    //                     <div className="d_accitem">
+    //                         <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveDiscounts(!isActiveDiscounts)}>
+    //                             <div className='d_title'>Discount</div>
+    //                             <div className='d_icon'>{isActiveDiscounts ? <FaMinus /> : <FaPlus />}</div>
+    //                         </div>
 
-                            {isActiveDiscounts &&
-                                <>
-                                    <div className='mt-3'>
-                                        {discount.map((discount, index) => (
-                                            <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
-                                                <input type="checkbox" onChange={() => handleCheckboxChange('discounts', discount.id)} checked={!!checkedFilters.discounts[discount.id]} id={`discount-${discount.id}`} />
-                                                <label htmlFor={`discount-${discount.id}`} class="d_checkmark"></label>
-                                                <p class="mb-0">{discount.no}% or more</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div className="d_categorylist">
-                    <div className="d_acc">
-                        <div className="d_accitem">
-                            <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActivePrice(!isActivePrice)}>
-                                <div className='d_title'>Price</div>
-                                <div className='d_icon'>{isActivePrice ? <FaMinus /> : <FaPlus />}</div>
-                            </div>
-                            {isActivePrice &&
-                                <>
-                                    <div className='mt-3'>
-                                        <div className="d_price-range">
-                                            <ReactSlider
-                                                className="d_horisilder"
-                                                thumbClassName="d_thumb"
-                                                trackClassName="d_track"
-                                                min={0}
-                                                max={5000}
-                                                value={priceRange}
-                                                onChange={handleSliderChange}
-                                                minDistance={50}
-                                                withTracks={true}
-                                                pearling
-                                                renderTrack={(props, state) => (
-                                                    <div {...props} className={`d_track ${state.index === 1 ? 'd_track-active' : ''}`}></div>
-                                                )}
-                                            />
-                                            <div className="d_price-label d_price-min" style={{ left: `${(priceRange[0] / 5000) * 100}%` }}>
-                                                ${priceRange[0]}
-                                            </div>
-                                            <div className="d_price-label d_price-max" style={{ left: `${(priceRange[1] / 5000) * 100}%` }}>
-                                                ${priceRange[1]}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div className="d_categorylist">
-                    <div className="d_acc">
-                        <div className="d_accitem">
-                            <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveSize(!isActiveSize)}>
-                                <div className='d_title'>Size</div>
-                                <div className='d_icon'>{isActiveSize ? <FaMinus /> : <FaPlus />}</div>
-                            </div>
-                            {isActiveSize && (
-                                <>
-                                    <div className='mt-3'>
-                                        {displayedSizes.map((size, index) => (
-                                            <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
-                                                <input type="checkbox" onChange={() => handleCheckboxChange('sizes', size.id)} checked={!!checkedFilters.sizes[size.id]} id={`size-${size.id}`} />
-                                                <label htmlFor={`size-${size.id}`} class="d_checkmark"></label>
-                                                <p class="mb-0">{size.sizename}</p>
-                                            </div>
-                                        ))}
-                                        {size.length > initialDisplayCount && (
-                                            <a href="#" onClick={(e) => handleShowMore(e, 'size')} className='text-decoration-none'>
-                                                {showMore.size ? 'Show Less' : `Show More (${size.length - initialDisplayCount})`}
-                                            </a>
-                                        )}
-                                    </div>
-                                </>
-                            )}
-                        </div>
-                    </div>
-                </div>
-                <div className="d_categorylist">
-                    <div className="d_acc">
-                        <div className="d_accitem">
-                            <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveBrand(!isActiveBrand)}>
-                                <div className='d_title'>Brand</div>
-                                <div className='d_icon'>{isActiveBrand ? <FaMinus /> : <FaPlus />}</div>
-                            </div>
-                            {isActiveBrand &&
-                                <>
-                                    <div class="d_search">
-                                        <IoSearch className='d_searchicon' />
-                                        <input type="text" name="brand" value={searchbrand} onChange={handleSearchChange} class="form-control " placeholder="Search" />
-                                    </div>
-                                    {displayedbrands.map((brand, index) => (
-                                        <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
-                                            <input type="checkbox" onChange={() => handleCheckboxChange('brands', brand.id)} checked={!!checkedFilters.brands[brand.id]} id={`brand-${brand.id}`} />
-                                            <label htmlFor={`brand-${brand.id}`} class="d_checkmark"></label>
-                                            <p class="mb-0">{brand.brandname}<span>(10)</span></p>
-                                        </div>
-                                    ))}
-                                    {filteredBrands.length > initialDisplayCount && (
-                                        <Link href="#" onClick={(e) => {e.preventDefault(); handleShowMore(e, 'brand')}} className='text-decoration-none'>
-                                            {showMore.brand ? 'Show Less' : `Show More (${filteredBrands.length - initialDisplayCount})`}
-                                        </Link>
-                                    )}
-                                </>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div className="d_categorylist">
-                    <div className="d_acc">
-                        <div className="d_accitem">
-                            <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveColor(!isActiveColor)}>
-                                <div className='d_title'>Color</div>
-                                <div className='d_icon'>{isActiveColor ? <FaMinus /> : <FaPlus />}</div>
-                            </div>
-                            {isActiveColor &&
-                                <>
-                                    <div className='mt-3'>
-                                        {displayedcolor.map((color, index) => (
-                                            <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
-                                                <input type="checkbox" onChange={() => handleCheckboxChange('colors', color.id)} checked={!!checkedFilters.colors[color.id]} id={`color-${color.id}`} />
-                                                <label htmlFor={`color-${color.id}`} class="d_checkmark"></label>
-                                                <div className="d-flex align-items-center">
-                                                    <div className="d_color" style={{ background: color.colorname }}></div>
-                                                    <p className='mb-0'>{color.colorname}</p>
-                                                </div>
-                                            </div>
-                                        ))}
-                                        {color.length > initialDisplayCount && (
-                                            <a href="#" onClick={(e) => handleShowMore(e, 'color')} className='text-decoration-none'>
-                                                {showMore.color ? 'Show Less' : `Show More (${color.length - initialDisplayCount})`}
-                                            </a>
-                                        )}
-                                    </div>
-                                </>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div className="d_categorylist">
-                    <div className="d_acc">
-                        <div className="d_accitem">
-                            <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveRating(!isActiveRating)}>
-                                <div className='d_title'>Rating</div>
-                                <div className='d_icon'>{isActiveRating ? <FaMinus /> : <FaPlus />}</div>
-                            </div>
-                            {isActiveRating &&
-                                <>
-                                    <div className='mt-3'>
-                                        {rating.map((rate, index) => (
-                                            <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
-                                                <input type="checkbox" onChange={() => handleCheckboxChange('ratings', rate.id)} checked={!!checkedFilters.ratings[rate.id]} id={`rate-${rate.id}`} />
-                                                <label htmlFor={`rate-${rate.id}`} class="d_checkmark"></label>
-                                                <p class="mb-0">{rate.rating} <FaStar className="d_staricon" /> & above</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div className="d_categorylist">
-                    <div className="d_acc">
-                        <div className="d_accitem">
-                            <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveSleeve(!isActiveSleeve)}>
-                                <div className='d_title'>Sleeve Length</div>
-                                <div className='d_icon'>{isActiveSleeve ? <FaMinus /> : <FaPlus />}</div>
-                            </div>
-                            {isActiveSleeve &&
-                                <>
-                                    <div className='mt-3'>
-                                        {displayedsleeve.map((sleeve, index) => (
-                                            <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
-                                                <input type="checkbox" onChange={() => handleCheckboxChange('sleeves', sleeve.id)} checked={!!checkedFilters.sleeves[sleeve.id]} id={`sleeve-${sleeve.id}`} />
-                                                <label htmlFor={`sleeve-${sleeve.id}`} class="d_checkmark"></label>
-                                                <p class="mb-0">{sleeve.sleevename}<span>(10)</span></p>
-                                            </div>
-                                        ))}
-                                        {sleeve.length > initialDisplayCount && (
-                                            <a href="#" onClick={(e) => handleShowMore(e, 'sleeve')} className='text-decoration-none'>
-                                                {showMore.sleeve ? 'Show Less' : `Show More (${sleeve.length - initialDisplayCount})`}
-                                            </a>
-                                        )}
-                                    </div>
-                                </>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div className="d_categorylist">
-                    <div className="d_acc">
-                        <div className="d_accitem">
-                            <div className="d_acctitle mb-0 d-flex justify-content-between" onClick={() => setIsActiveMaterial(!isActiveMaterial)}>
-                                <div className='d_title'>Material</div>
-                                <div className='d_icon'>{isActiveMaterial ? <FaMinus /> : <FaPlus />}</div>
-                            </div>
-                            {isActiveMaterial &&
-                                <>
-                                    <div class="d_search">
-                                        <IoSearch className='d_searchicon' />
-                                        <input type="text" name="material" value={searchmaterial} onChange={handleSearchChange} class="form-control " placeholder="Search" />
+    //                         {isActiveDiscounts &&
+    //                             <>
+    //                                 <div className='mt-3'>
+    //                                     {discount.map((discount, index) => (
+    //                                         <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+    //                                             <input type="checkbox" onChange={() => handleCheckboxChange('discounts', discount.id)} checked={!!checkedFilters.discounts[discount.id]} id={`discount-${discount.id}`} />
+    //                                             <label htmlFor={`discount-${discount.id}`} class="d_checkmark"></label>
+    //                                             <p class="mb-0">{discount.no}% or more</p>
+    //                                         </div>
+    //                                     ))}
+    //                                 </div>
+    //                             </>
+    //                         }
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <div className="d_categorylist">
+    //                 <div className="d_acc">
+    //                     <div className="d_accitem">
+    //                         <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActivePrice(!isActivePrice)}>
+    //                             <div className='d_title'>Price</div>
+    //                             <div className='d_icon'>{isActivePrice ? <FaMinus /> : <FaPlus />}</div>
+    //                         </div>
+    //                         {isActivePrice &&
+    //                             <>
+    //                                 <div className='mt-3'>
+    //                                     <div className="d_price-range">
+    //                                         <ReactSlider
+    //                                             className="d_horisilder"
+    //                                             thumbClassName="d_thumb"
+    //                                             trackClassName="d_track"
+    //                                             min={0}
+    //                                             max={5000}
+    //                                             value={priceRange}
+    //                                             onChange={handleSliderChange}
+    //                                             minDistance={50}
+    //                                             withTracks={true}
+    //                                             pearling
+    //                                             renderTrack={(props, state) => (
+    //                                                 <div {...props} className={`d_track ${state.index === 1 ? 'd_track-active' : ''}`}></div>
+    //                                             )}
+    //                                         />
+    //                                         <div className="d_price-label d_price-min" style={{ left: `${(priceRange[0] / 5000) * 100}%` }}>
+    //                                             ${priceRange[0]}
+    //                                         </div>
+    //                                         <div className="d_price-label d_price-max" style={{ left: `${(priceRange[1] / 5000) * 100}%` }}>
+    //                                             ${priceRange[1]}
+    //                                         </div>
+    //                                     </div>
+    //                                 </div>
+    //                             </>
+    //                         }
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <div className="d_categorylist">
+    //                 <div className="d_acc">
+    //                     <div className="d_accitem">
+    //                         <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveSize(!isActiveSize)}>
+    //                             <div className='d_title'>Size</div>
+    //                             <div className='d_icon'>{isActiveSize ? <FaMinus /> : <FaPlus />}</div>
+    //                         </div>
+    //                         {isActiveSize && (
+    //                             <>
+    //                                 <div className='mt-3'>
+    //                                     {displayedSizes.map((size, index) => (
+    //                                         <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+    //                                             <input type="checkbox" onChange={() => handleCheckboxChange('sizes', size.id)} checked={!!checkedFilters.sizes[size.id]} id={`size-${size.id}`} />
+    //                                             <label htmlFor={`size-${size.id}`} class="d_checkmark"></label>
+    //                                             <p class="mb-0">{size.sizename}</p>
+    //                                         </div>
+    //                                     ))}
+    //                                     {size.length > initialDisplayCount && (
+    //                                         <a href="#" onClick={(e) => handleShowMore(e, 'size')} className='text-decoration-none'>
+    //                                             {showMore.size ? 'Show Less' : `Show More (${size.length - initialDisplayCount})`}
+    //                                         </a>
+    //                                     )}
+    //                                 </div>
+    //                             </>
+    //                         )}
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <div className="d_categorylist">
+    //                 <div className="d_acc">
+    //                     <div className="d_accitem">
+    //                         <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveBrand(!isActiveBrand)}>
+    //                             <div className='d_title'>Brand</div>
+    //                             <div className='d_icon'>{isActiveBrand ? <FaMinus /> : <FaPlus />}</div>
+    //                         </div>
+    //                         {isActiveBrand &&
+    //                             <>
+    //                                 <div class="d_search">
+    //                                     <IoSearch className='d_searchicon' />
+    //                                     <input type="text" name="brand" value={searchbrand} onChange={handleSearchChange} class="form-control " placeholder="Search" />
+    //                                 </div>
+    //                                 {displayedbrands.map((brand, index) => (
+    //                                     <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+    //                                         <input type="checkbox" onChange={() => handleCheckboxChange('brands', brand.id)} checked={!!checkedFilters.brands[brand.id]} id={`brand-${brand.id}`} />
+    //                                         <label htmlFor={`brand-${brand.id}`} class="d_checkmark"></label>
+    //                                         <p class="mb-0">{brand.brandname}<span>(10)</span></p>
+    //                                     </div>
+    //                                 ))}
+    //                                 {filteredBrands.length > initialDisplayCount && (
+    //                                     <Link href="#" onClick={(e) => { e.preventDefault(); handleShowMore(e, 'brand') }} className='text-decoration-none'>
+    //                                         {showMore.brand ? 'Show Less' : `Show More (${filteredBrands.length - initialDisplayCount})`}
+    //                                     </Link>
+    //                                 )}
+    //                             </>
+    //                         }
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <div className="d_categorylist">
+    //                 <div className="d_acc">
+    //                     <div className="d_accitem">
+    //                         <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveColor(!isActiveColor)}>
+    //                             <div className='d_title'>Color</div>
+    //                             <div className='d_icon'>{isActiveColor ? <FaMinus /> : <FaPlus />}</div>
+    //                         </div>
+    //                         {isActiveColor &&
+    //                             <>
+    //                                 <div className='mt-3'>
+    //                                     {displayedcolor.map((color, index) => (
+    //                                         <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+    //                                             <input type="checkbox" onChange={() => handleCheckboxChange('colors', color.id)} checked={!!checkedFilters.colors[color.id]} id={`color-${color.id}`} />
+    //                                             <label htmlFor={`color-${color.id}`} class="d_checkmark"></label>
+    //                                             <div className="d-flex align-items-center">
+    //                                                 <div className="d_color" style={{ background: color.colorname }}></div>
+    //                                                 <p className='mb-0'>{color.colorname}</p>
+    //                                             </div>
+    //                                         </div>
+    //                                     ))}
+    //                                     {color.length > initialDisplayCount && (
+    //                                         <a href="#" onClick={(e) => handleShowMore(e, 'color')} className='text-decoration-none'>
+    //                                             {showMore.color ? 'Show Less' : `Show More (${color.length - initialDisplayCount})`}
+    //                                         </a>
+    //                                     )}
+    //                                 </div>
+    //                             </>
+    //                         }
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <div className="d_categorylist">
+    //                 <div className="d_acc">
+    //                     <div className="d_accitem">
+    //                         <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveRating(!isActiveRating)}>
+    //                             <div className='d_title'>Rating</div>
+    //                             <div className='d_icon'>{isActiveRating ? <FaMinus /> : <FaPlus />}</div>
+    //                         </div>
+    //                         {isActiveRating &&
+    //                             <>
+    //                                 <div className='mt-3'>
+    //                                     {rating.map((rate, index) => (
+    //                                         <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+    //                                             <input type="checkbox" onChange={() => handleCheckboxChange('ratings', rate.id)} checked={!!checkedFilters.ratings[rate.id]} id={`rate-${rate.id}`} />
+    //                                             <label htmlFor={`rate-${rate.id}`} class="d_checkmark"></label>
+    //                                             <p class="mb-0">{rate.rating} <FaStar className="d_staricon" /> & above</p>
+    //                                         </div>
+    //                                     ))}
+    //                                 </div>
+    //                             </>
+    //                         }
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <div className="d_categorylist">
+    //                 <div className="d_acc">
+    //                     <div className="d_accitem">
+    //                         <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveSleeve(!isActiveSleeve)}>
+    //                             <div className='d_title'>Sleeve Length</div>
+    //                             <div className='d_icon'>{isActiveSleeve ? <FaMinus /> : <FaPlus />}</div>
+    //                         </div>
+    //                         {isActiveSleeve &&
+    //                             <>
+    //                                 <div className='mt-3'>
+    //                                     {displayedsleeve.map((sleeve, index) => (
+    //                                         <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+    //                                             <input type="checkbox" onChange={() => handleCheckboxChange('sleeves', sleeve.id)} checked={!!checkedFilters.sleeves[sleeve.id]} id={`sleeve-${sleeve.id}`} />
+    //                                             <label htmlFor={`sleeve-${sleeve.id}`} class="d_checkmark"></label>
+    //                                             <p class="mb-0">{sleeve.sleevename}<span>(10)</span></p>
+    //                                         </div>
+    //                                     ))}
+    //                                     {sleeve.length > initialDisplayCount && (
+    //                                         <a href="#" onClick={(e) => handleShowMore(e, 'sleeve')} className='text-decoration-none'>
+    //                                             {showMore.sleeve ? 'Show Less' : `Show More (${sleeve.length - initialDisplayCount})`}
+    //                                         </a>
+    //                                     )}
+    //                                 </div>
+    //                             </>
+    //                         }
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <div className="d_categorylist">
+    //                 <div className="d_acc">
+    //                     <div className="d_accitem">
+    //                         <div className="d_acctitle mb-0 d-flex justify-content-between" onClick={() => setIsActiveMaterial(!isActiveMaterial)}>
+    //                             <div className='d_title'>Material</div>
+    //                             <div className='d_icon'>{isActiveMaterial ? <FaMinus /> : <FaPlus />}</div>
+    //                         </div>
+    //                         {isActiveMaterial &&
+    //                             <>
+    //                                 <div class="d_search">
+    //                                     <IoSearch className='d_searchicon' />
+    //                                     <input type="text" name="material" value={searchmaterial} onChange={handleSearchChange} class="form-control " placeholder="Search" />
+    //                                 </div>
+    //                                 {displayedmaterial.map((material, index) => (
+    //                                     <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+    //                                         <input type="checkbox" onChange={() => handleCheckboxChange('materials', material.id)} checked={!!checkedFilters.materials[material.id]} id={`material-${material.id}`} />
+    //                                         <label htmlFor={`material-${material.id}`} class="d_checkmark"></label>
+    //                                         <p class="mb-0">{material.materialname}<span>(10)</span></p>
+    //                                     </div>
+    //                                 ))}
+    //                                 {filteredmaterial.length > initialDisplayCount && (
+    //                                     <a href="#" onClick={(e) => handleShowMore(e, 'material')} className='text-decoration-none'>
+    //                                         {showMore.material ? 'Show Less' : `Show More (${filteredmaterial.length - initialDisplayCount})`}
+    //                                     </a>
+    //                                 )}
+    //                             </>
+    //                         }
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <div className="d_categorylist">
+    //                 <div className="d_acc">
+    //                     <div className="d_accitem">
+    //                         <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActivePattern(!isActivePattern)}>
+    //                             <div className='d_title'>Pattern</div>
+    //                             <div className='d_icon'>{isActivePattern ? <FaMinus /> : <FaPlus />}</div>
+    //                         </div>
+    //                         {isActivePattern &&
+    //                             <>
+    //                                 <div className='mt-3'>
+    //                                     {displayedpattern.map((pattern, index) => (
+    //                                         <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+    //                                             <input type="checkbox" onChange={() => handleCheckboxChange('patterns', pattern.id)} checked={!!checkedFilters.patterns[pattern.id]} id={`pattern-${pattern.id}`} />
+    //                                             <label htmlFor={`pattern-${pattern.id}`} class="d_checkmark"></label>
+    //                                             <p class="mb-0">{pattern.patternname}<span>(10)</span></p>
+    //                                         </div>
+    //                                     ))}
+    //                                     {pattern.length > initialDisplayCount && (
+    //                                         <a href="#" onClick={(e) => handleShowMore(e, 'pattern')} className='text-decoration-none'>
+    //                                             {showMore.pattern ? 'Show Less' : `Show More (${pattern.length - initialDisplayCount})`}
+    //                                         </a>
+    //                                     )}
+    //                                 </div>
+    //                             </>
+    //                         }
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <div className="d_categorylist">
+    //                 <div className="d_acc">
+    //                     <div className="d_accitem">
+    //                         <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveOccasion(!isActiveOccasion)}>
+    //                             <div className='d_title'>Occasion</div>
+    //                             <div className='d_icon'>{isActiveOccasion ? <FaMinus /> : <FaPlus />}</div>
+    //                         </div>
+    //                         {isActiveOccasion &&
+    //                             <>
+    //                                 <div className='mt-3'>
+    //                                     {displayedoccasion.map((occasion, index) => (
+    //                                         <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+    //                                             <input type="checkbox" onChange={() => handleCheckboxChange('occasions', occasion.id)} checked={!!checkedFilters.occasions[occasion.id]} id={`occasion-${occasion.id}`} />
+    //                                             <label htmlFor={`occasion-${occasion.id}`} class="d_checkmark"></label>
+    //                                             <p class="mb-0">{occasion.occasionname}<span>(10)</span></p>
+    //                                         </div>
+    //                                     ))}
+    //                                     {occasion.length > initialDisplayCount && (
+    //                                         <a href="#" onClick={(e) => handleShowMore(e, 'occasion')} className='text-decoration-none'>
+    //                                             {showMore.occasion ? 'Show Less' : `Show More (${occasion.length - initialDisplayCount})`}
+    //                                         </a>
+    //                                     )}
+    //                                 </div>
+    //                             </>
+    //                         }
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <div className="d_categorylist">
+    //                 <div className="d_acc">
+    //                     <div className="d_accitem">
+    //                         <div className="d_acctitle mb-0 d-flex justify-content-between" onClick={() => setIsActiveStyle(!isActiveStyle)}>
+    //                             <div className='d_title'>Style</div>
+    //                             <div className='d_icon'>{isActiveStyle ? <FaMinus /> : <FaPlus />}</div>
+    //                         </div>
+    //                         {isActiveStyle &&
+    //                             <>
+    //                                 <div class="d_search">
+    //                                     <IoSearch className='d_searchicon' />
+    //                                     <input type="text" name="style" value={searchstyle} onChange={handleSearchChange} class="form-control " placeholder="Search" />
 
-                                    </div>
-                                    {displayedmaterial.map((material, index) => (
-                                        <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
-                                            <input type="checkbox" onChange={() => handleCheckboxChange('materials', material.id)} checked={!!checkedFilters.materials[material.id]} id={`material-${material.id}`} />
-                                            <label htmlFor={`material-${material.id}`} class="d_checkmark"></label>
-                                            <p class="mb-0">{material.materialname}<span>(10)</span></p>
-                                        </div>
-                                    ))}
-                                    {filteredmaterial.length > initialDisplayCount && (
-                                        <a href="#" onClick={(e) => handleShowMore(e, 'material')} className='text-decoration-none'>
-                                            {showMore.material ? 'Show Less' : `Show More (${filteredmaterial.length - initialDisplayCount})`}
-                                        </a>
-                                    )}
-                                </>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div className="d_categorylist">
-                    <div className="d_acc">
-                        <div className="d_accitem">
-                            <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActivePattern(!isActivePattern)}>
-                                <div className='d_title'>Pattern</div>
-                                <div className='d_icon'>{isActivePattern ? <FaMinus /> : <FaPlus />}</div>
-                            </div>
-                            {isActivePattern &&
-                                <>
-                                    <div className='mt-3'>
-                                        {displayedpattern.map((pattern, index) => (
-                                            <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
-                                                <input type="checkbox" onChange={() => handleCheckboxChange('patterns', pattern.id)} checked={!!checkedFilters.patterns[pattern.id]} id={`pattern-${pattern.id}`} />
-                                                <label htmlFor={`pattern-${pattern.id}`} class="d_checkmark"></label>
-                                                <p class="mb-0">{pattern.patternname}<span>(10)</span></p>
-                                            </div>
-                                        ))}
-                                        {pattern.length > initialDisplayCount && (
-                                            <a href="#" onClick={(e) => handleShowMore(e, 'pattern')} className='text-decoration-none'>
-                                                {showMore.pattern ? 'Show Less' : `Show More (${pattern.length - initialDisplayCount})`}
-                                            </a>
-                                        )}
-                                    </div>
-                                </>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div className="d_categorylist">
-                    <div className="d_acc">
-                        <div className="d_accitem">
-                            <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveOccasion(!isActiveOccasion)}>
-                                <div className='d_title'>Occasion</div>
-                                <div className='d_icon'>{isActiveOccasion ? <FaMinus /> : <FaPlus />}</div>
-                            </div>
-                            {isActiveOccasion &&
-                                <>
-                                    <div className='mt-3'>
-                                        {displayedoccasion.map((occasion, index) => (
-                                            <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
-                                                <input type="checkbox" onChange={() => handleCheckboxChange('occasions', occasion.id)} checked={!!checkedFilters.occasions[occasion.id]} id={`occasion-${occasion.id}`} />
-                                                <label htmlFor={`occasion-${occasion.id}`} class="d_checkmark"></label>
-                                                <p class="mb-0">{occasion.occasionname}<span>(10)</span></p>
-                                            </div>
-                                        ))}
-                                        {occasion.length > initialDisplayCount && (
-                                            <a href="#" onClick={(e) => handleShowMore(e, 'occasion')} className='text-decoration-none'>
-                                                {showMore.occasion ? 'Show Less' : `Show More (${occasion.length - initialDisplayCount})`}
-                                            </a>
-                                        )}
-                                    </div>
-                                </>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div className="d_categorylist">
-                    <div className="d_acc">
-                        <div className="d_accitem">
-                            <div className="d_acctitle mb-0 d-flex justify-content-between" onClick={() => setIsActiveStyle(!isActiveStyle)}>
-                                <div className='d_title'>Style</div>
-                                <div className='d_icon'>{isActiveStyle ? <FaMinus /> : <FaPlus />}</div>
-                            </div>
-                            {isActiveStyle &&
-                                <>
-                                    <div class="d_search">
-                                        <IoSearch className='d_searchicon' />
-                                        <input type="text" name="style" value={searchstyle} onChange={handleSearchChange} class="form-control " placeholder="Search" />
-
-                                    </div>
-                                    {displayedstyle.map((style, index) => (
-                                        <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
-                                            <input type="checkbox" onChange={() => handleCheckboxChange('styles', style.id)} checked={!!checkedFilters.styles[style.id]} id={`style-${style.id}`} />
-                                            <label htmlFor={`style-${style.id}`} class="d_checkmark"></label>
-                                            <p class="mb-0">{style.stylename}<span>(10)</span></p>
-                                        </div>
-                                    ))}
-                                    {filteredstyle.length > initialDisplayCount && (
-                                        <a href="#" onClick={(e) => handleShowMore(e, 'style')} className='text-decoration-none'>
-                                            {showMore.style ? 'Show Less' : `Show More (${filteredstyle.length - initialDisplayCount})`}
-                                        </a>
-                                    )}
-                                </>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+    //                                 </div>
+    //                                 {displayedstyle.map((style, index) => (
+    //                                     <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+    //                                         <input type="checkbox" onChange={() => handleCheckboxChange('styles', style.id)} checked={!!checkedFilters.styles[style.id]} id={`style-${style.id}`} />
+    //                                         <label htmlFor={`style-${style.id}`} class="d_checkmark"></label>
+    //                                         <p class="mb-0">{style.stylename}<span>(10)</span></p>
+    //                                     </div>
+    //                                 ))}
+    //                                 {filteredstyle.length > initialDisplayCount && (
+    //                                     <a href="#" onClick={(e) => handleShowMore(e, 'style')} className='text-decoration-none'>
+    //                                         {showMore.style ? 'Show Less' : `Show More (${filteredstyle.length - initialDisplayCount})`}
+    //                                     </a>
+    //                                 )}
+    //                             </>
+    //                         }
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     </div>
+    // );
 
     return (
         <>
@@ -1110,7 +1112,7 @@ const Womenfilter = () => {
 
             {/* Main section Start */}
 
-            {/* <section className='d_p-80 d_womenfilter'>
+            {/* <section className='d_p-80 d_womenfilter d-none d-sm-block '>
                 <div className="container-fluid">
                     <div className="d_filtermargin">
                         <div className="row">
@@ -1511,7 +1513,375 @@ const Womenfilter = () => {
 
                             {/* Desktop Filter Section */}
                             <div className="col-12 col-sm-4 col-lg-4 col-xl-3 d-none d-sm-block">
-                                <FilterContent />
+                                <div className="d_left">
+                                    <div className="d_head d-flex justify-content-between">
+                                        <h5 className='mb-0'>Filters</h5>
+                                        <div className="d_cta">
+                                            <a href="" className='text-decoration-none'>Clear All</a>
+                                        </div>
+                                    </div>
+                                    <div className="d_category">
+                                        <div className="d_filterlist d-flex flex-wrap">
+                                            <div className="d_close">30% & more <IoClose className="d_closeicon" /></div>
+                                            <div className="d_close">M <IoClose className="d_closeicon" /></div>
+                                            <div className="d_close">BIBA <IoClose className="d_closeicon" /></div>
+                                            <div className="d_close">
+                                                <div className="d-flex align-items-center">
+                                                    <div className="d_circle"></div>
+                                                    Orange <IoClose className="d_closeicon" />
+                                                </div>
+                                            </div>
+                                            <div className="d_close">2 <FaStar className=" d_staricon" /> & above<IoClose className="d_closeicon" /></div>
+                                            <div className="d_close">Cotton Silk <IoClose className="d_closeicon" /></div>
+                                            <div className="d_close">Polka Print <IoClose className="d_closeicon" /></div>
+                                            <div className="d_close">Party <IoClose className="d_closeicon" /></div>
+                                            <div className="d_close">Daily Wear <IoClose className="d_closeicon" /></div>
+                                        </div>
+                                        <div className="d_categorylist">
+                                            <div className="d_acc">
+                                                <div className="d_accitem">
+                                                    <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActivecategory(!isActivecategory)}>
+                                                        <div className='d_title'>Categories</div>
+                                                        <div className='d_icon'>{isActivecategory ? <FaMinus /> : <FaPlus />}</div>
+                                                    </div>
+                                                    {isActivecategory &&
+                                                        <>
+                                                            <div className='mt-3'>
+                                                                {categories.map((category, index) => (
+                                                                    <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('categories', category.id)} checked={!!checkedFilters.categories[category.id]} id={`category-${category.id}`} />
+                                                                        <label htmlFor={`category-${category.id}`} class="d_checkmark"></label>
+                                                                        <p class="mb-0">{category.label}</p>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="d_categorylist">
+                                            <div className="d_acc">
+                                                <div className="d_accitem">
+                                                    <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveDiscounts(!isActiveDiscounts)}>
+                                                        <div className='d_title'>Discount</div>
+                                                        <div className='d_icon'>{isActiveDiscounts ? <FaMinus /> : <FaPlus />}</div>
+                                                    </div>
+
+                                                    {isActiveDiscounts &&
+                                                        <>
+                                                            <div className='mt-3'>
+                                                                {discount.map((discount, index) => (
+                                                                    <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('discounts', discount.id)} checked={!!checkedFilters.discounts[discount.id]} id={`discount-${discount.id}`} />
+                                                                        <label htmlFor={`discount-${discount.id}`} class="d_checkmark"></label>
+                                                                        <p class="mb-0">{discount.no}% or more</p>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="d_categorylist">
+                                            <div className="d_acc">
+                                                <div className="d_accitem">
+                                                    <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActivePrice(!isActivePrice)}>
+                                                        <div className='d_title'>Price</div>
+                                                        <div className='d_icon'>{isActivePrice ? <FaMinus /> : <FaPlus />}</div>
+                                                    </div>
+                                                    {isActivePrice &&
+                                                        <>
+                                                            <div className='mt-3'>
+                                                                <div className="d_price-range">
+                                                                    <ReactSlider
+                                                                        className="d_horisilder"
+                                                                        thumbClassName="d_thumb"
+                                                                        trackClassName="d_track"
+                                                                        min={0}
+                                                                        max={5000}
+                                                                        value={priceRange}
+                                                                        onChange={handleSliderChange}
+                                                                        minDistance={50}
+                                                                        withTracks={true}
+                                                                        pearling
+                                                                        renderTrack={(props, state) => (
+                                                                            <div {...props} className={`d_track ${state.index === 1 ? 'd_track-active' : ''}`}></div>
+                                                                        )}
+                                                                    />
+                                                                    <div className="d_price-label d_price-min" style={{ left: `${(priceRange[0] / 5000) * 100}%` }}>
+                                                                        ${priceRange[0]}
+                                                                    </div>
+                                                                    <div className="d_price-label d_price-max" style={{ left: `${(priceRange[1] / 5000) * 100}%` }}>
+                                                                        ${priceRange[1]}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="d_categorylist">
+                                            <div className="d_acc">
+                                                <div className="d_accitem">
+                                                    <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveSize(!isActiveSize)}>
+                                                        <div className='d_title'>Size</div>
+                                                        <div className='d_icon'>{isActiveSize ? <FaMinus /> : <FaPlus />}</div>
+                                                    </div>
+                                                    {isActiveSize && (
+                                                        <>
+                                                            <div className='mt-3'>
+                                                                {displayedSizes.map((size, index) => (
+                                                                    <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('sizes', size.id)} checked={!!checkedFilters.sizes[size.id]} id={`size-${size.id}`} />
+                                                                        <label htmlFor={`size-${size.id}`} class="d_checkmark"></label>
+                                                                        <p class="mb-0">{size.sizename}</p>
+                                                                    </div>
+                                                                ))}
+                                                                {size.length > initialDisplayCount && (
+                                                                    <a href="#" onClick={(e) => handleShowMore(e, 'size')} className='text-decoration-none'>
+                                                                        {showMore.size ? 'Show Less' : `Show More (${size.length - initialDisplayCount})`}
+                                                                    </a>
+                                                                )}
+                                                            </div>
+                                                        </>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="d_categorylist">
+                                            <div className="d_acc">
+                                                <div className="d_accitem">
+                                                    <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveBrand(!isActiveBrand)}>
+                                                        <div className='d_title'>Brand</div>
+                                                        <div className='d_icon'>{isActiveBrand ? <FaMinus /> : <FaPlus />}</div>
+                                                    </div>
+                                                    {isActiveBrand &&
+                                                        <>
+                                                            <div class="d_search">
+                                                                <IoSearch className='d_searchicon' />
+                                                                <input type="text" name="brand" value={searchbrand} onChange={handleSearchChange} class="form-control " placeholder="Search" />
+                                                            </div>
+                                                            {displayedbrands.map((brand, index) => (
+                                                                <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                    <input type="checkbox" onChange={() => handleCheckboxChange('brands', brand.id)} checked={!!checkedFilters.brands[brand.id]} id={`brand-${brand.id}`} />
+                                                                    <label htmlFor={`brand-${brand.id}`} class="d_checkmark"></label>
+                                                                    <p class="mb-0">{brand.brandname}<span>(10)</span></p>
+                                                                </div>
+                                                            ))}
+                                                            {filteredBrands.length > initialDisplayCount && (
+                                                                <Link href="#" onClick={(e) => { e.preventDefault(); handleShowMore(e, 'brand') }} className='text-decoration-none'>
+                                                                    {showMore.brand ? 'Show Less' : `Show More (${filteredBrands.length - initialDisplayCount})`}
+                                                                </Link>
+                                                            )}
+                                                        </>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="d_categorylist">
+                                            <div className="d_acc">
+                                                <div className="d_accitem">
+                                                    <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveColor(!isActiveColor)}>
+                                                        <div className='d_title'>Color</div>
+                                                        <div className='d_icon'>{isActiveColor ? <FaMinus /> : <FaPlus />}</div>
+                                                    </div>
+                                                    {isActiveColor &&
+                                                        <>
+                                                            <div className='mt-3'>
+                                                                {displayedcolor.map((color, index) => (
+                                                                    <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('colors', color.id)} checked={!!checkedFilters.colors[color.id]} id={`color-${color.id}`} />
+                                                                        <label htmlFor={`color-${color.id}`} class="d_checkmark"></label>
+                                                                        <div className="d-flex align-items-center">
+                                                                            <div className="d_color" style={{ background: color.colorname }}></div>
+                                                                            <p className='mb-0'>{color.colorname}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                ))}
+                                                                {color.length > initialDisplayCount && (
+                                                                    <a href="#" onClick={(e) => handleShowMore(e, 'color')} className='text-decoration-none'>
+                                                                        {showMore.color ? 'Show Less' : `Show More (${color.length - initialDisplayCount})`}
+                                                                    </a>
+                                                                )}
+                                                            </div>
+                                                        </>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="d_categorylist">
+                                            <div className="d_acc">
+                                                <div className="d_accitem">
+                                                    <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveRating(!isActiveRating)}>
+                                                        <div className='d_title'>Rating</div>
+                                                        <div className='d_icon'>{isActiveRating ? <FaMinus /> : <FaPlus />}</div>
+                                                    </div>
+                                                    {isActiveRating &&
+                                                        <>
+                                                            <div className='mt-3'>
+                                                                {rating.map((rate, index) => (
+                                                                    <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('ratings', rate.id)} checked={!!checkedFilters.ratings[rate.id]} id={`rate-${rate.id}`} />
+                                                                        <label htmlFor={`rate-${rate.id}`} class="d_checkmark"></label>
+                                                                        <p class="mb-0">{rate.rating} <FaStar className="d_staricon" /> & above</p>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="d_categorylist">
+                                            <div className="d_acc">
+                                                <div className="d_accitem">
+                                                    <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveSleeve(!isActiveSleeve)}>
+                                                        <div className='d_title'>Sleeve Length</div>
+                                                        <div className='d_icon'>{isActiveSleeve ? <FaMinus /> : <FaPlus />}</div>
+                                                    </div>
+                                                    {isActiveSleeve &&
+                                                        <>
+                                                            <div className='mt-3'>
+                                                                {displayedsleeve.map((sleeve, index) => (
+                                                                    <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('sleeves', sleeve.id)} checked={!!checkedFilters.sleeves[sleeve.id]} id={`sleeve-${sleeve.id}`} />
+                                                                        <label htmlFor={`sleeve-${sleeve.id}`} class="d_checkmark"></label>
+                                                                        <p class="mb-0">{sleeve.sleevename}<span>(10)</span></p>
+                                                                    </div>
+                                                                ))}
+                                                                {sleeve.length > initialDisplayCount && (
+                                                                    <a href="#" onClick={(e) => handleShowMore(e, 'sleeve')} className='text-decoration-none'>
+                                                                        {showMore.sleeve ? 'Show Less' : `Show More (${sleeve.length - initialDisplayCount})`}
+                                                                    </a>
+                                                                )}
+                                                            </div>
+                                                        </>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="d_categorylist">
+                                            <div className="d_acc">
+                                                <div className="d_accitem">
+                                                    <div className="d_acctitle mb-0 d-flex justify-content-between" onClick={() => setIsActiveMaterial(!isActiveMaterial)}>
+                                                        <div className='d_title'>Material</div>
+                                                        <div className='d_icon'>{isActiveMaterial ? <FaMinus /> : <FaPlus />}</div>
+                                                    </div>
+                                                    {isActiveMaterial &&
+                                                        <>
+                                                            <div class="d_search">
+                                                                <IoSearch className='d_searchicon' />
+                                                                <input type="text" name="material" value={searchmaterial} onChange={handleSearchChange} class="form-control " placeholder="Search" />
+                                                            </div>
+                                                            {displayedmaterial.map((material, index) => (
+                                                                <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                    <input type="checkbox" onChange={() => handleCheckboxChange('materials', material.id)} checked={!!checkedFilters.materials[material.id]} id={`material-${material.id}`} />
+                                                                    <label htmlFor={`material-${material.id}`} class="d_checkmark"></label>
+                                                                    <p class="mb-0">{material.materialname}<span>(10)</span></p>
+                                                                </div>
+                                                            ))}
+                                                            {filteredmaterial.length > initialDisplayCount && (
+                                                                <a href="#" onClick={(e) => handleShowMore(e, 'material')} className='text-decoration-none'>
+                                                                    {showMore.material ? 'Show Less' : `Show More (${filteredmaterial.length - initialDisplayCount})`}
+                                                                </a>
+                                                            )}
+                                                        </>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="d_categorylist">
+                                            <div className="d_acc">
+                                                <div className="d_accitem">
+                                                    <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActivePattern(!isActivePattern)}>
+                                                        <div className='d_title'>Pattern</div>
+                                                        <div className='d_icon'>{isActivePattern ? <FaMinus /> : <FaPlus />}</div>
+                                                    </div>
+                                                    {isActivePattern &&
+                                                        <>
+                                                            <div className='mt-3'>
+                                                                {displayedpattern.map((pattern, index) => (
+                                                                    <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('patterns', pattern.id)} checked={!!checkedFilters.patterns[pattern.id]} id={`pattern-${pattern.id}`} />
+                                                                        <label htmlFor={`pattern-${pattern.id}`} class="d_checkmark"></label>
+                                                                        <p class="mb-0">{pattern.patternname}<span>(10)</span></p>
+                                                                    </div>
+                                                                ))}
+                                                                {pattern.length > initialDisplayCount && (
+                                                                    <a href="#" onClick={(e) => handleShowMore(e, 'pattern')} className='text-decoration-none'>
+                                                                        {showMore.pattern ? 'Show Less' : `Show More (${pattern.length - initialDisplayCount})`}
+                                                                    </a>
+                                                                )}
+                                                            </div>
+                                                        </>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="d_categorylist">
+                                            <div className="d_acc">
+                                                <div className="d_accitem">
+                                                    <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveOccasion(!isActiveOccasion)}>
+                                                        <div className='d_title'>Occasion</div>
+                                                        <div className='d_icon'>{isActiveOccasion ? <FaMinus /> : <FaPlus />}</div>
+                                                    </div>
+                                                    {isActiveOccasion &&
+                                                        <>
+                                                            <div className='mt-3'>
+                                                                {displayedoccasion.map((occasion, index) => (
+                                                                    <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('occasions', occasion.id)} checked={!!checkedFilters.occasions[occasion.id]} id={`occasion-${occasion.id}`} />
+                                                                        <label htmlFor={`occasion-${occasion.id}`} class="d_checkmark"></label>
+                                                                        <p class="mb-0">{occasion.occasionname}<span>(10)</span></p>
+                                                                    </div>
+                                                                ))}
+                                                                {occasion.length > initialDisplayCount && (
+                                                                    <a href="#" onClick={(e) => handleShowMore(e, 'occasion')} className='text-decoration-none'>
+                                                                        {showMore.occasion ? 'Show Less' : `Show More (${occasion.length - initialDisplayCount})`}
+                                                                    </a>
+                                                                )}
+                                                            </div>
+                                                        </>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="d_categorylist">
+                                            <div className="d_acc">
+                                                <div className="d_accitem">
+                                                    <div className="d_acctitle mb-0 d-flex justify-content-between" onClick={() => setIsActiveStyle(!isActiveStyle)}>
+                                                        <div className='d_title'>Style</div>
+                                                        <div className='d_icon'>{isActiveStyle ? <FaMinus /> : <FaPlus />}</div>
+                                                    </div>
+                                                    {isActiveStyle &&
+                                                        <>
+                                                            <div class="d_search">
+                                                                <IoSearch className='d_searchicon' />
+                                                                <input type="text" name="style" value={searchstyle} onChange={handleSearchChange} class="form-control " placeholder="Search" />
+
+                                                            </div>
+                                                            {displayedstyle.map((style, index) => (
+                                                                <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                    <input type="checkbox" onChange={() => handleCheckboxChange('styles', style.id)} checked={!!checkedFilters.styles[style.id]} id={`style-${style.id}`} />
+                                                                    <label htmlFor={`style-${style.id}`} class="d_checkmark"></label>
+                                                                    <p class="mb-0">{style.stylename}<span>(10)</span></p>
+                                                                </div>
+                                                            ))}
+                                                            {filteredstyle.length > initialDisplayCount && (
+                                                                <a href="#" onClick={(e) => handleShowMore(e, 'style')} className='text-decoration-none'>
+                                                                    {showMore.style ? 'Show Less' : `Show More (${filteredstyle.length - initialDisplayCount})`}
+                                                                </a>
+                                                            )}
+                                                        </>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             {/* Mobile Offcanvas */}
@@ -1524,7 +1894,375 @@ const Womenfilter = () => {
                                 }}
                             >
                                 <div className="offcanvas-body">
-                                    <FilterContent />
+                                    <div className="d_left">
+                                        <div className="d_head d-flex justify-content-between">
+                                            <h5 className='mb-0'>Filters</h5>
+                                            <div className="d_cta">
+                                                <a href="" className='text-decoration-none'>Clear All</a>
+                                            </div>
+                                        </div>
+                                        <div className="d_category">
+                                            <div className="d_filterlist d-flex flex-wrap">
+                                                <div className="d_close">30% & more <IoClose className="d_closeicon" /></div>
+                                                <div className="d_close">M <IoClose className="d_closeicon" /></div>
+                                                <div className="d_close">BIBA <IoClose className="d_closeicon" /></div>
+                                                <div className="d_close">
+                                                    <div className="d-flex align-items-center">
+                                                        <div className="d_circle"></div>
+                                                        Orange <IoClose className="d_closeicon" />
+                                                    </div>
+                                                </div>
+                                                <div className="d_close">2 <FaStar className=" d_staricon" /> & above<IoClose className="d_closeicon" /></div>
+                                                <div className="d_close">Cotton Silk <IoClose className="d_closeicon" /></div>
+                                                <div className="d_close">Polka Print <IoClose className="d_closeicon" /></div>
+                                                <div className="d_close">Party <IoClose className="d_closeicon" /></div>
+                                                <div className="d_close">Daily Wear <IoClose className="d_closeicon" /></div>
+                                            </div>
+                                            <div className="d_categorylist">
+                                                <div className="d_acc">
+                                                    <div className="d_accitem">
+                                                        <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActivecategory(!isActivecategory)}>
+                                                            <div className='d_title'>Categories</div>
+                                                            <div className='d_icon'>{isActivecategory ? <FaMinus /> : <FaPlus />}</div>
+                                                        </div>
+                                                        {isActivecategory &&
+                                                            <>
+                                                                <div className='mt-3'>
+                                                                    {categories.map((category, index) => (
+                                                                        <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                            <input type="checkbox" onChange={() => handleCheckboxChange('categories', category.id)} checked={!!checkedFilters.categories[category.id]} id={`category-${category.id}`} />
+                                                                            <label htmlFor={`category-${category.id}`} class="d_checkmark"></label>
+                                                                            <p class="mb-0">{category.label}</p>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            </>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="d_categorylist">
+                                                <div className="d_acc">
+                                                    <div className="d_accitem">
+                                                        <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveDiscounts(!isActiveDiscounts)}>
+                                                            <div className='d_title'>Discount</div>
+                                                            <div className='d_icon'>{isActiveDiscounts ? <FaMinus /> : <FaPlus />}</div>
+                                                        </div>
+
+                                                        {isActiveDiscounts &&
+                                                            <>
+                                                                <div className='mt-3'>
+                                                                    {discount.map((discount, index) => (
+                                                                        <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                            <input type="checkbox" onChange={() => handleCheckboxChange('discounts', discount.id)} checked={!!checkedFilters.discounts[discount.id]} id={`discount-${discount.id}`} />
+                                                                            <label htmlFor={`discount-${discount.id}`} class="d_checkmark"></label>
+                                                                            <p class="mb-0">{discount.no}% or more</p>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            </>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="d_categorylist">
+                                                <div className="d_acc">
+                                                    <div className="d_accitem">
+                                                        <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActivePrice(!isActivePrice)}>
+                                                            <div className='d_title'>Price</div>
+                                                            <div className='d_icon'>{isActivePrice ? <FaMinus /> : <FaPlus />}</div>
+                                                        </div>
+                                                        {isActivePrice &&
+                                                            <>
+                                                                <div className='mt-3'>
+                                                                    <div className="d_price-range">
+                                                                        <ReactSlider
+                                                                            className="d_horisilder"
+                                                                            thumbClassName="d_thumb"
+                                                                            trackClassName="d_track"
+                                                                            min={0}
+                                                                            max={5000}
+                                                                            value={priceRange}
+                                                                            onChange={handleSliderChange}
+                                                                            minDistance={50}
+                                                                            withTracks={true}
+                                                                            pearling
+                                                                            renderTrack={(props, state) => (
+                                                                                <div {...props} className={`d_track ${state.index === 1 ? 'd_track-active' : ''}`}></div>
+                                                                            )}
+                                                                        />
+                                                                        <div className="d_price-label d_price-min" style={{ left: `${(priceRange[0] / 5000) * 100}%` }}>
+                                                                            ${priceRange[0]}
+                                                                        </div>
+                                                                        <div className="d_price-label d_price-max" style={{ left: `${(priceRange[1] / 5000) * 100}%` }}>
+                                                                            ${priceRange[1]}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="d_categorylist">
+                                                <div className="d_acc">
+                                                    <div className="d_accitem">
+                                                        <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveSize(!isActiveSize)}>
+                                                            <div className='d_title'>Size</div>
+                                                            <div className='d_icon'>{isActiveSize ? <FaMinus /> : <FaPlus />}</div>
+                                                        </div>
+                                                        {isActiveSize && (
+                                                            <>
+                                                                <div className='mt-3'>
+                                                                    {displayedSizes.map((size, index) => (
+                                                                        <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                            <input type="checkbox" onChange={() => handleCheckboxChange('sizes', size.id)} checked={!!checkedFilters.sizes[size.id]} id={`size-${size.id}`} />
+                                                                            <label htmlFor={`size-${size.id}`} class="d_checkmark"></label>
+                                                                            <p class="mb-0">{size.sizename}</p>
+                                                                        </div>
+                                                                    ))}
+                                                                    {size.length > initialDisplayCount && (
+                                                                        <a href="#" onClick={(e) => handleShowMore(e, 'size')} className='text-decoration-none'>
+                                                                            {showMore.size ? 'Show Less' : `Show More (${size.length - initialDisplayCount})`}
+                                                                        </a>
+                                                                    )}
+                                                                </div>
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="d_categorylist">
+                                                <div className="d_acc">
+                                                    <div className="d_accitem">
+                                                        <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveBrand(!isActiveBrand)}>
+                                                            <div className='d_title'>Brand</div>
+                                                            <div className='d_icon'>{isActiveBrand ? <FaMinus /> : <FaPlus />}</div>
+                                                        </div>
+                                                        {isActiveBrand &&
+                                                            <>
+                                                                <div class="d_search">
+                                                                    <IoSearch className='d_searchicon' />
+                                                                    <input type="text" name="brand" value={searchbrand} onChange={handleSearchChange} class="form-control " placeholder="Search" />
+                                                                </div>
+                                                                {displayedbrands.map((brand, index) => (
+                                                                    <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('brands', brand.id)} checked={!!checkedFilters.brands[brand.id]} id={`brand-${brand.id}`} />
+                                                                        <label htmlFor={`brand-${brand.id}`} class="d_checkmark"></label>
+                                                                        <p class="mb-0">{brand.brandname}<span>(10)</span></p>
+                                                                    </div>
+                                                                ))}
+                                                                {filteredBrands.length > initialDisplayCount && (
+                                                                    <Link href="#" onClick={(e) => { e.preventDefault(); handleShowMore(e, 'brand') }} className='text-decoration-none'>
+                                                                        {showMore.brand ? 'Show Less' : `Show More (${filteredBrands.length - initialDisplayCount})`}
+                                                                    </Link>
+                                                                )}
+                                                            </>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="d_categorylist">
+                                                <div className="d_acc">
+                                                    <div className="d_accitem">
+                                                        <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveColor(!isActiveColor)}>
+                                                            <div className='d_title'>Color</div>
+                                                            <div className='d_icon'>{isActiveColor ? <FaMinus /> : <FaPlus />}</div>
+                                                        </div>
+                                                        {isActiveColor &&
+                                                            <>
+                                                                <div className='mt-3'>
+                                                                    {displayedcolor.map((color, index) => (
+                                                                        <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                            <input type="checkbox" onChange={() => handleCheckboxChange('colors', color.id)} checked={!!checkedFilters.colors[color.id]} id={`color-${color.id}`} />
+                                                                            <label htmlFor={`color-${color.id}`} class="d_checkmark"></label>
+                                                                            <div className="d-flex align-items-center">
+                                                                                <div className="d_color" style={{ background: color.colorname }}></div>
+                                                                                <p className='mb-0'>{color.colorname}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    ))}
+                                                                    {color.length > initialDisplayCount && (
+                                                                        <a href="#" onClick={(e) => handleShowMore(e, 'color')} className='text-decoration-none'>
+                                                                            {showMore.color ? 'Show Less' : `Show More (${color.length - initialDisplayCount})`}
+                                                                        </a>
+                                                                    )}
+                                                                </div>
+                                                            </>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="d_categorylist">
+                                                <div className="d_acc">
+                                                    <div className="d_accitem">
+                                                        <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveRating(!isActiveRating)}>
+                                                            <div className='d_title'>Rating</div>
+                                                            <div className='d_icon'>{isActiveRating ? <FaMinus /> : <FaPlus />}</div>
+                                                        </div>
+                                                        {isActiveRating &&
+                                                            <>
+                                                                <div className='mt-3'>
+                                                                    {rating.map((rate, index) => (
+                                                                        <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                            <input type="checkbox" onChange={() => handleCheckboxChange('ratings', rate.id)} checked={!!checkedFilters.ratings[rate.id]} id={`rate-${rate.id}`} />
+                                                                            <label htmlFor={`rate-${rate.id}`} class="d_checkmark"></label>
+                                                                            <p class="mb-0">{rate.rating} <FaStar className="d_staricon" /> & above</p>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            </>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="d_categorylist">
+                                                <div className="d_acc">
+                                                    <div className="d_accitem">
+                                                        <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveSleeve(!isActiveSleeve)}>
+                                                            <div className='d_title'>Sleeve Length</div>
+                                                            <div className='d_icon'>{isActiveSleeve ? <FaMinus /> : <FaPlus />}</div>
+                                                        </div>
+                                                        {isActiveSleeve &&
+                                                            <>
+                                                                <div className='mt-3'>
+                                                                    {displayedsleeve.map((sleeve, index) => (
+                                                                        <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                            <input type="checkbox" onChange={() => handleCheckboxChange('sleeves', sleeve.id)} checked={!!checkedFilters.sleeves[sleeve.id]} id={`sleeve-${sleeve.id}`} />
+                                                                            <label htmlFor={`sleeve-${sleeve.id}`} class="d_checkmark"></label>
+                                                                            <p class="mb-0">{sleeve.sleevename}<span>(10)</span></p>
+                                                                        </div>
+                                                                    ))}
+                                                                    {sleeve.length > initialDisplayCount && (
+                                                                        <a href="#" onClick={(e) => handleShowMore(e, 'sleeve')} className='text-decoration-none'>
+                                                                            {showMore.sleeve ? 'Show Less' : `Show More (${sleeve.length - initialDisplayCount})`}
+                                                                        </a>
+                                                                    )}
+                                                                </div>
+                                                            </>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="d_categorylist">
+                                                <div className="d_acc">
+                                                    <div className="d_accitem">
+                                                        <div className="d_acctitle mb-0 d-flex justify-content-between" onClick={() => setIsActiveMaterial(!isActiveMaterial)}>
+                                                            <div className='d_title'>Material</div>
+                                                            <div className='d_icon'>{isActiveMaterial ? <FaMinus /> : <FaPlus />}</div>
+                                                        </div>
+                                                        {isActiveMaterial &&
+                                                            <>
+                                                                <div class="d_search">
+                                                                    <IoSearch className='d_searchicon' />
+                                                                    <input type="text" name="material" value={searchmaterial} onChange={handleSearchChange} class="form-control " placeholder="Search" />
+                                                                </div>
+                                                                {displayedmaterial.map((material, index) => (
+                                                                    <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('materials', material.id)} checked={!!checkedFilters.materials[material.id]} id={`material-${material.id}`} />
+                                                                        <label htmlFor={`material-${material.id}`} class="d_checkmark"></label>
+                                                                        <p class="mb-0">{material.materialname}<span>(10)</span></p>
+                                                                    </div>
+                                                                ))}
+                                                                {filteredmaterial.length > initialDisplayCount && (
+                                                                    <a href="#" onClick={(e) => handleShowMore(e, 'material')} className='text-decoration-none'>
+                                                                        {showMore.material ? 'Show Less' : `Show More (${filteredmaterial.length - initialDisplayCount})`}
+                                                                    </a>
+                                                                )}
+                                                            </>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="d_categorylist">
+                                                <div className="d_acc">
+                                                    <div className="d_accitem">
+                                                        <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActivePattern(!isActivePattern)}>
+                                                            <div className='d_title'>Pattern</div>
+                                                            <div className='d_icon'>{isActivePattern ? <FaMinus /> : <FaPlus />}</div>
+                                                        </div>
+                                                        {isActivePattern &&
+                                                            <>
+                                                                <div className='mt-3'>
+                                                                    {displayedpattern.map((pattern, index) => (
+                                                                        <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                            <input type="checkbox" onChange={() => handleCheckboxChange('patterns', pattern.id)} checked={!!checkedFilters.patterns[pattern.id]} id={`pattern-${pattern.id}`} />
+                                                                            <label htmlFor={`pattern-${pattern.id}`} class="d_checkmark"></label>
+                                                                            <p class="mb-0">{pattern.patternname}<span>(10)</span></p>
+                                                                        </div>
+                                                                    ))}
+                                                                    {pattern.length > initialDisplayCount && (
+                                                                        <a href="#" onClick={(e) => handleShowMore(e, 'pattern')} className='text-decoration-none'>
+                                                                            {showMore.pattern ? 'Show Less' : `Show More (${pattern.length - initialDisplayCount})`}
+                                                                        </a>
+                                                                    )}
+                                                                </div>
+                                                            </>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="d_categorylist">
+                                                <div className="d_acc">
+                                                    <div className="d_accitem">
+                                                        <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveOccasion(!isActiveOccasion)}>
+                                                            <div className='d_title'>Occasion</div>
+                                                            <div className='d_icon'>{isActiveOccasion ? <FaMinus /> : <FaPlus />}</div>
+                                                        </div>
+                                                        {isActiveOccasion &&
+                                                            <>
+                                                                <div className='mt-3'>
+                                                                    {displayedoccasion.map((occasion, index) => (
+                                                                        <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                            <input type="checkbox" onChange={() => handleCheckboxChange('occasions', occasion.id)} checked={!!checkedFilters.occasions[occasion.id]} id={`occasion-${occasion.id}`} />
+                                                                            <label htmlFor={`occasion-${occasion.id}`} class="d_checkmark"></label>
+                                                                            <p class="mb-0">{occasion.occasionname}<span>(10)</span></p>
+                                                                        </div>
+                                                                    ))}
+                                                                    {occasion.length > initialDisplayCount && (
+                                                                        <a href="#" onClick={(e) => handleShowMore(e, 'occasion')} className='text-decoration-none'>
+                                                                            {showMore.occasion ? 'Show Less' : `Show More (${occasion.length - initialDisplayCount})`}
+                                                                        </a>
+                                                                    )}
+                                                                </div>
+                                                            </>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="d_categorylist">
+                                                <div className="d_acc">
+                                                    <div className="d_accitem">
+                                                        <div className="d_acctitle mb-0 d-flex justify-content-between" onClick={() => setIsActiveStyle(!isActiveStyle)}>
+                                                            <div className='d_title'>Style</div>
+                                                            <div className='d_icon'>{isActiveStyle ? <FaMinus /> : <FaPlus />}</div>
+                                                        </div>
+                                                        {isActiveStyle &&
+                                                            <>
+                                                                <div class="d_search">
+                                                                    <IoSearch className='d_searchicon' />
+                                                                    <input type="text" name="style" value={searchstyle} onChange={handleSearchChange} class="form-control " placeholder="Search" />
+
+                                                                </div>
+                                                                {displayedstyle.map((style, index) => (
+                                                                    <div key={index} class="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('styles', style.id)} checked={!!checkedFilters.styles[style.id]} id={`style-${style.id}`} />
+                                                                        <label htmlFor={`style-${style.id}`} class="d_checkmark"></label>
+                                                                        <p class="mb-0">{style.stylename}<span>(10)</span></p>
+                                                                    </div>
+                                                                ))}
+                                                                {filteredstyle.length > initialDisplayCount && (
+                                                                    <a href="#" onClick={(e) => handleShowMore(e, 'style')} className='text-decoration-none'>
+                                                                        {showMore.style ? 'Show Less' : `Show More (${filteredstyle.length - initialDisplayCount})`}
+                                                                    </a>
+                                                                )}
+                                                            </>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -1551,7 +2289,6 @@ const Womenfilter = () => {
                                     <div className="d_trend mt-3">
                                         <div className="row gy-4">
                                             {filterItems.map((item, index) => {
-                                                console.log(item.length)
                                                 return (
                                                     <div key={item.id} className="col-12 col-sm-6 col-lg-6 col-xl-3">
                                                         <div className="d_box">
@@ -1559,7 +2296,7 @@ const Womenfilter = () => {
                                                                 <img src={require(`./../d_img/${item.image}`)} alt="" />
                                                                 {item.isBestSeller &&
                                                                     (<div className="d_seller">Best Seller</div>)}
-                                                                    {item.isNewArrial &&
+                                                                {item.isNewArrial &&
                                                                     (<div className="d_arrival">New Arrival</div>)}
                                                                 <div className="d_trendicon d-flex justify-content-center align-items-center">
                                                                     <IoMdHeartEmpty className='d_icon ' />

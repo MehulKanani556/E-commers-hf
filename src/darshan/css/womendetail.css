@@ -113,6 +113,8 @@ canvas {
 }
 
 
+
+
 /* content */
 
 .d_womendetail .d_detail .d_name {
@@ -346,6 +348,16 @@ canvas {
     border: 1px solid #2B221E;
     margin-right: 10px;
     position: relative;
+    overflow: hidden;
+}
+.d_womendetail .d_detail .d_size .d_gbsize {
+    width: 70px;
+    height: 40px;
+    border-radius: 2px;
+    border: 1px solid #2B221E;
+    margin-right: 10px;
+    position: relative;
+    overflow: hidden;
 }
 
 .d_womendetail .d_detail .d_size .d_sizebox.active {
@@ -361,13 +373,23 @@ canvas {
     color: #6A6A6A;
 }
 
-.d_diagonal-line {
+.d_sizebox .d_diagonal-line {
     position: absolute;
     top: 34%;
     left: 23%;
     width: 53px;
     height: 46px;
     transform: rotate(-45deg);
+    border-top: 1.25px solid #6A6A6A;
+    transform-origin: center;
+}
+.d_gbsize .d_diagonal-line{
+    position: absolute;
+    top: 34%;
+    left: 22%;
+    width: 78px;
+    height: 81px;
+    transform: rotate(-28deg);
     border-top: 1.25px solid #6A6A6A;
     transform-origin: center;
 }
@@ -941,6 +963,18 @@ input:focus-visible {
     visibility: visible !important;
 }
 
+.d_mainimg{
+    width: 100%;
+    height: 830px;
+}
+.d_glass img{
+    height: 830px;
+}
+.d_glass div img{
+    width: 100% !important;
+    height: 830px;
+}
+
 
 @media(max-width:1440px) {
 
@@ -953,9 +987,18 @@ input:focus-visible {
     .d_womendetail .d_mainimg .d_img {
         height: 685px;
     }
-
-    .d_womendetail .d_mainimg .d_img video {
-        height: 685px;
+  
+    .d_glass img{
+        height: 695px;
+    }
+    .d_mainimg{
+        height: 690px;
+    }
+    /* .d_womendetail .d_mainimg .d_img video {
+        height: 690px;
+    } */
+    .d_womendetail .d_mainimg video {
+        height: 690px;
     }
 
     .d_womendetail .d_detail .d_offer .d_acccon,
@@ -1005,7 +1048,17 @@ input:focus-visible {
         width: 30px;
         height: 30px;
     }
-
+    .d_sizebox .d_diagonal-line{
+        height: 74px;
+        width: 55px;
+    }
+    .d_gbsize .d_diagonal-line{
+        height: 96px;
+        transform: rotate(-21deg);
+    }
+    .d_womendetail .d_detail .d_size .d_gbsize{
+        width: 70px;
+    } 
     .d_womendetail .d_dropbtnqun {
         padding: 8px;
     }
@@ -1174,7 +1227,9 @@ input:focus-visible {
 }
 
 @media(max-width:991px) {
-
+    .d_glass img{
+        height: 650px;
+    }
     .d_womendetail .d_mainimg .d_img,
     .d_womendetail .d_mainimg video {
         height: 645px;
@@ -1443,6 +1498,12 @@ input:focus-visible {
     .d_overflowx{
         overflow-x: auto;
     } */
+    .d_glass img{
+        height: 500px;
+    }
+    .d_mainimg{
+        height: 500px;
+    }
 }
 
 @media(max-width:399px) {
