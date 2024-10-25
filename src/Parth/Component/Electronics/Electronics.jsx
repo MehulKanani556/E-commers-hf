@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 // import { Button, Col, Row, Card, Badge } from 'react-bootstrap';
 import './Electronic.css';
 import ElectronicSlider from '../Electronics/ElectronicSlider'
@@ -12,19 +12,18 @@ import Gridcomponent from './Gridcomponent';
 import Threeview from './Threeview';
 import { Row, Col, Button } from 'react-bootstrap'
 import OwlCarousel from 'react-owl-carousel';
+import mainImageSrc from '../../assets/V_Lion_laptop_1.png';
+
 
 function Electronics() {
 
-  const [mainImage, setMainImage] = useState(require('../../assets/V_Lion_laptop_1.png'));
+  const mainImageRef = useRef(null); // Create a ref for the main image
 
-  // Function to handle image click and update the main image
-  const handleImageClick = (imageSrc) => {
-
-    setMainImage(imageSrc);
-    console.log(handleImageClick);
-    console.log(imageSrc);
+  const handleImageClick = (newImageSrc) => {
+    if (mainImageRef.current) {
+      mainImageRef.current.src = newImageSrc; // Update the main image src directly
+    }
   };
-
 
 
   return (
@@ -95,14 +94,14 @@ function Electronics() {
                       <p className='V_story_stickers'>Story Stickers and Free Track pad Skin Girls Boys Kids Students Office Vinyl Printed Multicolored Sticker 14 Inches (MC 7)</p>
                     </div>
                     <div className='pt-2 pt-sm-3 pt-lg-5'>
-                      <Button className='py-2 px-5 text-dark bg-white'>Buy Now</Button>
+                      <Button className='py-2 px-5 V_skin_button'>Buy Now</Button>
                     </div>
                   </div>
                   <div className="col-md-6">
                     <div className='d-flex justify-content-between flex-md-column flex-row'>
                       <div className="py-2 py-sm-3 py-md-5 mt-lg-5 d-flex justify-content-center">
                         {/* Main image that changes on click */}
-                        <img src={mainImage} alt="Main laptop skin" className='w-100 V_main_img' />
+                        <img ref={mainImageRef} src={mainImageSrc} alt="Main laptop skin" className='w-100 V_main_img' />
                       </div>
                       <div className="py-2 py-sm-3 py-md-5 d-flex justify-content-between">
                         <div className='d-flex'>
@@ -144,39 +143,41 @@ function Electronics() {
             </div>
           </div>
           <div className='item V_slider_height'>
-            <div className="row m-0">
-              <div className="col-12 col-md-8 p-0">
-                <div className='V_hair_width p-0'>
-                  <img src={require('../../assets/enhance your natyural hair.png')} alt="" className='VK_obj' />
-                </div>
-              </div>
-              <div className="col-12 col-md-4 p-0">
-                <div className="V_green_part">
-                  <div className='p-3 p-lg-5 d-md-flex flex-md-column h-100'>
-                    <div className='my-auto'>
-                      <div className="V_hair_natura_oil  text-white ">
-                        <h1 className='V_enhance '>Enhance Your Natural Hair with Our Premium Products</h1>
-                        <p className='V_glow_shine'>Glow & Shine natural hair care products are made with natural, plant-based ingredients and do not contain harsh chemicals or synthetic additives. </p>
-                      </div>
-                      <div className='pt-sm-1 pt-md-5'>
-                        <Button className='py-2 px-5 text-white bg-dark'>Buy Now</Button>
-                      </div>
+            <div className="V_boat">
+              <div className="d_container h-100">
+                <div className="row m-0 V_boat_text  d-flex align-items-center h-100 flex-column-reverse flex-md-row">
+                  <div className="col-md-6">
+                    <div className="V_460 py-2">
+                      <h1 className='V_rockerz '>boAt Rockerz 460</h1>
+                      <p className="V_bluethooth text-white">BLUETOOTH HEADPHONES</p>
+                      <Button className='my-2 my-sm-3 my-lg-5 py-2 px-5 V_buy_head'>Buy Now</Button>
                     </div>
+                  </div>
+                  <div className="col-md-6">
+                    <img src={require('../../assets/boat rockrez.png')} alt="" className=' V_boat_img ' />
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div className='item V_slider_height'>
-            <div className='V_unlock'>
-              <div className=''>
-                <Row className=''>
-                  <Col className=''>
-                    <div className='V_overlay_unlock'>
-                      <p className="V_overlay_text_unlock">unlock your natural glow </p>
+            <div className="V_noise">
+              <div className="d_container h-100">
+                <div className="row m-0 d-flex align-items-center h-100 flex-column-reverse flex-md-row">
+                  <div className="col-md-6">
+                    <div className="V_noise_width py-2">
+                      <img src={require('../../assets/noise logo.png')} alt="" className=' V_logo_img ' />
+                      <h1 className='V_moment pt-sm-2 pt-md-3'>The Perfect Moment
+                        <span className='V_between'> Between Past And
+                          Future.</span></h1>
+
+                      <Button className='my-2 my-sm-3 my-lg-5 py-2 px-5 V_buy_noise'>Buy Now</Button>
                     </div>
-                  </Col>
-                </Row>
+                  </div>
+                  <div className="col-md-6 align-self-center m-0">
+                    <img src={require('../../assets/noise watch.png')} alt="" className=' V_noise_img ' />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

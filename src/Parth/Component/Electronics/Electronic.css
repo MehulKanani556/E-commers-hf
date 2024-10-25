@@ -61,7 +61,119 @@
 
 }
 
-/* ///////////////////////////////////////////////////////// container ////////////////////////////////////////////////// */
+.V_skin_button {
+    background-color: white;
+    color: black;
+}
+
+.V_skin_button:hover {
+    background-color: black;
+    color: white;
+}
+
+.V_buy_head {
+    background-color: white;
+    color: black;
+}
+
+.V_buy_head:hover {
+    background-color: black;
+    color: white;
+}
+
+.V_buy_noise {
+    background-color: white;
+    color: black;
+}
+
+.V_buy_noise:hover {
+    background-color: black;
+    color: white;
+}
+
+.V_boat {
+    width: 1920px;
+    height: 916px;
+    background-color: #272C34;
+}
+
+
+.V_boat {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.V_boat::before {
+    content: 'boAt';
+    position: absolute;
+    color: rgba(255, 255, 255, 0.5);
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 400px;
+    font-weight: 1000;
+    margin-right: 10px;
+}
+
+.V_rockerz {
+    color: #F7E6D3;
+    font-size: 90px;
+    font-weight: 700;
+}
+
+
+.V_bluethooth {
+    font-size: 40px;
+    font-weight: 300;
+}
+
+.V_boat_img {
+    width: 550px !important;
+    height: 550px;
+    margin-left: 400px;
+}
+
+.V_noise {
+    width: 1920px;
+    height: 916px;
+    background-color: #34394D;
+}
+
+.V_logo_img {
+    width: 183.1px !important;
+    height: 52.3px;
+}
+
+.V_noise_width {
+    width: 530px;
+}
+
+.V_moment {
+    color: #FFD7B4;
+    font-size: 55px;
+    font-weight: 700;
+}
+
+.V_between {
+    font-size: 55px;
+    font-weight: 400;
+}
+
+.V_noise_img {
+    width: 490px !important;
+    height: 490px;
+    margin-left: auto;
+}
+
+
+
+
+
+/* ///////////////////////////////////////////////////////// media Query ////////////////////////////////////////////////// */
 
 
 
@@ -114,6 +226,66 @@
         height: 130px;
     }
 
+
+
+    .V_boat {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_boat::before {
+        font-size: 400px;
+        margin-right: 10px;
+    }
+
+    .V_rockerz {
+        font-size: 90px;
+    }
+
+
+    .V_bluethooth {
+        font-size: 40px;
+    }
+
+    .V_boat_img {
+        width: 550px !important;
+        height: 550px;
+        margin-left: 320px;
+    }
+
+    .V_460 {
+        width: 750px;
+    }
+
+
+    .V_noise {
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_logo_img {
+        width: 183px !important;
+        height: 52px;
+    }
+
+    .V_noise_width {
+        width: 530px;
+    }
+
+    .V_moment {
+        font-size: 55px;
+    }
+
+    .V_between {
+        font-size: 55px;
+    }
+
+    .V_noise_img {
+        width: 490px !important;
+        height: 490px;
+        margin-left: auto;
+    }
 }
 
 @media (min-width: 1440px) and (max-width: 1649px) {
@@ -163,6 +335,68 @@
     .V_child_img {
         width: 150px !important;
         height: 120px;
+    }
+
+
+
+    .V_boat {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_boat::before {
+        font-size: 400px;
+        margin-right: 10px;
+    }
+
+    .V_rockerz {
+        font-size: 74px;
+    }
+
+
+    .V_bluethooth {
+        font-size: 36px;
+    }
+
+    .V_boat_img {
+        width: 550px !important;
+        height: 450px;
+        margin-left: 180px;
+    }
+
+    .V_460 {
+        width: 620px;
+    }
+
+
+
+    .V_noise {
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_logo_img {
+        width: 183px !important;
+        height: 52px;
+    }
+
+    .V_noise_width {
+        width: 530px;
+    }
+
+    .V_moment {
+        font-size: 52px;
+    }
+
+    .V_between {
+        font-size: 52px;
+    }
+
+    .V_noise_img {
+        width: 440px !important;
+        height: 440px;
+        margin-left: auto;
     }
 
 }
@@ -215,6 +449,67 @@
         width: 145px !important;
         height: 110px;
     }
+
+
+    .V_boat {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_boat::before {
+        font-size: 400px;
+        margin-right: 10px;
+    }
+
+    .V_rockerz {
+        font-size: 68px;
+    }
+
+
+    .V_bluethooth {
+        font-size: 32px;
+    }
+
+    .V_boat_img {
+        width: 550px !important;
+        height: 450px;
+        margin-left: 100px;
+    }
+
+    .V_460 {
+        width: 570px;
+    }
+
+
+
+    .V_noise {
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_logo_img {
+        width: 183px !important;
+        height: 52px;
+    }
+
+    .V_noise_width {
+        width: 500px;
+    }
+
+    .V_moment {
+        font-size: 50px;
+    }
+
+    .V_between {
+        font-size: 50px;
+    }
+
+    .V_noise_img {
+        width: 420px !important;
+        height: 420px;
+        margin-left: auto;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -266,6 +561,65 @@
         height: 100px;
     }
 
+
+    .V_boat {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_boat::before {
+        font-size: 400px;
+        margin-right: 10px;
+    }
+
+    .V_rockerz {
+        font-size: 54px;
+    }
+
+
+    .V_bluethooth {
+        font-size: 28px;
+    }
+
+    .V_boat_img {
+        width: 500px !important;
+        height: 400px;
+        margin-left: 40px;
+    }
+
+    .V_460 {
+        width: 450px;
+    }
+
+
+    .V_noise {
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_logo_img {
+        width: 183px !important;
+        height: 52px;
+    }
+
+    .V_noise_width {
+        width: 450px;
+    }
+
+    .V_moment {
+        font-size: 46px;
+    }
+
+    .V_between {
+        font-size: 46px;
+    }
+
+    .V_noise_img {
+        width: 400px !important;
+        height: 400px;
+        margin-left: auto;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -319,6 +673,65 @@
         height: 90px;
     }
 
+
+    .V_boat {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_boat::before {
+        font-size: 300px;
+        margin-right: 10px;
+    }
+
+    .V_rockerz {
+        font-size: 46px;
+    }
+
+
+    .V_bluethooth {
+        font-size: 24px;
+    }
+
+    .V_boat_img {
+        width: 400px !important;
+        height: 300px;
+        margin-left: 10px;
+    }
+
+    .V_460 {
+        width: 400px;
+    }
+
+
+    .V_noise {
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_logo_img {
+        width: 183px !important;
+        height: 52px;
+    }
+
+    .V_noise_width {
+        width: 450px;
+    }
+
+    .V_moment {
+        font-size: 42px;
+    }
+
+    .V_between {
+        font-size: 42px;
+    }
+
+    .V_noise_img {
+        width: 300px !important;
+        height: 300px;
+        margin-left: auto;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 767px) {
@@ -373,6 +786,67 @@
         width: 120px !important;
         height: 110px;
     }
+
+
+
+    .V_boat {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_boat::before {
+        font-size: 250px;
+        margin-right: 10px;
+    }
+
+    .V_rockerz {
+        font-size: 40px;
+    }
+
+
+    .V_bluethooth {
+        font-size: 20px;
+    }
+
+    .V_boat_img {
+        width: 450px !important;
+        height: 300px;
+        margin: auto;
+    }
+
+    .V_460 {
+        width: 350px;
+    }
+
+
+    .V_noise {
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_logo_img {
+        width: 150px !important;
+        height: 50px;
+    }
+
+    .V_noise_width {
+        width: 500px;
+    }
+
+    .V_moment {
+        font-size: 38px;
+    }
+
+    .V_between {
+        font-size: 38px;
+    }
+
+    .V_noise_img {
+        width: 280px !important;
+        height: 250px;
+        margin-right: auto;
+    }
 }
 
 @media (min-width: 480px) and (max-width: 575px) {
@@ -426,6 +900,67 @@
         width: 115px !important;
         height: 70px;
     }
+
+
+    .V_boat {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_boat::before {
+        font-size: 200px;
+        margin-right: 10px;
+    }
+
+    .V_rockerz {
+        font-size: 34px;
+    }
+
+
+    .V_bluethooth {
+        font-size: 16px;
+    }
+
+    .V_boat_img {
+        width: 350px !important;
+        height: 230px;
+        margin: auto;
+    }
+
+    .V_460 {
+        width: 300px;
+    }
+
+
+
+    .V_noise {
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_logo_img {
+        width: 130px !important;
+        height: 40px;
+    }
+
+    .V_noise_width {
+        width: 370px;
+    }
+
+    .V_moment {
+        font-size: 32px;
+    }
+
+    .V_between {
+        font-size: 32px;
+    }
+
+    .V_noise_img {
+        width: 270px !important;
+        height: 200px;
+        margin-right: auto;
+    }
 }
 
 @media (min-width: 300px) and (max-width: 479px) {
@@ -478,6 +1013,67 @@
     .V_child_img {
         width: 70px !important;
         height: 70px;
+    }
+
+
+    .V_boat {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_boat::before {
+        font-size: 140px;
+        margin-right: 10px;
+    }
+
+    .V_rockerz {
+        font-size: 28px;
+    }
+
+
+    .V_bluethooth {
+        font-size: 14px;
+    }
+
+    .V_boat_img {
+        width: 300px !important;
+        height: 249px;
+        margin: auto;
+    }
+
+    .V_460 {
+        width: 240px;
+    }
+
+
+
+    .V_noise {
+        width: 100%;
+        height: 100%;
+    }
+
+    .V_logo_img {
+        width: 110px !important;
+        height: 30px;
+    }
+
+    .V_noise_width {
+        width: 270px;
+    }
+
+    .V_moment {
+        font-size: 28px;
+    }
+
+    .V_between {
+        font-size: 28px;
+    }
+
+    .V_noise_img {
+        width: 230px !important;
+        height: 180px;
+        margin-right: auto;
     }
 }
 

@@ -151,12 +151,14 @@ function Luggage() {
                 <div className='V_new_footware'>
                     <div className='row m-0'>
                         <div className='col-6'>
-                            <div className="d_container V_all">
-                                <p className='V_all_width'><span className='V_new_foot'>NEW FOOTWEAR</span> <span className='V_collection text-white'>COLLECTION</span></p>
-                                <p className='V_big'>
-                                    <span className='V_disco text-white'>discount</span> 
-                                    <span className='V_30'>30%</span>
-                                </p>
+                            <div className="d_container">
+                                <div className='V_all'>
+                                    <p className='V_all_width'><span className='V_new_foot'>NEW FOOTWEAR</span> <span className='V_collection text-white'>COLLECTION</span></p>
+                                    <p className='V_big'>
+                                        <span className='V_disco text-white'>discount</span>
+                                        <span className='V_30'>30%</span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
