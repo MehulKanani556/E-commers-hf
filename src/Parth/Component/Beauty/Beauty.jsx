@@ -53,7 +53,7 @@ function Beauty() {
                                                 <p className='V_glow_shine'>Glow & Shine natural hair care products are made with natural, plant-based ingredients and do not contain harsh chemicals or synthetic additives. </p>
                                             </div>
                                             <div className='pt-sm-1 pt-md-5'>
-                                                <Button className='py-2 px-5 text-white bg-dark'>Buy Now</Button>
+                                                <Button className='py-2 px-5 V_beauty_slider_2_button'>Buy Now</Button>
                                             </div>
                                         </div>
                                     </div>

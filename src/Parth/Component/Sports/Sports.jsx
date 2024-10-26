@@ -37,7 +37,7 @@ function Luggage() {
                                             <p className='V_experience'>Experience unparalleled comfort and innovative design with our state-of-the-art, futuristic sports shoes. Built for champions, designed for you.</p>
                                         </div>
                                         <div className='pt-3'>
-                                            <Button className='py-2 px-5 text-white'>Buy Now</Button>
+                                            <Button className='py-2 px-5 V_sport_slider_1_button '>Buy Now</Button>
                                         </div>
                                     </Col>
                                 </Row>
@@ -54,7 +54,7 @@ function Luggage() {
                                             <p className='V_slide_2_text'>Phasellus risus turpis, pretium sit amet magna non, molestie ultricies enim. Nullam pulvinar felis at metus.</p>
                                         </div>
                                         <div className='pt-3'>
-                                            <Button className='py-2 px-5 text-white bg-dark'>Buy Now</Button>
+                                            <Button className='py-2 px-5 V_sport_slider_2_button'>Buy Now</Button>
                                         </div>
                                     </Col>
                                 </Row>

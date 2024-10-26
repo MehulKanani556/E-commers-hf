@@ -29,11 +29,38 @@
     height: auto;
 }
 
+.V_sport_slider_1_button {
+    color: white;
+    background-color: #3e9d26;
+}
 
-.btn-primary {
-    --bs-btn-bg: #3E9D26;
-    --bs-btn-border-color: none;
+.V_sport_slider_1_button:hover {
+    color: white !important;
+    background-color: #1b5f0a;
+}
 
+.V_sport_slider_2_button {
+    color: white;
+    background-color: black;
+}
+
+.V_sport_slider_2_button:hover {
+    color: white !important;
+    background-color: rgb(73, 66, 66);
+}
+
+.btn:focus-visible {
+    border-color: black;
+    box-shadow: 0px;
+}
+
+.btn-primary:hover {
+    background-color: none;
+    border: 0px;
+}
+.btn:active{
+    background-color: none;
+    border: 0px;
 }
 
 .V_sport_product_1 {
@@ -145,7 +172,9 @@
     background-color: #38CB89;
 }
 
-
+.V_golf:hover {
+    background-color: #1b5f0a;
+}
 
 .V_new_footware {
     background-image: url('../../assets/new footware sports.png');

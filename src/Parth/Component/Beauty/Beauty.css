@@ -199,8 +199,14 @@
 
 
 
-
-
+.V_beauty_slider_2_button{
+    color: white;
+    background-color: black;
+}
+.V_beauty_slider_2_button:hover{
+    color: black;
+    background-color: white;
+}
 
 
 

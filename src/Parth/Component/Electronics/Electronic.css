@@ -72,24 +72,40 @@
 }
 
 .V_buy_head {
-    background-color: white;
-    color: black;
-}
-
-.V_buy_head:hover {
-    background-color: black;
-    color: white;
-}
+    background-color: white !important;
+    color: black !important;
+    border: none !important;
+  }
+  
+  .V_buy_head:hover,
+  .V_buy_head:focus,
+  .V_buy_head:active {
+    background-color: black !important;
+    color: white !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  
 
 .V_buy_noise {
-    background-color: white;
+    background-color: white !important;
     color: black;
 }
 
 .V_buy_noise:hover {
-    background-color: black;
+    background-color: black !important;
     color: white;
 }
+
+
+.btn:focus-visible{
+    border-color: black;
+    box-shadow: 0px;
+}
+.btn-primary{
+ border: 0px;
+}
+
 
 .V_boat {
     width: 1920px;
@@ -104,7 +120,7 @@
     height: 100%;
 }
 
-.V_boat::before {
+.V_boat::before{
     content: 'boAt';
     position: absolute;
     color: rgba(255, 255, 255, 0.5);
@@ -117,6 +133,7 @@
     font-size: 400px;
     font-weight: 1000;
     margin-right: 10px;
+    z-index: 5;
 }
 
 .V_rockerz {
@@ -169,7 +186,10 @@
     margin-left: auto;
 }
 
-
+.V_460{
+    position: relative;
+    z-index: 5;
+}
 
 
 
@@ -1164,6 +1184,10 @@
     display: inline-block;
     border-radius: 50%;
     border: 1px solid black;
+}
+
+.VK_product_col_dot:hover{
+    border: 1px dashed black;
 }
 
 .VK_btn_shadow {

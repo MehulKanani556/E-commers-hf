@@ -148,9 +148,13 @@ function Electronics() {
                 <div className="row m-0 V_boat_text  d-flex align-items-center h-100 flex-column-reverse flex-md-row">
                   <div className="col-md-6">
                     <div className="V_460 py-2">
-                      <h1 className='V_rockerz '>boAt Rockerz 460</h1>
-                      <p className="V_bluethooth text-white">BLUETOOTH HEADPHONES</p>
-                      <Button className='my-2 my-sm-3 my-lg-5 py-2 px-5 V_buy_head'>Buy Now</Button>
+                      <div>
+                        <h1 className='V_rockerz '>boAt Rockerz 460</h1>
+                        <p className="V_bluethooth text-white">BLUETOOTH HEADPHONES</p>
+                      </div>
+                      <div className='my-2 my-sm-3 my-lg-5'>
+                        <Button className=' py-2 px-5 V_buy_head'>Buy Now</Button>
+                      </div>
                     </div>
                   </div>
                   <div className="col-md-6">
