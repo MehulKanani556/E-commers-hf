@@ -12,6 +12,8 @@ function ContactUs() {
         <>
             <Header />
 
+            {/* <h5 className='ds_curve-text'>25+</h5> */}
+
 {/* <div className="V_demo">
     jrghjnj
 </div> */}
@@ -86,7 +88,7 @@ function ContactUs() {
 
 
 
-            <section className='V_jal'>
+            {/* <section className='V_jal'>
                 <div className="d_container">
                     <div className="row m-0 pt-5">
                         <div className="col-4 pe-5">
@@ -112,6 +114,57 @@ function ContactUs() {
                                 <div>
                                     <img src={require('../../assets/V48.png')} alt="" className='' />
                                     <p  className='pt-2'>Rating</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section> */}
+
+           {/* *********************** The Quickcart ***************** */}
+
+            <section>
+                <div className='ds_bg-color'>
+                    <div className="d_container">
+                        <div className="row justify-content-center align-items-center">
+                            <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mt-3">
+                                <div className='ds_padding'>
+                                    <h5 className='ds_mini-title text-light'>The Quickcart</h5>
+                                    <p className='ds_para'>Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque iaculis habitant congue est blandit amet. Tortor in vulputate nulla vitae quam.</p>
+                                </div>
+                            </div>
+                            <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12 mt-3">
+                                <div>
+                                    <div className="row">
+                                        <div className="col-xl-3 col-lg-6 col-md-3 col-sm-6 col-6 text-center">
+                                            <div>
+                                                <h5 className='ds_curve-text mb-0'>25+</h5>
+                                                <p className='ds_text text-light'>Years of Experience</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-xl-3 col-lg-6 col-md-3 col-sm-6 col-6 text-center">
+                                            <div>
+                                                <h5 className='ds_curve-text mb-0'>100+</h5>
+                                                <p className='ds_text text-light'>Best Brands</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-xl-3 col-lg-6 col-md-3 col-sm-6 col-6 text-center">
+                                            <div>
+                                                <h5 className='ds_curve-text mb-0'>2M+</h5>
+                                                <p className='ds_text text-light'>Happy Clients</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-xl-3 col-lg-6 col-md-3 col-sm-6 col-6 text-center">
+                                            <div>
+                                                <h5 className='ds_curve-text mb-0'>4.8</h5>
+                                                <p className='ds_text text-light'>Rating</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>

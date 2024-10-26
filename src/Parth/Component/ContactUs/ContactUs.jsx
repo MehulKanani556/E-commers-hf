@@ -8,136 +8,108 @@ import './ContactUs.css'
 
 function ContactUs() {
 
+
+    function ok () {
+
+    }
+
     return (
         <>
             <Header />
 
-            <section className='py-5'>
-                <div className="d_container">
-                    <Row className='m-0'>
-                        <Col className='pt-lg-5'>
-                            <div className='text-center '>
-                                <h1 className="V_contact fw-bold">
-                                    Contact Us
-                                </h1>
-                                <p className='V_any'>Any question or remarks? Just write us a message!</p>
-                            </div>
-                        </Col>
-                    </Row>
+            
+           {/* ******************* Contact Us ***************** */}
+        <section className='mt-5 mb-5'>
+            <div className='d_container'>
+                <div className='text-center'>
+                    <h2 className='mb-0 h2'>Contact Us</h2>
+                    <p className='ds_us-text'>Any question or remarks? Just write us a message!</p>
                 </div>
-            </section>
-
-
-
-            <section className='pb-5 mb-3'>
-                <div className="d_container">
-                    <div className='m-0 p-lg-2 p-lg-5 p-3 V_shadow d-flex flex-wrap flex-lg-nowrap'>
-                        <div className='pe-lg-5'>
-                            <div className='V_back_img p-lg-5 p-4 text-white'>
-                                <div>
-                                    <h1 className='V_main_text'>
-                                        Contact Information
-                                    </h1>
-                                    <p className='V_feel_free'>
-                                        Feel free to ask your query anytime
-                                    </p>
-                                </div>
-                                <div className='py-5 align-items-center'>
-                                    <div className='d-flex flex-wrap pb-lg-3 pt-lg-5 '>
-                                        <img src={require('../../assets/call.png')} alt="" className='V_call' />
-                                        <p className='V_contact_no ps-3'>+1012 3456 789</p>
+                <div className='ds_us-box mt-4'>
+                   <div className="row align-items-center">
+                     <div className="col-xl-4 col-lg-5 mt-3">
+                        <div className='ds_us-img'>
+                           <div className='ds_us-padding '>
+                              <h4 className='h4 text-light'>Contact Information</h4>
+                              <p className='ds_us-muted'>Feel free to ask your query anytime</p>
+                              <div className='mt-5 pt-sm-5'>
+                                 <div className='d-flex mb-4'>
+                                    <div>
+                                        <img src={require("../../assets/ds_phone-call.png")} alt="" />
                                     </div>
-                                    <div className='d-flex py-lg-3 '>
-                                        <img src={require('../../assets/Mail.png')} alt="" className='V_call' />
-                                        <p className='V_contact_no ps-3'>demo@gmail.com</p>
+                                    <p className='text-light ms-3'>+1012 3456 789</p>
+                                 </div>
+                                 <div className='d-flex mb-4'>
+                                    <div>
+                                        <img src={require("../../assets/ds_sharp-email.png")} alt="" />
                                     </div>
-                                    <div className='d-flex py-lg-3 '>
-                                        <img src={require('../../assets/location.png')} alt="" className='V_call' />
-                                        <p className='V_contact_no ps-3'>132 Dartmouth Street Boston, Massachusetts 02156 United States</p>
+                                    <p className='text-light ms-3'>demo@gmail.com</p>
+                                 </div>
+                                 <div className='d-flex mb-4'>
+                                    <div>
+                                        <img src={require("../../assets/ds_phone-call.png")} alt="" />
                                     </div>
+                                    <p className='text-light ms-3'>132 Dartmouth Street Boston, <br/> Massachusetts 02156 United States</p>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                      <div className="col-xl-8 col-lg-7 mt-3">
+                        <div className='ms-sm-4'>
+                        <form>
+                            <div className="mb-3">
+                              <label  className="form-label ds_label mb-0">Name</label>
+                              <input type="text" className="form-control ds_us-email" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                            </div>
+                            <div className="mb-3">
+                              <label  className="form-label ds_label">Email</label>
+                              <input type="email" className="form-control ds_us-email" id="exampleInputPassword1"/>
+                            </div>
+                            <div className="mb-3">
+                              <label  className="form-label ds_label">Contact no.</label>
+                              <input type="number" className="form-control ds_us-email" id="exampleInputPassword1"/>
+                            </div>
+                            <div className='mt-4 pt-2'>
+                                <label htmlFor="" style={{fontWeight:'600'}}>Select Subject</label>
+                               <div className='d-flex flex-wrap mt-2'>
+                                   <div className="form-check ds_us-margin">
+                                     <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={()=>ok()} />
+                                     <label className="form-check-label" htmlFor="flexRadioDefault1" style={{color:"#6A6A6A"}}>
+                                        General Inquiry
+                                     </label>
+                                   </div>
+                                   <div className="form-check ms-sm-4 ds_us-margin">
+                                     <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"/>
+                                     <label className="form-check-label" htmlFor="flexRadioDefault2" style={{color:"#6A6A6A"}}>
+                                       Payment related
+                                   </label>
+                                   </div>
+                                   <div className="form-check ms-sm-4 ds_us-margin">
+                                     <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3"/>
+                                     <label className="form-check-label" htmlFor="flexRadioDefault3" style={{color:"#6A6A6A"}}>
+                                       Product related
+                                   </label>
+                                   </div>
+                               </div>
+                               <label htmlFor="" className='mt-4' style={{color:"#6A6A6A"}}>Message</label>
+                               <div className="form-floating">
+                                   <textarea className="form-control ds_us-textarea"  placeholder="Leave a comment here" ></textarea>
                                 </div>
                             </div>
+                              <div className='text-center mt-4'>
+                                <button type="submit" className="btn ds_us-submit">Submit</button>
+                              </div>
+                          </form>
                         </div>
-                        <div className='ps-lg-5'>
-                            <div className=' '>
-                                <form >
-                                    <div >
-                                        <label className='V_label pt-4 pb-2'>Name</label> <br />
-                                        <input className='V_input'
-                                            type="text"
-                                            name="name"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className='V_label pt-4 pb-2'>Email</label><br />
-                                        <input className='V_input'
-                                            type="email"
-                                            name="email"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className='V_label pt-4 pb-2'>Contact no.</label><br />
-                                        <input className='V_input'
-                                            type="text"
-                                            name="contactNo"
-                                        />
-                                    </div>
-                                    <div >
-                                        <label className='V_label pt-4 pb-2'>Select Subject</label><br />
-                                        <div className='d-flex flex-wrap flex-lg-nowrap align-items-center'>
-                                            <div className='d-flex align-items-center'>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="radio 1"
-                                                    className="custom-radio pe-3 py-2"
-                                                />{' '}
-                                                <p className=' px-lg-4 ps-lg-2 pe-lg-4 mb-0 V_redio_text'>
-                                                    General Inquiry
-                                                </p>
-                                            </div>
-                                            <div className='d-flex align-items-center'>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="radio 1"
-                                                    className="custom-radio pe-3 py-2"
-                                                />{' '}
-                                                <p className='ps-lg-2 pe-lg-4 mb-0 V_redio_text'>
-                                                    Payment related
-                                                </p>
-                                            </div>
-                                            <div className='d-flex align-items-center'>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="radio 1"
-                                                    className="custom-radio pe-3 py-2"
-                                                />{' '}
-                                                <p className='ps-lg-2 mb-0 V_redio_text'>
-                                                    Product related
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div >
-                                        <label className='V_label pt-lg-4 pb-lg-2'>Message</label><br />
-                                        <textarea className='V_textarea'
-                                            name="message"
-                                        />
-                                    </div>
-
-                                    <div className='pt-5 pb-4 text-center'>
-                                        <button className='py-3 px-5 V_submit_button'
-                                            type="submit"
-                                        >
-                                            <p className='V_submit mb-0 text-white'>Submit</p>
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                      </div>
+                   </div>
                 </div>
-            </section>
+            </div>
+        </section>
+
+
+            
 
 
 
