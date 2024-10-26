@@ -131,7 +131,7 @@ const Customerlike = () => {
     return (
         <>
 
-            <section className='d_p-50 pb-0 d_trend d_like'>
+            <section className='d_p-50  d_trend d_like'>
                 <div className="d_container">
                     <div className="d_head px-3 d-flex justify-content-between align-items-center">
                         <h4 className='mb-0'>Customer also like this</h4>

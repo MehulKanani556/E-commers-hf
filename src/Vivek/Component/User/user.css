@@ -20,7 +20,9 @@
     color: #2A221E;
 }
 
-
+.VK_emptyadd{
+    box-shadow: 0px 4px 14px 0px #8F8F8F40;
+}
 /* active */
 .VK_user_active {
     background-color: #2B221E !important;
