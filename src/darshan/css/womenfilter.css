@@ -6,6 +6,11 @@
     padding: 210px 0;
 }
 
+input:focus {
+    outline: none;
+    scroll-behavior:unset;
+}
+
 .d_bannerbg h2 {
     font-size: 50px;
     color: #fff;
@@ -136,7 +141,7 @@
 
 .d_checkmark:after {
     left: 6px;
-    top: 0px;
+    top: -1px;
     width: 7px;
     height: 14px;
     border: solid #fff;

@@ -28,13 +28,17 @@ const WomenDetails = () => {
 
 
 
-    // Initialize with the properly imported main image
+    const [imageLoaded, setImageLoaded] = useState(false);
+    const [magnifierKey, setMagnifierKey] = useState(0);
+
     const [mainContent, setMainContent] = useState({
         type: 'image',
-        src: detailImg4
+        src: detailImg4,
+        index: 0
     });
     const [is360Active, setIs360Active] = useState(false);
     const [isquantityOpen, setIsquantityOpen] = useState(false);
+    const [isImageVisible, setIsImageVisible] = useState(true); // Control image visibility
     const [sizemodalShow, setsizeModalShow] = useState(false);
     const [offermodalShow, setofferModalShow] = useState(false);
     const [imagemodalShow, setimageModalShow] = useState(false);
@@ -48,23 +52,40 @@ const WomenDetails = () => {
     const images = useRef([]);
     const dragThreshold = 30; // Increase this value to slow down the image change speed
 
-    // Use the imported images/video in the subImages array
-    const subImages = [
-        { type: 'image', src: detailImg1 },
-        { type: 'image', src: detailImg2 },
-        { type: 'video', src: detailVideo },
-        { type: 'image', src: detailImg3 }
+    const galleryItems = [
+        { type: 'image', src: detailImg1, thumbnail: detailImg1 },
+        { type: 'image', src: detailImg2, thumbnail: detailImg2 },
+        { type: 'video', src: detailVideo, thumbnail: detailVideo },
+        { type: 'image', src: detailImg3, thumbnail: detailImg3 }
     ];
 
-    const handleSubContentClick = (content) => {
-        if (content.type === 'video' && videoRef.current) {
-            setMainContent(content);
-            videoRef.current.play();
-        } else {
-            setMainContent(content);
-            setIs360Active(false);
+    useEffect(() => {
+        if (mainContent.type === 'image') {
+            const img = new Image();
+            img.src = mainContent.src;
+            img.onload = () => {
+                setImageLoaded(true);
+                setMagnifierKey(prev => prev + 1);
+            };
+        }
+    }, [mainContent.src]);
+
+
+    const handleThumbnailClick = (item, index) => {
+        setImageLoaded(false); // Reset the image loading state
+        setMainContent({ ...item, index });
+        setIs360Active(false);
+
+        // If it's a video, play it
+        if (item.type === 'video' && videoRef.current) {
+            setTimeout(() => {
+                if (videoRef.current) {
+                    videoRef.current.play();
+                }
+            }, 0);
         }
     };
+
 
     const toggle360View = () => {
         setIs360Active(!is360Active);
@@ -181,79 +202,83 @@ const WomenDetails = () => {
     };
 
     // Re-render the image when the current frame changes
-    useEffect(() => {
-        renderImage();
-    }, [currentFrame]);
+    // useEffect(() => {
+    //     renderImage();
+    // }, [currentFrame]);
 
-    const [activeIndex, setActiveIndex] = React.useState(0); // To track the current slide
-    const slidervideoRef = useRef(null); // Ref to control video playback
+    // useEffect(() => {
+    //     handleSubContentClick();
+    // }, [mainContent.src])
 
-    const mediaItems = [
-        { id: 1, type: 'image', src: require('./../d_img/detailimg1.png') },
-        { id: 2, type: 'image', src: require('./../d_img/detailimg2.png') },
-        { id: 3, type: 'image', src: require('./../d_img/detailimg3.png') },
-        { id: 4, type: 'video', src: require('./../d_img/detailvideo.mp4') },
-        { id: 5, type: 'image', src: require('./../d_img/detailimg5.png') },
-    ];
+    // const [activeIndex, setActiveIndex] = React.useState(0); // To track the current slide
+    // const slidervideoRef = useRef(null); // Ref to control video playback
+
+    // const mediaItems = [
+    //     { id: 1, type: 'image', src: require('./../d_img/detailimg1.png') },
+    //     { id: 2, type: 'image', src: require('./../d_img/detailimg2.png') },
+    //     { id: 3, type: 'image', src: require('./../d_img/detailimg3.png') },
+    //     { id: 4, type: 'video', src: require('./../d_img/detailvideo.mp4') },
+    //     { id: 5, type: 'image', src: require('./../d_img/detailimg5.png') },
+    // ];
 
 
-    const carouselSettings = {
-        items: 1,
-        center: true,
-        nav: false,
-        dots: false,
-        loop: true,
-        margin: -15,
-        stagePadding: 400,
-        // URLhashListener: true,
-        startPosition: activeIndex,
-        responsive: {
-            300: {
-                items: 1,
-                stagePadding: 30,
-            },
-            350: {
-                items: 1,
-                stagePadding: 45,
-            },
-            400: {
-                items: 1,
-                stagePadding: 95,
-                margin: -15
-            },
-            750: {
-                items: 1,
-                stagePadding: 180
-            },
-            1000: {
-                items: 1,
-                stagePadding: 250
-            },
-            1440: {
-                items: 1,
-                stagePadding: 350,
-                margin: -25,
-            }
-        },
-        onChange: (event) => {
-            setActiveIndex(event.item.index);
-        }
-    };
+    // const carouselSettings = {
+    //     items: 1,
+    //     center: true,
+    //     nav: false,
+    //     dots: false,
+    //     loop: true,
+    //     margin: -15,
+    //     stagePadding: 400,
+    //     // URLhashListener: true,
+    //     startPosition: activeIndex,
+    //     responsive: {
+    //         300: {
+    //             items: 1,
+    //             stagePadding: 30,
+    //         },
+    //         350: {
+    //             items: 1,
+    //             stagePadding: 45,
+    //         },
+    //         400: {
+    //             items: 1,
+    //             stagePadding: 95,
+    //             margin: -15
+    //         },
+    //         750: {
+    //             items: 1,
+    //             stagePadding: 180
+    //         },
+    //         1000: {
+    //             items: 1,
+    //             stagePadding: 250
+    //         },
+    //         1440: {
+    //             items: 1,
+    //             stagePadding: 350,
+    //             margin: -25,
+    //         }
+    //     },
+    //     onChange: (event) => {
+    //         setActiveIndex(event.item.index);
+    //     }
+    // };
 
-    // Function to handle thumbnail click
-    const handleThumbnailClick = (index) => {
-        setActiveIndex(index);
-        if (mediaItems[index].type === 'video' && slidervideoRef.current) {
-            slidervideoRef.current.play();
-        }
-    };
+    // // Function to handle thumbnail click
+    // const handleThumbnailClick = (index) => {
+    //     setActiveIndex(index);
+    //     if (mediaItems[index].type === 'video' && slidervideoRef.current) {
+    //         slidervideoRef.current.play();
+    //     }
+    // };
 
-    // Whenever activeIndex changes, reset video playback (for videos)
-    useEffect(() => {
-        if (mediaItems[activeIndex]?.type !== 'video' && slidervideoRef.current) {
-            slidervideoRef.current.pause();
-        }
-    }, [activeIndex, mediaItems]);
+    // // Whenever activeIndex changes, reset video playback (for videos)
+    // useEffect(() => {
+    //     if (mediaItems[activeIndex]?.type !== 'video' && slidervideoRef.current) {
+    //         slidervideoRef.current.pause();
+    //     }
+    // }, [activeIndex, mediaItems]);
 
     return (
         <>
@@ -268,22 +293,22 @@ const WomenDetails = () => {
                                 {/* Thumbnail Column */}
                                 <div className="col-12 col-sm-3 d-flex justify-content-center">
                                     <div className="d_subimg">
-                                        {subImages.map((item, index) => (
+                                        {galleryItems.map((item, index) => (
                                             <div
                                                 key={index}
                                                 className="d_img cursor-pointer"
-                                                onClick={() => handleSubContentClick(item)}
+                                                onClick={() => handleThumbnailClick(item, index)}
                                             >
                                                 {item.type === 'image' ? (
                                                     <img
-                                                        src={item.src}
+                                                        src={item.thumbnail}
                                                         alt={`Thumbnail ${index + 1}`}
                                                         className="w-100 h-100"
                                                     />
                                                 ) : (
                                                     <div className="v_img">
                                                         <video>
-                                                            <source src={item.src} type="video/mp4" />
+                                                            <source src={item.thumbnail} type="video/mp4" />
                                                         </video>
                                                         <div className="d_play">
                                                             <img src={playIcon} alt="Play" />
@@ -297,8 +322,7 @@ const WomenDetails = () => {
 
                                 {/* Main Content */}
                                 <div className="col-12 col-sm-9">
-                                    <div className="d_mainimg ">
-
+                                    <div className="d_mainimg">
                                         {mainContent.type === 'image' && !is360Active && (
                                             <div className="d_img ">
                                                 {/* <GlassMagnifier className="d_glass"
@@ -316,10 +340,9 @@ const WomenDetails = () => {
                                                             src={icon360}
                                                             alt="360 View"
                                                             onClick={() => {
-                                                                toggle360View()
-                                                                setCurrentFrame(1)
+                                                                toggle360View();
+                                                                setCurrentFrame(1); // Ensure you have this function defined
                                                             }}
-
                                                             style={{ cursor: 'pointer' }}
                                                         />
                                                         <IoShareSocialSharp
@@ -330,32 +353,24 @@ const WomenDetails = () => {
                                                 </div>
                                             </div>
                                         )}
-
-                                        
-
                                         {mainContent.type === 'video' && (
                                             <video
                                                 ref={videoRef}
-                                                controls
-                                                className="w-100 "
-                                            >
+                                                controls>
                                                 <source src={mainContent.src} type="video/mp4" />
+                                                Your browser does not support the video tag.
                                             </video>
                                         )}
-
                                         {is360Active && (
-                                            <div className=" ">
-                                                <div
-                                                    id="viewer"
-                                                    ref={viewerRef}
-                                                >
+                                            <div>
+                                                <div id="viewer" ref={viewerRef}>
                                                     <canvas
                                                         className='w-100'
                                                         ref={canvasRef}
                                                         onMouseDown={(e) => startDragging(e.pageX)}
                                                         onMouseUp={stopDragging}
                                                         onMouseMove={(e) => handleDrag(e.pageX)}
-                                                        onClick={handleClick} // Add click event
+                                                        onClick={handleClick}
                                                         onTouchStart={(e) => startDragging(e.touches[0].pageX)}
                                                         onTouchEnd={stopDragging}
                                                         onTouchMove={(e) => {
@@ -465,6 +480,16 @@ const WomenDetails = () => {
                                                 <div className="d_sizebox d-flex justify-content-center align-items-center">
                                                     <p className='mb-0'>46</p>
                                                 </div>
+                                                {/* <div className="d_sizebox d_gbsize d-flex justify-content-center align-items-center">
+                                                    <p className='mb-0'>128 GB</p>
+                                                </div>
+                                                <div className="d_sizebox d_gbsize d-flex justify-content-center align-items-center">
+                                                    <p className='mb-0'>256 GB</p>
+                                                </div>
+                                                <div className="d_sizebox d_gbsize d_disable d-flex justify-content-center align-items-center">
+                                                    <div className="d_diagonal-line"></div>
+                                                    <p className='mb-0'>512 GB</p>
+                                                </div> */}
                                             </div>
                                         </div>
                                         <div className="col-12 col-sm-6 col-lg-12 col-xl-6 d_psdeliver">
@@ -562,7 +587,6 @@ const WomenDetails = () => {
                                                 <p className='mb-0'>Work</p>
                                                 <div className="d_conhead">Cutdana, Sequins, Beads, Mirror, Gota, shells</div>
                                             </div>
-
                                         </div>
                                         <div className="col-6">
                                             <div className="d_con">
@@ -584,6 +608,47 @@ const WomenDetails = () => {
                                         <div className="d_conhead d_add">Akshya Nagar 1st Block 1st Cross, Rammurthy nagar, Bangalore-560016</div>
                                     </div>
                                 </div>
+                                {/* <div className="prodel">
+                                    <div className="d_head">Product Details</div>
+                                    <div className="row">
+                                        <div className="col-6">
+                                            <div className="d_con">
+                                                <p className='mb-0'>Model Name</p>
+                                                <div className="d_conhead">iPhone 13 (256GB) - Midnight</div>
+                                            </div>
+                                            <div className="d_con">
+                                                <p className='mb-0'>Operating System</p>
+                                                <div className="d_conhead">iOS 14</div>
+                                            </div>
+                                            <div className="d_con">
+                                                <p className='mb-0'>Memory Storage Capacity</p>
+                                                <div className="d_conhead">256 GB</div>
+                                            </div>
+                                            <div className="d_con">
+                                                <p className='mb-0'>Camera and Video</p>
+                                                <div className="d_conhead d_add">Dual 12MP cameras with Portrait mode, Depth Control, Portrait Lighting, Smart HDR</div>
+                                            </div>
+                                        </div>
+                                        <div className="col-6">
+                                            <div className="d_con">
+                                                <p className='mb-0'>Colour</p>
+                                                <div className="d_conhead">Dark Blue</div>
+                                            </div>
+                                            <div className="d_con">
+                                                <p className='mb-0'>Screen Size</p>
+                                                <div className="d_conhead">6.1 Inches</div>
+                                            </div>
+                                            <div className="d_con">
+                                                <p className='mb-0'>Browse Type</p>
+                                                <div className="d_conhead">Smart Phones</div>
+                                            </div>
+                                            <div className="d_con">
+                                                <p className='mb-0'>Front Camera</p>
+                                                <div className="d_conhead d_add">12MP TrueDepth front camera with Portrait mode, Depth Control, Portrait Lighting</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> */}
                             </Accordion.Body>
                         </Accordion.Item>
                         <Accordion.Item eventKey="1">

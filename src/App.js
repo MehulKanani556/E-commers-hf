@@ -72,6 +72,7 @@ function App() {
           {/* user */}
           <Route path="/user" element={<User />}>
             <Route path='profile' element={<UserProfile />} />
+            <Route path='payment' element={<UserpaymentMethod />} />
             <Route path='myorder' element={<MyOrder />} />
             <Route path='faqs' element={<UserFaq />} />
             {/* <Route path='term' element={<TermOfServices />} />
