@@ -26,6 +26,7 @@ import TermOfServices from './Vivek/Component/User/TermOfServices'
 import UserpaymentMethod from './Vivek/Component/User/UserpaymentMethod';
 import UserUpiPayment from './Vivek/Component/User/UserUpiPayment';
 import Wishlist from './Vivek/Component/Wishlist/Wishlist';
+import Cart from './Dhruvin/Components/Cart/Cart';
 // import WomenDetails from './darshan/pages/WomenDetails';
 
 
@@ -79,6 +80,9 @@ function App() {
             <Route path='deactive' element={<UserDeactive />} />
             <Route path='address' element={<UserAddress />} /> */}
           </Route>
+
+          {/* Cart  */}
+          <Route path="/cart" element={<Cart/>}></Route>
 
         </Routes>
       </BrowserRouter>

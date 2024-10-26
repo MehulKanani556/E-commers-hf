@@ -1,0 +1,107 @@
+.ds_space{
+    white-space: nowrap;
+}
+
+/* {**************** Empty Card *************} */
+.ds_cart-btn{
+    padding: 10px 30px;
+    background-color:#2B221E !important;
+    color: white !important;
+}
+.ds_cart-img{
+    width: 100%;
+}
+
+/* {**************** Cart Without Address *************} */
+.ds_with-btn{
+   padding: 5px 10px;
+   border: 1px solid #2B221E;
+   font-weight: 600;
+   font-size: 14px;
+}
+
+/* {**************** Cart Without Address *************} */
+.ds_with-circle{
+    width: 40px;
+    height: 40px;
+    background: #2B221E;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ds_with-line{
+    position: absolute;
+    width: 50%;
+    border: 0.65px dashed #9e9d9d;
+    top: 18px;
+    left: 0px;
+    z-index: -1;
+}
+.ds_with-line2{
+    position: absolute;
+    width: 47%;
+    border: 0.65px dashed #6A6A6A;
+    top: 18px;
+    left: 50%;
+    z-index: -1;
+}
+.ds_with-shadow{
+    box-shadow: 0px 4px 14px 0px #8F8F8F40;
+    padding: 20px;
+}
+.ds_with-add{
+    padding: 5px 10px;
+   border: 1px solid #2B221E;
+   font-weight: 600;
+   font-size: 14px;
+}
+.ds_with-cupon{
+  box-shadow: 0px 4px 14px 0px #8F8F8F40;
+  padding: 20px 0px;
+}
+.ds_with-border{
+    border: 0.5px solid #c9c7c7
+}
+.ds_add-cupan{
+    position: absolute;
+    top: 12px;
+    left: 15px;
+
+}
+.ds_add-input{
+    background: #EDEDED;
+    padding: 0px 30px;
+    border: none;
+    border-radius: 5px;
+}
+.ds_add-input:focus{
+    background: #EDEDED;
+    border: none;
+}
+.ds_add-apply{
+    position: absolute;
+    top: 1px;
+    right: 0;
+    padding: 7px 15px;
+    border-left: 1px solid #b6b2b2;
+    border-radius: 0;
+}
+.ds_add-apply:hover{
+    border-left: 1px solid #b6b2b2;
+}
+@media (max-width:550px) {
+/* {**************** Empty Card *************} */
+    .ds_cart-img{
+        width: 100%;
+    }    
+    .ds_card-title{
+       font-size: 18px;
+    }
+    .ds_card-text{
+        font-size: 13px;
+    }
+    .ds_cart-btn{
+        padding: 10px 20px;
+    }
+}
