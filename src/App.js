@@ -82,6 +82,9 @@ function App() {
             <Route path='address' element={<UserAddress />} /> */}
           </Route>
 
+          {/* Cart  */}
+          <Route path="/cart" element={<Cart/>}></Route>
+
         </Routes>
       </BrowserRouter>
 
