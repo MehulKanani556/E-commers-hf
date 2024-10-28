@@ -27,6 +27,8 @@ import UserpaymentMethod from './Vivek/Component/User/UserpaymentMethod';
 import UserUpiPayment from './Vivek/Component/User/UserUpiPayment';
 import Wishlist from './Vivek/Component/Wishlist/Wishlist';
 import Profile from './darshan/pages/Profile';
+import GooglepayUPIMethod from './Vivek/Component/User/GooglepayUPIMethod'
+import TrackOrder from './Vivek/Component/User/TrackOrder';
 // import WomenDetails from './darshan/pages/WomenDetails';
 
 
@@ -71,19 +73,24 @@ function App() {
           {/* wishlist */}
           <Route path="/wishlist" element={<Wishlist />} />
 
+
+          <Route path="/trackorder" element={<TrackOrder />} />
+         
           {/* user */}
           <Route path="/user" element={<User />}>
             <Route path='profile' element={<UserProfile />} />
             <Route path='payment' element={<UserpaymentMethod />} />
+            <Route path='payment/upi' element={<GooglepayUPIMethod />} />
             <Route path='myorder' element={<MyOrder />} />
             <Route path='faqs' element={<UserFaq />} />
+          
             {/* <Route path='term' element={<TermOfServices />} />
             <Route path='deactive' element={<UserDeactive />} />
             <Route path='address' element={<UserAddress />} /> */}
           </Route>
 
           {/* Cart  */}
-          <Route path="/cart" element={<Cart/>}></Route>
+          {/* <Route path="/cart" element={<Cart/>}></Route> */}
 
         </Routes>
       </BrowserRouter>

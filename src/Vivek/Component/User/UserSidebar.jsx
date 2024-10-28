@@ -88,12 +88,13 @@ const UserSidebar = ({ setModalShow }) => {
                                             </Accordion.Header>
                                             <Accordion.Body className='p-0 py-3'>
                                                 <ul className='VK_ul'>
+
                                                     <li>
                                                         Credit / Debit Cards
                                                     </li>
-                                                    <li>
-                                                        UPI ID
-                                                    </li>
+                                                    <NavLink to="/user/payment/upi">
+                                                        <li>UPI ID</li>
+                                                    </NavLink>
                                                 </ul>
                                             </Accordion.Body>
                                         </Accordion.Item>

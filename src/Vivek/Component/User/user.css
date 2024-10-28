@@ -20,9 +20,10 @@
     color: #2A221E;
 }
 
-.VK_emptyadd{
+.VK_emptyadd {
     box-shadow: 0px 4px 14px 0px #8F8F8F40;
 }
+
 /* active */
 .VK_user_active {
     background-color: #2B221E !important;
@@ -437,7 +438,7 @@
 }
 
 
-.VK_empty_card{
+.VK_empty_card {
     height: 500px;
     display: flex;
     justify-content: center;
@@ -447,14 +448,153 @@
 
 
 /* upi card */
-.VK_upi_card{
+.VK_upi_card {
     border: 2px solid #9C9C9C;
     border-radius: 5px;
     padding: 10px 15px;
 }
 
-.VK_theme_bg{
+.VK_theme_bg {
     background-color: #EDEDED !important;
+}
+
+
+
+/* Track Order */
+
+
+
+
+.VK_trackorder_heading {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.V_full_pair {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.V_full_child_text {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.V_light {
+    font-size: 14px;
+    font-weight: 400;
+    color: #6A6A6A;
+}
+
+.V_track_order_price {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.V_label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #727272;
+}
+
+.V_label_value {
+    font-size: 12px;
+    font-weight: 500;
+    color: black;
+}
+
+.V_confirmed {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.V_track_time {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.V_order_description {
+    font-size: 11px;
+    font-weight: 400;
+    color: #6A6A6A;
+}
+
+.V_back-line {
+    position: absolute;
+    width: 80%;
+    border: 0.32px dashed #6A6A6A;
+    top: 87px;
+    z-index: -1;
+    left: 110px;
+}
+
+.V_right_border {
+    border-right: 0.5px solid #646464;
+}
+
+.V_delivery_address {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.V_customer_name {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.V_customer_address {
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.V_customer_number {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.V_delivery_address_width {
+    width: 260px;
+}
+
+.V_ame_exp {
+    font-size: 12px;
+    font-weight: 500;
+    color: black;
+}
+
+.V_card_name {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6A6A6A;
+}
+
+.V_success {
+    color: #0F993E;
+}
+
+.V_invoice_width {
+    padding-left: 100px;
+}
+
+.V_invoice {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.V_down_invoic {
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: 2px underline;
+}
+
+.V_cancle_order_btn {
+    color: black;
+    background-color: white;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 60px;
+    border: 1px colid black;
+    border-radius: 5px;
 }
 
 /* -------------------------------------------------------- media query -------------------------------------------------------- */
@@ -536,6 +676,64 @@
     .VK_card_box {
         height: 180px;
     }
+
+
+    
+    .V_full_pair {
+        font-size: 12px;
+    }
+
+    .V_full_child_text {
+        font-size: 10px;
+    }
+
+    .V_light {
+        font-size: 10px;
+    }
+
+    .V_track_order_price {
+        font-size: 16px;
+    }
+
+    .V_back-line {
+        width: 70%;
+        left: 70px;
+        top: 50px;
+    }
+
+    .V_delivery_address_width {
+        width: 105px;
+    }
+
+    .V_customer_name{
+       font-size: 12px;
+    }
+    .V_delivery_address{
+        font-size: 14px;
+    }
+
+    .V_customer_address{
+        font-size: 10px;
+    }
+    .V_invoice_width {
+        padding-left: 10px;
+    }
+    .V_card_name, .V_ame_exp{
+        font-size: 10px;
+    }
+
+    .V_confirmed{
+        font-size: 10px;
+    }
+    .V_invoice{
+        font-size: 14px;
+    }
+    .V_down_invoic{
+        font-size: 12px;
+    }
+    .V_customer_number{
+        font-size: 10px;
+    }
 }
 
 
@@ -588,6 +786,60 @@
     .VK_card_box {
         height: 180px;
     }
+
+
+    .V_full_pair {
+        font-size: 16px;
+    }
+
+    .V_full_child_text {
+        font-size: 12px;
+    }
+
+    .V_light {
+        font-size: 12px;
+    }
+
+    .V_track_order_price {
+        font-size: 18px;
+    }
+
+    .V_back-line {
+        width: 70%;
+        left: 70px;
+        top: 50px;
+    }
+
+    .V_delivery_address_width {
+        width: 120px;
+    }
+
+    .V_customer_name{
+       font-size: 12px;
+    }
+    .V_delivery_address{
+        font-size: 14px;
+    }
+
+    .V_customer_address{
+        font-size: 10px;
+    }
+    .V_invoice_width {
+        padding-left: 10px;
+    }
+    .V_card_name, .V_ame_exp{
+        font-size: 10px;
+    }
+
+    .V_confirmed{
+        font-size: 10px;
+    }
+    .V_invoice{
+        font-size: 14px;
+    }
+    .V_down_invoic{
+        font-size: 12px;
+    }
 }
 
 
@@ -615,6 +867,59 @@
     .VK_card_box {
         height: 180px;
     }
+
+    .V_full_pair {
+        font-size: 16px;
+    }
+
+    .V_full_child_text {
+        font-size: 12px;
+    }
+
+    .V_light {
+        font-size: 12px;
+    }
+
+    .V_track_order_price {
+        font-size: 18px;
+    }
+
+    .V_back-line {
+        width: 76%;
+        left: 70px;
+        top: 50px;
+    }
+
+    .V_delivery_address_width {
+        width: 150px;
+    }
+
+    .V_customer_name{
+       font-size: 12px;
+    }
+    .V_delivery_address{
+        font-size: 14px;
+    }
+
+    .V_customer_address{
+        font-size: 10px;
+    }
+    .V_invoice_width {
+        padding-left: 20px;
+    }
+    .V_card_name, .V_ame_exp{
+        font-size: 10px;
+    }
+
+    .V_confirmed{
+        font-size: 10px;
+    }
+    .V_invoice{
+        font-size: 14px;
+    }
+    .V_down_invoic{
+        font-size: 12px;
+    }
 }
 
 
@@ -632,6 +937,37 @@
     .VK_order_images {
         width: 150px;
     }
+
+
+    .V_full_pair {
+        font-size: 20px;
+    }
+
+    .V_full_child_text {
+        font-size: 14px;
+    }
+
+    .V_light {
+        font-size: 14px;
+    }
+
+    .V_track_order_price {
+        font-size: 20px;
+    }
+
+    .V_back-line {
+        width: 75%;
+        left: 95px;
+        top: 55px;
+    }
+
+    .V_delivery_address_width {
+        width: 180px;
+    }
+
+    .V_invoice_width {
+        padding-left: 20px;
+    }
 }
 
 
@@ -645,6 +981,31 @@
         width: 120px;
     }
 
+    .V_full_pair {
+        font-size: 14px;
+    }
+
+    .V_full_child_text {
+        font-size: 10px;
+    }
+
+    .V_light {
+        font-size: 12px;
+    }
+
+    .V_track_order_price {
+        font-size: 16px;
+    }
+
+    .V_back-line {
+        width: 60%;
+        left: 120px;
+        top: 40px;
+    }
+
+    .V_invoice_width {
+        padding-left: 60px;
+    }
 }
 
 
@@ -657,11 +1018,38 @@
     .VK_order_images {
         width: 120px;
     }
+
+
+    .V_full_pair {
+        font-size: 16px;
+    }
+
+    .V_full_child_text {
+        font-size: 10px;
+    }
+
+    .V_light {
+        font-size: 12px;
+    }
+
+    .V_track_order_price {
+        font-size: 16px;
+    }
+
+    .V_back-line {
+        width: 70%;
+        top: 55px;
+        left: 120px;
+    }
+
+    .V_invoice_width {
+        padding-left: 60px;
+    }
 }
 
 
 /* 3xl device */
-@media (min-width:1441px) {
+@media (min-width:1441px) and (max-width:1649px) {
 
     .VK_order_detail {
         width: 40%;
@@ -675,4 +1063,34 @@
         max-width: 33.33% !important;
     }
 
+    .V_back-line {
+        width: 70%;
+        left: 123px;
+        top: 55px;
+    }
+
+    .V_invoice_width {
+        padding-left: 60px;
+    }
+
+}
+
+@media (min-width:1650px) {
+    .VK_order_detail {
+        width: 40%;
+    }
+
+    .VK_order_images {
+        width: 120px;
+    }
+
+    .VK_add_address_model_ .modal-dialog {
+        max-width: 33.33% !important;
+    }
+
+    .V_back-line {
+        width: 77%;
+        left: 123px;
+        top: 55px;
+    }
 }

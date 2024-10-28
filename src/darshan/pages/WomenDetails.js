@@ -26,7 +26,7 @@ import Header from '../../Vivek/Component/header/Header';
 import Subscribe from '../../Vivek/Component/common/Subscribe';
 import Process from '../../Vivek/Component/common/Process';
 import Footer from '../../Vivek/Component/footer/Footer';
-import { GlassMagnifier } from 'react-image-magnifiers';
+// import { GlassMagnifier } from 'react-image-magnifiers';
 // import { GlassMagnifier } from 'react-image-magnifiers';
 
 const WomenDetails = () => {
@@ -332,7 +332,7 @@ const WomenDetails = () => {
                                     <div className="d_mainimg">
                                         {mainContent.type === 'image' && !is360Active && (
                                             <div className="d_img ">
-                                                <GlassMagnifier className="d_glass"
+                                                {/* <GlassMagnifier className="d_glass"
                                                     imageSrc={mainContent.src} // Use the image source
                                                     imageAlt="Main content"    // Provide an alt text
                                                     largeImageSrc={mainContent.src} // Use the same or a larger image for magnification
@@ -340,7 +340,7 @@ const WomenDetails = () => {
                                                     magnifierBorderSize={3} // Optional: adjust border thickness
                                                     magnifierBorderColor="rgba(255,255,255,0.5)" // Optional: adjust border color
                                                     // style={{ width: "100%", height: "830px" }} // Set the image size
-                                                />
+                                                /> */}
                                                 <div className="d_delicon">
                                                     <div className="d-flex justify-content-between align-items-center">
                                                         <img
