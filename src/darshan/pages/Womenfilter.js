@@ -7,6 +7,10 @@ import { MdKeyboardArrowDown } from 'react-icons/md';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import './../css/trending.css'
 import { Link } from 'react-router-dom';
+import Header from '../../Vivek/Component/header/Header';
+import Subscribe from '../../Vivek/Component/common/Subscribe';
+import Process from '../../Vivek/Component/common/Process';
+import Footer from '../../Vivek/Component/footer/Footer';
 
 const Womenfilter = () => {
 
@@ -1093,6 +1097,9 @@ const Womenfilter = () => {
 
     return (
         <>
+
+        {/* Header section start */}
+        <Header />
 
             {/* Banner section Start */}
 
@@ -2347,6 +2354,15 @@ const Womenfilter = () => {
                     ></div>
                 )}
             </section>
+
+            {/* Subscribe section */}
+            <Subscribe />
+
+            {/* Process section */}
+            <Process />
+
+            {/* Footer section */}
+            <Footer />
 
         </>
     )

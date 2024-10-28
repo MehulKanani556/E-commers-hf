@@ -26,6 +26,7 @@ import TermOfServices from './Vivek/Component/User/TermOfServices'
 import UserpaymentMethod from './Vivek/Component/User/UserpaymentMethod';
 import UserUpiPayment from './Vivek/Component/User/UserUpiPayment';
 import Wishlist from './Vivek/Component/Wishlist/Wishlist';
+import Profile from './darshan/pages/Profile';
 // import WomenDetails from './darshan/pages/WomenDetails';
 
 
@@ -50,6 +51,7 @@ function App() {
           <Route path='/women' element={<Womenstore />} />
           <Route path='/womenstore' element={<Womenfilter />} />
           <Route path='/womendetails' element={<WomenDetails />} />
+          <Route path='/profile' element={<Profile />} />
 
           {/* about us */}
           <Route path="/about" element={<AboutUs />} />
