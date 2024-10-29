@@ -401,7 +401,7 @@
     }
 
     .owl_height {
-        height: 440px;
+        height: 640px;
     }
 
     .d_bannersilder2 .d_content .d_cta a,
@@ -468,6 +468,9 @@
 }
 
 @media(max-width:991px) {
+    .owl_height{
+        height: 465px;
+    }
     .d_womenbannerbg .d_img {
         height: 465px;
         width: 385px;

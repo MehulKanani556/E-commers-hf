@@ -3,6 +3,7 @@ import OwlCarousel from 'react-owl-carousel';
 import { GoArrowUpRight } from "react-icons/go";
 import { FiPlus } from "react-icons/fi";
 import '../css/style.css';
+import Animation from './Animation';
 
 const Banner = () => {
     return (
@@ -123,6 +124,9 @@ const Banner = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className='item owl_height'>
+                        <Animation />
                     </div>
                 </OwlCarousel>
             </section >

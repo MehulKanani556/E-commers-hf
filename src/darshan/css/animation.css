@@ -1,0 +1,597 @@
+/* .d_animationbg {
+    background-color: #ffd37f;
+    height: 880px;
+    width: 100%;
+    position: relative;
+}
+
+.d_animationbg .d_anigroup {
+    position: absolute;
+    top: 20%;
+    left: 42%;
+}
+
+.d_animationbg .d_aniimg {
+    width: 100%;
+}
+
+.d_animationbg .d_aniimg img {
+    width: 240px;
+    height: 480px;
+    border-radius: 90px;
+    position: absolute;
+}
+
+.d_animationbg .d_aniimg .d_animationsubimg1 {
+    z-index: 4;
+}
+
+.d_animationbg .d_aniimg .d_animationsubimg2 {
+    z-index: 2;
+    transform: rotate(-5deg);
+}
+
+.d_animationbg .d_aniimg .d_animationsubimg3 {
+    z-index: 3;
+    transform: rotate(5deg);
+}
+
+.d_animationbg .d_poem {
+    z-index: 4;
+    position: absolute;
+    top: 30%;
+    left: 12%;
+}
+
+.d_animationbg .d_poem h2 {
+    width: 100%;
+    font-size: 200px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.d_animationbg .d_cta {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.d_animationbg .d_cta a {
+    font-size: 20px;
+    font-weight: 500;
+    color: #F4F4F4;
+    background-color: #FF5656;
+    border-radius: 12px;
+    padding: 13px 40px;
+} */
+
+.d_animation {
+    background-color: #ffefcf;
+    height: 850px;
+    position: relative;
+}
+
+.d_animation img {
+    width: 240px !important;
+    height: 480px;
+    border-radius: 92px;
+}
+
+.d_animation .d_img1 {
+    position: absolute;
+    top: 15%;
+    left: 43%;
+    z-index: 2;
+}
+
+.d_animation .d_img2 {
+    position: absolute;
+    top: 36%;
+    left: 20%;
+    transform: rotate(-45deg);
+    z-index: 3;
+}
+
+.d_animation .d_img3 {
+    position: absolute;
+    top: 36%;
+    right: 20%;
+    transform: rotate(45deg);
+    z-index: 4;
+}
+
+.d_animationhead {
+    z-index: 1;
+    text-align: center;
+}
+
+.d_animationhead h2 {
+    font-size: 180px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.d_animation2 {
+    background-color: #e1e0e2;
+}
+
+.d_img4 {
+    position: absolute;
+    top: 25%;
+    left: 43%;
+    z-index: 2;
+}
+
+.d_img5 {
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    transform: rotate(-45deg);
+    z-index: 3;
+}
+
+.d_img6 {
+    position: absolute;
+    top: 50%;
+    right: 20%;
+    transform: rotate(45deg);
+    z-index: 4;
+}
+
+.d_animation3 {
+    background-color: #ffb7c8;
+}
+
+.d_animation4 {
+    background-color: #ffc396;
+}
+
+.d_animation5 {
+    background-color: #e9e7eb;
+}
+
+.d_animationbg {
+    background-color: #ffd37f;
+    height: 850px;
+    position: relative;
+}
+
+.d_animationbg img {
+    width: 240px !important;
+    height: 480px;
+    border-radius: 92px;
+}
+
+.d_overlayimg {
+    position: absolute;
+    top: 18%;
+    left: 44%;
+    transition: all 0.3s ease;
+}
+
+.d_animationsubimg3 {
+    transform: rotate(10deg);
+    z-index: 3;
+}
+
+.d_animationsubimg2 {
+    transform: rotate(-10deg);
+    z-index: 2;
+}
+
+.d_animationsubimg1 {
+    z-index: 4;
+}
+
+.d_animationbg .d_animationbghead {
+    z-index: 5;
+    position: absolute;
+    top: 27%;
+    left: 18%;
+}
+
+.d_animationbg .d_animationbghead h2 {
+    font-size: 200px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.d_animationbg .d_cta {
+    position: absolute;
+    bottom: 10%;
+    left: 46%;
+}
+
+.d_animationbg .d_cta a {
+    padding: 13px 40px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #F4F4F4;
+    background-color: #FF5656;
+    border-radius: 12px;
+}
+
+.d_animation {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    visibility: hidden;
+}
+
+.d_animation.fade-in {
+    opacity: 1;
+    visibility: visible;
+}
+
+.d_animationbg {
+    transition: opacity 1s ease-in-out;
+}
+
+@media(max-width:1680px) {
+    .d_animationbg .d_animationbghead {
+        left: 13%;
+    }
+
+    .d_animationbg .d_cta {
+        left: 45%;
+    }
+
+    .d_overlayimg {
+        left: 43%;
+    }
+}
+
+@media(max-width:1450px) {
+    .d_animationbg .d_animationbghead h2 {
+        font-size: 150px;
+    }
+
+    .d_overlayimg {
+        top: 6%;
+    }
+
+    .d_animationbg .d_cta {
+        bottom: 26%;
+    }
+
+    .d_animationbg .d_animationbghead {
+        left: 19%;
+        top: 19%;
+    }
+
+    .d_animationhead h2 {
+        font-size: 130px;
+    }
+
+    .d_animation img {
+        height: 430px;
+    }
+
+    .d_animation .d_img1 {
+        top: 11%;
+        left: 41.5%;
+    }
+
+    .d_animation .d_img2 {
+        top: 27%;
+        left: 16%;
+    }
+
+    .d_animation .d_img3 {
+        top: 27%;
+        right: 16%;
+    }
+
+    .d_img4 {
+        top: 17%;
+        left: 41.5%;
+    }
+
+    .d_img5 {
+        top: 38%;
+        left: 16%;
+    }
+
+    .d_img6 {
+        top: 38%;
+        right: 16%;
+    }
+}
+
+@media(max-width:1199px) {
+    .d_animationbg .d_animationbghead h2 {
+        font-size: 120px;
+    }
+
+    .d_animationbg img {
+        height: 420px;
+    }
+
+    .d_animationbg .d_cta {
+        bottom: 30%;
+        left: 43%;
+    }
+
+    .d_overlayimg {
+        left: 40%;
+    }
+
+    .d_animationbg .d_animationbghead {
+        left: 14%;
+    }
+
+    .d_animationhead h2 {
+        font-size: 100px;
+    }
+
+    .d_animation img {
+        height: 370px;
+    }
+
+    .d_animation .d_img1 {
+        top: 8%;
+        left: 38%;
+    }
+
+    .d_animation .d_img2 {
+        top: 30%;
+        left: 8%;
+    }
+
+    .d_animation .d_img3 {
+        top: 30%;
+        right: 8%;
+    }
+
+    .d_img4 {
+        top: 13%;
+        left: 38.5%;
+    }
+
+    .d_img5 {
+        left: 8%;
+    }
+
+    .d_img6 {
+        right: 8%;
+    }
+}
+
+@media(max-width:991px) {
+    .d_animationbg .d_animationbghead h2 {
+        font-size: 95px;
+    }
+
+    .d_animationbg img {
+        height: 330px;
+    }
+
+    .d_animationbg .d_cta {
+        bottom: 48%;
+        left: 41%;
+    }
+
+    .d_animationbg .d_cta a {
+        font-size: 18px;
+        padding: 10px 30px;
+    }
+
+    .d_overlayimg {
+        left: 35%;
+        top: 4%;
+    }
+
+    .d_animationbg .d_animationbghead {
+        left: 12%;
+        top: 14%;
+    }
+
+    .d_animationhead h2 {
+        font-size: 70px;
+    }
+
+    .d_animation img {
+        height: 300px;
+        width: 200px !important;
+    }
+
+    .d_animation .d_img1 {
+        top: 6%;
+        left: 37%;
+    }
+
+    .d_animation .d_img2 {
+        top: 20%;
+        left: 6%;
+    }
+
+    .d_animation .d_img3 {
+        top: 20%;
+        right: 6%;
+    }
+
+    .d_img4 {
+        top: 9%;
+        left: 37%;
+    }
+
+    .d_img5 {
+        top: 26%;
+        left: 6%;
+    }
+
+    .d_img6 {
+        top: 26%;
+        right: 6%;
+    }
+}
+@media(max-width:445px){
+    .d_animationbg .d_animationbghead {
+        font-size: 22px;
+        left: 6%;
+    }
+}
+@media(max-width:425px) {
+    .d_animationbg .d_animationbghead h2 {
+        font-size: 55px;
+    }
+
+    .d_overlayimg {
+        left: 23%;
+    }
+
+    .d_animationbg .d_cta {
+        left: 35%;
+    }
+
+    .d_animationbg .d_animationbghead {
+        left: 10%;
+        top: 16%;
+    }
+
+    .d_animationhead h2 {
+        padding-top: 30px;
+        font-size: 50px;
+    }
+
+    .d_animation img {
+        height: 240px;
+        width: 115px !important;
+    }
+
+    .d_animation .d_img2 {
+        top: 29%;
+        left: 11%;
+    }
+
+    .d_animation .d_img3 {
+        top: 29%;
+        right: 11%;
+    }
+
+    .d_animation .d_img1 {
+        top: 8%;
+    }
+
+    .d_img4 {
+        top: 13%;
+    }
+
+    .d_img5 {
+        top: 36%;
+        left: 12%;
+    }
+
+    .d_img6 {
+        top: 35%;
+        right: 12%;
+    }
+}
+
+
+@media(max-width:375px) {
+    .d_animation .d_img2 {
+        top: 35%;
+        left: 8%;
+    }
+
+    .d_animation .d_img3 {
+        top: 35%;
+        right: 8%;
+    }
+
+    .d_animation .d_img1 {
+        top: 16%;
+        left: 33%;
+    }
+
+    .d_animation img {
+        height: 180px;
+        width: 130px !important;
+    }
+
+    .d_animationhead h2 {
+        padding-top: 100px;
+    }
+
+    .d_img4 {
+        top: 30%;
+        left: 33%;
+    }
+
+    .d_img5 {
+        top: 50%;
+        left: 8%;
+    }
+
+    .d_img6 {
+        top: 50%;
+        right: 8%;
+    }
+
+    .d_animationbg .d_cta {
+        bottom: 38%;
+        left: 33%;
+    }
+
+    .d_overlayimg {
+        left: 18%;
+        top: 10%;
+    }
+
+    .d_animationbg .d_animationbghead {
+        left: 5%;
+        top: 22%;
+    }
+    .d_animationhead h2 {
+        font-size: 48px;
+    }
+}
+
+@media(max-width:320px) {
+    .d_animationbg .d_cta {
+        bottom: 35%;
+        left: 30%;
+    }
+
+    .d_overlayimg {
+        left: 13%;
+        top: 12%;
+    }
+
+    .d_animationbg .d_animationbghead h2 {
+        font-size: 40px;
+    }
+
+    .d_animationbg .d_animationbghead {
+        left: 12%;
+        top: 26%;
+    }
+
+    .d_animation img {
+        height: 175px;
+        width: 100px !important;
+    }
+
+    .d_animation .d_img2 {
+        top: 45%;
+    }
+    .d_animation .d_img3 {
+        top: 45%;
+    }
+    .d_animation .d_img1{
+        top: 26%;
+    }
+    .d_animationhead h2{
+        padding-top: 145px ;
+    }
+    .d_img4{
+        top: 34%;
+    }
+    .d_img5 {
+        top: 53%;
+    }
+    .d_img6 {
+        top: 53%;
+    }
+}

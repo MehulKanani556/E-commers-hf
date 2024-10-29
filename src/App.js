@@ -32,6 +32,7 @@ import GooglepayUPIMethod from './Vivek/Component/User/GooglepayUPIMethod'
 import TrackOrder from './Vivek/Component/User/TrackOrder';
 
 import Cart from './Dhruvin/Components/Cart/Cart';
+import Animation from './darshan/components/Animation';
 
 // import WomenDetails from './darshan/pages/WomenDetails';
 
@@ -58,6 +59,7 @@ function App() {
           <Route path='/womenstore' element={<Womenfilter />} />
           <Route path='/womendetails' element={<WomenDetails />} />
           <Route path='/profile' element={<Profile />} />
+          <Route path='/animation' element={<Animation />} />
 
           {/* about us */}
           <Route path="/about" element={<AboutUs />} />
