@@ -19,6 +19,9 @@
    font-weight: 600;
    font-size: 14px;
 }
+.ds_with-btn:hover{
+   border: 1px solid #2B221E;
+}
 
 /* {**************** Cart Without Address *************} */
 .ds_with-circle{
@@ -56,6 +59,9 @@
    font-weight: 600;
    font-size: 14px;
 }
+.ds_with-add:hover{
+   border: 1px solid #2B221E;
+}
 .ds_with-cupon{
   box-shadow: 0px 4px 14px 0px #8F8F8F40;
   padding: 20px 0px;
@@ -90,6 +96,169 @@
 .ds_add-apply:hover{
     border-left: 1px solid #b6b2b2;
 }
+.ds_add-offer-txt{
+    color: #727272;
+    font-size: 15px;
+}
+.ds_add-save{
+    font-size: 15px;
+}
+.ds_add-order{
+  box-shadow: 0px 4px 14px 0px #8F8F8F40;
+  padding: 20px 0px;
+}
+.ds_add-detail{
+    color: #6A6A6A;
+}
+.ds_add-color{
+    color: #03CF18;
+}
+.ds_add-proccess{
+    padding: 10px 0px;
+    background: #2B221E;
+    color: white;
+    width: 100%;
+}
+.ds_add-proccess:hover{
+    background: #2B221E;
+    color: white;  
+}
+.ds_add-img{
+    width: 115px;
+    height: 145px;
+    object-fit: cover;
+}
+.ds_mini-text{
+    font-size: 12px;
+    line-height: 16px;
+    white-space: pre-wrap;
+}
+.ds_add-type{
+    color: #6A6A6A;
+    font-size: 13px;
+}
+.ds_add-count{
+    box-shadow: 0px 4px 4px 0px #8F8F8F40;
+    padding: 5px;
+    width: 50%;
+} 
+
+
+/* ************* Cart With Address Popup **************  */
+.ds_user-data{
+    display: inline-block;
+    width: 60px;
+    height: 24px;
+    background: #EDEDED;
+    text-align: center;
+    margin-left: 10px;
+}
+
+
+/* {************** Change Address Popup *******************} */
+.ds_modal-dialog{
+    --bs-modal-width: 750px !important;
+    width: 750px !important;
+}
+.ds_change-box{
+    width: 60px;
+    height: 24px;
+    background: #EDEDED;
+    font-size: 14px;
+}
+.ds_change-inner{
+    border: 1px solid black;
+    padding: 5px 0px;
+}
+.ds_change-line{
+    border-bottom: 0.1px solid rgb(189, 186, 186);
+}
+.ds_change-name{
+    font-size: 13px;
+}
+.ds_change-add{
+    font-size: 11px;
+}
+.ds_new-btn{
+    background: #EDEDED;
+    width: 100%; 
+    padding: 10px 0px;
+    color: #6A6A6A;
+}
+.ds_new-btn:hover{
+    color: #6A6A6A;
+    background: #EDEDED;
+}
+
+/* {************** Payment With COD ************} */
+.ds_cod-box{
+    box-shadow: 0px 4px 14px 0px #8F8F8F40;
+    padding: 10px 0px;
+}
+.ds_cod-title{
+    color: #6A6A6A;
+}
+.ds_cod-mini{
+    font-size: 14px;
+}
+.ds_cod-main{
+    box-shadow: 0px 4px 14px 0px #8F8F8F40;
+}
+.ds_cod-on-btn{
+    background: #2B221E;
+    padding: 13px 0px;
+    width: 100%;
+    color: white;
+    border-radius:0% !important;
+    font-size: 14px;
+}
+.ds_cod-on-btn-txt{
+    font-size: 14px;
+}
+.ds_cod-on-btn:hover{
+    background: #2B221E;
+    color: white;
+}
+.ds_cod-on-btn:focus{
+    box-shadow: none !important;
+}
+@media (max-width:1441px) {
+    .ds_add-img{
+        width: 115px;
+        height: 145px;
+        object-fit: cover;
+    }
+    .ds_add-count{
+        width: 70%;
+    }
+}
+
+@media (max-width:1200px) {
+    .ds_add-auto{
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        margin-bottom: 20px;
+    }
+    .ds_add-img{
+        width: 115px;
+        height: 145px;
+        object-fit: cover;
+    }
+    .hello{
+        min-width: 1000px;
+    }
+}
+
+@media (max-width:768px) {
+/* {************** Change Address Popup *******************} */
+ .ds_modal-dialog {
+     --bs-modal-width: 550px !important;
+     width: 550px !important;
+ }
+}
+
+
 @media (max-width:550px) {
 /* {**************** Empty Card *************} */
     .ds_cart-img{
@@ -104,4 +273,76 @@
     .ds_cart-btn{
         padding: 10px 20px;
     }
+/* {**************** Cart Without Address *************} */
+.ds_with-line2{
+    width: 45%;
 }
+.ds_with-text{
+    font-size: 13px;
+}
+.ds_with-add{
+    padding: 5px 5px;
+    font-size: 13px;
+}
+.ds_add-address{
+    font-size: 13px;
+}
+.ds_add-cupan-txt{
+    font-size: 15px;
+}
+.ds_add-special{
+    font-size: 14px;
+}
+.ds_add-label{
+    font-size: 13px;
+}
+.ds_add-offer-txt{
+    font-size: 12px;
+}
+.ds_add-save{
+    font-size: 13px;
+}
+.ds_add-detail{
+    font-size: 13px;
+}
+.ds_add-price{
+    font-size: 13px;
+}
+.ds_add-color{
+    font-size: 13px;
+}
+.ds_add-total{
+    font-size: 15px;
+}
+.ds_add-proccess{
+    font-size: 14px;
+}
+/* {************** Change Address Popup *******************} */
+.ds_modal-dialog {
+    --bs-modal-width: 410px !important;
+    width: 410px !important;
+}
+/* {************** Payment With COD ************} */
+.ds_cod-title{
+    font-size: 14px;
+}
+.ds_cod-mini {
+    font-size: 13px;
+}
+}
+
+@media (max-width:426px) {
+/* {************** Change Address Popup *******************} */
+.ds_modal-dialog {
+    --bs-modal-width: 350px !important;
+    width: 350px !important;
+}    
+}
+
+@media (max-width:350px) {
+    /* {************** Change Address Popup *******************} */
+    .ds_modal-dialog {
+        --bs-modal-width: 300px !important;
+        width: 300px !important;
+    } 
+} 
