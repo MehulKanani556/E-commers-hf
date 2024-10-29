@@ -27,8 +27,12 @@ import UserpaymentMethod from './Vivek/Component/User/UserpaymentMethod';
 import UserUpiPayment from './Vivek/Component/User/UserUpiPayment';
 import Wishlist from './Vivek/Component/Wishlist/Wishlist';
 import Profile from './darshan/pages/Profile';
+
 import GooglepayUPIMethod from './Vivek/Component/User/GooglepayUPIMethod'
 import TrackOrder from './Vivek/Component/User/TrackOrder';
+
+import Cart from './Dhruvin/Components/Cart/Cart';
+
 // import WomenDetails from './darshan/pages/WomenDetails';
 
 
