@@ -26,15 +26,15 @@ import Header from '../../Vivek/Component/header/Header';
 import Subscribe from '../../Vivek/Component/common/Subscribe';
 import Process from '../../Vivek/Component/common/Process';
 import Footer from '../../Vivek/Component/footer/Footer';
-// import { GlassMagnifier } from 'react-image-magnifiers';
-// import { GlassMagnifier } from 'react-image-magnifiers';
+
+import ReactImageMagnify from 'react-image-magnify';
+
 
 const WomenDetails = () => {
 
 
 
     const [imageLoaded, setImageLoaded] = useState(false);
-    const [magnifierKey, setMagnifierKey] = useState(0);
 
     const [mainContent, setMainContent] = useState({
         type: 'image',
@@ -70,7 +70,6 @@ const WomenDetails = () => {
             img.src = mainContent.src;
             img.onload = () => {
                 setImageLoaded(true);
-                setMagnifierKey(prev => prev + 1);
             };
         }
     }, [mainContent.src]);
@@ -332,15 +331,28 @@ const WomenDetails = () => {
                                     <div className="d_mainimg">
                                         {mainContent.type === 'image' && !is360Active && (
                                             <div className="d_img ">
-                                                {/* <GlassMagnifier className="d_glass"
-                                                    imageSrc={mainContent.src} // Use the image source
-                                                    imageAlt="Main content"    // Provide an alt text
-                                                    largeImageSrc={mainContent.src} // Use the same or a larger image for magnification
-                                                    magnifierSize="200"  // Adjust the magnifier size (you can change this)
-                                                    magnifierBorderSize={3} // Optional: adjust border thickness
-                                                    magnifierBorderColor="rgba(255,255,255,0.5)" // Optional: adjust border color
-                                                    // style={{ width: "100%", height: "830px" }} // Set the image size
-                                                /> */}
+
+                                                <div className='d_reactglass'>
+                                                    <ReactImageMagnify
+                                                        {...{
+                                                            smallImage: {
+                                                                alt: 'Main content',                
+                                                                isFluidWidth: true,                 
+                                                                src: mainContent.src,               
+                                                            },
+                                                            largeImage: {
+                                                                src: mainContent.src,               
+                                                                width: 1200,                        
+                                                                height: 1800,                       
+                                                            },
+                                                            enlargedImagePosition: "over",          
+                                                            lensStyle: {                            
+                                                                backgroundColor: 'rgba(255,255,255,0.3)',
+                                                            },
+                                                        }}
+                                                    />
+                                                </div>
+
                                                 <div className="d_delicon">
                                                     <div className="d-flex justify-content-between align-items-center">
                                                         <img
@@ -1511,7 +1523,7 @@ const WomenDetails = () => {
 
             {/* Images modal section end */}
 
-           
+
 
 
         </>

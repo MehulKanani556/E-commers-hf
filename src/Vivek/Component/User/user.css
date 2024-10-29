@@ -29,15 +29,13 @@
     background-color: #2B221E !important;
     color: white !important;
 }
+.VK_payment_acc_active{
+    background-color: #2B221E;
+    color: #fff;
+}
 
 .VK_user_active .icon {
     fill: white !important;
-}
-
-.VK_payment_acoridan button {
-    box-shadow: none !important;
-    background-color: white !important;
-    padding: 0;
 }
 
 .VK_ul {
@@ -425,7 +423,17 @@
     border-radius: 10px;
     height: 220px;
 }
-
+.VK_paymentbox{
+    box-shadow: 1px 6px 19px 0px #A4A4A433;
+    height: 600px;
+}
+.VK_paymentbox .VK_paymenthead{
+    padding: 16px 30px;
+    border-bottom: 1px solid #6A6A6A;
+}
+.VK_paymentbox .VK_paymentdata{
+    padding: 22px 30px;
+}
 .VK_card_num {
     font-size: 28px;
     color: white;
@@ -438,11 +446,51 @@
 }
 
 
-.VK_empty_card {
+.VK_paymentselect{
+    color: #2B221E !important;
+}
+.VK_empty_card{
     height: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.VK_payment .accordion-button:not(.collapsed){
+    background-color: #2B221E;
+    color: #fff;
+}
+.VK_payment .accordion-button:not(.collapsed) .icon{
+    fill: #fff;
+}
+.VK_payment .accordion-button{
+    padding: 24px;
+    color: #6A6A6A;
+    font-weight: 600;
+}
+.VK_payment .accordion-button:focus{
+    box-shadow: none;
+}
+.VK_payment_acoridan button {
+    box-shadow: none !important;
+    background-color: white !important;
+    padding: 0;
+}
+.VK_payment .accordion-body{
+    padding: 20px;
+}
+.VK_payment .accordion-body li{
+    margin-bottom: 20px;
+    color: #6A6A6A;
+}
+.VK_payment .accordion-body li:last-child{
+    margin-bottom: 0;
+}
+.VK_payment .accordion-button:not(.collapsed)::after{
+    background-image: url('../../assets/downarrow.png');
+}
+.VK_payment .accordion-body ul{
+    padding-left: 50px;
 }
 
 
@@ -938,35 +986,8 @@
         width: 150px;
     }
 
-
-    .V_full_pair {
-        font-size: 20px;
-    }
-
-    .V_full_child_text {
-        font-size: 14px;
-    }
-
-    .V_light {
-        font-size: 14px;
-    }
-
-    .V_track_order_price {
-        font-size: 20px;
-    }
-
-    .V_back-line {
-        width: 75%;
-        left: 95px;
-        top: 55px;
-    }
-
-    .V_delivery_address_width {
-        width: 180px;
-    }
-
-    .V_invoice_width {
-        padding-left: 20px;
+    .VK_payment .accordion-body ul{
+        padding-left: 15px;
     }
 }
 
@@ -981,30 +1002,12 @@
         width: 120px;
     }
 
-    .V_full_pair {
-        font-size: 14px;
+    .VK_payment .accordion-body ul{
+        padding-left: 15px;
     }
+    .VK_payment .accordion-body li{
+        margin-bottom: 10px;
 
-    .V_full_child_text {
-        font-size: 10px;
-    }
-
-    .V_light {
-        font-size: 12px;
-    }
-
-    .V_track_order_price {
-        font-size: 16px;
-    }
-
-    .V_back-line {
-        width: 60%;
-        left: 120px;
-        top: 40px;
-    }
-
-    .V_invoice_width {
-        padding-left: 60px;
     }
 }
 

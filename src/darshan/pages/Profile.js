@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Accordion, Col, Modal, Offcanvas, Row, Form, Dropdown } from 'react-bootstrap';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaChevronDown } from 'react-icons/fa';
 import { Link, NavLink } from 'react-router-dom'
 import '../../Vivek/Component/User/user.css'
 import Map from '../../Vivek/Component/Map';
@@ -62,6 +62,36 @@ const Profile = () => {
         },
     ];
 
+    var data = [
+        {
+            upiId: "example56@oksbi"
+        },
+        {
+            upiId: "example56@oksbi"
+        },
+        {
+            upiId: "example56@oksbi"
+        }
+    ]
+
+    var cards = [
+        {
+            name: "John Smith",
+            date: "24/11",
+            number: "1520  0100  3356  6888",
+        },
+        {
+            name: "John Smith1",
+            date: "24/11",
+            number: "1520  0101  3356  6888",
+        },
+        {
+            name: "John Smith2",
+            date: "24/11",
+            number: "1520  0102  3356  6888",
+        }
+    ]
+
     const [activeSection, setActiveSection] = useState('profile'); // Default to profile section
     const [modalShow, setModalShow] = useState(false);
 
@@ -80,6 +110,13 @@ const Profile = () => {
     const [delete_model, setdelete_model] = useState(false);
     const [orders, setOrders] = useState(myorder);
     const [current, setCurrent] = useState(myorder);
+    const [paymentMethod, setPaymentMethod] = useState('credit');
+    const [deletecredit, setDeletecredit] = useState(false);
+    const [addcredit, setAddcredit] = useState(false);
+    const [addupimodal, setAddupimodal] = useState(false);
+    const [deleteupimodal, setDeleteupimodal] = useState(false);
+    let [card, setcard] = useState([])
+    let [upi, setupi] = useState([])
     const inputRefs = useRef([]);
 
     const handleToggle = (key) => {
@@ -124,6 +161,8 @@ const Profile = () => {
 
     useEffect(() => {
         setaddress(Address)
+        setupi(data);
+        setcard(cards)
     }, [])
 
 
@@ -180,12 +219,12 @@ const Profile = () => {
                                                         </li>
                                                     </NavLink>
                                                     <hr className='m-0' />
-                                                    <NavLink to={"/user/payment"} className={({ isActive }) => `text-decoration-none d-block ${isActive ? 'VK_user_active' : ''}`}>
+                                                    <NavLink to="" onClick={() => { setActiveSection('payment'); }} className={({ isActive }) => `text-decoration-none d-block ${activeSection === "payment" ? 'VK_payment_acc_active' : ''}`}>
                                                         <li>
-                                                            <Accordion className='border-0'>
-                                                                <Accordion.Item eventKey="0" className='px-4 border-0'>
-                                                                    <Accordion.Header className='VK_payment_acoridan'>
-                                                                        <div className='d-flex align-items-center gap-2 py-4'>
+                                                            <Accordion className='VK_payment'>
+                                                                <Accordion.Item eventKey="0">
+                                                                    <Accordion.Header className='py-0'>
+                                                                        <div className='d-flex align-items-center gap-2'>
                                                                             <span className='d-inline-block pe-2'>
                                                                                 <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" className='icon'>
                                                                                     <path d="M14.9089 12.7363H12.3634C10.7594 12.7363 9.45442 11.5142 9.45442 10.012C9.45442 8.50982 10.7594 7.28766 12.3634 7.28766H14.9089C14.9566 7.28769 15.0039 7.2789 15.0481 7.2618C15.0922 7.24469 15.1323 7.21961 15.1661 7.18798C15.1999 7.15635 15.2266 7.1188 15.2449 7.07747C15.2632 7.03614 15.2725 6.99184 15.2725 6.94711V5.92548C15.2725 5.21136 14.681 4.6306 13.9338 4.57428L11.8454 1.15821C11.6518 0.842272 11.3393 0.61646 10.9654 0.522693C10.5932 0.429566 10.2041 0.478476 9.87097 0.660039L2.71189 4.5633H1.45453C0.652353 4.5633 0 5.1742 0 5.92548V14.0985C0 14.8498 0.652319 15.4607 1.45453 15.4607H13.818C14.6202 15.4607 15.2725 14.8498 15.2725 14.0985V13.0769C15.2725 13.0321 15.2632 12.9879 15.2449 12.9465C15.2266 12.9052 15.1999 12.8676 15.1661 12.836C15.1323 12.8044 15.0922 12.7793 15.0481 12.7622C15.0039 12.7451 14.9566 12.7363 14.9089 12.7363ZM12.2964 3.26723L13.0887 4.5633H9.91927L12.2964 3.26723ZM4.15732 4.5633L10.2371 1.24866C10.4015 1.15853 10.5936 1.13458 10.7772 1.18049C10.9629 1.22704 11.1178 1.33945 11.214 1.49675L11.2147 1.498L5.5929 4.5633H4.15732Z" />
@@ -195,12 +234,12 @@ const Profile = () => {
                                                                             Payment Methods
                                                                         </div>
                                                                     </Accordion.Header>
-                                                                    <Accordion.Body className='p-0 py-3'>
+                                                                    <Accordion.Body className=''>
                                                                         <ul className='VK_ul'>
-                                                                            <li>
+                                                                            <li onClick={() => setPaymentMethod('credit')} className={paymentMethod === 'credit' ? 'VK_paymentselect' : ''}>
                                                                                 Credit / Debit Cards
                                                                             </li>
-                                                                            <li>
+                                                                            <li onClick={() => setPaymentMethod('upi')} className={paymentMethod === 'upi' ? 'VK_paymentselect' : ''}>
                                                                                 UPI ID
                                                                             </li>
                                                                         </ul>
@@ -289,7 +328,7 @@ const Profile = () => {
                                                 <Offcanvas.Body>
                                                     <div>
                                                         <ul className='list-unstyled user_profile_menu p-0 m-0'>
-                                                            <Link onClick={() => {setActiveSection('profile'); handleClose()}} to=""  className='text-decoration-none'>
+                                                            <Link onClick={() => { setActiveSection('profile'); handleClose() }} to="" className='text-decoration-none'>
                                                                 <li className='py-4 px-4'>
                                                                     <div className='d-flex gap-2 align-items-center'>
                                                                         <span className='d-inline-block pe-2'>
@@ -303,7 +342,7 @@ const Profile = () => {
                                                                 </li>
                                                             </Link>
                                                             <hr className='m-0' />
-                                                            <Link onClick={() => {setActiveSection('order'); handleClose()}} to="" className='text-decoration-none' >
+                                                            <Link onClick={() => { setActiveSection('order'); handleClose() }} to="" className='text-decoration-none' >
                                                                 <li className='py-4 px-4'>
                                                                     <div className='d-flex gap-2 align-items-center'>
                                                                         <span className='d-inline-block pe-2'>
@@ -316,7 +355,7 @@ const Profile = () => {
                                                                 </li>
                                                             </Link>
                                                             <hr className='m-0' />
-                                                            <Link to=""  className='text-decoration-none' onClick={handleClose}>
+                                                            <Link to="" className='text-decoration-none' onClick={handleClose}>
                                                                 <li>
                                                                     <Accordion>
                                                                         <Accordion.Item eventKey="0" className='px-4 border-0'>
@@ -346,7 +385,7 @@ const Profile = () => {
                                                                 </li>
                                                             </Link>
                                                             <hr className='m-0' />
-                                                            <Link to="" onClick={() => {setActiveSection('address'); handleClose()}} className='text-decoration-none'>
+                                                            <Link to="" onClick={() => { setActiveSection('address'); handleClose() }} className='text-decoration-none'>
                                                                 <li className='py-4 px-4'>
                                                                     <div className='d-flex gap-2 align-items-center'>
                                                                         <span className='d-inline-block pe-2'>
@@ -359,7 +398,7 @@ const Profile = () => {
                                                                 </li>
                                                             </Link>
                                                             <hr className='m-0' />
-                                                            <Link to="" onClick={() => {setActiveSection('faqs'); handleClose()}} className='text-decoration-none'>
+                                                            <Link to="" onClick={() => { setActiveSection('faqs'); handleClose() }} className='text-decoration-none'>
                                                                 <li className='py-4 px-4'>
                                                                     <div className='d-flex gap-2 align-items-center'>
                                                                         <span className='d-inline-block pe-2'>
@@ -372,7 +411,7 @@ const Profile = () => {
                                                                 </li>
                                                             </Link>
                                                             <hr className='m-0' />
-                                                            <Link to="" onClick={() => {setActiveSection('terms'); handleClose()}} className='text-decoration-none'>
+                                                            <Link to="" onClick={() => { setActiveSection('terms'); handleClose() }} className='text-decoration-none'>
                                                                 <li className='py-4 px-4'>
                                                                     <div className='d-flex gap-2 align-items-center'>
                                                                         <span className='d-inline-block pe-2'>
@@ -387,7 +426,7 @@ const Profile = () => {
                                                                 </li>
                                                             </Link>
                                                             <hr className='m-0' />
-                                                            <Link to="" onClick={() => {setActiveSection('deactiveaccount'); handleClose()}} className='text-decoration-none'>
+                                                            <Link to="" onClick={() => { setActiveSection('deactiveaccount'); handleClose() }} className='text-decoration-none'>
                                                                 <li className='py-4 px-4'>
                                                                     <div className='d-flex gap-2 align-items-center'>
                                                                         <span className='d-inline-block pe-2'>
@@ -627,6 +666,160 @@ const Profile = () => {
                                         </section>
                                     }
                                     {/* order end */}
+
+                                    {/* Payment start */}
+
+                                    {activeSection === 'payment' && (
+                                        <>
+                                            {paymentMethod === 'credit' && (
+                                                <section className='VK_user_profile mb-4 h-100'>
+                                                    <div className='d-flex flex-wrap align-items-center justify-content-between mb-4'>
+                                                        <h2 className='VK_profile_heading fw-bold'>
+                                                            Payment Methods
+                                                        </h2>
+                                                    </div>
+                                                    <div className='mt-4'>
+                                                        <div className='VK_paymentbox'>
+                                                            <div className="VK_paymenthead">
+                                                                <div className='d-flex justify-content-between flex-wrap align-items-center'>
+                                                                    <div>
+                                                                        <p className='m-0 fw-600 font_18'>
+                                                                            Credit / Debit Cards
+                                                                        </p>
+                                                                    </div>
+                                                                    <div className='ms-auto'>
+                                                                        <button className='VK_theme_btn' onClick={() => { setAddcredit(true) }}>
+                                                                            Add Credit / Debit Card
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className='h-100'>
+                                                                <div className="VK_paymentdata">
+                                                                    <Row>
+                                                                        <Map data={card}>
+                                                                            {(item) => (
+                                                                                <Col xxl={4} md={12} lg={6} sm={6} className='my-3'>
+                                                                                    <div className='VK_card_box d-flex flex-column p-3'>
+                                                                                        <div className='d-flex justify-content-between align-items-center'>
+                                                                                            <div>
+                                                                                                <img src={require('../d_img/card_type.png')} width="48px" alt="" />
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <button className='bg-transparent border-0' onClick={() => { setDeletecredit(true) }}>
+                                                                                                    <img src={require('../d_img/delete.png')} width="16px" alt="" />
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className='mt-auto'>
+                                                                                            <h4 className='VK_card_num mb-3'>
+                                                                                                {item.number}
+                                                                                            </h4>
+                                                                                        </div>
+                                                                                        <div className='d-flex gap-4'>
+                                                                                            <div>
+                                                                                                <p className='VK_card_del_tit m-0'>
+                                                                                                    CARD HOLDER NAME
+                                                                                                </p>
+                                                                                                <p className='text-white mb-2'>
+                                                                                                    {item.name}
+                                                                                                </p>
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <p className='VK_card_del_tit m-0'>
+                                                                                                    VALID THRU
+                                                                                                </p>
+                                                                                                <p className='text-white mb-2'>
+                                                                                                    {item.date}
+                                                                                                </p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </Col>
+                                                                            )}
+                                                                        </Map>
+                                                                    </Row>
+                                                                </div>
+
+                                                                {/* empty card */}
+                                                                <div className='VK_empty_card d-none'>
+                                                                    <div className='text-center'>
+                                                                        <img src={require('../d_img/card.png')} alt="" />
+                                                                        <p className='fw-600 text-black'>
+                                                                            You have no Saved cards
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                            )}
+                                            {paymentMethod === 'upi' && (
+                                                <section className='VK_user_profile mb-4 h-100'>
+                                                    <div className='d-flex flex-wrap align-items-center justify-content-between mb-4'>
+                                                        <h2 className='VK_profile_heading fw-bold'>
+                                                            Payment Methods
+                                                        </h2>
+                                                    </div>
+                                                    <div className='mt-4'>
+                                                        <div className='VK_paymentbox'>
+                                                            <div className="VK_paymenthead">
+                                                                <div className='d-flex justify-content-between flex-wrap align-items-center'>
+                                                                    <div>
+                                                                        <p className='m-0 fw-600 font_18'>
+                                                                            UPI ID
+                                                                        </p>
+                                                                    </div>
+                                                                    <div className='ms-auto'>
+                                                                        <button className='VK_theme_btn' onClick={() => { setAddupimodal(true) }}>
+                                                                            Add UPI ID
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className='h-100'>
+                                                                <div className="VK_paymentdata">
+                                                                    <Row>
+                                                                        {upi.length > 0 ? (
+                                                                            upi.map((item) => (
+                                                                                <Col lg={6} md={12} sm={6} className='my-3' key={item.id}>
+                                                                                    <div className='VK_upi_card d-flex align-items-center w-100'>
+                                                                                        <div>
+                                                                                            <img src={require('../d_img/googlepay.png')} height="28px" alt="Google Pay" />
+                                                                                        </div>
+                                                                                        <div className='ps-3'>
+                                                                                            {item.upiId}
+                                                                                        </div>
+                                                                                        <div className='ms-auto'>
+                                                                                            <button className='bg-transparent border-0' onClick={() => setDeleteupimodal(true)}>
+                                                                                                <img src={require('../d_img/delete.png')} width="16px" alt="Delete" />
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </Col>
+                                                                            ))
+                                                                        ) : (
+                                                                            <div className='VK_empty_card'>
+                                                                                <div className='text-center'>
+                                                                                    <img src={require('../d_img/upi.png')} alt="No UPI IDs" />
+                                                                                    <p className='fw-600 text-black'>You have no saved UPI ID</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        )}
+                                                                    </Row>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                            )}
+                                        </>
+                                    )}
+
+                                    {/* Payment end */}
+
 
                                     {/* address start */}
                                     {activeSection === 'address' &&
@@ -952,12 +1145,12 @@ const Profile = () => {
                             </Row>
                         </div>
                     </aside>
-                </div>
-            </section>
+                </div >
+            </section >
 
             {/* Edit detail Modal */}
 
-            <Modal
+            <Modal Modal
                 className='VK_edit_profile_model'
                 show={editpersonal}
                 onHide={() => setEditpersonal(false)}
@@ -1035,7 +1228,7 @@ const Profile = () => {
                         </form>
                     </div>
                 </Modal.Body>
-            </Modal>
+            </Modal >
 
             {/* Edit detail Modal */}
 
@@ -1084,6 +1277,196 @@ const Profile = () => {
             </Modal>
 
             {/* Edit contact modal */}
+
+            {/* Add Upi model */}
+            <Modal
+                show={addupimodal}
+                onHide={() => { setAddupimodal(false) }}
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                className='VK_add_address_model_'
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        <h5 className='VK_add_address_model_heading'>
+                            Add UPI ID
+                        </h5>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className='p-2 py-3'>
+                        <form action="" className='w-100 VK_address_form'>
+                            <div className='VK_name mb-3'>
+                                <span className='VK_input_label pb-1'>
+                                    UPI ID
+                                </span>
+                                <div className='d-flex VK_theme_bg'>
+                                    <input type="text" className='VK_from_input w-100 py-2 px-3' />
+                                    <Dropdown>
+                                        <Dropdown.Toggle className='VK_theme_bg' id="dropdown-basic">
+                                            <FaChevronDown className='text-black' />
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu>
+                                            <Dropdown.Item>
+                                                oksbi
+                                            </Dropdown.Item>
+                                            <Dropdown.Item>
+                                                okicici
+                                            </Dropdown.Item>
+                                            <Dropdown.Item>
+                                                okaxis
+                                            </Dropdown.Item>
+                                            <Dropdown.Item>
+                                                okhdfcbank
+                                            </Dropdown.Item>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                </div>
+                            </div>
+                            <div className='mt-5 text-center'>
+                                <button type="submit" className='VK_add_address_submit'>
+                                    Save
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </Modal.Body>
+            </Modal>
+            {/* Add Upi model */}
+
+            {/* delete upi model */}
+            <Modal
+                show={deleteupimodal}
+                onHide={() => { setDeleteupimodal(false) }}
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                className='VK_logout_model'
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        <span className='fw-bold m-0 ps-3'>
+                            Delete
+                        </span>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className='py-4'>
+                    <div className='d-flex flex-column p-md-4 p-2'>
+                        <p className='text-center VK_logout_txt m-0'>
+                            Are you sure you want to delete?
+                        </p>
+                        <div className='mt-5'>
+                            <div className='d-flex gap-2'>
+                                <div className='w-100'>
+                                    <button className='VK_logut_cancle h-100' onClick={() => setDeleteupimodal(false)}>
+                                        Cancel
+                                    </button>
+                                </div>
+                                <div className='w-100'>
+                                    <button className='VK_logout_ok h-100'>
+                                        Yes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
+            {/* delete upi model */}
+
+            {/* Add Card model */}
+            <Modal
+                show={addcredit}
+                onHide={() => { setAddcredit(false) }}
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                className='VK_add_address_model_'
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        <h5 className='VK_add_address_model_heading'>
+                            Add Credit / Debit Card
+                        </h5>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className='p-2 py-3'>
+                        <form action="" className='w-100 VK_address_form'>
+                            <div className='VK_name mb-3'>
+                                <span className='VK_input_label pb-1'>
+                                    Card Holder Name
+                                </span>
+                                <input type="text" className='VK_from_input w-100 py-2 px-3' />
+                            </div>
+                            <div className='VK_name my-3'>
+                                <span className='VK_input_label pb-1'>
+                                    Card No.
+                                </span>
+                                <input type="text" className='VK_from_input w-100 py-2 px-3' />
+                            </div>
+                            <div className='d-flex flex-sm-nowrap flex-wrap my-3 gap-3'>
+                                <div className='w-100'>
+                                    <span className='VK_input_label pb-1'>
+                                        CVV
+                                    </span>
+                                    <input type="text" className='VK_from_input w-100 py-2 px-3' />
+                                </div>
+                                <div className='w-100'>
+                                    <span className='VK_input_label pb-1'>
+                                        Expiry Date
+                                    </span>
+                                    <input type="text" className='VK_from_input w-100 py-2 px-3' />
+                                </div>
+                            </div>
+                            <div className='mt-5 text-center'>
+                                <button type="submit" className='VK_add_address_submit'>
+                                    Save
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </Modal.Body>
+            </Modal>
+            {/* Add card model */}
+
+            {/* delete card model */}
+            <Modal
+                show={deletecredit}
+                onHide={() => { setDeletecredit(false) }}
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                className='VK_logout_model'
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        <span className='fw-bold m-0 ps-3'>
+                            Delete
+                        </span>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className='py-4'>
+                    <div className='d-flex flex-column p-md-4 p-2'>
+                        <p className='text-center VK_logout_txt m-0'>
+                            Are you sure you want to delete?
+                        </p>
+                        <div className='mt-5'>
+                            <div className='d-flex gap-2'>
+                                <div className='w-100'>
+                                    <button className='VK_logut_cancle h-100' onClick={() => setDeletecredit(false)}>
+                                        Cancel
+                                    </button>
+                                </div>
+                                <div className='w-100'>
+                                    <button className='VK_logout_ok h-100'>
+                                        Yes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
+            {/* Delete card modal */}
 
             {/* Deactive account modal */}
 
@@ -1432,7 +1815,7 @@ const Profile = () => {
                         <div className='mt-5'>
                             <div className='d-flex gap-2'>
                                 <div className='w-100'>
-                                    <button className='VK_logut_cancle h-100'>
+                                    <button className='VK_logut_cancle h-100' onClick={() => setlogoutmodal(false)}>
                                         Cancel
                                     </button>
                                 </div>

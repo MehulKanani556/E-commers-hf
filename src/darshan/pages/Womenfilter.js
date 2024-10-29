@@ -551,7 +551,7 @@ const Womenfilter = () => {
 
     const color = [
         { id: 1, colorname: "Black" },
-        { id: 2, colorname: "White" },
+        { id: 2, colorname: "white" },
         { id: 3, colorname: "Orange" },
         { id: 4, colorname: "Blue" },
         { id: 5, colorname: "Green" },
