@@ -26,10 +26,11 @@ const Cart = () => {
     });
    const [showToggle, setShowToggle] = useState(false) 
    const [count, setCount] = useState(0)
-   const [activeButton, setActiveButton] = useState("Pay on Delivery");
    const [isOpen, setIsOpen] = useState(false);
    const [selectedOption, setSelectedOption] = useState("Class");
    const selectRef = useRef(null);
+   const [activeButton, setActiveButton] = useState('Pay on Delivery');
+
 
    const handleOpenModal = () => setShowModal(true);
    const handleCloseModal = () => setShowModal(false);
@@ -126,44 +127,35 @@ const Cart = () => {
    if(count === 0){
       document.getElementById("ds_with-line").style.border = "0.65px solid #2A221E"
       document.getElementById("ds_cupon").classList.add("d-none")
-      window.scrollTo({ top: 0, behavior: 'smooth' });   
+      document.getElementById("ds_women-card").classList.add("d-none")
+
    }
    else if(count === 1){
      document.getElementById("ds_with-line2").style.border = "0.65px solid #2A221E"
-     document.getElementById("ds_women-card").classList.add("d-none")
      document.getElementById("ds_product").classList.add("d-none")
+     document.getElementById("ds_address").classList.add("d-none")
+     document.getElementById("ds_express-card").classList.remove("d-none")
+     document.getElementById("ds_Nav-Tabs").classList.remove("d-none")
    }
+   window.scrollTo({ top: 0, behavior: 'smooth' });   
 
  }
 
- const handlePayment = (buttonName) => {
-   setActiveButton(buttonName);
- }
 
-   // Toggle dropdown open/close
-   const toggleDropdown = () => {
+ const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  // Update selected option and close dropdown
   const handleOptionClick = (option) => {
     setSelectedOption(option);
-    setIsOpen(false);
+    setIsOpen(false); // Close the dropdown after selection
   };
 
-  // Close dropdown if clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (selectRef.current && !selectRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
+  const handlePayment = (paymentType) => {
+    setActiveButton(paymentType);
+    console.log(paymentType);
+    
+  };
 
   return (
     <div>
@@ -180,7 +172,7 @@ const Cart = () => {
                 <p className="ds_card-text">
                   There is nothing in your bag. add some item.
                 </p>
-                <button className="btn ds_cart-btn mt-3">
+                <button className=" ds_cart-btn mt-3">
                   Continue Shopping
                 </button>
               </div>
@@ -195,7 +187,7 @@ const Cart = () => {
           <div className="d_container">
             <div className="d-flex justify-content-between align-items-center">
               <h2 className="h2">Cart</h2>
-              <button className="btn ds_with-btn">+Add From Wishlist</button>
+              <button className=" ds_with-btn">+Add From Wishlist</button>
             </div>
 
             <div className="row mt-4" >
@@ -230,18 +222,18 @@ const Cart = () => {
                     </div>
                   </div>
                  
-                 <div className="d-none" id="ds_product">
-                  <div className="mt-3">
+                 <div className="d-non" id="ds_product">
+                  <div className="mt-3" id="ds_address">
                     <div className="ds_with-shadow">
                       <div className="d-flex justify-content-between align-items-center">
                         {address ? <div>
-                                       <p className="mb-0">Deliver to: <span className="fw-bold ms-2">Hello</span> <span className="ds_user-data">Home</span> </p>
-                                       <p className="mb-0">Ehrenkranz 13 Washington Square S, New York,Washington Square, NY 10012, USA</p>
+                                       <p className="ds_add-smart mb-0">Deliver to: <span className="fw-bold ms-2">Hello</span> <span className="ds_user-data">Home</span> </p>
+                                       <p className="ds_add-smart mb-0">Ehrenkranz 13 Washington Square S, New York,Washington Square, NY 10012, USA</p>
                                    </div>
                         : <p className="mb-0 fw-600 ds_add-address">
                           No saved Addresses
                         </p>}
-                        {address ?  <button className="btn ds_with-add" data-bs-toggle="modal" data-bs-target="#ds_modal">Change Address</button> : <button className="btn ds_with-add" onClick={handleOpenModal}>+Add Address</button>}
+                        {address ?  <button className="ds_with-add" data-bs-toggle="modal" data-bs-target="#ds_modal">Change Address</button> : <button className=" ds_with-add" onClick={handleOpenModal}>+Add Address</button>}
                       </div>
                     </div>
                   </div>
@@ -430,7 +422,7 @@ const Cart = () => {
                   </div>
 
                   {/* ************** Payment With COD ************ */}
-                  <div className="mt-2 mb-4">
+                  <div className="mt-2 mb-4 d-none" id="ds_express-card">
                      <div className="row justify-content-center align-items-center">
                         <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 mt-2">
                            <div className="ds_cod-box">
@@ -477,146 +469,157 @@ const Cart = () => {
                      </div>
                   </div>
 
-                  <div>
+                  <section className="d-none" id="ds_Nav-Tabs">
                    <div className="ds_cod-main mt-5 ds_cod-bg">
-                     <div className="row p-0 m-0" style={{borderBottom:'1px solid black'}}>
-                       <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6  text-center p-0">
-                         <div className="h-100">
-                           <button className={`btn h-100 ${activeButton === 'Pay on Delivery' ? 'ds_cod-on-btn' : 'ds_cod-on-btn-txt'}`} style={{ padding: '13px 0px' }} onClick={() => handlePayment('Pay on Delivery')}>
-                             Pay on Delivery
-                           </button>
-                         </div>
-                       </div>
-                       <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6  text-center p-0">
-                         <div className="h-100">
-                           <button className={`btn h-100 ${activeButton === 'Credit / Debit Card' ? 'ds_cod-on-btn' : 'ds_cod-on-btn-txt'}`} style={{ padding: '13px 0px' }} onClick={() => handlePayment('Credit / Debit Card')}>
-                             Credit / Debit Card
-                           </button>
-                         </div>
-                       </div>
-                       <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6  text-center p-0">
-                         <div className="h-100">
-                           <button className={`btn h-100 ${activeButton === 'UPI ID' ? 'ds_cod-on-btn' : 'ds_cod-on-btn-txt'}`} style={{ padding: '13px 0px' }} onClick={() => handlePayment('UPI ID')}>
-                             UPI ID
-                           </button>
-                         </div>
-                       </div>
-                       <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6  text-center p-0">
-                         <div className="h-100">
-                           <button className={`btn h-100 ${activeButton === 'Net Banking' ? 'ds_cod-on-btn' : 'ds_cod-on-btn-txt'}`} style={{ padding: '13px 0px' }} onClick={() => handlePayment('Net Banking')}>
-                             Net Banking
-                           </button>
-                         </div>
-                       </div>
-                     </div>
-                     {/* *************** Pay On Delivery ************** */}
-                     <section className="d-none">
-                        <div className="row justify-content-center  pt-sm-5 pt-2 ds_pay-box mx-xl-0 mx-2">
-                           <div className="col-xl-10">
-                             <div className="row justify-content-center">
-                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
-                                   <input type="text" className="ds_cod-input " placeholder="Enter the captcha" />
+                            <div className="row p-0 m-0" style={{ borderBottom: '1px solid black' }}>
+                              {['Pay on Delivery', 'Credit / Debit Card', 'UPI ID', 'Net Banking'].map((paymentType, index) => (
+                                <div key={index} className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6 text-center p-0">
+                                  <button className={` h-100 ${activeButton === paymentType ? 'ds_cod-on-btn' : 'ds_cod-on-btn-txt'}`} style={{ padding: '13px 0px' }} onClick={() => handlePayment(paymentType)}>
+                                    {paymentType}
+                                  </button>
                                 </div>
-                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
-                                   <input type="text" className="ds_cod-input " placeholder="Enter card number" />
-                               </div>  
-                               <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
-                                   <input type="text" className="ds_cod-input " placeholder="MM/YYYY" />
-                                </div>
-                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
-                                   <input type="text" className="ds_cod-input " placeholder="Enter CVV" />
-                                </div> 
-                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-5">
-                                    <button className="btn ds_cod-pay">Pay $220</button>
-                                </div> 
-                             </div>
-                           </div>
-                        </div>
-                     </section>
-
-                     {/* *************** UPI ID ************** */}
-                      <section className="ds_pay-box d-none">
-                        <div className="pt-sm-5 mt-2 pt-2">
-                           <div className="row justify-content-center mx-xl-0 mx-2 ">
-                              <div className="col-xl-10">
-                                <div className="">
-                                   <div className="position-relative ds_upi-arrow">
-                                     <input type="text" className="ds_upi-input " placeholder="Enter UPI ID" />
-                                     <select class="form-select ds_upi-select" aria-label="Default select example">
-                                       <option selected>@okicici</option>
-                                       <option value="1">One</option>
-                                       <option value="2">Two</option>
-                                       <option value="3">Three</option>
-                                    </select>
-                                   </div>
-                                </div>
-                              </div>
-                              <div className="col-xl-5 mt-5">
-                                 <button className="btn ds_cod-pay">Pay $220</button>
-                              </div>
-                           </div>
-                        </div>
-                      </section>
-
-                     {/* *************** Net Banking ************** */}
-                     <section >
-                         <div className="ds_pay-box">
-                             <div className="pt-sm-5 mt-2 pt-2 mx-xl-0 mx-2">
-                              <div className="row justify-content-center align-items-center">
-                                <div className="col-xl-10 ">
-                                   <div className="position-relative">
-                                      <input type="text" className="ds_net-input " placeholder="Search your bank" />
-                                      <div className="ds_net-icon">
-                                        <IoSearch />
+                              ))}
+                            </div>
+                      
+                            {/* Pay On Delivery Section */}
+                            {activeButton === 'Pay on Delivery' && (
+                              <section className="ds_pay-box mt-5">
+                                <div className="row justify-content-center mx-xl-0 mx-2">
+                                  <div className="col-xl-8">
+                                    <div className="row">
+                                      <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 mt-3"></div>
+                                      <div className="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12 mt-3">
+                                        <p className="ds_pay-text mb-0">Enter the captcha to confirm order.</p>
                                       </div>
-                                   </div>
-                                   <div>
-                                     <div className="d-flex flex-wrap justify-content-between align-items-center mt-5 mx-xl-0 mx-2">
-                                        <div className="text-center">
-                                          <img src={require('../Img/city.png')} alt="" className="ds_net-img" />
-                                          <p className="ds_net-text">Citi <br /> Bank</p>
-                                        </div>
-                                        <div className="text-center">
-                                          <img src={require('../Img/well.png')} alt="" className="ds_net-img" />
-                                          <p className="ds_net-text">Wells Fargo <br /> Bank</p>
-                                        </div>
-                                        <div className="text-center">
-                                          <img src={require('../Img/capital.png')} alt="" className="ds_net-img" />
-                                          <p className="ds_net-text">Capital One <br /> Bank</p>
-                                        </div>
-                                        <div className="text-center">
-                                          <img src={require('../Img/td.png')} alt="" className="ds_net-img" />
-                                          <p className="ds_net-text">TD <br /> Bank</p>
-                                        </div>
-                                        <div className="text-center">
-                                          <img src={require('../Img/city.png')} alt="" className="ds_net-img" />
-                                          <p className="ds_net-text">Citi <br /> Bank</p>
-                                        </div>
-                                        <div className="text-center">
-                                          <img src={require('../Img/capital.png')} alt="" className="ds_net-img" />
-                                          <p className="ds_net-text">Capital One <br /> Bank</p>
-                                        </div>
-                                        <div className="text-center">
-                                          <img src={require('../Img/td.png')} alt="" className="ds_net-img" />
-                                          <p className="ds_net-text">TD <br /> Bank</p>
-                                        </div>
-                                        <div className="text-center">
-                                          <img src={require('../Img/city.png')} alt="" className="ds_net-img" />
-                                          <p className="ds_net-text">Citi <br /> Bank</p>
-                                        </div>
-                                        <div className="text-center">
-                                          <img src={require('../Img/well.png')} alt="" className="ds_net-img" />
-                                          <p className="ds_net-text">Wells Fargo <br /> Bank</p>
-                                        </div>
-                                     </div>
-                                   </div>
+                                    </div>
+                                    <div className="row justify-content-center align-items-center">
+                <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 mt-3">
+                  <img src={require("../Img/captha.png")} alt="" className="ds_cod-cap" />
+                </div>
+                <div className="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12 mt-3">
+                  <input type="text" className="ds_cod-input" placeholder="Enter the captcha" />
+                </div>
+                <div className="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12 mt-3">
+                  <MdRefresh className="ds_cod-refresh" />
+                </div>
+                                    </div>
+                                    <div className="row mt-5">
+                                      <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12"></div>
+                                      <div className="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12">
+                                        <button className=" ds_cod-pay">Pay $220</button>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
-                              </div>
-                             </div>
-                         </div>
-                     </section>
+                              </section>
+                            )}
+                      
+                            {/* Credit / Debit Card Section */}
+                            {activeButton === 'Credit / Debit Card' && (
+                              <section className="ds_pay-box mt-5">
+                                <div className="row justify-content-center mx-xl-0 mx-2">
+                                  <div className="col-xl-10">
+                                    <div className="row justify-content-center">
+                                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                                        <input type="text" className="ds_cod-input" placeholder="Enter the captcha" />
+                                      </div>
+                                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                                        <input type="text" className="ds_cod-input" placeholder="Enter card number" />
+                                      </div>
+                                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                                        <input type="text" className="ds_cod-input" placeholder="MM/YYYY" />
+                                      </div>
+                                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                                        <input type="text" className="ds_cod-input" placeholder="Enter CVV" />
+                                      </div>
+                                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-5">
+                                        <button className=" ds_cod-pay">Pay $220</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </section>
+                            )}
+                      
+                            {/* UPI ID Section */}
+                            {activeButton === 'UPI ID' && (
+                              <section className="ds_pay-box mt-5 pt-4">
+                                <div className="">
+                                  <div className="row justify-content-center mx-xl-0 mx-2">
+                                    <div className="col-xl-10">
+                                      <div className="position-relative ds_upi-arrow d-flex">
+                                        <input type="text" className="ds_upi-input" placeholder="Enter UPI ID" />
+                                        <select className="form-select ds_upi-select">
+                                          <option defaultValue>@okicici</option>
+                                          <option value="1">One</option>
+                                          <option value="2">Two</option>
+                                          <option value="3">Three</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div className="col-xl-5 mt-5">
+                                      <button className=" ds_cod-pay">Pay $220</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </section>
+                            )}
+                      
+                            {/* Net Banking Section */}
+                            {activeButton === 'Net Banking' && (
+                              <section className="ds_pay-box mt-5 pt-4">
+                                <div className="mx-xl-0 mx-2">
+                                  <div className="row justify-content-center align-items-center">
+                                    <div className="col-xl-10">
+                                      <div className="position-relative">
+                                        <input type="text" className="ds_net-input" placeholder="Search your bank" />
+                                        <IoSearch className="ds_net-icon" />
+                                      </div>
+                                      <div className="d-flex flex-wrap justify-content-between align-items-center mt-5">
+                                      <div className="text-center">
+                          <img src={require('../Img/city.png')} alt="" className="ds_net-img" />
+                          <p className="ds_net-text">Citi <br /> Bank</p>
+                        </div>
+                        <div className="text-center">
+                          <img src={require('../Img/well.png')} alt="" className="ds_net-img" />
+                          <p className="ds_net-text">Wells Fargo <br /> Bank</p>
+                        </div>
+                        <div className="text-center">
+                          <img src={require('../Img/capital.png')} alt="" className="ds_net-img" />
+                          <p className="ds_net-text">Capital One <br /> Bank</p>
+                        </div>
+                        <div className="text-center">
+                          <img src={require('../Img/td.png')} alt="" className="ds_net-img" />
+                          <p className="ds_net-text">TD <br /> Bank</p>
+                        </div>
+                        <div className="text-center">
+                          <img src={require('../Img/city.png')} alt="" className="ds_net-img" />
+                          <p className="ds_net-text">Citi <br /> Bank</p>
+                        </div>
+                        <div className="text-center">
+                          <img src={require('../Img/capital.png')} alt="" className="ds_net-img" />
+                          <p className="ds_net-text">Capital One <br /> Bank</p>
+                        </div>
+                        <div className="text-center">
+                          <img src={require('../Img/td.png')} alt="" className="ds_net-img" />
+                          <p className="ds_net-text">TD <br /> Bank</p>
+                        </div>
+                        <div className="text-center">
+                          <img src={require('../Img/city.png')} alt="" className="ds_net-img" />
+                          <p className="ds_net-text">Citi <br /> Bank</p>
+                        </div>
+                        <div className="text-center">
+                          <img src={require('../Img/well.png')} alt="" className="ds_net-img" />
+                          <p className="ds_net-text">Wells Fargo <br /> Bank</p>
+                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </section>
+                            )}
                    </div>
-                  </div>
+                  </section>
 
 
 
@@ -637,7 +640,7 @@ const Cart = () => {
                         <form action="" className="position-relative">
                           <img className="ds_add-cupan" src={require("../Img/cupon.png")} alt=""/>
                           <input type="email" class="form-control ds_add-input" id="exampleInputEmail1" placeholder="Enter coupon code" aria-describedby="emailHelp"/>
-                          <button className="btn ds_add-apply">Apply</button>
+                          <button className=" ds_add-apply">Apply</button>
                         </form>
                       </div>
                     </div>
@@ -703,7 +706,7 @@ const Cart = () => {
                         <h5 className="h5 mb-0 ds_add-total">Total Amount</h5>
                         <h5 className="h5 mb-0 ds_add-total">$240</h5>
                       </div>
-                      <button className="btn ds_add-proccess mt-5" onClick={handleCheckOut}>
+                      <button className=" ds_add-proccess mt-5" onClick={handleCheckOut}>
                         Proceed to checkout
                       </button>
                     </div>
@@ -773,7 +776,7 @@ const Cart = () => {
       </section>
 
 {/* ************** Address Modal Popup ******************* */}
-   <Modal show={showModal} onHide={handleCloseModal} aria-labelledby="contained-modal-title-vcenter" centered className="VK_add_address_model_">
+   <Modal show={showModal} onHide={handleCloseModal} aria-labelledby="contained-modal-title-vcenter" centered className="ds_my-modal  VK_add_address_model_">
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
           <h5 className="VK_add_address_model_heading">Add Address</h5>
@@ -881,7 +884,7 @@ const Cart = () => {
 
          </div>
          <div className="mt-4 pt-2">
-            <button className="btn ds_new-btn">+ Add new address</button>
+            <button className=" ds_new-btn">+ Add new address</button>
          </div>
       </div>
     </div>
@@ -951,7 +954,7 @@ const Cart = () => {
                              <p className="ds_con-font text-dark fw-600 " >Jhon Wick</p>
                              <p className="ds_con-font text-dark fw-600">Ehrenkranz 13 Washington Square S, New York,Washington Square, NY 10012, USA</p>
                              <p className="ds_con-font text-dark fw-600">+1 565 5656 565</p>
-                             <button className="btn ds_con-btn">View Invoice</button>
+                             <button className=" ds_con-btn">View Invoice</button>
                           </div>
                         </div>
 
@@ -1038,7 +1041,7 @@ const Cart = () => {
 
 
  {/* /* {************** Invoice *******************} */}
- <section >
+ <section className="d-non">
    <div>
        <div className="d_container">
           <div className="mt-4">
@@ -1046,13 +1049,13 @@ const Cart = () => {
                 <div className="col-xl-8 ">
                   <div className="ds_in-bg">
                       <h5 className="fw-bold">LOGO</h5>
-                      <div className="d-flex justify-content-between mt-4">
-                         <div>
+                      <div className="d-flex flex-wrap justify-content-between ">
+                         <div className="mt-4">
                            <h5 className="ds_in-name">Jhon Wick</h5>
                            <h6 className="ds_in-email">example@gmail.com</h6>
                            <h6 className="ds_in-email">+1 565 5656 565</h6>
                          </div>
-                         <div className="d-flex justify-content-between">
+                         <div className="d-flex justify-content-between mt-4">
                            <div>
                               <p className="ds_in-text mb-0">Invoice No</p>
                               <p className="ds_in-text mb-0">Invoice Date</p>
@@ -1067,24 +1070,24 @@ const Cart = () => {
                       </div>  
                   </div>
                   <div className="row">
-                        <div className="col-xl-4 mt-4">
-                          <div className="ds_in-border">
+                        <div className="col-xl-4 col-lg-4 col-md-4 mt-4">
+                          <div className="ds_in-border h-100">
                               <p className="ds_in-sold fw-500 mb-2">SOLD BY</p>
                               <p className="ds_in-sold text-dark fw-600 mb-0">COCOBLU RETAIL LIMITED </p>
                               <p className="ds_in-add text-dark fw-400">Renaissance industrial smart city, Kalyan Sape road, Thane, Maharashtra, 421302 IN</p>
                           </div>
                         </div>
 
-                        <div className="col-xl-4 mt-4">
-                          <div className="ds_in-border">
+                        <div className="col-xl-4 col-lg-4 col-md-4 mt-4">
+                          <div className="ds_in-border h-100">
                               <p className="ds_in-sold fw-500 mb-2">BILLED TO</p>
                               <p className="ds_in-sold text-dark fw-600 mb-0">Alex Shroff </p>
                               <p className="ds_in-add text-dark fw-400">Ehrenkranz 13 Washington Square S , New York , Washington Square , NY 10012 , USA</p>
                           </div>
                         </div>
 
-                        <div className="col-xl-4 mt-4">
-                          <div className="ds_in-border border-0">
+                        <div className="col-xl-4 col-lg-4 col-md-4 mt-4">
+                          <div className="ds_in-border border-0 h-100">
                               <p className="ds_in-sold fw-500 mb-2">SHIPPED TO</p>
                               <p className="ds_in-sold text-dark fw-600 mb-0">Alex Shroff </p>
                               <p className="ds_in-add text-dark fw-400">Ehrenkranz 13 Washington Square S , New York , Washington Square , NY 10012 , USA</p>
@@ -1095,14 +1098,14 @@ const Cart = () => {
                           <div className="ds_in-line mt-3"></div>
                         </div>
 
-                         <div className="mt-4">
+                         <div className="mt-4 ds_table-main">
                            <table>
                                <thead>
                                  <tr>
-                                   <th>Item</th>
-                                   <th>Qty.</th>
-                                   <th>Price</th>
-                                   <th>Amount</th>
+                                   <th className="ds_table-th">Item</th>
+                                   <th className="ds_table-th">Qty.</th>
+                                   <th className="ds_table-th">Price</th>
+                                   <th className="ds_table-th">Amount</th>
                                  </tr>
                                </thead>
                                <tbody>
@@ -1111,7 +1114,7 @@ const Cart = () => {
                                      <div class="ds_table-title">Traditional Chaniya Choli</div>
                                      <div class="ds_table-desc">Elegant peach color silk chaniya choli with dupatta & accessories</div>
                                    </td>
-                                   <td>1</td>
+                                   <td className="ds_table-quantity">1</td>
                                    <td class="ds_table-price">$120.00</td>
                                    <td class="ds_table-price">$120.00</td>
                                  </tr>
@@ -1120,7 +1123,7 @@ const Cart = () => {
                                      <div class="ds_table-title">Traditional Chaniya Choli</div>
                                      <div class="ds_table-desc">Elegant peach color silk chaniya choli with dupatta & accessories</div>
                                    </td>
-                                   <td>1</td>
+                                   <td className="ds_table-quantity">1</td>
                                    <td class="ds_table-price">$120.00</td>
                                    <td class="ds_table-price">$120.00</td>
                                  </tr>
@@ -1130,6 +1133,46 @@ const Cart = () => {
                              
                              
                          </div>
+
+                         <div>
+                          <div className="ds_in-line mt-5"></div>
+                        </div>
+
+                        <div>
+                          <div className="d-flex justify-content-between flex-wrap align-items-end ">
+                             <div className="mt-4">
+                               <h6 className="ds_in-method">Payment Method </h6>
+                               <p className="ds_in-name mb-0">Bank Name : Bank Central Asia (BCA)</p>
+                               <p className="ds_in-name mb-0">Card No. : 1234 5678 9123 4567</p>
+                               <p className="ds_in-name mb-0">Name : Jhon Wick</p>
+                             </div>
+                             <div className="mt-4">
+                                <div className="d-flex justify-content-between">
+                                   <div>
+                                      <p className="ds_in-sub">Sub Total</p>
+                                      <p className="ds_in-sub">Discount</p>
+                                      <p className="ds_in-sub">SGST</p>
+                                      <p className="ds_in-sub">CGST</p>
+                                      <h6 className="ds_in-total">Total Amount</h6>
+                                   </div>
+                                   <div className="ms-5">
+                                      <p className="ds_in-sub fw-600 text-dark">$240.00</p>
+                                      <p className="ds_in-sub fw-600" style={{color: "#0F993E"}}>-$40.00</p>
+                                      <p className="ds_in-sub fw-600 text-dark">$3.50</p>
+                                      <p className="ds_in-sub fw-600 text-dark">$6.50</p>
+                                      <h6 className="ds_in-total">$210.00</h6>
+                                   </div>
+                                </div>
+                             </div>
+                          </div>
+                        </div>
+
+                        <div className="mt-5 text-center">
+                          <div>
+                             <p className="ds_in-thank mb-0">Thank you for shopping with us!</p>
+                             <p className="ds_in-thank ">Have a nice day <img src={require("../Img/smile.png")} alt="" /></p>
+                          </div>
+                        </div>
                   </div>
  
                 </div>

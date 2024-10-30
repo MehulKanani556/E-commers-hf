@@ -571,6 +571,7 @@
 .V_confirmed {
     font-size: 13px;
     font-weight: 500;
+    white-space: nowrap;
 }
 
 .V_track_time {
@@ -796,6 +797,8 @@
 /* -------------------------------------------------------- media query -------------------------------------------------------- */
 
 
+
+
 /*  extra small device */
 @media (max-width:480px) {
 
@@ -967,6 +970,32 @@
     }
 
 }
+
+@media (max-width:550px) {
+   .V_back-line{
+      width: 75%;
+   }
+}
+
+@media (max-width:426px) {
+    .V_back-line{
+        width: 65%;
+     }
+}
+
+@media (max-width:350px) {
+    .V_right_border{
+        border-right: none;
+    }
+    .VK_order_card {
+        padding: 10px;
+    }
+    .VK_order_product{
+        padding: 0 !important;
+    }
+}
+
+
 
 
 /* small device */
