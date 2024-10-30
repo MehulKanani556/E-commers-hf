@@ -27,7 +27,7 @@ import Subscribe from '../../Vivek/Component/common/Subscribe';
 import Process from '../../Vivek/Component/common/Process';
 import Footer from '../../Vivek/Component/footer/Footer';
 
-// import ReactImageMagnify from 'react-image-magnify';
+import ReactImageMagnify from 'react-image-magnify';
 
 
 const WomenDetails = () => {
@@ -333,7 +333,7 @@ const WomenDetails = () => {
                                             <div className="d_img ">
 
                                                 <div className='d_reactglass'>
-                                                    {/* <ReactImageMagnify
+                                                    <ReactImageMagnify
                                                         {...{
                                                             smallImage: {
                                                                 alt: 'Main content',                
@@ -350,7 +350,7 @@ const WomenDetails = () => {
                                                                 backgroundColor: 'rgba(255,255,255,0.3)',
                                                             },
                                                         }}
-                                                    /> */}
+                                                    />
                                                 </div>
 
                                                 <div className="d_delicon">

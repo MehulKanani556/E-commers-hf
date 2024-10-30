@@ -98,7 +98,7 @@
 }
 
 .VK_margig {
-    margin-top: -25px;
+    margin-top: -11px;
 }
 
 
@@ -127,6 +127,10 @@
 
     .VK_three_child h3 {
         font-size: 18px;
+    }
+
+    .VK_margig {
+        margin-top: -11px;
     }
 }
 
