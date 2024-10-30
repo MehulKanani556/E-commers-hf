@@ -30,6 +30,11 @@ import Profile from './darshan/pages/Profile';
 
 import GooglepayUPIMethod from './Vivek/Component/User/GooglepayUPIMethod'
 import TrackOrder from './Vivek/Component/User/TrackOrder';
+import TrackRefund from './Vivek/Component/User/TrackRefund';
+import MyOrderwithTracking from './Vivek/Component/User/MyOrderwithTracking';
+import TrackReturnRefund from './Vivek/Component/User/TrackReturnRefund';
+import RateReview from './Vivek/Component/User/RateReview';
+import Combined from './Vivek/Component/User/Combined';
 
 import Cart from './Dhruvin/Components/Cart/Cart';
 import Animation from './darshan/components/Animation';
@@ -81,6 +86,13 @@ function App() {
 
 
           <Route path="/trackorder" element={<TrackOrder />} />
+
+          <Route path='/trackrefund' element={<TrackRefund />} />
+          <Route path='/myordertrack' element={<MyOrderwithTracking />} />
+
+          <Route path='/returnrefund' element={<TrackReturnRefund />} />
+          <Route path='/ratereview' element={<RateReview />} />
+          <Route path='/combine' element={<Combined />} />
          
           {/* user */}
           <Route path="/user" element={<User />}>

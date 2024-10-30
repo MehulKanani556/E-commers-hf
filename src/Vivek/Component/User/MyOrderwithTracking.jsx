@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../User/user.css';
 import Map from '../Map';
 import { Modal } from 'react-bootstrap';
 import Header from '../../Component/header/Header.jsx'
 import Footer from '../footer/Footer.jsx';
 
-function TrackOrder() {
+function MyOrderwithTracking() {
 
-    const [deletecard, setDeletecard] = useState(false);
+    const [returncard, setReturncard] = useState(false);
     const [canclecard, setCanclecard] = useState(false);
 
-    const handleCancelOrder = () => {
-        setDeletecard(true); // Show the cancel order modal
+    const handleReturnOrder = () => {
+        setReturncard(true); // Show the cancel order modal
     };
 
     const handleSaveCancel = (event) => {
         event.preventDefault();
-        setDeletecard(false); // Close the cancel order modal
+        setReturncard(false); // Close the cancel order modal
         setCanclecard(true); // Show the success modal
     };
 
@@ -29,7 +29,7 @@ function TrackOrder() {
             <section className='VK_user_profile mb-4 h-100 '>
                 <div className="d_container">
                     <h2 className='VK_trackorder_heading py-5 mb-0'>
-                        Track Order
+                        My Order
                     </h2>
 
 
@@ -63,7 +63,7 @@ function TrackOrder() {
                                 <div className='d-flex justify-content-between flex-wrap align-items-center VK_border_bottom pb-4'>
                                     <div>
                                         <p className='m-0 fw-600 font_18'>
-                                            UPI ID
+                                            Order Details
                                         </p>
                                     </div>
                                 </div>
@@ -83,7 +83,7 @@ function TrackOrder() {
                                             </div>
                                         </div>
                                         <div className="col-lg-8 py-3 pt-lg-0 pt-xl-3 position-relative">
-                                            <div className='V_back-line'></div>
+                                            <div className='V_back-line2'></div>
                                             <div className="d-flex justify-content-between px-md-3 px-lg-5 ">
                                                 <div className='text-center'>
                                                     <p className='V_confirmed mb-0'>Order Confirmed</p>
@@ -99,15 +99,15 @@ function TrackOrder() {
                                                 </div>
                                                 <div className='text-center'>
                                                     <p className='V_confirmed mb-0'>Order Confirmed</p>
-                                                    <img src={require('../../assets/Out for Delivery logo.png')} alt="" className='py-2' />
+                                                    <img src={require('../../assets/Out for delivery 2.png')} alt="" className='py-2' />
                                                     <p className='V_track_time mb-0'>05 Oct, 2024 <span>8:36 PM</span></p>
-                                                    {/* <p className='V_order_description mb-0'>your order has been placed.</p> */}
+                                                    <p className='V_order_description mb-0'>Your item has been out for delivery</p>
                                                 </div>
                                                 <div className='text-center'>
                                                     <p className='V_confirmed mb-0'>Delivered</p>
-                                                    <img src={require('../../assets/delivered logo.png')} alt="" className='py-2' />
+                                                    <img src={require('../../assets/delivered 2.png')} alt="" className='py-2' />
                                                     <p className='V_track_time mb-0'>10 Oct, 2024 <span>8:36 PM</span></p>
-                                                    {/* <p className='V_order_description mb-0'>your order has been placed.</p> */}
+                                                    <p className='V_order_description mb-0'>Your item has been delivered</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -150,9 +150,9 @@ function TrackOrder() {
                                         </div>
                                         <div className='text-end'>
                                             <button type='submit' className='V_cancle_order_btn px-sm-3 px-md-4 py-2'
-                                                onClick={handleCancelOrder}
+                                                onClick={handleReturnOrder}
                                             >
-                                                Cancel Order
+                                                Return Order
                                             </button>
                                         </div>
                                     </div>
@@ -169,8 +169,8 @@ function TrackOrder() {
 
             {/* Cancle ordered model */}
             <Modal
-                show={deletecard}
-                onHide={() => setDeletecard(false)}
+                show={returncard}
+                onHide={() => setReturncard(false)}
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
                 className='VK_add_address_model_'
@@ -178,40 +178,91 @@ function TrackOrder() {
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
                         <h5 className='VK_add_address_model_heading'>
-                            Cancel Order
+                            Return Order
                         </h5>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className='p-2 py-3'>
                         <form action="" onSubmit={handleSaveCancel} className='w-100 VK_address_form'>
+                            <div className='VK_name mb-3'>
+                                <span className='VK_input_label pb-1'>
+                                    Order ID<span className='V_complasery'>*</span>
+                                </span>
+                                <input type="text" className='VK_from_input w-100 py-2 px-3 mt-2'
+                                    placeholder='Enter Order ID'>
+
+                                </input>
+                            </div>
                             <div className='VK_name mb-4'>
                                 <span className='VK_input_label pb-1'>
-                                    Reason for cancellation <span className='V_complasery'>*</span>
+                                    Reason for Return <span className='V_complasery'>*</span>
                                 </span>
-                                <select type="text" className='VK_from_input w-100 py-2 px-3 mt-2' >
+                                <select type="text" className='VK_from_input w-100 py-2 px-3 mt-2' placeholder='Select Reason' >
                                     <option value="">I was hopping for a shorter delivery time</option>
-                                    <option value="">Price of the product has now decreased</option>
-                                    <option value="">I want to change the delivery address</option>
-                                    <option value="">I’m worried about the ratings/reviews</option>
-                                    <option value="">I want to change the payment option</option>
-                                    <option value="">I want to change the contact details</option>
+                                    <option value="">Product quality does not match the level of its worth</option>
+                                    <option value="">The product doesn't look like the online picture </option>
+                                    <option value="">The product was damaged in transit or was poorly made </option>
+                                    <option value="">The product information was misleading</option>
                                     <option value="">My reason are not listed here</option>
                                 </select>
                             </div>
                             <div className='VK_name mb-3'>
                                 <span className='VK_input_label pb-1'>
-                                    Comments <span className='V_complasery'>*</span>
+                                    Mobile No <span className='V_complasery'>*</span>
                                 </span>
-                                <textarea type="text" className='V_textarea w-100 py-2 px-3 mt-2'>
-
-                                </textarea>
+                                <input type="text" className='VK_from_input w-100 py-2 px-3 mt-2'
+                                    placeholder='Enter Mobile no..'>
+                                </input>
+                            </div>
+                            <div className="mb-3">
+                                <span className='text-dark pb-3 pt-5'>
+                                    Enter OTP to return order
+                                </span>
+                                <div className="d-flex justify-content-between mt-3">
+                                    <input
+                                        type="text"
+                                        maxLength="1"
+                                        style={{ width: "40px", height: "40px", textAlign: "center" }}
+                                        className="me-2"
+                                    />
+                                    <input
+                                        type="text"
+                                        maxLength="1"
+                                        style={{ width: "40px", height: "40px", textAlign: "center" }}
+                                        className="me-2"
+                                    />
+                                    <input
+                                        type="text"
+                                        maxLength="1"
+                                        style={{ width: "40px", height: "40px", textAlign: "center" }}
+                                        className="me-2"
+                                    />
+                                    <input
+                                        type="text"
+                                        maxLength="1"
+                                        style={{ width: "40px", height: "40px", textAlign: "center" }}
+                                        className="me-2"
+                                    />
+                                    <input
+                                        type="text"
+                                        maxLength="1"
+                                        style={{ width: "40px", height: "40px", textAlign: "center" }}
+                                        className="me-2"
+                                    />
+                                    <input
+                                        type="text"
+                                        maxLength="1"
+                                        style={{ width: "40px", height: "40px", textAlign: "center" }}
+                                        className="me-2"
+                                    />
+                                </div>
                             </div>
                             <div className='mt-5 text-center'>
                                 <button type="submit" className='VK_add_address_submit mt-4'
                                     onClick={() => setCanclecard(true)}
                                 >
-                                    Save
+                                    Request for OTP
                                 </button>
                             </div>
                         </form>
@@ -230,16 +281,17 @@ function TrackOrder() {
             >
                 <Modal.Body>
                     <div className='p-2 py-3 text-center'>
-                        <img src={require('../../assets/order cancle successfully.png')} alt="Order Cancelled Successfully" className='pt-5 pb-4' />
-                        <p className='mb-0'>Your order has been cancelled successfully.</p>
-                        <div className='mt-5 text-center'>
+                        <img src={require('../../assets/track return order.png')} alt="Order Cancelled Successfully" className='pt-5 pb-4' />
+                        <p className='mb-0 V_success_modal'>Your request for return product has been <br />
+                            successfully received</p>
+                        <div className='mt-3 text-center'>
                             <button type="submit" className='V_order_success px-4 py-2 mt-3 mx-3 text-dark bg-white'
                             >
                                 Back to Home
                             </button>
                             <button type="submit" className='V_order_success px-4 py-2 mt-3 mx-3 text-white bg-dark'
                             >
-                                Track Refund
+                                Track Return/Refund
                             </button>
                         </div>
                     </div>
@@ -252,4 +304,4 @@ function TrackOrder() {
     )
 }
 
-export default TrackOrder
+export default MyOrderwithTracking
