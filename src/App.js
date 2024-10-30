@@ -95,7 +95,7 @@ function App() {
 
           {/* Cart  */}
 
-          {/* <Route path="/cart" element={<Cart/>}></Route>   */}
+          <Route path="/cart" element={<Cart/>}></Route>  
 
 
         </Routes>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "../../../Vivek/Component/header/Header";
 import Footer from "../../../Vivek/Component/footer/Footer";
 import "../Css/Cart.css";
@@ -6,6 +6,9 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { FaStar } from "react-icons/fa6";
 import { Form, Modal } from "react-bootstrap";
 import { FaCheckCircle } from "react-icons/fa";
+import { MdRefresh } from "react-icons/md";
+import { IoSearch } from "react-icons/io5";
+import { RiArrowDropDownLine } from "react-icons/ri";
 
 const Cart = () => {
 
@@ -24,6 +27,9 @@ const Cart = () => {
    const [showToggle, setShowToggle] = useState(false) 
    const [count, setCount] = useState(0)
    const [activeButton, setActiveButton] = useState("Pay on Delivery");
+   const [isOpen, setIsOpen] = useState(false);
+   const [selectedOption, setSelectedOption] = useState("Class");
+   const selectRef = useRef(null);
 
    const handleOpenModal = () => setShowModal(true);
    const handleCloseModal = () => setShowModal(false);
@@ -134,6 +140,31 @@ const Cart = () => {
    setActiveButton(buttonName);
  }
 
+   // Toggle dropdown open/close
+   const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  // Update selected option and close dropdown
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    setIsOpen(false);
+  };
+
+  // Close dropdown if clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (selectRef.current && !selectRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div>
       <Header />
@@ -144,11 +175,7 @@ const Cart = () => {
           <div className="row">
             <div className="col-xl-12 text-center">
               <div>
-                <img
-                  className="ds_cart-img"
-                  src={require("../Img/cart.png")}
-                  alt=""
-                />
+                <img className="ds_cart-img" src={require("../Img/cart.png")} alt=""/>
                 <h4 className="ds_card-title">Your cart is empty!</h4>
                 <p className="ds_card-text">
                   There is nothing in your bag. add some item.
@@ -163,7 +190,7 @@ const Cart = () => {
       </section>
 
       {/* **************** Cart Without Address ************* */}
-      <section className="mb-5 mt-4">
+      <section className="mb-5 mt-4 d-none">
         <div>
           <div className="d_container">
             <div className="d-flex justify-content-between align-items-center">
@@ -186,10 +213,7 @@ const Cart = () => {
                       </div>
                       <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 p-0 ">
                         <div className="text-center mx-auto">
-                          <div
-                            className="ds_with-circle d-inline-block m-auto"
-                            style={{ lineHeight: "35px" }}
-                          >
+                          <div className="ds_with-circle d-inline-block m-auto" style={{ lineHeight: "35px" }}>
                             <img src={require("../Img/order.png")} alt="" />
                           </div>
                           <p className="ds_with-text mt-1">Order Summary</p>
@@ -197,10 +221,7 @@ const Cart = () => {
                       </div>
                       <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 p-0 ">
                         <div className="d-flex justify-content-end flex-column align-items-end">
-                          <div
-                            className="ds_with-circle me-sm-3"
-                            style={{ lineHeight: "35px" }}
-                          >
+                          <div className="ds_with-circle me-sm-3" style={{ lineHeight: "35px" }}>
                             <img src={require("../Img/order.png")} alt="" />
                           </div>
                           <p className="ds_with-text mt-1">Payment</p>
@@ -230,16 +251,8 @@ const Cart = () => {
                       <div className="row mt-5">
                         <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
                           <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id="flexCheckDefault"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexCheckDefault"
-                            >
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                            <label class="form-check-label" for="flexCheckDefault">
                               Select All
                             </label>
                           </div>
@@ -279,19 +292,10 @@ const Cart = () => {
                           <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 ">
                             <div className="d-flex align-items-center">
                               <div>
-                                <input
-                                  class="form-check-input"
-                                  type="checkbox"
-                                  value=""
-                                  id="flexCheckDefault"
-                                />
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
                               </div>
                               <div className="ms-4">
-                                <img
-                                  src={require("../Img/img.png")}
-                                  className="ds_add-img"
-                                  alt=""
-                                />
+                                <img src={require("../Img/img.png")} className="ds_add-img" alt=""/>
                               </div>
                             </div>
                           </div>
@@ -334,19 +338,10 @@ const Cart = () => {
                           <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 ">
                             <div className="d-flex align-items-center">
                               <div>
-                                <input
-                                  class="form-check-input"
-                                  type="checkbox"
-                                  value=""
-                                  id="flexCheckDefault"
-                                />
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
                               </div>
                               <div className="ms-4">
-                                <img
-                                  src={require("../Img/img1.png")}
-                                  className="ds_add-img"
-                                  alt=""
-                                />
+                                <img src={require("../Img/img1.png")} className="ds_add-img" alt=""/>
                               </div>
                             </div>
                           </div>
@@ -387,19 +382,10 @@ const Cart = () => {
                           <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 ">
                             <div className="d-flex align-items-center">
                               <div>
-                                <input
-                                  class="form-check-input"
-                                  type="checkbox"
-                                  value=""
-                                  id="flexCheckDefault"
-                                />
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
                               </div>
                               <div className="ms-4">
-                                <img
-                                  src={require("../Img/img2.png")}
-                                  className="ds_add-img"
-                                  alt=""
-                                />
+                                <img src={require("../Img/img2.png")} className="ds_add-img" alt=""/>
                               </div>
                             </div>
                           </div>
@@ -492,30 +478,30 @@ const Cart = () => {
                   </div>
 
                   <div>
-                   <div className="ds_cod-main mt-5">
-                     <div className="row">
-                       <div className="col-xl-3 col-lg-3  text-center">
+                   <div className="ds_cod-main mt-5 ds_cod-bg">
+                     <div className="row p-0 m-0" style={{borderBottom:'1px solid black'}}>
+                       <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6  text-center p-0">
                          <div className="h-100">
                            <button className={`btn h-100 ${activeButton === 'Pay on Delivery' ? 'ds_cod-on-btn' : 'ds_cod-on-btn-txt'}`} style={{ padding: '13px 0px' }} onClick={() => handlePayment('Pay on Delivery')}>
                              Pay on Delivery
                            </button>
                          </div>
                        </div>
-                       <div className="col-xl-3 col-lg-3  text-center">
+                       <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6  text-center p-0">
                          <div className="h-100">
                            <button className={`btn h-100 ${activeButton === 'Credit / Debit Card' ? 'ds_cod-on-btn' : 'ds_cod-on-btn-txt'}`} style={{ padding: '13px 0px' }} onClick={() => handlePayment('Credit / Debit Card')}>
                              Credit / Debit Card
                            </button>
                          </div>
                        </div>
-                       <div className="col-xl-3 col-lg-3  text-center">
+                       <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6  text-center p-0">
                          <div className="h-100">
                            <button className={`btn h-100 ${activeButton === 'UPI ID' ? 'ds_cod-on-btn' : 'ds_cod-on-btn-txt'}`} style={{ padding: '13px 0px' }} onClick={() => handlePayment('UPI ID')}>
                              UPI ID
                            </button>
                          </div>
                        </div>
-                       <div className="col-xl-3 col-lg-3  text-center">
+                       <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6  text-center p-0">
                          <div className="h-100">
                            <button className={`btn h-100 ${activeButton === 'Net Banking' ? 'ds_cod-on-btn' : 'ds_cod-on-btn-txt'}`} style={{ padding: '13px 0px' }} onClick={() => handlePayment('Net Banking')}>
                              Net Banking
@@ -523,9 +509,116 @@ const Cart = () => {
                          </div>
                        </div>
                      </div>
-                     <div style={{border: "0.1px solid #6A6A6A"}}></div>
+                     {/* *************** Pay On Delivery ************** */}
+                     <section className="d-none">
+                        <div className="row justify-content-center  pt-sm-5 pt-2 ds_pay-box mx-xl-0 mx-2">
+                           <div className="col-xl-10">
+                             <div className="row justify-content-center">
+                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                                   <input type="text" className="ds_cod-input " placeholder="Enter the captcha" />
+                                </div>
+                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                                   <input type="text" className="ds_cod-input " placeholder="Enter card number" />
+                               </div>  
+                               <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                                   <input type="text" className="ds_cod-input " placeholder="MM/YYYY" />
+                                </div>
+                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                                   <input type="text" className="ds_cod-input " placeholder="Enter CVV" />
+                                </div> 
+                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-5">
+                                    <button className="btn ds_cod-pay">Pay $220</button>
+                                </div> 
+                             </div>
+                           </div>
+                        </div>
+                     </section>
+
+                     {/* *************** UPI ID ************** */}
+                      <section className="ds_pay-box d-none">
+                        <div className="pt-sm-5 mt-2 pt-2">
+                           <div className="row justify-content-center mx-xl-0 mx-2 ">
+                              <div className="col-xl-10">
+                                <div className="">
+                                   <div className="position-relative ds_upi-arrow">
+                                     <input type="text" className="ds_upi-input " placeholder="Enter UPI ID" />
+                                     <select class="form-select ds_upi-select" aria-label="Default select example">
+                                       <option selected>@okicici</option>
+                                       <option value="1">One</option>
+                                       <option value="2">Two</option>
+                                       <option value="3">Three</option>
+                                    </select>
+                                   </div>
+                                </div>
+                              </div>
+                              <div className="col-xl-5 mt-5">
+                                 <button className="btn ds_cod-pay">Pay $220</button>
+                              </div>
+                           </div>
+                        </div>
+                      </section>
+
+                     {/* *************** Net Banking ************** */}
+                     <section >
+                         <div className="ds_pay-box">
+                             <div className="pt-sm-5 mt-2 pt-2 mx-xl-0 mx-2">
+                              <div className="row justify-content-center align-items-center">
+                                <div className="col-xl-10 ">
+                                   <div className="position-relative">
+                                      <input type="text" className="ds_net-input " placeholder="Search your bank" />
+                                      <div className="ds_net-icon">
+                                        <IoSearch />
+                                      </div>
+                                   </div>
+                                   <div>
+                                     <div className="d-flex flex-wrap justify-content-between align-items-center mt-5 mx-xl-0 mx-2">
+                                        <div className="text-center">
+                                          <img src={require('../Img/city.png')} alt="" className="ds_net-img" />
+                                          <p className="ds_net-text">Citi <br /> Bank</p>
+                                        </div>
+                                        <div className="text-center">
+                                          <img src={require('../Img/well.png')} alt="" className="ds_net-img" />
+                                          <p className="ds_net-text">Wells Fargo <br /> Bank</p>
+                                        </div>
+                                        <div className="text-center">
+                                          <img src={require('../Img/capital.png')} alt="" className="ds_net-img" />
+                                          <p className="ds_net-text">Capital One <br /> Bank</p>
+                                        </div>
+                                        <div className="text-center">
+                                          <img src={require('../Img/td.png')} alt="" className="ds_net-img" />
+                                          <p className="ds_net-text">TD <br /> Bank</p>
+                                        </div>
+                                        <div className="text-center">
+                                          <img src={require('../Img/city.png')} alt="" className="ds_net-img" />
+                                          <p className="ds_net-text">Citi <br /> Bank</p>
+                                        </div>
+                                        <div className="text-center">
+                                          <img src={require('../Img/capital.png')} alt="" className="ds_net-img" />
+                                          <p className="ds_net-text">Capital One <br /> Bank</p>
+                                        </div>
+                                        <div className="text-center">
+                                          <img src={require('../Img/td.png')} alt="" className="ds_net-img" />
+                                          <p className="ds_net-text">TD <br /> Bank</p>
+                                        </div>
+                                        <div className="text-center">
+                                          <img src={require('../Img/city.png')} alt="" className="ds_net-img" />
+                                          <p className="ds_net-text">Citi <br /> Bank</p>
+                                        </div>
+                                        <div className="text-center">
+                                          <img src={require('../Img/well.png')} alt="" className="ds_net-img" />
+                                          <p className="ds_net-text">Wells Fargo <br /> Bank</p>
+                                        </div>
+                                     </div>
+                                   </div>
+                                </div>
+                              </div>
+                             </div>
+                         </div>
+                     </section>
                    </div>
-                   </div>
+                  </div>
+
+
 
                 </div>
               </div>
@@ -794,6 +887,257 @@ const Cart = () => {
     </div>
   </div>
 </div>
+
+ {/* /* {************** Order Conformation *******************} */}
+ <section className="d-none">
+     <div className="d_container">
+        <div className="mt-4  mb-5 pb-4">
+            <div>
+               <h4 className="ds_con-title">Order Details</h4>
+               <p className="ds_con-text mt-3">Order placed successfully!</p>
+            </div>
+            <div className="row">
+              <div className="col-xl-8 col-lg-8">
+                <div>
+                    <iframe className="ds_con-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7439.261324736735!2d72.87650904796955!3d21.2068260871905!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04f76476e9ea7%3A0x361d912920aa035b!2sSilver%20Chowk%2C%20Punagam%20Parmukhpark%20Society%2C%20Yoginagar%20Society%2C%20Surat%2C%20Gujarat%20395010!5e0!3m2!1sen!2sin!4v1730193943220!5m2!1sen!2sin"   allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <div className="ds_con-box mt-4">
+                  <div>
+                     <p className="px-3 fw-600 mt-1">Order details</p>
+                     <div className="ds_con-line"></div>
+                     <div className="px-3">
+                      <div className="row justify-content-between">
+                        <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 mt-3">
+                          <div>
+                            <div className="d-flex ">
+                               <p className="ds_con-bill-txt ">Order ID:</p>
+                               <p className="ds_con-bill-deta text-dark fw-600 text-start" >#123456</p>
+                            </div>
+                            <div className="d-flex ">
+                               <p className="ds_con-bill-txt">Order Date:</p>
+                               <p className="ds_con-bill-deta text-dark fw-600" >21/09/2024</p>
+                            </div>
+                            <div className="d-flex ">
+                               <p className="ds_con-bill-txt">Payment Method:</p>
+                               <p className="ds_con-bill-deta text-dark fw-600" >Debit card <RiArrowDropDownLine /></p>
+                            </div>
+                            <div className="d-flex  mt-1">
+                               <p className="ds_con-bill-txt">Card name</p>
+                               <p className="ds_con-bill-deta text-dark fw-600" >VISA</p>
+                            </div>
+                            <div className="d-flex ">
+                               <p className="ds_con-bill-txt">Card no.</p>
+                               <p className="ds_con-bill-deta text-dark fw-600" >1234 5678 9123 4567</p>
+                            </div>
+                            <div className="d-flex ">
+                               <p className="ds_con-bill-txt">Card holder name</p>
+                               <p className="ds_con-bill-deta text-dark fw-600" >Jhon Wick</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12  mt-3">
+                          <div>
+                             <p className="ds_con-bill-txt">Billing Address</p>
+                             <p className="ds_con-font text-dark fw-600 " >Jhon Wick</p>
+                             <p className="ds_con-font text-dark fw-600">Ehrenkranz 13 Washington Square S, New York,Washington Square, NY 10012, USA</p>
+                             <p className="ds_con-font text-dark fw-600">+1 565 5656 565</p>
+                          </div>
+                        </div>
+
+                        <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12  mt-3 mb-3">
+                          <div>
+                             <p className="ds_con-bill-txt">Shipping Address</p>
+                             <p className="ds_con-font text-dark fw-600 " >Jhon Wick</p>
+                             <p className="ds_con-font text-dark fw-600">Ehrenkranz 13 Washington Square S, New York,Washington Square, NY 10012, USA</p>
+                             <p className="ds_con-font text-dark fw-600">+1 565 5656 565</p>
+                             <button className="btn ds_con-btn">View Invoice</button>
+                          </div>
+                        </div>
+
+
+                      </div>
+                     </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-xl-4 col-lg-4 mt-lg-0 mt-4">
+                  <div className="ds_con-buy">
+                     <div className="d-flex justify-content-between px-3">
+                        <div>
+                           <div className="d-flex">
+                              <div>
+                                <img src={require("../Img/trade.png")} alt="" />
+                              </div>
+                              <div className="ms-2">
+                                <p className="fw-600 mb-0 ds_con-trade">Traditional</p>
+                                <p className="ds_con-trade-text mb-0">Elegant peach color silk chaniya choli</p>
+                                <p className="ds_qantity" style={{color:'#6A6A6ABF'}}>Qty : <span className="fw-600 text-dark">01</span></p>
+                              </div>
+                           </div>
+                        </div>
+                        <p className="ds_con-price fw-600">$120</p>
+                     </div>
+
+                     <div className="d-flex justify-content-between mt-3 px-3">
+                        <div>
+                           <div className="d-flex">
+                              <div>
+                                <img src={require("../Img/trade.png")} alt="" />
+                              </div>
+                              <div className="ms-2">
+                                <p className="fw-600 ds_con-trade mb-0 ">Traditional</p>
+                                <p className="ds_con-trade-text mb-0">Elegant peach color silk chaniya choli</p>
+                                <p className="ds_qantity" style={{color:'#6A6A6ABF'}}>Qty : <span className="fw-600 text-dark">01</span></p>
+                              </div>
+                           </div>
+                        </div>
+                        <p className="ds_con-price fw-600">$120</p>
+                     </div>
+
+                     <div className="d-flex justify-content-between mt-3 px-3">
+                        <div>
+                           <div className="d-flex">
+                              <div>
+                                <img src={require("../Img/trade.png")} alt="" />
+                              </div>
+                              <div className="ms-2">
+                                <p className="fw-600 ds_con-trade mb-0">Traditional</p>
+                                <p className="ds_con-trade-text mb-0">Elegant peach color silk chaniya choli</p>
+                                <p className="ds_qantity" style={{color:'#6A6A6ABF'}}>Qty : <span className="fw-600 text-dark">01</span></p>
+                              </div>
+                           </div>
+                        </div>
+                        <p className="ds_con-price fw-600">$120</p>
+                     </div>
+                     <div class="ds_con-line mt-3"></div>
+
+                     <div>
+                        <div className="d-flex px-3 mt-3 justify-content-between">
+                           <h6 className="ds_con-total">Sub Total</h6>
+                           <h6 className="ds_con-total-price text-dark fw-600">$240</h6>
+                        </div>
+                        <div className="d-flex px-3 mt-3 justify-content-between">
+                           <h6 className="ds_con-total">Delivery Charge</h6>
+                           <h6 className="ds_con-total-price fw-600" style={{color: "#03CF18"}}>FREE</h6>
+                        </div>
+                     </div>
+                      <div className="ds_con-dash mt-3"></div>
+
+                      <div className="d-flex justify-content-between px-3 mt-3">
+                        <h4 className="ds_con-amount">Total Amount</h4>
+                        <h4 className="ds_con-amount">$220</h4>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+     </div>
+ </section>
+
+
+ {/* /* {************** Invoice *******************} */}
+ <section >
+   <div>
+       <div className="d_container">
+          <div className="mt-4">
+             <div className="row justify-content-center">
+                <div className="col-xl-8 ">
+                  <div className="ds_in-bg">
+                      <h5 className="fw-bold">LOGO</h5>
+                      <div className="d-flex justify-content-between mt-4">
+                         <div>
+                           <h5 className="ds_in-name">Jhon Wick</h5>
+                           <h6 className="ds_in-email">example@gmail.com</h6>
+                           <h6 className="ds_in-email">+1 565 5656 565</h6>
+                         </div>
+                         <div className="d-flex justify-content-between">
+                           <div>
+                              <p className="ds_in-text mb-0">Invoice No</p>
+                              <p className="ds_in-text mb-0">Invoice Date</p>
+                              <p className="ds_in-text mb-0">Order ID</p>
+                           </div>
+                           <div className="text-end">
+                              <p className="ds_in-text mb-0 text-dark fw-500">#123456</p>
+                              <p className="ds_in-text mb-0 text-dark fw-500">26/09/2024</p>
+                              <p className="ds_in-text mb-0 text-dark fw-500">#1123456789654</p>
+                           </div>
+                         </div>
+                      </div>  
+                  </div>
+                  <div className="row">
+                        <div className="col-xl-4 mt-4">
+                          <div className="ds_in-border">
+                              <p className="ds_in-sold fw-500 mb-2">SOLD BY</p>
+                              <p className="ds_in-sold text-dark fw-600 mb-0">COCOBLU RETAIL LIMITED </p>
+                              <p className="ds_in-add text-dark fw-400">Renaissance industrial smart city, Kalyan Sape road, Thane, Maharashtra, 421302 IN</p>
+                          </div>
+                        </div>
+
+                        <div className="col-xl-4 mt-4">
+                          <div className="ds_in-border">
+                              <p className="ds_in-sold fw-500 mb-2">BILLED TO</p>
+                              <p className="ds_in-sold text-dark fw-600 mb-0">Alex Shroff </p>
+                              <p className="ds_in-add text-dark fw-400">Ehrenkranz 13 Washington Square S , New York , Washington Square , NY 10012 , USA</p>
+                          </div>
+                        </div>
+
+                        <div className="col-xl-4 mt-4">
+                          <div className="ds_in-border border-0">
+                              <p className="ds_in-sold fw-500 mb-2">SHIPPED TO</p>
+                              <p className="ds_in-sold text-dark fw-600 mb-0">Alex Shroff </p>
+                              <p className="ds_in-add text-dark fw-400">Ehrenkranz 13 Washington Square S , New York , Washington Square , NY 10012 , USA</p>
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="ds_in-line mt-3"></div>
+                        </div>
+
+                         <div className="mt-4">
+                           <table>
+                               <thead>
+                                 <tr>
+                                   <th>Item</th>
+                                   <th>Qty.</th>
+                                   <th>Price</th>
+                                   <th>Amount</th>
+                                 </tr>
+                               </thead>
+                               <tbody>
+                                 <tr>
+                                   <td>
+                                     <div class="ds_table-title">Traditional Chaniya Choli</div>
+                                     <div class="ds_table-desc">Elegant peach color silk chaniya choli with dupatta & accessories</div>
+                                   </td>
+                                   <td>1</td>
+                                   <td class="ds_table-price">$120.00</td>
+                                   <td class="ds_table-price">$120.00</td>
+                                 </tr>
+                                 <tr>
+                                   <td>
+                                     <div class="ds_table-title">Traditional Chaniya Choli</div>
+                                     <div class="ds_table-desc">Elegant peach color silk chaniya choli with dupatta & accessories</div>
+                                   </td>
+                                   <td>1</td>
+                                   <td class="ds_table-price">$120.00</td>
+                                   <td class="ds_table-price">$120.00</td>
+                                 </tr>
+                               </tbody>
+                           </table>
+                             
+                             
+                             
+                         </div>
+                  </div>
+ 
+                </div>
+             </div>
+          </div>
+       </div>
+   </div>
+ </section>
 
       <Footer />
     </div>
