@@ -289,8 +289,8 @@
     border: 1px solid white;
     border-radius: 50%;
     color: white;
-    height: 30px;
-    width: 30px;
+    height: 60px;
+    width: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -309,14 +309,79 @@
     transform: translateY(-50%) translateX(-50%);
     justify-content: space-between;
 }
+.VK_slider_nav .icon{
+    font-size: 20px;
+}
+
+/* headphone animation */
 
 
+.VK_headphone_slider_size {
+    width: 88%;
+    margin: 0px auto;
+}
+.VK_slider_bgimage{
+    background-image: url('../../../darshan/d_img/headphoneanimationbg.png');
+    background-position: center ;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.VK_headphone_heading {
+    color: #51068B;
+    font-size: 90px;
+    font-weight: 900;
+    width: 42%;
+    line-height: 85px;
+}
 
+.VK_headphone_desc {
+    font-size: 18px;
+    line-height: 2;
+    font-weight: 500;
+    width: 39%;
+    color: #000000;
+    line-height: 26px;
+}
 
+.VK_headphone_slider{
+    position: relative;
+}
+.VK_headphone_container {
+    width: 400px;
+    height: 500px;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
 
-
-
-
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.VK_headphone_slider_controls{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    width: 125%;
+    transform: translateY(-50%) translateX(-50%);
+    justify-content: space-between;
+}
+.VK_headphone_slider_nav{
+    background-color: #fff;
+    border: 10px solid #FDDCDC;
+    border-radius: 50%;
+    color: white;
+    height: 60px;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.VK_headphone_slider_nav .icon{
+    font-size: 20px;
+    color: #8A4DC6;
+    
+}
 
 
 /* -------------------------------------------------------- media query -------------------------------------------------------- */
@@ -693,4 +758,86 @@
     }
 
 
+}
+
+/* watch animation  */
+
+@media(max-width:1199px){
+    .VK_watch_heading{
+        font-size: 48px;
+    }
+    .VK_watch_sub{
+        font-size: 26px;
+    }
+    .VK_watch_desc{
+        width: 80%;
+    }
+    .VK_watch_price{
+        font-size: 52px;
+    }
+}
+@media(max-width:991px){
+    .VK_watch_heading{
+        font-size: 40px;
+    }
+    .VK_watch_container{
+        width: 300px;
+        height: 400px;
+    }
+    .VK_slider_nav{
+        width: 40px;
+        height: 40px;
+    }
+    .VK_watch_price{
+        font-size: 44px;
+    }
+    .VK_watch_sub{
+        font-size: 24px;
+    }
+}
+@media(max-width:425px){
+    /* .VK_owl_item{
+        padding: 110px 0;
+    } */
+    .VK_watch_heading{
+        font-size: 32px;
+    }
+    .VK_watch_sub{
+        font-size: 22px;
+    }
+    .VK_watch_desc{
+        width: 100%;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+    .VK_watch_price{
+        font-size: 32px;
+    }
+    .VK_watch_container{
+        width: 250px;
+        height: 280px;
+    }
+}
+@media(max-width:375px){
+    .VK_watch_desc{
+        margin-bottom: 6px;
+    }
+    .VK_watch_container{
+        width: 220px;
+        height: 260px;
+    }
+    .VK_slider_controls{
+        width: 140%;
+    }
+}
+@media(max-width:320px){
+    .VK_watch_heading{
+        font-size: 28px;
+    }
+    .VK_watch_sub{
+        font-size: 20px;
+    }
+    .VK_watch_price{
+        font-size: 28px;
+    }
 }
