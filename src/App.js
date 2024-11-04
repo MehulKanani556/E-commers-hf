@@ -102,9 +102,9 @@ function App() {
             <Route path='myorder' element={<MyOrder />} />
             <Route path='faqs' element={<UserFaq />} />
           
-            {/* <Route path='term' element={<TermOfServices />} />
+            <Route path='term' element={<TermOfServices />} />
             <Route path='deactive' element={<UserDeactive />} />
-            <Route path='address' element={<UserAddress />} /> */}
+            <Route path='address' element={<UserAddress />} />
           </Route>
 
           {/* Cart  */}

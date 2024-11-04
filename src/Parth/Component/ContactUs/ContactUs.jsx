@@ -92,7 +92,7 @@ function ContactUs() {
                                    </label>
                                    </div>
                                </div>
-                               <label htmlFor="" className='mt-4' style={{color:"#6A6A6A"}}>Message</label>
+                               <label htmlFor="" className='mt-4 mb-2' style={{color:"#6A6A6A"}}>Message</label>
                                <div className="form-floating">
                                    <textarea className="form-control ds_us-textarea"  placeholder="Leave a comment here" ></textarea>
                                 </div>

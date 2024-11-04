@@ -28,7 +28,7 @@ import Process from '../../Vivek/Component/common/Process';
 import Footer from '../../Vivek/Component/footer/Footer';
 import ReactImageMagnify from 'react-image-magnify';
 
-// import ReactImageMagnify from 'react-image-magnify';
+import ReactImageMagnify from 'react-image-magnify';
 
 
 const WomenDetails = () => {
