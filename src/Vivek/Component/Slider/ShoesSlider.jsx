@@ -4,7 +4,7 @@ import OwlCarousel from 'react-owl-carousel';
 import { FaAngleLeft, FaAngleRight, FaLongArrowAltLeft } from 'react-icons/fa';
 import { MdOutlineArrowBack, MdOutlineArrowLeft, MdOutlineArrowRightAlt } from 'react-icons/md';
 import { PiArrowLeftFill, PiArrowRightFill } from 'react-icons/pi';
-import { Animated } from "react-animated-css";
+// import { Animated } from "react-animated-css";
 
 // Define headphone images as objects with id and image properties
 const headphoneimages = [
@@ -413,7 +413,7 @@ const ShoesSlider = () => {
                     <div className="VK_slider_bgimage h-100">
                         <div className="d-flex h-100 align-items-center VK_headphone_slider_size flex-sm-row flex-column-reverse">
                             <div className=''>
-                                <Animated key={animationKey} animationIn={direction === 'right' ? "slideInDown" : "slideInUp"} animationOut="fadeOut" isVisible={true}>
+                                {/* <Animated key={animationKey} animationIn={direction === 'right' ? "slideInDown" : "slideInUp"} animationOut="fadeOut" isVisible={true}>
                                     <div>
                                         <h2 className='VK_headphone_heading'>{headphoneContent[headphonecurrentImage]?.heading}</h2>
                                     </div>
@@ -422,17 +422,17 @@ const ShoesSlider = () => {
                                             {headphoneContent[headphonecurrentImage]?.description}
                                         </p>
                                     </div>
-                                </Animated>
+                                </Animated> */}
                             </div>
                             <div className='VK_headphone_slider'>
-                                <Animated key={animationKey} animationIn={direction === 'right' ? "slideInDown" : "slideInUp"} animationOut="fadeOut" isVisible={true}>
+                                {/* <Animated key={animationKey} animationIn={direction === 'right' ? "slideInDown" : "slideInUp"} animationOut="fadeOut" isVisible={true}>
                                     <div className='VK_headphone_container overflow d-flex flex-nowrap' ref={containerRef}>
                                         <div className='w-100 h-100'>
                                             <img src={headphoneimages[headphonecurrentImage]?.image} className='w-100 h-100' alt="" />
                                         </div>
 
                                     </div>
-                                </Animated>
+                                </Animated> */}
                                 <div className='VK_headphone_slider_controls d-flex justify-content-end'>
                                     <button
                                         className='VK_headphone_slider_nav'

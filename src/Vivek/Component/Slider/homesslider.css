@@ -1,0 +1,422 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Stick+No+Bills:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Stick+No+Bills:wght@200..800&family=Viaoda+Libre&display=swap');
+
+
+.V_spring {
+    background-image: url('../../../Parth/assets/rite of spring.png');
+    background-position: center;
+    height: 916px;
+    width: 1920px;
+    position: relative;
+}
+
+.V_rite_of {
+    width: 250px;
+    margin-top: -300px;
+}
+
+.V_rite {
+    font-family: Dancing Script;
+    font-size: 72px;
+    font-weight: 400;
+    color: white;
+}
+
+.V_50 {
+    margin-left: 700px;
+    padding-top: 100px;
+    color: white;
+}
+
+.V_bottom {
+    margin: 100px;
+    margin-top: -200px;
+    color: white;
+}
+
+.V_tank_top {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.V_shop_arri {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+.V_vintage_back {
+    background-image: url('../../../Parth/assets/vintage background.png');
+    background-position: center;
+    height: 916px;
+    width: 1920px;
+}
+
+.V_vintage_text {
+    font-family: Viaoda Libre;
+    font-size: 250px;
+    font-weight: 400;
+    color: white;
+    margin-left: 100px;
+    margin-top: 70px;
+}
+
+.V_vintage_sub_text {
+    font-family: Varela Round;
+    font-size: 20px;
+    font-weight: 400;
+    width: 370px;
+    color: white;
+    margin-left: 100px;
+    margin-top: 70px;
+}
+
+.V_vintage_btn {
+    background-color: #2B221E;
+    margin-left: 100px;
+    margin-top: -180px;
+}
+
+.V_main_girl {
+    margin-left: 580px;
+    margin-top: -630px;
+    /* width: 341px; */
+    height: 580px;
+}
+
+
+.V_featured {
+    font-family: Voltaire;
+    position: absolute;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 39.86px;
+    letter-spacing: 1em;
+    text-align: right;
+    color: white;
+    transform: rotate(90deg);
+    z-index: 5;
+    top: 15%;
+    width: 0;
+}
+
+.owl-carousel .owl-item img {
+    width: 430px;
+}
+
+
+@media (min-width: 1650px) {
+
+    .V_slider_height {
+        height: 916px;
+    }
+
+    .V_spring {
+        background-position: center;
+        width: 100%;
+    }
+
+    .V_rite_of {
+        width: 250px;
+        margin-top: -300px;
+    }
+
+    .V_rite {
+        font-size: 60px;
+    }
+
+    .V_50 {
+        margin-left: 600px;
+        padding-top: 100px;
+    }
+
+    .V_bottom {
+        margin: 100px;
+        margin-top: -200px;
+    }
+
+    .V_tank_top {
+        font-size: 20px;
+    }
+
+    .V_shop_arri {
+        font-size: 20px;
+    }
+}
+
+
+@media (min-width: 1440px) and (max-width: 1649px) {
+
+    .V_slider_height {
+        height: 750px;
+    }
+
+    .V_spring {
+        background-position: center;
+        width: 100%;
+    }
+
+    .V_rite_of {
+        width: 200px;
+        margin-top: -300px;
+    }
+
+    .V_rite {
+        font-size: 54px;
+    }
+
+    .V_50 {
+        margin-left: 500px;
+        padding-top: 35px;
+    }
+
+    .V_bottom {
+        margin: 100px;
+        margin-top: -300px;
+    }
+
+    .V_tank_top {
+        font-size: 20px;
+    }
+
+    .V_shop_arri {
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1439px) {
+    .V_slider_height {
+        height: 600px;
+    }
+
+    .V_spring {
+        background-position: center;
+        width: 100%;
+    }
+
+    .V_rite_of {
+        width: 150px;
+        margin-top: -320px;
+    }
+
+    .V_rite {
+        font-size: 44px;
+    }
+
+    .V_50 {
+        margin-left: 300px;
+        padding-top: 35px;
+    }
+
+    .V_bottom {
+        margin: 30px;
+        margin-top: -430px;
+    }
+
+    .V_tank_top {
+        font-size: 18px;
+    }
+
+    .V_shop_arri {
+        font-size: 18px;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+
+    .V_slider_height {
+        height: 600px;
+    }
+
+    .V_spring {
+        background-position: center;
+        width: 100%;
+    }
+
+    .V_rite_of {
+        width: 150px;
+        margin-top: -320px;
+    }
+
+    .V_rite {
+        font-size: 44px;
+    }
+
+    .V_50 {
+        margin-left: 300px;
+        padding-top: 35px;
+    }
+
+    .V_bottom {
+        margin: 30px;
+        margin-top: -430px;
+    }
+
+    .V_tank_top {
+        font-size: 18px;
+    }
+
+    .V_shop_arri {
+        font-size: 18px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+
+    .V_slider_height {
+        height: 550px;
+    }
+
+
+    .V_spring {
+        background-position: center;
+        width: 100%;
+    }
+
+    .V_rite_of {
+        width: 130px;
+        margin-top: -320px;
+    }
+
+    .V_rite {
+        font-size: 36px;
+    }
+
+    .V_50 {
+        margin-left: 200px;
+        padding-top: 35px;
+    }
+
+    .V_bottom {
+        margin: 50px;
+        margin-top: -470px;
+    }
+
+    .V_tank_top {
+        font-size: 18px;
+    }
+
+    .V_shop_arri {
+        font-size: 18px;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+
+
+    .V_slider_height {
+        height: 500px;
+    }
+
+    .V_spring {
+        background-position-y: -100px;
+        width: 100%;
+    }
+
+    .V_rite_of {
+        width: 120px;
+        margin-top: -375px;
+    }
+
+    .V_rite {
+        font-size: 30px;
+    }
+
+    .V_50 {
+        margin-left: 150px;
+        padding-top: 35px;
+    }
+
+    .V_bottom {
+        margin: 50px;
+        margin-top: -520px;
+    }
+
+    .V_tank_top {
+        font-size: 16px;
+    }
+
+    .V_shop_arri {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 575px) {
+
+    .V_slider_height {
+        height: 400px;
+    }
+
+    .V_spring {
+        background-position-y: -200px;
+        width: 100%;
+    }
+
+    .V_rite_of {
+        width: 120px;
+        margin-top: -400px;
+    }
+
+    .V_rite {
+        font-size: 30px;
+    }
+
+    .V_50 {
+        margin-left: 150px;
+        padding-top: 35px;
+    }
+
+    .V_bottom {
+        margin: 30px;
+        margin-top: -620px;
+    }
+
+    .V_tank_top {
+        font-size: 16px;
+    }
+
+    .V_shop_arri {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 300px) and (max-width: 479px) {
+
+
+    .V_slider_height {
+        height: 400px;
+    }
+
+    .V_spring {
+        background-position-y: -200px;
+        width: 100%;
+    }
+
+    .V_rite_of {
+        width: 120px;
+        margin-top: -400px;
+    }
+
+    .V_rite {
+        font-size: 30px;
+    }
+
+    .V_50 {
+        margin-left: 70px;
+        padding-top: 20px;
+    }
+
+    .V_bottom {
+        margin: 10px;
+        margin-top: -600px;
+    }
+
+    .V_tank_top {
+        font-size: 12px;
+    }
+
+    .V_shop_arri {
+        font-size: 12px;
+    }
+}
