@@ -71,19 +71,19 @@ const ShoesSlider = () => {
         }
     };
 
-
-    // main slider controll
     const slider_control = {
         items: 1,
         dots: true,
-    }
-
+        loop: false,
+        nav: false,
+    };
 
     // watch slider controller
 
-    const containerRef = useRef(null);
+    const containerRef1 = useRef(null);
     const [bgColor, setBgColor] = useState('linear-gradient(105.54deg, #F4A764 -2.93%, #FFDEC2 72.14%)');
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [carouselIndex, setCarouselIndex] = useState(0);
 
     const colors = [
         'linear-gradient(105.54deg, #F4A764 -2.93%, #FFDEC2 72.14%)',
@@ -92,7 +92,6 @@ const ShoesSlider = () => {
         'linear-gradient(105.54deg, #F24F4F -2.93%, #FFA895 72.14%)',
     ];
 
-
     const images = [
         require('../../assets/watch1.png'),
         require('../../assets/watch2.png'),
@@ -100,7 +99,10 @@ const ShoesSlider = () => {
         require('../../assets/watch4.png')
     ];
 
-    const handle_change_watch = (direction) => {
+    const handlechangewatch = (direction, e) => {
+        // Prevent event from bubbling up to carousel
+        e.preventDefault();
+        e.stopPropagation();
 
         setCurrentImageIndex((prevIndex) => {
             let newIndex = direction === 'left' ? prevIndex - 1 : prevIndex + 1;
@@ -108,7 +110,6 @@ const ShoesSlider = () => {
             else if (newIndex >= images.length) newIndex = 0;
             return newIndex;
         });
-
 
         setBgColor((prevColor) => {
             const currentIndex = colors.indexOf(prevColor);
@@ -119,62 +120,153 @@ const ShoesSlider = () => {
 
     // Headphone slider 
 
+    // Headphone slider setup (assumed to be similar)
     const [headphonecurrentImage, setHeadphoneCurrentImage] = useState(0);
     const [direction, setDirection] = useState('right');
-    const [animationKey, setAnimationKey] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(true);
 
-    const handleImageChange = () => {
+    // Initial animation effect
+    useEffect(() => {
+        const timer = setTimeout(() => setIsAnimating(false), 100);
+        return () => clearTimeout(timer);
+    }, []);
+
+    // Add initial animation effect
+    useEffect(() => {
+        // End the initial animation after transition time
+        const timer = setTimeout(() => setIsAnimating(false), 100);
+        return () => clearTimeout(timer);
+    }, []); // Empty dependency array means this runs once on mount
+
+    const handleHeadphoneChange = (e) => {
+        // Prevent event from bubbling up to carousel
+        e.preventDefault();
+        e.stopPropagation();
+        // Start animation
+        setIsAnimating(true);
+
         // Get the current image's ID
         const currentImageId = headphoneimages[headphonecurrentImage].id;
 
         if (direction === 'right') {
-            // Calculate the next image ID
             const nextImageId = currentImageId + 1;
 
-            // Check if nextImageId is within bounds
             if (nextImageId <= headphoneimages.length) {
-                // Find the next image index based on the next image ID
                 const nextImageIndex = headphoneimages.findIndex(img => img.id === nextImageId);
                 if (nextImageIndex !== -1) {
-                    // Set the next image index and update animation key
                     setHeadphoneCurrentImage(nextImageIndex);
-                    setAnimationKey(prevKey => prevKey + 1);
 
-                    // Change direction if the last image is reached
                     if (nextImageIndex === headphoneimages.length - 1) {
                         setDirection('left');
                     }
                 }
             }
         } else {
-            // Calculate the previous image ID
             const prevImageId = currentImageId - 1;
 
-            // Check if prevImageId is within bounds
             if (prevImageId >= 1) {
-                // Find the previous image index based on the previous image ID
                 const prevImageIndex = headphoneimages.findIndex(img => img.id === prevImageId);
                 if (prevImageIndex !== -1) {
-                    // Set the previous image index and update animation key
                     setHeadphoneCurrentImage(prevImageIndex);
-                    setAnimationKey(prevKey => prevKey + 1);
 
-                    // Change direction if the first image is reached
                     if (prevImageIndex === 0) {
                         setDirection('right');
                     }
                 }
             }
         }
+        // End animation after transition time (adjust if needed)
+        setTimeout(() => setIsAnimating(false), 100);
     };
-
-    // Effect to log the current image
-    // useEffect(() => {
-    //     console.log(headphoneimages[headphonecurrentImage]?.image); // Log current image whenever it changes
-    // }, [headphonecurrentImage]);
 
     return (
         <React.Fragment>
+
+            <OwlCarousel className="owl-theme" items={1} startPosition={carouselIndex} {...slider_control}>
+                {/* Headphone slider item */}
+                <div className="item VK_owl_item">
+                    <div className="VK_slider_bgimage h-100">
+                        <div className="d-flex h-100 align-items-center VK_headphone_slider_size flex-sm-row flex-column-reverse">
+                            <div>
+                                <Animated
+                                    animationIn={isAnimating ? (direction === 'right' ? "slideInDown" : "slideInUp") : ""}
+                                    animationOut="fadeOut"
+                                    isVisible={isAnimating}
+                                >
+                                    <div>
+                                        <h2 className='VK_headphone_heading'>{headphoneContent[headphonecurrentImage]?.heading}</h2>
+                                    </div>
+                                    <div className='mt-lg-4 mt-sm-3 mt-1'>
+                                        <p className='VK_headphone_desc'>
+                                            {headphoneContent[headphonecurrentImage]?.description}
+                                        </p>
+                                    </div>
+                                </Animated>
+                            </div>
+                            <div className='VK_headphone_slider'>
+                                <Animated
+                                    animationIn={isAnimating ? (direction === 'right' ? "slideInDown" : "slideInUp") : ""}
+                                    animationOut="fadeOut"
+                                    isVisible={isAnimating}
+                                >
+                                    <div className='VK_headphone_container overflow d-flex flex-nowrap' >
+                                        <div className='w-100 h-100'>
+                                            <img src={headphoneimages[headphonecurrentImage]?.image} className='w-100 h-100' alt="" />
+                                        </div>
+                                    </div>
+                                </Animated>
+                                <div className='VK_headphone_slider_controls d-flex justify-content-end'>
+                                    <button className='VK_headphone_slider_nav' onClick={handleHeadphoneChange}>
+                                        {direction === 'right' ? (
+                                            <PiArrowRightFill className="icon" />
+                                        ) : (
+                                            <PiArrowLeftFill className="icon" />
+                                        )}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Watch slider item */}
+                <div className="item VK_owl_item">
+                    <div className="VK_slider_gradient h-100" style={{ background: bgColor }}>
+                        <div className="d-flex h-100 align-items-center VK_watch_slider_size flex-sm-row flex-column-reverse">
+                            <div>
+                                <h2 className='VK_watch_heading'>Exquisite Watches</h2>
+                                <h5 className='text-white VK_watch_sub'>Choose Luxury,<span className='text-black ps-2'>Choose Us</span></h5>
+                                <div className='mt-lg-5 mt-sm-3 mt-1'>
+                                    <p className='VK_watch_desc'>
+                                        Discover the Perfect Watch for Every Occasion and Elevate Your Style with Timeless Elegance and Precision Craftsmanship - watch
+                                    </p>
+                                </div>
+                                <div className='mt-lg-5 mt-sm-3 mt-1'>
+                                    <h2 className='VK_watch_price text-white'>$430.00</h2>
+                                </div>
+                                <div className='mt-sm-4 mt-1 pb-3'>
+                                    <button className='VK_theme_btn'>Order Now</button>
+                                </div>
+                            </div>
+                            <div className='VK_watch_slider'>
+                                <div className='VK_watch_container overflow d-flex flex-nowrap' ref={containerRef1}>
+                                    <div className='w-100 h-100'>
+                                        <img src={images[currentImageIndex]} className='w-100 h-100' alt="" />
+                                    </div>
+                                </div>
+                                <div className='VK_slider_controls'>
+                                    <button className='VK_slider_nav' onClick={(e) => handlechangewatch('left', e)}>
+                                        <FaAngleLeft className='icon' />
+                                    </button>
+                                    <button className='VK_slider_nav' onClick={(e) => handlechangewatch('right', e)}>
+                                        <FaAngleRight className='icon' />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </OwlCarousel>
 
             {/* display none */}
             <section className='VK_slider_parent d-none inter'>
@@ -388,7 +480,7 @@ const ShoesSlider = () => {
                                 </div>
                             </div>
                             <div className='VK_watch_slider'>
-                                <div className='VK_watch_container overflow d-flex flex-nowrap' ref={containerRef}>
+                                <div className='VK_watch_container overflow d-flex flex-nowrap' ref={containerRef1}>
                                     <div className='w-100 h-100'>
                                         <img src={images[currentImageIndex]} className='w-100 h-100' alt="" />
                                     </div>
@@ -407,36 +499,42 @@ const ShoesSlider = () => {
                 </div>
             </OwlCarousel> */}
 
-
-            <OwlCarousel className="owl-theme" {...slider_control}>
+            {/* <OwlCarousel className="owl-theme" items={1} startPosition={carouselIndex} {...slider_control}>
                 <div className="item VK_owl_item">
                     <div className="VK_slider_bgimage h-100">
                         <div className="d-flex h-100 align-items-center VK_headphone_slider_size flex-sm-row flex-column-reverse">
                             <div className=''>
-                                <Animated key={animationKey} animationIn={direction === 'right' ? "slideInDown" : "slideInUp"} animationOut="fadeOut" isVisible={true}>
+                                <Animated
+                                    animationIn={isAnimating ? (direction === 'right' ? "slideInDown" : "slideInUp") : ""}
+                                    animationOut="fadeOut"
+                                    isVisible={isAnimating}
+                                >
                                     <div>
                                         <h2 className='VK_headphone_heading'>{headphoneContent[headphonecurrentImage]?.heading}</h2>
                                     </div>
-                                    <div className='mt-lg-4 mt-sm-3 mt-1'>
-                                        <p className='VK_watch_desc'>
+                                    <div className='mt-lg-4 mt-sm-3 mt-1 '>
+                                        <p className='VK_headphone_desc'>
                                             {headphoneContent[headphonecurrentImage]?.description}
                                         </p>
                                     </div>
                                 </Animated>
                             </div>
                             <div className='VK_headphone_slider'>
-                                <Animated key={animationKey} animationIn={direction === 'right' ? "slideInDown" : "slideInUp"} animationOut="fadeOut" isVisible={true}>
+                                <Animated
+                                    animationIn={isAnimating ? (direction === 'right' ? "slideInDown" : "slideInUp") : ""}
+                                    animationOut="fadeOut"
+                                    isVisible={isAnimating}
+                                >
                                     <div className='VK_headphone_container overflow d-flex flex-nowrap' ref={containerRef}>
                                         <div className='w-100 h-100'>
                                             <img src={headphoneimages[headphonecurrentImage]?.image} className='w-100 h-100' alt="" />
                                         </div>
-
                                     </div>
                                 </Animated>
                                 <div className='VK_headphone_slider_controls d-flex justify-content-end'>
                                     <button
                                         className='VK_headphone_slider_nav'
-                                        onClick={handleImageChange}
+                                        onClick={handleHeadphoneChange}
 
                                     >
                                         {direction === 'right' ? (
@@ -450,8 +548,47 @@ const ShoesSlider = () => {
                         </div>
                     </div>
                 </div>
-            </OwlCarousel>
-
+                <div className="item VK_owl_item">
+                    <div className="VK_slider_gradient h-100" style={{ background: bgColor }}>
+                        <div className="d-flex h-100 align-items-center VK_watch_slider_size flex-sm-row flex-column-reverse">
+                            <div>
+                                <div>
+                                    <h2 className='VK_watch_heading'>Exquisite Watches</h2>
+                                    <h5 className='text-white VK_watch_sub'>
+                                        Choose Luxury,<span className='text-black ps-2'>Choose Us</span>
+                                    </h5>
+                                </div>
+                                <div className='mt-lg-5 mt-sm-3 mt-1'>
+                                    <p className='VK_watch_desc'>
+                                        Discover the Perfect Watch for Every Occasion and Elevate Your Style with Timeless Elegance and Precision Craftsmanship - watch
+                                    </p>
+                                </div>
+                                <div className='mt-lg-5 mt-sm-3 mt-1'>
+                                    <h2 className='VK_watch_price text-white'>$430.00</h2>
+                                </div>
+                                <div className='mt-sm-4 mt-1 pb-3'>
+                                    <button className='VK_theme_btn'>Order Now</button>
+                                </div>
+                            </div>
+                            <div className='VK_watch_slider'>
+                                <div className='VK_watch_container overflow d-flex flex-nowrap' ref={containerRef1}>
+                                    <div className='w-100 h-100'>
+                                        <img src={images[currentImageIndex]} className='w-100 h-100' alt="" />
+                                    </div>
+                                </div>
+                                <div className='VK_slider_controls'>
+                                    <button className='VK_slider_nav' onClick={(e) => handlechangewatch('left', e)}>
+                                        <FaAngleLeft className='icon' />
+                                    </button>
+                                    <button className='VK_slider_nav' onClick={(e) => handlechangewatch('right', e)}>
+                                        <FaAngleRight className='icon' />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </OwlCarousel> */}
 
         </React.Fragment >
     )
