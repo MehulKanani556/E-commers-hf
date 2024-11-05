@@ -37,7 +37,6 @@ import RateReview from './Vivek/Component/User/RateReview';
 import Combined from './Vivek/Component/User/Combined';
 
 import Cart from './Dhruvin/Components/Cart/Cart';
-import Animation from './darshan/components/Animation';
 
 // import WomenDetails from './darshan/pages/WomenDetails';
 
@@ -63,8 +62,9 @@ function App() {
           <Route path='/women' element={<Womenstore />} />
           <Route path='/womenstore' element={<Womenfilter />} />
           <Route path='/womendetails' element={<WomenDetails />} />
+
+          {/* Profile */}
           <Route path='/profile' element={<Profile />} />
-          <Route path='/animation' element={<Animation />} />
 
           {/* about us */}
           <Route path="/about" element={<AboutUs />} />
@@ -84,7 +84,6 @@ function App() {
           {/* wishlist */}
           <Route path="/wishlist" element={<Wishlist />} />
 
-
           <Route path="/trackorder" element={<TrackOrder />} />
 
           <Route path='/trackrefund' element={<TrackRefund />} />
@@ -95,7 +94,7 @@ function App() {
           <Route path='/combine' element={<Combined />} />
          
           {/* user */}
-          <Route path="/user" element={<User />}>
+          {/* <Route path="/user" element={<User />}>
             <Route path='profile' element={<UserProfile />} />
             <Route path='payment' element={<UserpaymentMethod />} />
             <Route path='payment/upi' element={<GooglepayUPIMethod />} />
@@ -105,7 +104,7 @@ function App() {
             <Route path='term' element={<TermOfServices />} />
             <Route path='deactive' element={<UserDeactive />} />
             <Route path='address' element={<UserAddress />} />
-          </Route>
+          </Route> */}
 
           {/* Cart  */}
 

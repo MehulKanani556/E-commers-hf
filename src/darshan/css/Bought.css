@@ -117,7 +117,12 @@
         margin-left: 6px;
     }
 }
-
+@media(max-width:480px){
+    .d_bought .d_plusbox{
+        top: 45%;
+        left: 50%;
+    }
+}
 @media(max-width:425px) {
     .d_bought .d_plusbox{
         top: 45%;

@@ -15,10 +15,6 @@ function RateReview() {
                     <h2 className='VK_trackorder_heading pt-5 pb-3 mb-0'>
                         Rate & Review
                     </h2>
-
-
-
-
                     {/* empty order */}
                     <div className='VK_my_order d-flex justify-content-center align-items-center h-100 d-none'>
                         <div className='VK_empty_order text-center'>

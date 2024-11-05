@@ -1,71 +1,3 @@
-/* .d_animationbg {
-    background-color: #ffd37f;
-    height: 880px;
-    width: 100%;
-    position: relative;
-}
-
-.d_animationbg .d_anigroup {
-    position: absolute;
-    top: 20%;
-    left: 42%;
-}
-
-.d_animationbg .d_aniimg {
-    width: 100%;
-}
-
-.d_animationbg .d_aniimg img {
-    width: 240px;
-    height: 480px;
-    border-radius: 90px;
-    position: absolute;
-}
-
-.d_animationbg .d_aniimg .d_animationsubimg1 {
-    z-index: 4;
-}
-
-.d_animationbg .d_aniimg .d_animationsubimg2 {
-    z-index: 2;
-    transform: rotate(-5deg);
-}
-
-.d_animationbg .d_aniimg .d_animationsubimg3 {
-    z-index: 3;
-    transform: rotate(5deg);
-}
-
-.d_animationbg .d_poem {
-    z-index: 4;
-    position: absolute;
-    top: 30%;
-    left: 12%;
-}
-
-.d_animationbg .d_poem h2 {
-    width: 100%;
-    font-size: 200px;
-    font-weight: 700;
-    color: #fff;
-}
-
-.d_animationbg .d_cta {
-    position: absolute;
-    bottom: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.d_animationbg .d_cta a {
-    font-size: 20px;
-    font-weight: 500;
-    color: #F4F4F4;
-    background-color: #FF5656;
-    border-radius: 12px;
-    padding: 13px 40px;
-} */
-
 .d_animation {
     background-color: #ffefcf;
     height: 850px;
@@ -203,13 +135,15 @@
     left: 46%;
 }
 
-.d_animationbg .d_cta a {
+.d_animationbg .d_cta button {
     padding: 13px 40px;
     font-size: 20px;
     font-weight: 500;
     color: #F4F4F4;
     background-color: #FF5656;
     border-radius: 12px;
+    outline: none;
+    border: none;
 }
 
 .d_animation {
@@ -371,7 +305,7 @@
         left: 41%;
     }
 
-    .d_animationbg .d_cta a {
+    .d_animationbg .d_cta button {
         font-size: 18px;
         padding: 10px 30px;
     }

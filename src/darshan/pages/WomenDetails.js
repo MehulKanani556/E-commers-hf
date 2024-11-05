@@ -55,6 +55,10 @@ const WomenDetails = () => {
     const [lastX, setLastX] = useState(0);
     const imageCount = 4; // Number of images (adjust as needed)
     const images = useRef([]);
+    const [selectedSize, setSelectedSize] = useState(null);
+    const [selectedgbsize, setSelectedGBSize] = useState(null);
+    const [selectedColor, setSelectedColor] = useState(null);
+
     const dragThreshold = 30; // Increase this value to slow down the image change speed
 
     const galleryItems = [
@@ -336,17 +340,17 @@ const WomenDetails = () => {
                                                     <ReactImageMagnify
                                                         {...{
                                                             smallImage: {
-                                                                alt: 'Main content',                
-                                                                isFluidWidth: true,                 
-                                                                src: mainContent.src,               
+                                                                alt: 'Main content',
+                                                                isFluidWidth: true,
+                                                                src: mainContent.src,
                                                             },
                                                             largeImage: {
-                                                                src: mainContent.src,               
-                                                                width: 1200,                        
-                                                                height: 1800,                       
+                                                                src: mainContent.src,
+                                                                width: 1200,
+                                                                height: 1800,
                                                             },
-                                                            enlargedImagePosition: "over",          
-                                                            lensStyle: {                            
+                                                            enlargedImagePosition: "over",
+                                                            lensStyle: {
                                                                 backgroundColor: 'rgba(255,255,255,0.3)',
                                                             },
                                                         }}
@@ -464,9 +468,9 @@ const WomenDetails = () => {
                                 <div className="d_color">
                                     <div className="d_title">Colors :</div>
                                     <div className="d-flex">
-                                        <div className="d_colorcircle active"></div>
-                                        <div className="d_colorcircle" style={{ background: "#1D45A9" }}></div>
-                                        <div className="d_colorcircle" style={{ background: "#172631" }}></div>
+                                        <div className={`d_colorcircle ${selectedColor === '#E15939' ? 'active' : ''}`} style={{ background: '#E15939' }} onClick={() => setSelectedColor('#E15939')}></div>
+                                        <div className={`d_colorcircle ${selectedColor === '#1D45A9' ? 'active' : ''}`} style={{ background: '#1D45A9' }} onClick={() => setSelectedColor('#1D45A9')}></div>
+                                        <div className={`d_colorcircle ${selectedColor === '#172631' ? 'active' : ''}`} style={{ background: '#172631' }} onClick={() => setSelectedColor('#172631')}></div>
                                     </div>
                                 </div>
                                 <div className="d_size">
@@ -477,35 +481,35 @@ const WomenDetails = () => {
                                                 <Link className='text-decoration-underline d_cur' onClick={(e) => { e.preventDefault(); setsizeModalShow(true) }}>Size chart</Link>
                                             </div>
                                             <div className="d-flex">
-                                                <div className="d_sizebox d_disable d-flex justify-content-center align-items-center">
+                                                <div className={`d_sizebox d_disable d-flex justify-content-center align-items-center ${selectedSize === 34 ? 'active' : ''}`}>
                                                     <div className="d_diagonal-line"></div>
                                                     <p className='mb-0'>34</p>
                                                 </div>
-                                                <div className="d_sizebox d-flex justify-content-center align-items-center">
+                                                <div className={`d_sizebox d-flex justify-content-center align-items-center ${selectedSize === 36 ? 'active' : ''}`} onClick={() => setSelectedSize(36)}>
                                                     <p className='mb-0'>36</p>
                                                 </div>
-                                                <div className="d_sizebox active d-flex justify-content-center align-items-center">
+                                                <div className={`d_sizebox d-flex justify-content-center align-items-center ${selectedSize === 38 ? 'active' : ''}`} onClick={() => setSelectedSize(38)}>
                                                     <p className='mb-0'>38</p>
                                                 </div>
-                                                <div className="d_sizebox d-flex justify-content-center align-items-center">
+                                                <div className={`d_sizebox d-flex justify-content-center align-items-center ${selectedSize === 40 ? 'active' : ''}`} onClick={() => setSelectedSize(40)}>
                                                     <p className='mb-0'>40</p>
                                                 </div>
-                                                <div className="d_sizebox d-flex justify-content-center align-items-center">
+                                                <div className={`d_sizebox d-flex justify-content-center align-items-center ${selectedSize === 42 ? 'active' : ''}`} onClick={() => setSelectedSize(42)}>
                                                     <p className='mb-0'>42</p>
                                                 </div>
-                                                <div className="d_sizebox d-flex justify-content-center align-items-center">
+                                                <div className={`d_sizebox d-flex justify-content-center align-items-center ${selectedSize === 44 ? 'active' : ''}`} onClick={() => setSelectedSize(44)}>
                                                     <p className='mb-0'>44</p>
                                                 </div>
-                                                <div className="d_sizebox d-flex justify-content-center align-items-center">
+                                                <div className={`d_sizebox d-flex justify-content-center align-items-center ${selectedSize === 46 ? 'active' : ''}`} onClick={() => setSelectedSize(46)}>
                                                     <p className='mb-0'>46</p>
                                                 </div>
-                                                {/* <div className="d_sizebox d_gbsize d-flex justify-content-center align-items-center">
+                                                {/* <div className={`d_sizebox d_gbsize d-flex justify-content-center align-items-center ${selectedgbsize === 128 ? 'active' : ''}`} onClick={() => setSelectedGBSize(128)}>
                                                     <p className='mb-0'>128 GB</p>
                                                 </div>
-                                                <div className="d_sizebox d_gbsize d-flex justify-content-center align-items-center">
+                                                <div className={`d_sizebox d_gbsize d-flex justify-content-center align-items-center ${selectedgbsize === 256 ? 'active' : ''}`} onClick={() => setSelectedGBSize(256)}>
                                                     <p className='mb-0'>256 GB</p>
                                                 </div>
-                                                <div className="d_sizebox d_gbsize d_disable d-flex justify-content-center align-items-center">
+                                                <div className={`d_sizebox d_gbsize d_disable d-flex justify-content-center align-items-center ${selectedgbsize === 512 ? 'active' : ''}`}>
                                                     <div className="d_diagonal-line"></div>
                                                     <p className='mb-0'>512 GB</p>
                                                 </div> */}

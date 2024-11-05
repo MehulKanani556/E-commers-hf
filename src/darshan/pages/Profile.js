@@ -2,11 +2,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Accordion, Col, Modal, Offcanvas, Row, Form, Dropdown } from 'react-bootstrap';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaBars, FaChevronDown } from 'react-icons/fa';
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import '../../Vivek/Component/User/user.css'
 import Map from '../../Vivek/Component/Map';
 
 const Profile = () => {
+
+    const navigate = useNavigate();
 
     let Address = [
         {
@@ -163,14 +165,25 @@ const Profile = () => {
         setaddress(Address)
         setupi(data);
         setcard(cards)
-    }, [])
+    }, []);
+
+    const handleOrderNavigation = (status) => {
+        if (status === 'arriving') {
+            navigate('/trackorder'); 
+        } else if (status === 'Cancelled') {
+            navigate('/returnrefund'); 
+        } else if (status === 'Delivered') {
+            navigate('/ratereview'); 
+        }
+        
+      };
 
 
 
     return (
         <>
 
-            <section className='pb-5'>
+            <section className=''>
                 <div className='pt-5'>
                     <aside className='inter'>
                         <div className='d_container'>
@@ -517,8 +530,8 @@ const Profile = () => {
                                                                     </p>
                                                                     <input type="text" name="gender" className='VK_from_input w-100 py-2 px-3' />
                                                                 </div>
-                                                                <div className='w-100 px-xxl-4'>
-                                                                </div>
+                                                                {/* <div className='w-100 px-xxl-4'>
+                                                                </div> */}
                                                             </div>
                                                         </form>
                                                     </div>
@@ -562,8 +575,8 @@ const Profile = () => {
                                                                     </p>
                                                                     <input type="text" name="gender" className='VK_from_input w-100 py-2 px-3' />
                                                                 </div>
-                                                                <div className='w-100 px-xxl-4 my-3'>
-                                                                </div>
+                                                                {/* <div className='w-100 px-xxl-4 my-3'>
+                                                                </div> */}
                                                             </div>
                                                         </form>
                                                     </div>
@@ -648,7 +661,7 @@ const Profile = () => {
                                                                                 <span className='VK_order_date ps-2'>On {item.status_date}</span>
                                                                             </h4>
                                                                             <p className='font_14 fw-bold light_color'>{item.message}</p>
-                                                                            <p className='mt-auto text-end m-0 font_16 VK_track fw-500'>
+                                                                            <p className='mt-auto text-end m-0 font_16 VK_track fw-500 d_cur' onClick={() => handleOrderNavigation(item.status)}>
                                                                                 {
                                                                                     item.status === 'Delivered' ? 'Add Rate & Review' :
                                                                                         item.status === 'arriving' ? 'Track Order' :
@@ -784,7 +797,7 @@ const Profile = () => {
                                                                         {upi.length > 0 ? (
                                                                             upi.map((item) => (
                                                                                 <Col lg={6} md={12} sm={6} className='my-3' key={item.id}>
-                                                                                    <div className='VK_upi_card d-flex align-items-center w-100'>
+                                                                                    <div className='VK_upi_card d-flex justify-content-between align-items-center w-100'>
                                                                                         <div>
                                                                                             <img src={require('../d_img/googlepay.png')} height="28px" alt="Google Pay" />
                                                                                         </div>

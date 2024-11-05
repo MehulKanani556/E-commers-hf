@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import './../css/animation.css'
-// import { Animated } from "react-animated-css";
+import { Animated } from "react-animated-css";
 
 const Animation = () => {
 
@@ -34,14 +34,13 @@ const Animation = () => {
                             <h2 className='mb-0'>Get the Trend</h2>
                         </div>
                         <div className="d_cta">
-                            <a onClick={handleLetSeeClick} className='text-decoration-none'>Let’s See</a>
+                            <button onClick={handleLetSeeClick} className='text-decoration-none'>Let’s See</button>
                         </div>
                     </div>
                 )}
 
                 {/* Animation Sections */}
                 {currentSection === 1 && (
-                    // eslint-disable-next-line react/jsx-no-undef
                     <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true} animationInDuration={3000}>
                         <div className="d_animation fade-in " onClick={handleNextSection}>
                             <div className="d_img1">
@@ -58,12 +57,9 @@ const Animation = () => {
                             </div>
                         </div>
                     </Animated>
-
-
                 )}
 
                 {currentSection === 2 && (
-                    // eslint-disable-next-line react/jsx-no-undef
                     <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true} animationInDuration={3000}>
                         <div className="d_animation d_animation2 overflow-hidden fade-in" onClick={handleNextSection}>
                             <div className="d_img4">
@@ -83,7 +79,6 @@ const Animation = () => {
                 )}
 
                 {currentSection === 3 && (
-                    // eslint-disable-next-line react/jsx-no-undef
                     <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true} animationInDuration={3000}>
                         <div className="d_animation d_animation3 fade-in" onClick={handleNextSection}>
                             <div className="d_img1">
@@ -103,7 +98,6 @@ const Animation = () => {
                 )}
 
                 {currentSection === 4 && (
-                    // eslint-disable-next-line react/jsx-no-undef
                     <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true} animationInDuration={3000}>
                         <div className="d_animation d_animation4 overflow-hidden fade-in" onClick={handleNextSection}>
                             <div className="d_img4">
@@ -123,7 +117,6 @@ const Animation = () => {
                 )}
 
                 {currentSection === 5 && (
-                    // eslint-disable-next-line react/jsx-no-undef
                     <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true} animationInDuration={3000}>
                         <div className="d_animation d_animation5 fade-in" >
                             <div className="d_img1">
@@ -237,10 +230,6 @@ const Animation = () => {
                     <h2 className='mb-0'>Walk Around </h2>
                 </div>
             </div> */}
-
-
-
-
 
         </>
     )

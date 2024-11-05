@@ -731,7 +731,10 @@
 }
 
 .V_bg_star {
-    background-color: #ecb1b1;
+    background-color: #feefd9;
+}
+.V_bg_star .V_star{
+    color: #F8A120;
 }
 
 .V_rate_this {
@@ -742,7 +745,7 @@
 .V_star_size {
     width: 40px;
     height: 40px;
-    color: darkorange;
+    color: #F8A120;
 }
 
 .V_star_size1 {
@@ -1657,7 +1660,7 @@
     }
 
     .V_star {
-        color: darkorange;
+        color: #F8A120;
     }
 
 
