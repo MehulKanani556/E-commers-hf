@@ -72,18 +72,22 @@
 }
 
 .V_vintage_btn {
-    background-color: #2B221E;
+    background-color: #ffffff;
     margin-left: 100px;
-    margin-top: -180px;
+    margin-top: 25px;
 }
 
 .V_main_girl {
     margin-left: 580px;
-    margin-top: -630px;
+    margin-top: -420px;
     /* width: 341px; */
     height: 580px;
 }
 
+.V_shadow_girl {
+    margin-left: 750px;
+    margin-top: -485px;
+}
 
 .V_featured {
     font-family: Voltaire;
@@ -94,15 +98,105 @@
     letter-spacing: 1em;
     text-align: right;
     color: white;
-    transform: rotate(90deg);
+    transform: rotate(270deg);
     z-index: 5;
-    top: 15%;
+    top: 75%;
     width: 0;
 }
 
 .owl-carousel .owl-item img {
     width: 430px;
 }
+
+.V_jens {
+    position: relative;
+    width: 100%;
+    object-fit: cover;
+}
+
+.owl-carousel .owl-item .V_jens {
+    width: 230px;
+}
+
+.V_blur {
+    width: 270px;
+    padding: 20px 20px 10px 20px;
+    background-color: #D9D9D94F;
+    border: 1px solid #ffffff4f;
+    border-radius: 15px;
+}
+
+.V_jacket {
+    font-family: Viaoda Libre;
+    font-size: 20px;
+    font-weight: 400;
+    color: white;
+
+}
+
+.V_dil {
+    background-color: #264653;
+    border-radius: 50px;
+    min-width: 36px;
+    height: 36px;
+
+}
+
+.V_theli {
+    background-color: #264653;
+    border-radius: 50px;
+    min-width: 36px;
+    height: 36px;
+}
+
+
+
+.V_both_denim {
+    position: relative;
+    width: 400px;
+    left: calc(100% - 400px);
+    bottom: 25%;
+}
+
+.v_blur1 {
+    position: absolute;
+    top: -50%;
+    left: 30%;
+    z-index: 3;
+}
+
+.V_blur2 {
+    position: relative;
+    z-index: 5;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @media (min-width: 1650px) {
@@ -141,6 +235,103 @@
 
     .V_shop_arri {
         font-size: 20px;
+    }
+
+
+
+
+
+    .V_vintage_back {
+        background-position: center;
+        height: 100%;
+        width: 100%;
+    }
+
+    .V_vintage_text {
+        font-size: 250px;
+        margin-left: 100px;
+        margin-top: 70px;
+    }
+
+    .V_vintage_sub_text {
+        font-size: 20px;
+        width: 370px;
+        margin-left: 100px;
+        margin-top: 70px;
+    }
+
+    .V_vintage_btn {
+        margin-left: 100px;
+        margin-top: 25px;
+    }
+
+    .V_main_girl {
+        margin-left: 580px;
+        margin-top: -420px;
+        height: 580px;
+    }
+
+    .V_shadow_girl {
+        margin-left: 750px;
+        margin-top: -485px;
+    }
+
+    .V_featured {
+        font-size: 32px;
+        transform: rotate(270deg);
+        z-index: 5;
+        top: 75%;
+        width: 0;
+    }
+
+    .owl-carousel .owl-item img {
+        width: 430px;
+    }
+
+    .V_jens {
+        width: 100%;
+    }
+
+    .owl-carousel .owl-item .V_jens {
+        width: 230px;
+    }
+
+    .V_blur {
+        width: 270px;
+        padding: 20px 20px 10px 20px;
+    }
+
+    .V_jacket {
+        font-size: 20px;
+        font-weight: 400;
+    }
+
+    .V_dil {
+        min-width: 36px;
+        height: 36px;
+    }
+
+    .V_theli {
+        min-width: 36px;
+        height: 36px;
+    }
+
+
+
+    .V_both_denim {
+        width: 400px;
+        left: calc(100% - 400px);
+        bottom: 25%;
+    }
+
+    .v_blur1 {
+        top: -50%;
+        left: 30%;
+        z-index: 3;
+    }
+
+    .V_blur2 {
+        z-index: 5;
     }
 }
 
@@ -182,6 +373,103 @@
     .V_shop_arri {
         font-size: 20px;
     }
+
+
+
+    .V_vintage_back {
+        background-position: bottom;
+        height: 100%;
+        width: 100%;
+    }
+
+    .V_vintage_text {
+        font-size: 150px;
+        margin-left: 100px;
+        margin-top: 20px;
+    }
+
+    .V_vintage_sub_text {
+        font-size: 18px;
+        font-weight: 400;
+        width: 290px;
+        margin-left: 100px;
+        margin-top: 40px;
+    }
+
+    .V_vintage_btn {
+        margin-left: 100px;
+        margin-top: 20px;
+    }
+
+    .V_main_girl {
+        margin-left: 360px;
+        margin-top: -360px;
+        height: 540px;
+    }
+
+    .V_shadow_girl {
+        margin-left: 520px;
+        margin-top: -450px;
+    }
+
+    .V_featured {
+        font-size: 28px;
+        font-weight: 400;
+        transform: rotate(270deg);
+        z-index: 5;
+        top: 65%;
+        left: 5%;
+        width: 0;
+    }
+
+    .owl-carousel .owl-item img {
+        width: 400px;
+    }
+
+    .V_jens {
+        width: 100%;
+    }
+
+    .owl-carousel .owl-item .V_jens {
+        width: 200px;
+    }
+
+    .V_blur {
+        width: 240px;
+        padding: 20px 20px 10px 20px;
+    }
+
+    .V_jacket {
+        font-size: 17px;
+    }
+
+    .V_dil {
+        min-width: 30px;
+        height: 30px;
+    }
+
+    .V_theli {
+        min-width: 30px;
+        height: 30px;
+    }
+
+
+
+    .V_both_denim {
+        width: 400px;
+        left: calc(100% - 350px);
+        bottom: 25%;
+    }
+
+    .v_blur1 {
+        top: -50%;
+        left: 30%;
+        z-index: 3;
+    }
+
+    .V_blur2 {
+        z-index: 5;
+    }
 }
 
 @media (min-width: 1200px) and (max-width: 1439px) {
@@ -219,6 +507,102 @@
 
     .V_shop_arri {
         font-size: 18px;
+    }
+
+
+    .V_vintage_back {
+        background-position-y: -220px;
+        height: 100%;
+        width: 100%;
+    }
+
+    .V_vintage_text {
+        font-size: 130px;
+        margin-left: 130px;
+        margin-top: 45px;
+    }
+
+    .V_vintage_sub_text {
+        font-size: 16px;
+        font-weight: 400;
+        width: 215px;
+        margin-left: 130px;
+        margin-top: 40px;
+    }
+
+    .V_vintage_btn {
+        margin-left: 130px;
+        margin-top: 20px;
+    }
+
+    .V_main_girl {
+        margin-left: 360px;
+        margin-top: -320px;
+        height: 440px;
+    }
+
+    .V_shadow_girl {
+        margin-left: 495px;
+        margin-top: -380px;
+    }
+
+    .V_featured {
+        font-size: 24px;
+        font-weight: 400;
+        transform: rotate(270deg);
+        z-index: 5;
+        top: 75%;
+        left: 5%;
+        width: 0;
+    }
+
+    .owl-carousel .owl-item img {
+        width: 340px;
+    }
+
+    .V_jens {
+        width: 100%;
+    }
+
+    .owl-carousel .owl-item .V_jens {
+        width: 159px;
+    }
+
+    .V_blur {
+        width: 200px;
+        padding: 20px 20px 10px 20px;
+    }
+
+    .V_jacket {
+        font-size: 14px;
+    }
+
+    .V_dil {
+        min-width: 26px;
+        height: 26px;
+    }
+
+    .V_theli {
+        min-width: 26px;
+        height: 26px;
+    }
+
+
+
+    .V_both_denim {
+        width: 400px;
+        left: calc(100% - 330px);
+        bottom: 35%;
+    }
+
+    .v_blur1 {
+        top: -50%;
+        left: 24%;
+        z-index: 3;
+    }
+
+    .V_blur2 {
+        z-index: 5;
     }
 }
 
@@ -258,6 +642,102 @@
 
     .V_shop_arri {
         font-size: 18px;
+    }
+
+
+    .V_vintage_back {
+        background-position-y: -220px;
+        height: 100%;
+        width: 100%;
+    }
+
+    .V_vintage_text {
+        font-size: 130px;
+        margin-left: 130px;
+        margin-top: 45px;
+    }
+
+    .V_vintage_sub_text {
+        font-size: 16px;
+        font-weight: 400;
+        width: 215px;
+        margin-left: 130px;
+        margin-top: 40px;
+    }
+
+    .V_vintage_btn {
+        margin-left: 130px;
+        margin-top: 20px;
+    }
+
+    .V_main_girl {
+        margin-left: 360px;
+        margin-top: -320px;
+        height: 440px;
+    }
+
+    .V_shadow_girl {
+        margin-left: 495px;
+        margin-top: -380px;
+    }
+
+    .V_featured {
+        font-size: 24px;
+        font-weight: 400;
+        transform: rotate(270deg);
+        z-index: 5;
+        top: 75%;
+        left: 5%;
+        width: 0;
+    }
+
+    .owl-carousel .owl-item img {
+        width: 340px;
+    }
+
+    .V_jens {
+        width: 100%;
+    }
+
+    .owl-carousel .owl-item .V_jens {
+        width: 159px;
+    }
+
+    .V_blur {
+        width: 200px;
+        padding: 20px 20px 10px 20px;
+    }
+
+    .V_jacket {
+        font-size: 14px;
+    }
+
+    .V_dil {
+        min-width: 26px;
+        height: 26px;
+    }
+
+    .V_theli {
+        min-width: 26px;
+        height: 26px;
+    }
+
+
+
+    .V_both_denim {
+        width: 400px;
+        left: calc(100% - 310px);
+        bottom: 35%;
+    }
+
+    .v_blur1 {
+        top: -50%;
+        left: 24%;
+        z-index: 3;
+    }
+
+    .V_blur2 {
+        z-index: 5;
     }
 }
 
@@ -300,6 +780,103 @@
     .V_shop_arri {
         font-size: 18px;
     }
+
+
+    .V_vintage_back {
+        background-position-y: -220px;
+        height: 100%;
+        width: 100%;
+    }
+
+    .V_vintage_text {
+        font-size: 100px;
+        margin-left: 100px;
+        margin-top: 30px;
+    }
+
+    .V_vintage_sub_text {
+        font-size: 14px;
+        font-weight: 400;
+        width: 215px;
+        margin-left: 100px;
+        margin-top: 30px;
+    }
+
+    .V_vintage_btn {
+        margin-left: 100px;
+        margin-top: 10px;
+    }
+
+    .V_main_girl {
+        margin-left: 180px;
+        margin-top: -130px;
+        height: 330px;
+    }
+
+    .V_shadow_girl {
+        margin-left: 310px;
+        margin-top: -230px;
+        width: 200px !important;
+    }
+
+    .V_featured {
+        font-size: 20px;
+        font-weight: 400;
+        transform: rotate(270deg);
+        z-index: 5;
+        top: 65%;
+        left: 8%;
+        width: 0;
+    }
+
+    .owl-carousel .owl-item img {
+        width: 340px;
+    }
+
+    .V_jens {
+        width: 100%;
+    }
+
+    .owl-carousel .owl-item .V_jens {
+        width: 138px;
+    }
+
+    .V_blur {
+        width: 160px;
+        padding: 10px 10px 5px 10px;
+    }
+
+    .V_jacket {
+        font-size: 12px;
+    }
+
+    .V_dil {
+        min-width: 26px;
+        height: 26px;
+    }
+
+    .V_theli {
+        min-width: 26px;
+        height: 26px;
+    }
+
+
+
+    .V_both_denim {
+        width: 400px;
+        left: calc(100% - 275px);
+        bottom: 35%;
+    }
+
+    .v_blur1 {
+        top: -50%;
+        left: 20%;
+        z-index: 3;
+    }
+
+    .V_blur2 {
+        z-index: 5;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 767px) {
@@ -340,6 +917,103 @@
     .V_shop_arri {
         font-size: 16px;
     }
+
+
+    .V_vintage_back {
+        background-position-y: -270px;
+        height: 100%;
+        width: 100%;
+    }
+
+    .V_vintage_text {
+        font-size: 80px;
+        margin-left: 70px;
+        margin-top: 20px;
+    }
+
+    .V_vintage_sub_text {
+        font-size: 14px;
+        font-weight: 400;
+        width: 152px;
+        margin-left: 70px;
+        margin-top: 10px;
+    }
+
+    .V_vintage_btn {
+        margin-left: 70px;
+        margin-top: 5px;
+    }
+
+    .V_main_girl {
+        margin-left: 200px;
+        margin-top: -115px;
+        height: 300px;
+    }
+
+    .V_shadow_girl {
+        margin-left: 260px;
+        margin-top: -174px;
+        width: 153px !important;
+    }
+
+    .V_featured {
+        font-size: 14px;
+        font-weight: 400;
+        transform: rotate(270deg);
+        z-index: 5;
+        top: 50%;
+        left: 5%;
+        width: 0;
+    }
+
+    .owl-carousel .owl-item img {
+        width: 250px;
+    }
+
+    .V_jens {
+        width: 100%;
+    }
+
+    .owl-carousel .owl-item .V_jens {
+        width: 108px;
+    }
+
+    .V_blur {
+        width: 130px;
+        padding: 10px 10px 5px 10px;
+    }
+
+    .V_jacket {
+        font-size: 12px;
+    }
+
+    .V_dil {
+        min-width: 18px;
+        height: 18px;
+    }
+
+    .V_theli {
+        min-width: 18px;
+        height: 18px;
+    }
+
+
+
+    .V_both_denim {
+        width: 300px;
+        left: calc(100% - 200px);
+        bottom: 55%;
+    }
+
+    .v_blur1 {
+        top: -50%;
+        left: 20%;
+        z-index: 3;
+    }
+
+    .V_blur2 {
+        z-index: 5;
+    }
 }
 
 @media (min-width: 480px) and (max-width: 575px) {
@@ -378,6 +1052,110 @@
 
     .V_shop_arri {
         font-size: 16px;
+    }
+
+
+
+
+
+
+
+
+
+    .V_vintage_back {
+        background-position-y: -270px;
+        height: 100%;
+        width: 100%;
+    }
+
+    .V_vintage_text {
+        font-size: 80px;
+        margin-left: 70px;
+        margin-top: 20px;
+    }
+
+    .V_vintage_sub_text {
+        font-size: 14px;
+        font-weight: 400;
+        width: 152px;
+        margin-left: 70px;
+        margin-top: 10px;
+    }
+
+    .V_vintage_btn {
+        margin-left: 70px;
+        margin-top: 5px;
+    }
+
+    .V_main_girl {
+        margin-left: 200px;
+        margin-top: -115px;
+        height: 300px;
+    }
+
+    .V_shadow_girl {
+        margin-left: 260px;
+        margin-top: -174px;
+        width: 153px !important;
+    }
+
+    .V_featured {
+        font-size: 14px;
+        font-weight: 400;
+        transform: rotate(270deg);
+        z-index: 5;
+        top: 50%;
+        left: 5%;
+        width: 0;
+    }
+
+    .owl-carousel .owl-item img {
+        width: 250px;
+    }
+
+    .V_jens {
+        width: 100%;
+    }
+
+    .owl-carousel .owl-item .V_jens {
+        width: 108px;
+    }
+
+    .V_blur {
+        width: 130px;
+        padding: 10px 10px 5px 10px;
+    }
+
+    .V_jacket {
+        font-size: 12px;
+    }
+
+    .V_dil {
+        min-width: 18px;
+        height: 18px;
+    }
+
+    .V_theli {
+        min-width: 18px;
+        height: 18px;
+    }
+
+
+
+    .V_both_denim {
+        width: 300px;
+        left: calc(100% - 200px);
+        bottom: 55%;
+    }
+
+    .v_blur1 {
+        top: -50%;
+        left: 20%;
+        z-index: 3;
+    }
+
+    .V_blur2 {
+        z-index: 5;
     }
 }
 

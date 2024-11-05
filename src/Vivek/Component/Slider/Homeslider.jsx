@@ -46,13 +46,54 @@ function Homeslider() {
                                     </div>
 
                                     <div className=''>
-                                        <Button className='py-2 px-5 text-white V_vintage_btn'>Buy Now</Button>
+                                        <Button className='py-2 px-sm-4 px-lg-5 text-dark V_vintage_btn'>Buy Now</Button>
                                     </div>
                                     <div>
                                         <img src={require('../../../Parth/assets/Main Girl.png')} alt="" className='V_main_girl' />
+                                        <img src={require('../../../Parth/assets/Shadow.png')} alt="" className='V_shadow_girl' />
                                     </div>
-                                    <p className='V_featured'>FEATURED <br />
+                                    <p className='V_featured'>FEATURED 
                                         COLLECTION</p>
+                                    <div className='V_both_denim'>
+                                        <div className='V_blur V_blur2'>
+                                            <div className=''>
+                                                <img src={require('../../../Parth/assets/jacket.png')} alt="" className='V_jens' />
+                                            </div>
+                                            <div className="d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <p className='V_jacket mb-0'>Denim Jacket</p>
+                                                    <p className='V_jacket mb-0'>$54</p>
+                                                </div>
+                                                <div className='d-flex '>
+                                                    <div className='V_dil d-flex align-items-center justify-content-center me-md-2 me-1'>
+                                                        <img src={require('../../../Parth/assets/heart.png')} alt="" className='w-50' />
+                                                    </div>
+                                                    <div className='V_theli d-flex align-items-center justify-content-center me-md-2 me-1'>
+                                                        <img src={require('../../../Parth/assets/shopping-cart 1.png')} alt="" className='w-50' />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='V_blur v_blur1'>
+                                            <div className=''>
+                                                <img src={require('../../../Parth/assets/denim jens.png')} alt="" className='V_jens' />
+                                            </div>
+                                            <div className="d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <p className='V_jacket mb-0'>Denim Jacket</p>
+                                                    <p className='V_jacket mb-0'>$54</p>
+                                                </div>
+                                                <div className='d-flex '>
+                                                    <div className='V_dil d-flex align-items-center justify-content-center me-2'>
+                                                        <img src={require('../../../Parth/assets/heart.png')} alt="" className='w-50' />
+                                                    </div>
+                                                    <div className='V_theli d-flex align-items-center justify-content-center'>
+                                                        <img src={require('../../../Parth/assets/shopping-cart 1.png')} alt="" className='w-50' />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
