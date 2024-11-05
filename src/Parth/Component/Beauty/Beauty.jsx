@@ -11,6 +11,7 @@ import Subscribe from '../../../Vivek/Component/common/Subscribe.jsx';
 import Footer from '../../../Vivek/Component/footer/Footer.jsx'
 import Process from '../../../Vivek/Component/common/Process.jsx';
 import OwlCarousel from 'react-owl-carousel';
+import Homeslider from '../../../Vivek/Component/Slider/Homeslider.jsx';
 
 function Beauty() {
 
@@ -18,7 +19,7 @@ function Beauty() {
         <>
 
             <Header />
-
+            <Homeslider />
 
             <section className=''>
                 <OwlCarousel className='owl-theme' loop items={1}>
