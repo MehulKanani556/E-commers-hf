@@ -46,7 +46,7 @@ function Homeslider() {
                                     </div>
 
                                     <div className=''>
-                                        <Button className='py-2 px-sm-4 px-lg-5 text-dark V_vintage_btn'>Buy Now</Button>
+                                        <Button className='py-1 px-2 px-sm-4 px-lg-5 text-dark V_vintage_btn'>Buy Now</Button>
                                     </div>
                                     <div>
                                         <img src={require('../../../Parth/assets/Main Girl.png')} alt="" className='V_main_girl' />
@@ -65,10 +65,10 @@ function Homeslider() {
                                                     <p className='V_jacket mb-0'>$54</p>
                                                 </div>
                                                 <div className='d-flex '>
-                                                    <div className='V_dil d-flex align-items-center justify-content-center me-md-2 me-1'>
+                                                    <div className='V_dil d-flex align-items-center justify-content-center me-md-2 me-sm-1 me-1'>
                                                         <img src={require('../../../Parth/assets/heart.png')} alt="" className='w-50' />
                                                     </div>
-                                                    <div className='V_theli d-flex align-items-center justify-content-center me-md-2 me-1'>
+                                                    <div className='V_theli d-flex align-items-center justify-content-center me-md-2'>
                                                         <img src={require('../../../Parth/assets/shopping-cart 1.png')} alt="" className='w-50' />
                                                     </div>
                                                 </div>

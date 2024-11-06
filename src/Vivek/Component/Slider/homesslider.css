@@ -104,7 +104,7 @@
     width: 0;
 }
 
-.owl-carousel .owl-item img {
+.owl-carousel .owl-item .V_main_girl {
     width: 430px;
 }
 
@@ -284,7 +284,7 @@
         width: 0;
     }
 
-    .owl-carousel .owl-item img {
+    .owl-carousel .owl-item .V_main_girl {
         width: 430px;
     }
 
@@ -320,8 +320,9 @@
 
     .V_both_denim {
         width: 400px;
-        left: calc(100% - 400px);
-        bottom: 25%;
+        left: calc(100% - 500px);
+        bottom: 12%;
+        position: absolute;
     }
 
     .v_blur1 {
@@ -422,7 +423,7 @@
         width: 0;
     }
 
-    .owl-carousel .owl-item img {
+    .owl-carousel .owl-item .V_main_girl {
         width: 400px;
     }
 
@@ -457,8 +458,9 @@
 
     .V_both_denim {
         width: 400px;
-        left: calc(100% - 350px);
+        left: calc(100% - 420px);
         bottom: 25%;
+        position: absolute;
     }
 
     .v_blur1 {
@@ -556,7 +558,7 @@
         width: 0;
     }
 
-    .owl-carousel .owl-item img {
+    .owl-carousel .owl-item .V_main_girl {
         width: 340px;
     }
 
@@ -591,8 +593,10 @@
 
     .V_both_denim {
         width: 400px;
-        left: calc(100% - 330px);
-        bottom: 35%;
+        left: calc(100% - 360px);
+        bottom: 10%;
+        position: absolute;
+
     }
 
     .v_blur1 {
@@ -689,9 +693,10 @@
         top: 75%;
         left: 5%;
         width: 0;
+        line-height: 36.86px;
     }
 
-    .owl-carousel .owl-item img {
+    .owl-carousel .owl-item .V_main_girl {
         width: 340px;
     }
 
@@ -723,11 +728,11 @@
     }
 
 
-
     .V_both_denim {
         width: 400px;
-        left: calc(100% - 310px);
-        bottom: 35%;
+        left: calc(100% - 350px);
+        bottom: 10%;
+        position: absolute;
     }
 
     .v_blur1 {
@@ -827,9 +832,10 @@
         top: 65%;
         left: 8%;
         width: 0;
+        line-height: 24.86px;
     }
 
-    .owl-carousel .owl-item img {
+    .owl-carousel .owl-item .V_main_girl {
         width: 340px;
     }
 
@@ -964,9 +970,10 @@
         top: 50%;
         left: 5%;
         width: 0;
+        line-height: 20.86px;
     }
 
-    .owl-carousel .owl-item img {
+    .owl-carousel .owl-item .V_main_girl {
         width: 250px;
     }
 
@@ -1063,40 +1070,40 @@
 
 
     .V_vintage_back {
-        background-position-y: -270px;
+        background-position-y: -380px;
         height: 100%;
         width: 100%;
     }
 
     .V_vintage_text {
-        font-size: 80px;
-        margin-left: 70px;
+        font-size: 70px;
+        margin-left: 80px;
         margin-top: 20px;
     }
 
     .V_vintage_sub_text {
-        font-size: 14px;
+        font-size: 12px;
         font-weight: 400;
-        width: 152px;
-        margin-left: 70px;
-        margin-top: 10px;
+        width: 130px;
+        margin-left: 80px;
+        margin-top: 0px;
     }
 
     .V_vintage_btn {
-        margin-left: 70px;
+        margin-left: 80px;
         margin-top: 5px;
     }
 
     .V_main_girl {
-        margin-left: 200px;
-        margin-top: -115px;
-        height: 300px;
+        margin-left: 160px;
+        margin-top: -130px;
+        height: 230px;
     }
 
     .V_shadow_girl {
-        margin-left: 260px;
-        margin-top: -174px;
-        width: 153px !important;
+        margin-left: 230px;
+        margin-top: -118px;
+        width: 100px !important;
     }
 
     .V_featured {
@@ -1104,13 +1111,14 @@
         font-weight: 400;
         transform: rotate(270deg);
         z-index: 5;
-        top: 50%;
-        left: 5%;
+        top: 67%;
+        line-height: 16.86px;
+        left: 10%;
         width: 0;
     }
 
-    .owl-carousel .owl-item img {
-        width: 250px;
+    .owl-carousel .owl-item .V_main_girl {
+        width: 200px;
     }
 
     .V_jens {
@@ -1118,34 +1126,34 @@
     }
 
     .owl-carousel .owl-item .V_jens {
-        width: 108px;
+        width: 88px;
     }
 
     .V_blur {
-        width: 130px;
-        padding: 10px 10px 5px 10px;
+        width: 100px;
+        padding: 5px 5px 0px 5px;
     }
 
     .V_jacket {
-        font-size: 12px;
+        font-size: 8px;
     }
 
     .V_dil {
-        min-width: 18px;
-        height: 18px;
+        min-width: 14px;
+        height: 14px;
     }
 
     .V_theli {
-        min-width: 18px;
-        height: 18px;
+        min-width: 14px;
+        height: 14px;
     }
 
 
 
     .V_both_denim {
         width: 300px;
-        left: calc(100% - 200px);
-        bottom: 55%;
+        left: calc(100% - 180px);
+        bottom: 20%;
     }
 
     .v_blur1 {
@@ -1196,5 +1204,105 @@
 
     .V_shop_arri {
         font-size: 12px;
+    }
+
+
+
+    .V_vintage_back {
+        background-position-y: -380px;
+        height: 100%;
+        width: 100%;
+    }
+
+    .V_vintage_text {
+        font-size: 30px;
+        margin-left: 50px;
+        margin-top: 20px;
+    }
+
+    .V_vintage_sub_text {
+        font-size: 12px;
+        font-weight: 400;
+        width: 170px;
+        margin-left: 50px;
+        margin-top: 0px;
+    }
+
+    .V_vintage_btn {
+        margin-left: 50px;
+        margin-top: -20px;
+        font-size: 10px;
+    }
+
+    .V_main_girl {
+        margin-left: 100px;
+        margin-top: -20px;
+        height: 200px;
+    }
+
+    .V_shadow_girl {
+        margin-left: 150px;
+        margin-top: -95px;
+        width: 80px !important;
+    }
+
+    .V_featured {
+        font-size: 8px;
+        font-weight: 400;
+        transform: rotate(270deg);
+        z-index: 5;
+        top: 38%;
+        line-height: 10.86px;
+        left: 6%;
+        width: 0;
+    }
+
+    .owl-carousel .owl-item .V_main_girl {
+        width: 160px;
+    }
+
+    .V_jens {
+        width: 100%;
+    }
+
+    .owl-carousel .owl-item .V_jens {
+        width: 68px;
+    }
+
+    .V_blur {
+        width: 80px;
+        padding: 5px 5px 0px 5px;
+    }
+
+    .V_jacket {
+        font-size: 8px;
+    }
+
+    .V_dil {
+        min-width: 14px;
+        height: 14px;
+    }
+
+    .V_theli {
+        min-width: 14px;
+        height: 14px;
+    }
+
+
+
+    .V_both_denim {
+        width: 300px;
+        left: calc(100% - 150px);
+        bottom: 20%;
+    }
+
+    .v_blur1 {
+        top: -35%;
+        left: 18%;
+        z-index: 3;
+    }
+
+    .V_blur2 {
+        z-index: 5;
     }
 }

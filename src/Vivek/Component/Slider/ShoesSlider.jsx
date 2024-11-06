@@ -413,7 +413,7 @@ const ShoesSlider = () => {
                     <div className="VK_slider_bgimage h-100">
                         <div className="d-flex h-100 align-items-center VK_headphone_slider_size flex-sm-row flex-column-reverse">
                             <div className=''>
-                                 <Animated key={animationKey} animationIn={direction === 'right' ? "slideInDown" : "slideInUp"} animationOut="fadeOut" isVisible={true}>
+                                <Animated key={animationKey} animationIn={direction === 'right' ? "slideInDown" : "slideInUp"} animationOut="fadeOut" isVisible={true}>
                                     <div>
                                         <h2 className='VK_headphone_heading'>{headphoneContent[headphonecurrentImage]?.heading}</h2>
                                     </div>
