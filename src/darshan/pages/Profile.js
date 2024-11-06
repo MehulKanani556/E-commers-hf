@@ -169,16 +169,13 @@ const Profile = () => {
 
     const handleOrderNavigation = (status) => {
         if (status === 'arriving') {
-            navigate('/trackorder'); 
+            navigate('/trackorder');
         } else if (status === 'Cancelled') {
-            navigate('/returnrefund'); 
+            navigate('/returnrefund');
         } else if (status === 'Delivered') {
-            navigate('/ratereview'); 
+            navigate('/ratereview');
         }
-        
-      };
-
-
+    };
 
     return (
         <>
@@ -635,7 +632,11 @@ const Profile = () => {
                                                     {/* Orders list */}
                                                     <div className='VK_order_parent'>
                                                         {orders.map((item) => (
-                                                            <div className='VK_order_card my-3' key={item.id}>
+                                                            <div className='VK_order_card my-3' key={item.id} onClick={() => {
+                                                                if (item.status === 'Delivered') {
+                                                                    navigate('/combine');
+                                                                }
+                                                            }}>
                                                                 <div className='VK_order_product h-100 w-100 justify-content-between d-flex flex-wrap'>
                                                                     <div className='VK_order_detail d-flex flex-sm-row flex-column'>
                                                                         <div>
@@ -1241,7 +1242,7 @@ const Profile = () => {
                         </form>
                     </div>
                 </Modal.Body>
-            </Modal >
+            </Modal>
 
             {/* Edit detail Modal */}
 

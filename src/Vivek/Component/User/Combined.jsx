@@ -6,8 +6,12 @@ import Header from '../header/Header.jsx'
 import Footer from '../footer/Footer.jsx';
 import { Modal } from 'react-bootstrap';
 import { FaStar } from 'react-icons/fa6';
+import { useNavigate } from 'react-router-dom';
 
 function Combined() {
+
+    const navigate = useNavigate();
+
     const [returncard, setReturncard] = useState(false);
     const [canclecard, setCanclecard] = useState(false);
 
@@ -32,10 +36,6 @@ function Combined() {
                     <h2 className='VK_trackorder_heading py-5 mb-0'>
                         My Order
                     </h2>
-
-
-
-
                     {/* empty order */}
                     <div className='VK_my_order d-flex justify-content-center align-items-center h-100 d-none'>
                         <div className='VK_empty_order text-center'>
@@ -70,9 +70,9 @@ function Combined() {
                                 </div>
                                 <div className='VK_order_product h-100 w-100 justify-content-between d-flex flex-wrap  py-3'>
                                     <div className="row m-0 flex-lg-row flex-column-reverse w-100 ">
-                                        <div className="col-lg-4 ">
+                                        <div className="col-lg-4 px-0">
                                             <div className='d-flex'>
-                                                <div className='px-2'>
+                                                <div className='px-0'>
                                                     <img src={require('../../assets/order1.png')} alt="" width="100px" height="120px" />
                                                 </div>
                                                 <div className='ps-2 ps-sm-4'>
@@ -83,10 +83,10 @@ function Combined() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-lg-8 py-3 pt-lg-0 pt-xl-3 position-relative">
+                                        <div className="col-lg-8 py-3 VK_subtrack pt-lg-0 pt-xl-3 position-relative overflow-auto">
                                             <div className='V_back-line2'></div>
-                                            <div className="d-flex justify-content-between px-md-3 px-lg-5 ">
-                                                <div className='text-center'>
+                                            <div className="d-flex justify-content-between px-md-2 px-lg-5 ">
+                                                <div className='text-center '>
                                                     <p className='V_confirmed mb-0'>Order Confirmed</p>
                                                     <img src={require('../../assets/ordered confirmed.png')} alt="" className='py-2' />
                                                     <p className='V_track_time mb-0'>01 Oct, 2024 <span>1:21 PM</span></p>
@@ -199,7 +199,7 @@ function Combined() {
                                 <span className='VK_input_label pb-1'>
                                     Reason for Return <span className='V_complasery'>*</span>
                                 </span>
-                                <select type="text" className='VK_from_input w-100 py-2 px-3 mt-2' placeholder='Select Reason' >
+                                <select type="text" className='VK_from_input VK_return_input w-100 py-2 px-3 mt-2' placeholder='Select Reason' >
                                     <option value="">I was hopping for a shorter delivery time</option>
                                     <option value="">Product quality does not match the level of its worth</option>
                                     <option value="">The product doesn't look like the online picture </option>
@@ -290,7 +290,7 @@ function Combined() {
                             >
                                 Back to Home
                             </button>
-                            <button type="submit" className='V_order_success px-4 py-2 mt-3 mx-3 text-white bg-dark'
+                            <button type="submit" onClick={() => navigate('/trackrefund')} className='V_order_success px-4 py-2 mt-3 mx-3 text-white bg-dark'
                             >
                                 Track Return/Refund
                             </button>
