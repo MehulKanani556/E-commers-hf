@@ -173,36 +173,10 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @media (min-width: 1650px) {
 
-    .V_slider_height {
-        height: 916px;
+    .VK_silderh {
+        height: 800px;
     }
 
     .V_spring {
@@ -339,7 +313,7 @@
 
 @media (min-width: 1440px) and (max-width: 1649px) {
 
-    .V_slider_height {
+    .VK_silderh {
         height: 750px;
     }
 
@@ -475,7 +449,7 @@
 }
 
 @media (min-width: 1200px) and (max-width: 1439px) {
-    .V_slider_height {
+    .VK_silderh {
         height: 600px;
     }
 
@@ -612,7 +586,7 @@
 
 @media (min-width: 992px) and (max-width: 1199px) {
 
-    .V_slider_height {
+    .VK_silderh {
         height: 600px;
     }
 
@@ -749,7 +723,7 @@
 @media (min-width: 768px) and (max-width: 991px) {
 
 
-    .V_slider_height {
+    .VK_silderh {
         height: 550px;
     }
 
@@ -888,7 +862,7 @@
 @media (min-width: 576px) and (max-width: 767px) {
 
 
-    .V_slider_height {
+    .VK_silderh {
         height: 500px;
     }
 
@@ -1025,7 +999,7 @@
 
 @media (min-width: 480px) and (max-width: 575px) {
 
-    .V_slider_height {
+    .VK_silderh {
         height: 400px;
     }
 
@@ -1170,7 +1144,7 @@
 @media (min-width: 300px) and (max-width: 479px) {
 
 
-    .V_slider_height {
+    .VK_silderh {
         height: 400px;
     }
 

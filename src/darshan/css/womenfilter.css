@@ -107,15 +107,20 @@ input:focus {
     margin-bottom: 14px;
 }
 
-.d_cuscheckbox input {
-    display: none;
+.d_cuscheckbox input[type="checkbox"] {
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin-right: 14px;
+    accent-color: #2B221E;
 }
-
+  
+  
 .d_cuscheckbox:last-child {
     margin-bottom: 0;
 }
 
-.d_checkmark {
+/* .d_checkmark {
     height: 20px;
     width: 20px;
     background-color: #fff;
@@ -147,7 +152,7 @@ input:focus {
     border: solid #fff;
     border-width: 0 1px 1px 0;
     transform: rotate(45deg);
-}
+} */
 
 .d_cuscheckbox p {
     margin-left: 4px;
@@ -330,6 +335,12 @@ input:focus {
 
 .d_womenfilter .d_right .d_dropcon a:hover {
     color: #2A221E;
+}
+.d_womenfilter .offcanvas-body{
+    padding: 0;
+}
+.d_womenfilter .offcanvas-body .d_left{
+    box-shadow: none;
 }
 
 @media(max-width:1450px) {

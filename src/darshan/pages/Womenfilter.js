@@ -1955,7 +1955,6 @@ const Womenfilter = () => {
                                                             <div className='d_title'>Discount</div>
                                                             <div className='d_icon'>{isActiveDiscounts ? <FaMinus /> : <FaPlus />}</div>
                                                         </div>
-
                                                         {isActiveDiscounts &&
                                                             <>
                                                                 <div className='mt-3'>

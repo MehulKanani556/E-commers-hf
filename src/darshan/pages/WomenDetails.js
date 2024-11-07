@@ -58,6 +58,7 @@ const WomenDetails = () => {
     const [selectedSize, setSelectedSize] = useState(null);
     const [selectedgbsize, setSelectedGBSize] = useState(null);
     const [selectedColor, setSelectedColor] = useState(null);
+    const [selectedQuantity, setSelectedQuantity] = useState('Select')
 
     const dragThreshold = 30; // Increase this value to slow down the image change speed
 
@@ -112,6 +113,10 @@ const WomenDetails = () => {
     const togglequantity = (e) => {
         e.stopPropagation(); // Prevent immediate closure on toggle click
         setIsquantityOpen(!isquantityOpen);
+    };
+    const selectQuantity = (quantity) => {
+        setSelectedQuantity(quantity);
+        setIsquantityOpen(false);
     };
 
     // Function to load images from the public folder
@@ -208,6 +213,9 @@ const WomenDetails = () => {
             }
         }
     };
+
+
+
 
     // Re-render the image when the current frame changes
     // useEffect(() => {
@@ -520,17 +528,17 @@ const WomenDetails = () => {
                                             <div class="d_dropdownqun">
                                                 <button class="d_dropbtnqun" onClick={togglequantity}>
                                                     <div className="d-flex justify-content-between align-items-center">
-                                                        Select
+                                                    {selectedQuantity}
                                                         <MdKeyboardArrowDown className='ms-2 d_dropicon' />
                                                     </div>
                                                 </button>
                                                 {isquantityOpen && (
                                                     <div className="d_dropconqun">
-                                                        <a href="#home">1</a>
-                                                        <a href="#about">2</a>
-                                                        <a href="#contact">3</a>
-                                                        <a href="#contact">4</a>
-                                                        <a href="#contact">5</a>
+                                                        <a href="#select1" onClick={() => selectQuantity('1')}>1</a>
+                                                        <a href="#select2" onClick={() => selectQuantity('2')}>2</a>
+                                                        <a href="#select3" onClick={() => selectQuantity('3')}>3</a>
+                                                        <a href="#select4" onClick={() => selectQuantity('4')}>4</a>
+                                                        <a href="#select5" onClick={() => selectQuantity('5')}>5</a>
                                                     </div>
                                                 )}
                                             </div>

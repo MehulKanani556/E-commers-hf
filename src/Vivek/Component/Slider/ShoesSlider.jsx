@@ -5,6 +5,7 @@ import { FaAngleLeft, FaAngleRight, FaLongArrowAltLeft } from 'react-icons/fa';
 import { MdOutlineArrowBack, MdOutlineArrowLeft, MdOutlineArrowRightAlt } from 'react-icons/md';
 import { PiArrowLeftFill, PiArrowRightFill } from 'react-icons/pi';
 import { Animated } from "react-animated-css";
+import { Button, Col, Row } from 'react-bootstrap';
 
 // Define headphone images as objects with id and image properties
 const headphoneimages = [
@@ -77,7 +78,7 @@ const ShoesSlider = () => {
         loop: false,
         nav: false,
         onDragged: (event) => handleDrag(event),
-        onTranslate: (event) => setCarouselIndex(event.item.index), 
+        onTranslate: (event) => setCarouselIndex(event.item.index),
     };
 
     const handleDrag = (event) => {
@@ -272,6 +273,92 @@ const ShoesSlider = () => {
                         </div>
                     </div>
                 </div>
+                <div className='item VK_silderh'>
+                    <div className='V_spring'>
+                        <div className="">
+                            <p className='V_50 mb-0'>50 % OFF SITEWIDE</p>
+                        </div>
+                        <div className='d_container h-100'>
+                            <Row className='h-100'>
+                                <Col lg={4} className='align-self-center p-3'>
+                                    <div className='V_rite_of '>
+                                        <h1 className='V_rite'> <p className='d-flex justify-content-start'>RITE</p>
+                                            <p className='d-flex justify-content-center'>OF</p>
+                                            <p className='d-flex justify-content-end'>SPRING</p>
+                                        </h1>
+                                    </div>
+                                </Col>
+                            </Row>
+                        </div>
+                        <div className="V_bottom d-flex justify-content-between">
+                            <p className='V_tank_top'>Tank Top - White</p>
+                            <p className='V_shop_arri'>SHOP NEW ARRIVALS</p>
+                        </div>
+                    </div>
+                </div>
+                <div className='item VK_silderh'>
+                    <div className='V_vintage_back'>
+                        <div className='d_container h-100'>
+                            <div className='row m-0 d-flex h-100'>
+                                <div className="col-12">
+
+                                    <h1 className='V_vintage_text'>VINTAGE</h1>
+                                    <p className='V_vintage_sub_text'>At vero eos et accusamus et iusto odio dignis ducimus qui blanditiis praesentium</p>
+                                </div>
+
+                                <div className=''>
+                                    <Button className='py-1 px-2 px-sm-4 px-lg-5 text-dark V_vintage_btn'>Buy Now</Button>
+                                </div>
+                                <div>
+                                    <img src={require('../../../Parth/assets/Main Girl.png')} alt="" className='V_main_girl' />
+                                    <img src={require('../../../Parth/assets/Shadow.png')} alt="" className='V_shadow_girl' />
+                                </div>
+                                <p className='V_featured'>FEATURED
+                                    COLLECTION</p>
+                                <div className='V_both_denim'>
+                                    <div className='V_blur V_blur2'>
+                                        <div className=''>
+                                            <img src={require('../../../Parth/assets/jacket.png')} alt="" className='V_jens' />
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <p className='V_jacket mb-0'>Denim Jacket</p>
+                                                <p className='V_jacket mb-0'>$54</p>
+                                            </div>
+                                            <div className='d-flex '>
+                                                <div className='V_dil d-flex align-items-center justify-content-center me-md-2 me-sm-1 me-1'>
+                                                    <img src={require('../../../Parth/assets/heart.png')} alt="" className='w-50' />
+                                                </div>
+                                                <div className='V_theli d-flex align-items-center justify-content-center me-md-2'>
+                                                    <img src={require('../../../Parth/assets/shopping-cart 1.png')} alt="" className='w-50' />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='V_blur v_blur1'>
+                                        <div className=''>
+                                            <img src={require('../../../Parth/assets/denim jens.png')} alt="" className='V_jens' />
+                                        </div>
+                                        <div className="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <p className='V_jacket mb-0'>Denim Jacket</p>
+                                                <p className='V_jacket mb-0'>$54</p>
+                                            </div>
+                                            <div className='d-flex '>
+                                                <div className='V_dil d-flex align-items-center justify-content-center me-2'>
+                                                    <img src={require('../../../Parth/assets/heart.png')} alt="" className='w-50' />
+                                                </div>
+                                                <div className='V_theli d-flex align-items-center justify-content-center'>
+                                                    <img src={require('../../../Parth/assets/shopping-cart 1.png')} alt="" className='w-50' />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </OwlCarousel>
 
             {/* display none */}
@@ -460,140 +547,6 @@ const ShoesSlider = () => {
                     </div>
                 </div>
             </section>
-
-            {/* <OwlCarousel className="owl-theme" {...slider_control}>
-                <div className="item VK_owl_item">
-                    <div className="VK_slider_gradient h-100" style={{ background: bgColor }}>
-                        <div className="d-flex h-100 align-items-center VK_watch_slider_size flex-sm-row flex-column-reverse">
-                            <div>
-                                <div>
-                                    <h2 className='VK_watch_heading'>Exquisite Watches</h2>
-                                    <h5 className='text-white VK_watch_sub'>
-                                        Choose Luxury,<span className='text-black ps-2'>Choose Us</span>
-                                    </h5>
-                                </div>
-                                <div className='mt-lg-5 mt-sm-3 mt-1'>
-                                    <p className='VK_watch_desc'>
-                                        Discover the Perfect Watch for Every Occasion and Elevate Your Style with Timeless Elegance and Precision Craftsmanship - watch
-                                    </p>
-                                </div>
-                                <div className='mt-lg-5 mt-sm-3 mt-1'>
-                                    <h2 className='VK_watch_price text-white'>$430.00</h2>
-                                </div>
-                                <div className='mt-sm-4 mt-1 pb-3'>
-                                    <button className='VK_theme_btn'>Order Now</button>
-                                </div>
-                            </div>
-                            <div className='VK_watch_slider'>
-                                <div className='VK_watch_container overflow d-flex flex-nowrap' ref={containerRef1}>
-                                    <div className='w-100 h-100'>
-                                        <img src={images[currentImageIndex]} className='w-100 h-100' alt="" />
-                                    </div>
-                                </div>
-                                <div className='VK_slider_controls'>
-                                    <button className='VK_slider_nav' onClick={() => handle_change_watch('left')}>
-                                        <FaAngleLeft className='icon' />
-                                    </button>
-                                    <button className='VK_slider_nav' onClick={() => handle_change_watch('right')}>
-                                        <FaAngleRight className='icon' />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </OwlCarousel> */}
-
-            {/* <OwlCarousel className="owl-theme" items={1} startPosition={carouselIndex} {...slider_control}>
-                <div className="item VK_owl_item">
-                    <div className="VK_slider_bgimage h-100">
-                        <div className="d-flex h-100 align-items-center VK_headphone_slider_size flex-sm-row flex-column-reverse">
-                            <div className=''>
-                                <Animated
-                                    animationIn={isAnimating ? (direction === 'right' ? "slideInDown" : "slideInUp") : ""}
-                                    animationOut="fadeOut"
-                                    isVisible={isAnimating}
-                                >
-                                    <div>
-                                        <h2 className='VK_headphone_heading'>{headphoneContent[headphonecurrentImage]?.heading}</h2>
-                                    </div>
-                                    <div className='mt-lg-4 mt-sm-3 mt-1 '>
-                                        <p className='VK_headphone_desc'>
-                                            {headphoneContent[headphonecurrentImage]?.description}
-                                        </p>
-                                    </div>
-                                </Animated>
-                            </div>
-                            <div className='VK_headphone_slider'>
-                                <Animated
-                                    animationIn={isAnimating ? (direction === 'right' ? "slideInDown" : "slideInUp") : ""}
-                                    animationOut="fadeOut"
-                                    isVisible={isAnimating}
-                                >
-                                    <div className='VK_headphone_container overflow d-flex flex-nowrap' ref={containerRef}>
-                                        <div className='w-100 h-100'>
-                                            <img src={headphoneimages[headphonecurrentImage]?.image} className='w-100 h-100' alt="" />
-                                        </div>
-                                    </div>
-                                </Animated>
-                                <div className='VK_headphone_slider_controls d-flex justify-content-end'>
-                                    <button
-                                        className='VK_headphone_slider_nav'
-                                        onClick={handleHeadphoneChange}
-
-                                    >
-                                        {direction === 'right' ? (
-                                            <PiArrowRightFill className="icon" />
-                                        ) : (
-                                            <PiArrowLeftFill className="icon" />
-                                        )}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="item VK_owl_item">
-                    <div className="VK_slider_gradient h-100" style={{ background: bgColor }}>
-                        <div className="d-flex h-100 align-items-center VK_watch_slider_size flex-sm-row flex-column-reverse">
-                            <div>
-                                <div>
-                                    <h2 className='VK_watch_heading'>Exquisite Watches</h2>
-                                    <h5 className='text-white VK_watch_sub'>
-                                        Choose Luxury,<span className='text-black ps-2'>Choose Us</span>
-                                    </h5>
-                                </div>
-                                <div className='mt-lg-5 mt-sm-3 mt-1'>
-                                    <p className='VK_watch_desc'>
-                                        Discover the Perfect Watch for Every Occasion and Elevate Your Style with Timeless Elegance and Precision Craftsmanship - watch
-                                    </p>
-                                </div>
-                                <div className='mt-lg-5 mt-sm-3 mt-1'>
-                                    <h2 className='VK_watch_price text-white'>$430.00</h2>
-                                </div>
-                                <div className='mt-sm-4 mt-1 pb-3'>
-                                    <button className='VK_theme_btn'>Order Now</button>
-                                </div>
-                            </div>
-                            <div className='VK_watch_slider'>
-                                <div className='VK_watch_container overflow d-flex flex-nowrap' ref={containerRef1}>
-                                    <div className='w-100 h-100'>
-                                        <img src={images[currentImageIndex]} className='w-100 h-100' alt="" />
-                                    </div>
-                                </div>
-                                <div className='VK_slider_controls'>
-                                    <button className='VK_slider_nav' onClick={(e) => handlechangewatch('left', e)}>
-                                        <FaAngleLeft className='icon' />
-                                    </button>
-                                    <button className='VK_slider_nav' onClick={(e) => handlechangewatch('right', e)}>
-                                        <FaAngleRight className='icon' />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </OwlCarousel> */}
 
         </React.Fragment >
     )

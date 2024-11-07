@@ -94,6 +94,7 @@ function App() {
           <Route path='/combine' element={<Combined />} />
          
           {/* user */}
+          
           {/* <Route path="/user" element={<User />}>
             <Route path='profile' element={<UserProfile />} />
             <Route path='payment' element={<UserpaymentMethod />} />

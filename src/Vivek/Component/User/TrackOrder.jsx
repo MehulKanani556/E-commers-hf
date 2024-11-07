@@ -86,8 +86,8 @@ function TrackOrder() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-lg-8 py-3 pt-lg-0 pt-xl-3 position-relative VK_padding">
-                                            <div className='V_back-line'></div>
+                                        <div className="col-lg-8 py-3 pt-lg-0 pt-xl-3 position-relative VK_padding overflow-auto">
+                                            <div className='V_back-line4'></div>
                                             <div className="d-flex justify-content-between px-md-3 px-lg-5 ">
                                                 <div className='text-center'>
                                                     <p className='V_confirmed mb-0'>Order Confirmed</p>

@@ -14,6 +14,8 @@
     padding: 10px 30px;
     background-color:#2B221E !important;
     color: white !important;
+    border-radius: 4px;
+    border: none;
 }
 .ds_cart-img{
     width: 100%;
@@ -128,6 +130,8 @@
     background: #2B221E;
     color: white;
     width: 100%;
+    border: none;
+    border-radius: 4px;
 }
 .ds_add-proccess:hover{
     background: #2B221E;
@@ -221,6 +225,7 @@
     color: white;
     border-radius:0% !important;
     font-size: 14px;
+    border: none;
 }
 .ds_cod-on-btn-txt{
     font-size: 14px;
@@ -260,6 +265,8 @@
     font-size: 25px;
 }
 .ds_cod-pay{
+    border: none;
+    border-radius: 4px;
     width: 100%;
     padding: 10px 0px;
     background: #2B221E;
@@ -358,6 +365,8 @@
     background-color: black;
     color: white;
     font-size: 14px;
+    border: none;
+    border-radius: 4px;
 }
 .ds_con-buy{
     border: 1px solid #000000;
