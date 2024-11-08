@@ -33,9 +33,15 @@
     height: 400px;
 
 }
+.VK_wishlist_boxshadow{
+    box-shadow: 0px 4px 14px 0px #8F8F8F40;
 
+}
 .VK_wishlist_parent{
     position: relative;
+}
+.VK_wislist_desc{
+    padding: 12px;
 }
 
 .VK_wishlist_bt{

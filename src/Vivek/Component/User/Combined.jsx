@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import '../User/user.css';
 import Map from '../Map.jsx';
 // import { Modal } from 'react-bootstrap';
@@ -14,6 +14,7 @@ function Combined() {
 
     const [returncard, setReturncard] = useState(false);
     const [canclecard, setCanclecard] = useState(false);
+    const inputRefs = useRef([]);
 
     const handleReturnOrder = () => {
         setReturncard(true); // Show the cancel order modal
@@ -28,6 +29,19 @@ function Combined() {
     const handleCloseSuccessModal = () => {
         setCanclecard(false); // Close the success modal
     };
+
+    const handleInputChange = (e, index) => {
+        const value = e.target.value;
+
+        if (e.key === 'Backspace' && !value && index > 0) {
+            inputRefs.current[index - 1].focus();
+        }
+        else if (value && index < inputRefs.current.length - 1) {
+            inputRefs.current[index + 1].focus();
+        }
+    };
+
+
     return (
         <React.Fragment>
             <Header />
@@ -221,42 +235,17 @@ function Combined() {
                                     Enter OTP to return order
                                 </span>
                                 <div className="d-flex justify-content-between mt-3">
-                                    <input
-                                        type="text"
-                                        maxLength="1"
-                                        style={{ width: "40px", height: "40px", textAlign: "center" }}
-                                        className="me-2"
-                                    />
-                                    <input
-                                        type="text"
-                                        maxLength="1"
-                                        style={{ width: "40px", height: "40px", textAlign: "center" }}
-                                        className="me-2"
-                                    />
-                                    <input
-                                        type="text"
-                                        maxLength="1"
-                                        style={{ width: "40px", height: "40px", textAlign: "center" }}
-                                        className="me-2"
-                                    />
-                                    <input
-                                        type="text"
-                                        maxLength="1"
-                                        style={{ width: "40px", height: "40px", textAlign: "center" }}
-                                        className="me-2"
-                                    />
-                                    <input
-                                        type="text"
-                                        maxLength="1"
-                                        style={{ width: "40px", height: "40px", textAlign: "center" }}
-                                        className="me-2"
-                                    />
-                                    <input
-                                        type="text"
-                                        maxLength="1"
-                                        style={{ width: "40px", height: "40px", textAlign: "center" }}
-                                        className="me-2"
-                                    />
+                                    {Array(6).fill("").map((_, index) => (
+                                        <input
+                                            key={index}
+                                            type="text"
+                                            maxLength="1"
+                                            style={{ width: "40px", height: "40px", textAlign: "center" }}
+                                            className="me-2"
+                                            onKeyUp={(e) => handleInputChange(e, index)}
+                                            ref={(el) => inputRefs.current[index] = el}
+                                        />
+                                    ))}
                                 </div>
                             </div>
                             <div className='mt-5 text-center'>

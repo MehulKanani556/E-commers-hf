@@ -117,6 +117,9 @@ const Profile = () => {
     const [addcredit, setAddcredit] = useState(false);
     const [addupimodal, setAddupimodal] = useState(false);
     const [deleteupimodal, setDeleteupimodal] = useState(false);
+    const [upiId, setUpiId] = useState(''); // State to hold the input value
+
+
     let [card, setcard] = useState([])
     let [upi, setupi] = useState([])
     const inputRefs = useRef([]);
@@ -175,6 +178,10 @@ const Profile = () => {
         } else if (status === 'Delivered') {
             navigate('/ratereview');
         }
+    };
+
+    const handleDropdownSelect = (suffix) => {
+        setUpiId((prevUpiId) => `${prevUpiId}${suffix}`);
     };
 
     return (
@@ -652,7 +659,7 @@ const Profile = () => {
                                                                     <div className='VK_order_price'>
                                                                         <p className='m-0'>${item.price}</p>
                                                                     </div>
-                                                                    <div className='VK_order_status ms-xl-0 ms-auto mt-xl-0 mt-4'>
+                                                                    <div className='VK_order_status ms-xl-0 mt-xl-0 mt-4'>
                                                                         <div className='h-100 d-flex flex-column'>
                                                                             <h4 className='d-flex flex-wrap align-items-center'>
                                                                                 <span className='VK_order_dots me-sm-3 me-2'></span>
@@ -662,7 +669,7 @@ const Profile = () => {
                                                                                 <span className='VK_order_date ps-2'>On {item.status_date}</span>
                                                                             </h4>
                                                                             <p className='font_14 fw-bold light_color'>{item.message}</p>
-                                                                            <p className='mt-auto text-end m-0 font_16 VK_track fw-500 d_cur' onClick={() => handleOrderNavigation(item.status)}>
+                                                                            <p className='mt-auto text-lg-end m-0 font_16 VK_track fw-500 d_cur' onClick={() => handleOrderNavigation(item.status)}>
                                                                                 {
                                                                                     item.status === 'Delivered' ? 'Add Rate & Review' :
                                                                                         item.status === 'arriving' ? 'Track Order' :
@@ -1315,24 +1322,16 @@ const Profile = () => {
                                     UPI ID
                                 </span>
                                 <div className='d-flex VK_theme_bg'>
-                                    <input type="text" className='VK_from_input w-100 py-2 px-3' />
-                                    <Dropdown>
+                                    <input type="text" value={upiId} onChange={(e) => setUpiId(e.target.value)} className='VK_from_input w-100 py-2 px-3' />
+                                    <Dropdown onSelect={handleDropdownSelect}>
                                         <Dropdown.Toggle className='VK_theme_bg' id="dropdown-basic">
                                             <FaChevronDown className='text-black' />
                                         </Dropdown.Toggle>
                                         <Dropdown.Menu>
-                                            <Dropdown.Item>
-                                                oksbi
-                                            </Dropdown.Item>
-                                            <Dropdown.Item>
-                                                okicici
-                                            </Dropdown.Item>
-                                            <Dropdown.Item>
-                                                okaxis
-                                            </Dropdown.Item>
-                                            <Dropdown.Item>
-                                                okhdfcbank
-                                            </Dropdown.Item>
+                                            <Dropdown.Item eventKey="@oksbi">oksbi</Dropdown.Item>
+                                            <Dropdown.Item eventKey="@okicici">okicici</Dropdown.Item>
+                                            <Dropdown.Item eventKey="@okaxis">okaxis</Dropdown.Item>
+                                            <Dropdown.Item eventKey="@okhdfcbank">okhdfcbank</Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </div>

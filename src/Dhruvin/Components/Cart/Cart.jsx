@@ -161,7 +161,7 @@ const Cart = () => {
       <Header />
 
       {/* **************** Empty Card **************/}
-      <section className="mt-5 mb-5">
+      <section className="mt-5 mb-5 d-none">
         <div className="d_container">
           <div className="row">
             <div className="col-xl-12 text-center">
@@ -638,7 +638,7 @@ const Cart = () => {
                       <div className="px-3 mt-3">
                         <form action="" className="position-relative">
                           <img className="ds_add-cupan" src={require("../Img/cupon.png")} alt="" />
-                          <input type="email" class="form-control ds_add-input" id="exampleInputEmail1" placeholder="Enter coupon code" aria-describedby="emailHelp" />
+                          <input type="text" class="form-control ds_add-input" id="exampleInputEmail1" placeholder="Enter coupon code" aria-describedby="emailHelp" />
                           <button className=" ds_add-apply">Apply</button>
                         </form>
                       </div>
@@ -891,7 +891,7 @@ const Cart = () => {
       </div>
 
       {/* /* {************** Order Conformation *******************} */}
-      <section className="d-block">
+      <section className="d-none">
         <div className="d_container">
           <div className="mt-4  mb-5 pb-4">
             <div>
@@ -1037,7 +1037,7 @@ const Cart = () => {
       </section>
 
       {/* /* {************** Invoice *******************} */}
-      <section className="d-non">
+      <section className="d-non d-none">
         <div>
           <div className="d_container">
             <div className="mt-4">

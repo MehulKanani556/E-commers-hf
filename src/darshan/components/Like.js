@@ -17,7 +17,7 @@ const Like = () => {
             isNewArrial: true,
             name: "Premium Lehenga choli",
             rating: 4.5,
-            description: "Purple lehenga choli in silk",
+            description: "Purple lehenga choli in silk efhdefdhfsdfsdfhbsdhfbjhsdjhfbhsdjfbsdhjfbhsdjbfjhsdhfjsdjhbfhsdfhjbsdjhfefhdefdhfsdfsdfhbsdhfbjhsdjhfbhsdjfbsdhjfbhsdjbfjhsdhfjsdjhbfhsdfhjbsdjhf",
             colors: [
                 { id: 1, color: "#B16AAF", isActive: true },
             ],
@@ -137,8 +137,7 @@ const Like = () => {
                     <div className="d_head px-3 d-flex justify-content-between align-items-center">
                         <h4 className='mb-0'>You may also like this</h4>
                     </div>
-                    <Slider {...settings} prevArrow={<CustomPrevArrow />}
-    nextArrow={<CustomNextArrow />}>
+                    <Slider {...settings} prevArrow={<CustomPrevArrow />} nextArrow={<CustomNextArrow />}>
                         {filterItems.map((item, index) => {
                             console.log(item.length)
                             return (

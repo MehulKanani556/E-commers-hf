@@ -76,44 +76,46 @@ const Wishlist = () => {
                         <Row>
                             {wishlistdata.map((item, index) => (
                                 <Col xl={3} lg={4} sm={6} className='my-3' key={index}>
-                                    <div className='VK_wishlist_parent'>
-                                        <div className='VK_wishlist_img'>
-                                            <img
-                                                src={require(`../../assets/${item.image}`)}
-                                                className='w-100 h-100 object_cover object_top'
-                                                alt={item.name}
-                                            />
-                                        </div>
-                                        <div className='VK_wishlist_bt'>
-                                            <button className='VK_wishlist_btn'>
-                                                <FaHeart className='text-danger vk_IN' />
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div className='VK_wislist_desc mt-2'>
-                                        <div className='d-flex align-items-center justify-content-between'>
-                                            <h5 className='m-0 VK_wishlist_cart_tit'>{item.name}</h5>
-                                            <div className='VK_revire_desc d-inline-flex'>
-                                                <FaStar className='text-warning VK_icns' />
-                                                <span className='font_14'>{item.rating}</span>
+                                    <div className="VK_wishlist_boxshadow">
+                                        <div className='VK_wishlist_parent'>
+                                            <div className='VK_wishlist_img'>
+                                                <img
+                                                    src={require(`../../assets/${item.image}`)}
+                                                    className='w-100 h-100 object_cover object_top'
+                                                    alt={item.name}
+                                                />
+                                            </div>
+                                            <div className='VK_wishlist_bt'>
+                                                <button className='VK_wishlist_btn'>
+                                                    <FaHeart className='text-danger vk_IN' />
+                                                </button>
                                             </div>
                                         </div>
-                                        <p className='mb-2 font_14 fw-500'>{item.description}</p>
-                                        <div className='d-flex justify-content-between align-items-center'>
-                                            <div className='d-flex align-items-center gap-2'>
-                                                {item.color.map((el, ind) => (
-                                                    <span
-                                                        key={ind}
-                                                        className='VK_wishlist_color_span d-inline-block'
-                                                        style={{ backgroundColor: el }}
-                                                    ></span>
-                                                ))}
+                                        <div className='VK_wislist_desc'>
+                                            <div className='d-flex align-items-center justify-content-between'>
+                                                <h5 className='m-0 VK_wishlist_cart_tit'>{item.name}</h5>
+                                                <div className='VK_revire_desc d-inline-flex'>
+                                                    <FaStar className='text-warning VK_icns' />
+                                                    <span className='font_14'>{item.rating}</span>
+                                                </div>
                                             </div>
-                                            <div className='d-flex align-items-end'>
-                                                <p className='m-0 fw-600 text-black'>${item.price}</p>
-                                                <p className='m-0 light_color font_14 ps-1'>
-                                                    <strike>${item.old_price}</strike>
-                                                </p>
+                                            <p className='mb-2 font_14 fw-500'>{item.description}</p>
+                                            <div className='d-flex justify-content-between align-items-center'>
+                                                <div className='d-flex align-items-center gap-2'>
+                                                    {item.color.map((el, ind) => (
+                                                        <span
+                                                            key={ind}
+                                                            className='VK_wishlist_color_span d-inline-block'
+                                                            style={{ backgroundColor: el }}
+                                                        ></span>
+                                                    ))}
+                                                </div>
+                                                <div className='d-flex align-items-end'>
+                                                    <p className='m-0 fw-600 text-black'>${item.price}</p>
+                                                    <p className='m-0 light_color font_14 ps-1'>
+                                                        <strike>${item.old_price}</strike>
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

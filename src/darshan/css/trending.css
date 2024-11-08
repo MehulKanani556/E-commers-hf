@@ -110,6 +110,8 @@
     font-weight: 400;
     color: #000;
     margin: 6px 0 24px 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .d_trend .d_box .d_content .d_color {
@@ -171,7 +173,7 @@
     }
 
     .d_trend .d_box .d_content .d_desc {
-        margin-bottom: 12px;
+        margin-bottom: 0px;
     }
     .d_trend .d_box .d_content .d_name {
         letter-spacing: 0px;

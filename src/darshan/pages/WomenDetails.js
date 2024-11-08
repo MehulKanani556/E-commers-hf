@@ -28,11 +28,7 @@ import Process from '../../Vivek/Component/common/Process';
 import Footer from '../../Vivek/Component/footer/Footer';
 import ReactImageMagnify from 'react-image-magnify';
 
-
-
 const WomenDetails = () => {
-
-
 
     const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -60,7 +56,7 @@ const WomenDetails = () => {
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedQuantity, setSelectedQuantity] = useState('Select')
 
-    const dragThreshold = 30; // Increase this value to slow down the image change speed
+    const dragThreshold = 30;
 
     const galleryItems = [
         { type: 'image', src: detailImg1, thumbnail: detailImg1 },
@@ -377,7 +373,7 @@ const WomenDetails = () => {
                                                             style={{ cursor: 'pointer' }}
                                                         />
                                                         <IoShareSocialSharp
-                                                            className='d_shareicon'
+                                                            className='d_shareicon d_cur'
                                                             onClick={handleShare}
                                                         />
                                                     </div>
@@ -389,7 +385,6 @@ const WomenDetails = () => {
                                                 ref={videoRef}
                                                 controls>
                                                 <source src={mainContent.src} type="video/mp4" />
-                                                Your browser does not support the video tag.
                                             </video>
                                         )}
                                         {is360Active && (

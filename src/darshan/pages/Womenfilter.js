@@ -63,9 +63,9 @@ const Womenfilter = () => {
             image: "itemimg1.png",
             isBestSeller: false,
             isNewArrial: true,
-            name: "Premium Lehenga choli",
+            name: "Premium Lehenga choli ",
             rating: 4.5,
-            description: "Purple lehenga choli in silk",
+            description: "Purple lehenga choli in silk efhdefdhfsdfsdfhbsdhfbjhsdjhfbhsdjfbsdhjfbhsdjbfjhsdhfjsdjhbfhsdfhjbsdjhfefhdefdhfsdfsdfhbsdhfbjhsdjhfbhsdjfbsdhjfbhsdjbfjhsdhfjsdjhbfhsdfhjbsdjhf",
             colors: [
                 { id: 1, color: "#B16AAF", isActive: true },
             ],
@@ -614,6 +614,21 @@ const Womenfilter = () => {
             }
         }));
     };
+
+    // const handleCheckboxChange = (type, id) => {
+    //     debugger
+    //     setCheckedFilters(prevState => ({
+    //         ...prevState,
+    //         [type]: {
+    //             // Set all checkboxes in the section to false, then set the selected one to true
+    //             ...Object.keys(prevState[type]).reduce((acc, key) => {
+    //                 acc[key] = false;
+    //                 return acc;
+    //             }, {}),
+    //             [id]: true
+    //         }
+    //     }));
+    // };
 
     // Price Range
 

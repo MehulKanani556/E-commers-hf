@@ -16,7 +16,7 @@ const Recentlyviewed = () => {
             isNewArrial: true,
             name: "Premium Lehenga choli",
             rating: 4.5,
-            description: "Purple lehenga choli in silk",
+            description: "Purple lehenga choli in silk efhdefdhfsdfsdfhbsdhfbjhsdjhfbhsdjfbsdhjfbhsdjbfjhsdhfjsdjhbfhsdfhjbsdjhfefhdefdhfsdfsdfhbsdhfbjhsdjhfbhsdjfbsdhjfbhsdjbfjhsdhfjsdjhbfhsdfhjbsdjhf",
             colors: [
                 { id: 1, color: "#B16AAF", isActive: true },
             ],

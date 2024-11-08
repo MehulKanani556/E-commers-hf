@@ -12,9 +12,9 @@ const Bought = () => {
             image: "itemimg5.png",
             isBestSeller: false,
             isNewArrial: true,
-            name: "Traditional Chaniya choli",
+            name: "Traditional Chaniya choli ",
             rating: 4.5,
-            description: "Peach cotton silk chaniya choli",
+            description: "Peach cotton silk chaniya choli efhdefdhfsdfsdfhbsdhfbjhsdjhfbhsdjfbsdhjfbhsdjbfjhsdhfjsdjhbfhsdfhjbsdjhfefhdefdhfsdfsdfhbsdhfbjhsdjhfbhsdjfbsdhjfbhsdjbfjhsdhfjsdjhbfhsdfhjbsdjhfsdsddddd",
             colors: [
                 { id: 1, color: "#E15939", isActive: true },
                 { id: 2, color: "#1D45A9", isActive: true },

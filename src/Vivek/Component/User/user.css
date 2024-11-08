@@ -1,3 +1,16 @@
+.btn-check:active+.btn-primary:focus, .btn-check:checked+.btn-primary:focus, .btn-primary.active:focus, .btn-primary:active:focus, .show>.btn-primary.dropdown-toggle:focus{
+    box-shadow: none;
+}
+.btn-primary:focus{
+    box-shadow: none;
+}
+.dropdown-item.active, .dropdown-item:active{
+    background-color: #2B221E;
+    color: #fff;
+}
+.btn-close:focus{
+    box-shadow: none;
+}
 .VK_user_sidebar {
     box-sizing: border-box;
     border-radius: 5px;
@@ -12,7 +25,6 @@
 .user_profile_menu .icon {
     fill: #6A6A6A;
 }
-
 
 .VK_user_heading {
     font-size: 22px;
@@ -814,6 +826,10 @@
     height: 44px;
 }
 
+.dropdown-toggle::after{
+    display: none !important;
+}
+
 ::-webkit-scrollbar {
     display: none;
 }
@@ -1096,9 +1112,6 @@
         width: 120%;
 }
 }
-
-
-
 
 /* small device */
 @media (max-width:575px) and (min-width:481px) {
@@ -1515,6 +1528,7 @@
 
     .VK_order_images {
         width: 120px;
+        height: 145px;
     }
 
     .VK_payment .accordion-body ul {
@@ -1634,6 +1648,7 @@
 
     .VK_order_images {
         width: 120px;
+        height: 150px;
     }
 
 
@@ -1745,6 +1760,7 @@
 
     .VK_order_images {
         width: 120px;
+        height: 150px;
     }
 
     .VK_add_address_model_ .modal-dialog {
