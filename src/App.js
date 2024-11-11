@@ -37,6 +37,7 @@ import RateReview from './Vivek/Component/User/RateReview';
 import Combined from './Vivek/Component/User/Combined';
 
 import Cart from './Dhruvin/Components/Cart/Cart';
+import Invoice from './Dhruvin/Components/Cart/Invoice';
 
 // import WomenDetails from './darshan/pages/WomenDetails';
 
@@ -109,7 +110,8 @@ function App() {
 
           {/* Cart  */}
 
-          <Route path="/cart" element={<Cart/>}></Route>  
+          <Route path="/cart" element={<Cart />}></Route>  
+          <Route path="/invoice" element={<Invoice />}></Route>  
 
 
         </Routes>

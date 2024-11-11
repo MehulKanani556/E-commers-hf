@@ -198,6 +198,7 @@
     width: 100%; 
     padding: 10px 0px;
     color: #6A6A6A;
+    border: none;
 }
 .ds_new-btn:hover{
     color: #6A6A6A;
@@ -362,7 +363,7 @@
 }
 .ds_con-btn{
     padding: 10px 30px;
-    background-color: black;
+    background-color: #2B221E;
     color: white;
     font-size: 14px;
     border: none;
@@ -471,7 +472,18 @@ table {
     font-size: 14px;
     color: #727272;
   }
-  
+  .d_invoicefooter{
+    background-color: #2B221E;
+    padding: 20px 0;
+    text-align: center;
+  }
+  .d_invoicefooter p{
+    font-size: 14px;
+    color: #fff;
+    font-weight: 400;
+    max-width: 550px;
+    margin: auto;
+  }
 
 @media (max-width:1441px) {
     .ds_add-img{
@@ -712,6 +724,10 @@ table {
   }
   .ds_in-thank{
     font-size: 13px;
+  }
+  .d_invoicefooter p{
+    max-width: 350px;
+    font-size: 12px;
   }
 }
 

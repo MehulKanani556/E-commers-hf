@@ -73,9 +73,9 @@ function TrackOrder() {
                                 </div>
                                 <div className='VK_order_product h-100 w-100 justify-content-between d-flex flex-wrap  py-3'>
                                     <div className="row m-0 flex-lg-row flex-column-reverse w-100 ">
-                                        <div className="col-lg-4 ">
+                                        <div className="col-lg-4 px-0">
                                             <div className='d-flex'>
-                                                <div className='px-2'>
+                                                <div className='px-0'>
                                                     <img src={require('../../assets/order1.png')} alt="" width="100px" height="120px" />
                                                 </div>
                                                 <div className='ps-2 ps-sm-4'>

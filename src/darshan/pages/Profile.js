@@ -117,7 +117,7 @@ const Profile = () => {
     const [addcredit, setAddcredit] = useState(false);
     const [addupimodal, setAddupimodal] = useState(false);
     const [deleteupimodal, setDeleteupimodal] = useState(false);
-    const [upiId, setUpiId] = useState(''); // State to hold the input value
+    const [upiId, setUpiId] = useState(''); 
 
 
     let [card, setcard] = useState([])
@@ -662,10 +662,12 @@ const Profile = () => {
                                                                     <div className='VK_order_status ms-xl-0 mt-xl-0 mt-4'>
                                                                         <div className='h-100 d-flex flex-column'>
                                                                             <h4 className='d-flex flex-wrap align-items-center'>
-                                                                                <span className='VK_order_dots me-sm-3 me-2'></span>
+                                                                                <span
+                                                                                    className={`VK_order_dots me-sm-3 me-2 ${item.status === 'Delivered' ? 'bg-success' : item.status === 'arriving' ? 'bg-warning' : item.status === 'Cancelled' ? 'bg-danger' : ''}`}
+                                                                                ></span>
                                                                                 <span className={`VK_order_stu ${item.status === 'Delivered' ? 'text-success' : item.status === 'arriving' ? 'text-warning' : item.status === 'Cancelled' ? 'text-danger' : ''}`}>
                                                                                     Order {item.status}
-                                                                                </span>
+                                                                                </span> 
                                                                                 <span className='VK_order_date ps-2'>On {item.status_date}</span>
                                                                             </h4>
                                                                             <p className='font_14 fw-bold light_color'>{item.message}</p>

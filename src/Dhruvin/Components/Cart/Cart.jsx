@@ -9,8 +9,11 @@ import { FaCheckCircle } from "react-icons/fa";
 import { MdRefresh } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+
+  const navigate = useNavigate();
 
   const [showModal, setShowModal] = useState(false);
   const [address, setAddress] = useState(false)
@@ -30,6 +33,7 @@ const Cart = () => {
   const [selectedOption, setSelectedOption] = useState("Class");
   const selectRef = useRef(null);
   const [activeButton, setActiveButton] = useState('Pay on Delivery');
+  const [upipayId, setUpipayId] = useState('');
 
 
   const handleOpenModal = () => setShowModal(true);
@@ -136,9 +140,9 @@ const Cart = () => {
       document.getElementById("ds_address").classList.add("d-none")
       document.getElementById("ds_express-card").classList.remove("d-none")
       document.getElementById("ds_Nav-Tabs").classList.remove("d-none")
+      document.getElementById("ds_proceed_btn").classList.add("d-none")
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
-
   }
 
   const toggleDropdown = () => {
@@ -147,13 +151,28 @@ const Cart = () => {
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
-    setIsOpen(false); // Close the dropdown after selection
+    setIsOpen(false); 
   };
 
   const handlePayment = (paymentType) => {
     setActiveButton(paymentType);
     console.log(paymentType);
+  };
 
+  const handlePaymentsuccess = () => {
+    document.getElementById("ds_order_conformation").classList.remove("d-none")
+    document.getElementById("ds_cartsec").classList.add("d-none")
+  }
+
+  const handleinvoicenavigate = () => {
+    navigate('/invoice');
+  }
+
+  const handleDropdownSelect = (suffix) => {
+    setUpipayId((prevUpiId) => {
+      const baseId = prevUpiId.split("@")[0];
+      return baseId + suffix;
+    });
   };
 
   return (
@@ -181,7 +200,7 @@ const Cart = () => {
       </section>
 
       {/* **************** Cart Without Address ************* */}
-      <section className="mb-5 mt-4">
+      <section className="mb-5 mt-4" id="ds_cartsec">
         <div>
           <div className="d_container">
             <div className="d-flex justify-content-between align-items-center">
@@ -505,7 +524,7 @@ const Cart = () => {
                               <div className="row mt-5">
                                 <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12"></div>
                                 <div className="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12">
-                                  <button className=" ds_cod-pay">Pay $220</button>
+                                  <button className=" ds_cod-pay" onClick={() => handlePaymentsuccess()}>Pay $220</button>
                                 </div>
                               </div>
                             </div>
@@ -520,7 +539,7 @@ const Cart = () => {
                             <div className="col-xl-10">
                               <div className="row justify-content-center">
                                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
-                                  <input type="text" className="ds_cod-input" placeholder="Enter the captcha" />
+                                  <input type="text" className="ds_cod-input" placeholder="Enter card holder name" />
                                 </div>
                                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
                                   <input type="text" className="ds_cod-input" placeholder="Enter card number" />
@@ -532,7 +551,7 @@ const Cart = () => {
                                   <input type="text" className="ds_cod-input" placeholder="Enter CVV" />
                                 </div>
                                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-5">
-                                  <button className=" ds_cod-pay">Pay $220</button>
+                                  <button className=" ds_cod-pay" onClick={() => handlePaymentsuccess()}>Pay $220</button>
                                 </div>
                               </div>
                             </div>
@@ -547,17 +566,17 @@ const Cart = () => {
                             <div className="row justify-content-center mx-xl-0 mx-2">
                               <div className="col-xl-10">
                                 <div className="position-relative ds_upi-arrow d-flex">
-                                  <input type="text" className="ds_upi-input" placeholder="Enter UPI ID" />
-                                  <select className="form-select ds_upi-select">
-                                    <option defaultValue>@okicici</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                  <input type="text" value={upipayId} onChange={(e) => setUpipayId(e.target.value)} className="ds_upi-input" placeholder="Enter UPI ID" />
+                                  <select onChange={(e) => handleDropdownSelect(e.target.value)} className="form-select ds_upi-select">
+                                    <option value="@okicici">@okicici</option>
+                                    <option value="@oksbi">@oksbi</option>
+                                    <option value="@okhdfc">@okhdfc</option>
+                                    <option value="@okaxis">@okaxis</option>
                                   </select>
                                 </div>
                               </div>
                               <div className="col-xl-5 mt-5">
-                                <button className=" ds_cod-pay">Pay $220</button>
+                                <button className=" ds_cod-pay" onClick={() => handlePaymentsuccess()}>Pay $220</button>
                               </div>
                             </div>
                           </div>
@@ -613,15 +632,15 @@ const Cart = () => {
                                   </div>
                                 </div>
                               </div>
+                              <div className="col-xl-5 mt-5">
+                                <button className="ds_cod-pay" onClick={() => handlePaymentsuccess()}>Pay $220</button>
+                              </div>
                             </div>
                           </div>
                         </section>
                       )}
                     </div>
                   </section>
-
-
-
                 </div>
               </div>
 
@@ -705,7 +724,7 @@ const Cart = () => {
                         <h5 className="h5 mb-0 ds_add-total">Total Amount</h5>
                         <h5 className="h5 mb-0 ds_add-total">$240</h5>
                       </div>
-                      <button className=" ds_add-proccess mt-5" onClick={handleCheckOut}>
+                      <button className=" ds_add-proccess mt-5" id="ds_proceed_btn" onClick={handleCheckOut}>
                         Proceed to checkout
                       </button>
                     </div>
@@ -891,7 +910,7 @@ const Cart = () => {
       </div>
 
       {/* /* {************** Order Conformation *******************} */}
-      <section className="d-none">
+      <section className="d-none" id="ds_order_conformation">
         <div className="d_container">
           <div className="mt-4  mb-5 pb-4">
             <div>
@@ -953,7 +972,7 @@ const Cart = () => {
                             <p className="ds_con-font text-dark fw-600 " >Jhon Wick</p>
                             <p className="ds_con-font text-dark fw-600">Ehrenkranz 13 Washington Square S, New York,Washington Square, NY 10012, USA</p>
                             <p className="ds_con-font text-dark fw-600">+1 565 5656 565</p>
-                            <button className=" ds_con-btn">View Invoice</button>
+                            <button className=" ds_con-btn" onClick={handleinvoicenavigate}>View Invoice</button>
                           </div>
                         </div>
                       </div>
@@ -1174,6 +1193,9 @@ const Cart = () => {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="d_invoicefooter">
+            <p className="mb-0">If you have any questions, feel free to call customer care at +1 565 5656 565 or use Contact Us section.</p>
           </div>
         </div>
       </section>
