@@ -52,13 +52,14 @@ const Popularbrands = () => {
 
     let cnt = 1
 
-    let [gridview, setgridview] = useState([])
+    let [gridview, setgridview] = useState([]);
 
     useEffect(() => {
         setgridview(data)
-    }, [])
+    }, []);
 
     return (
+
         <React.Fragment>
             <section className='VK_sec_padding'>
                 <div className='d_container'>
@@ -72,10 +73,10 @@ const Popularbrands = () => {
                     <Row className='m-0'>
                         <Col className='p-0'>
                             <div>
-                                <div class="parent">
+                                <div className="parent">
                                     <Map data={gridview}>
                                         {(item) => (
-                                            <div class={`div${cnt++} VK_grid_parent`}>
+                                            <div className={`div${cnt++} VK_grid_parent`}>
                                                 <img src={require(`./../d_img/${item.image}`)} className='w-100 h-100 object_center' alt="" />
                                                 <div className='VK_grid_child'>
                                                     <div className='h-100 d-flex flex-column'>

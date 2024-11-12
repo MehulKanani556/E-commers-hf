@@ -19,7 +19,7 @@ function Beauty() {
         <>
 
             <Header />
-            <Homeslider />
+            {/* <Homeslider /> */}
 
             <section className=''>
                 <OwlCarousel className='owl-theme' loop items={1}>
@@ -130,12 +130,7 @@ function Beauty() {
                     </Row>
                 </div>
             </section>
-
-
-
-
-
-
+            
             <BeautyCollection />
 
             <section className='pb-5'>

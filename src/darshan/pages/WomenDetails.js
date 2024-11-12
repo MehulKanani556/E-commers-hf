@@ -210,9 +210,6 @@ const WomenDetails = () => {
         }
     };
 
-
-
-
     // Re-render the image when the current frame changes
     // useEffect(() => {
     //     renderImage();
@@ -459,7 +456,7 @@ const WomenDetails = () => {
                                         <div className="col-12 col-sm-6 col-lg-12 col-xl-6">
                                             <div className="d_input d-flex justify-content-between align-items-center">
                                                 <input type="text" placeholder='Enter delivery Pincode' />
-                                                <a href="">Check</a>
+                                                <Link to="">Check</Link>
                                             </div>
                                         </div>
                                         <div className="col-12 col-sm-6 col-lg-12 col-xl-6 d_psdeliver">
@@ -484,56 +481,46 @@ const WomenDetails = () => {
                                                 <Link className='text-decoration-underline d_cur' onClick={(e) => { e.preventDefault(); setsizeModalShow(true) }}>Size chart</Link>
                                             </div>
                                             <div className="d-flex">
-                                                <div className={`d_sizebox d_disable d-flex justify-content-center align-items-center ${selectedSize === 34 ? 'active' : ''}`}>
-                                                    <div className="d_diagonal-line"></div>
-                                                    <p className='mb-0'>34</p>
-                                                </div>
-                                                <div className={`d_sizebox d-flex justify-content-center align-items-center ${selectedSize === 36 ? 'active' : ''}`} onClick={() => setSelectedSize(36)}>
-                                                    <p className='mb-0'>36</p>
-                                                </div>
-                                                <div className={`d_sizebox d-flex justify-content-center align-items-center ${selectedSize === 38 ? 'active' : ''}`} onClick={() => setSelectedSize(38)}>
-                                                    <p className='mb-0'>38</p>
-                                                </div>
-                                                <div className={`d_sizebox d-flex justify-content-center align-items-center ${selectedSize === 40 ? 'active' : ''}`} onClick={() => setSelectedSize(40)}>
-                                                    <p className='mb-0'>40</p>
-                                                </div>
-                                                <div className={`d_sizebox d-flex justify-content-center align-items-center ${selectedSize === 42 ? 'active' : ''}`} onClick={() => setSelectedSize(42)}>
-                                                    <p className='mb-0'>42</p>
-                                                </div>
-                                                <div className={`d_sizebox d-flex justify-content-center align-items-center ${selectedSize === 44 ? 'active' : ''}`} onClick={() => setSelectedSize(44)}>
-                                                    <p className='mb-0'>44</p>
-                                                </div>
-                                                <div className={`d_sizebox d-flex justify-content-center align-items-center ${selectedSize === 46 ? 'active' : ''}`} onClick={() => setSelectedSize(46)}>
-                                                    <p className='mb-0'>46</p>
-                                                </div>
-                                                {/* <div className={`d_sizebox d_gbsize d-flex justify-content-center align-items-center ${selectedgbsize === 128 ? 'active' : ''}`} onClick={() => setSelectedGBSize(128)}>
-                                                    <p className='mb-0'>128 GB</p>
-                                                </div>
-                                                <div className={`d_sizebox d_gbsize d-flex justify-content-center align-items-center ${selectedgbsize === 256 ? 'active' : ''}`} onClick={() => setSelectedGBSize(256)}>
-                                                    <p className='mb-0'>256 GB</p>
-                                                </div>
-                                                <div className={`d_sizebox d_gbsize d_disable d-flex justify-content-center align-items-center ${selectedgbsize === 512 ? 'active' : ''}`}>
-                                                    <div className="d_diagonal-line"></div>
-                                                    <p className='mb-0'>512 GB</p>
-                                                </div> */}
+                                                {[34, 36, 38, 40, 42, 44, 46].map((size) => (
+                                                    <div
+                                                        key={size}
+                                                        className={`d_sizebox d-flex justify-content-center align-items-center ${selectedSize === size ? 'active' : ''} ${size === 34 ? 'd_disable' : ''}`}
+                                                        onClick={() => size !== 34 && setSelectedSize(size)}
+                                                    >
+                                                        {size === 34 && <div className="d_diagonal-line"></div>}
+                                                        <p className="mb-0">{size}</p>
+                                                    </div>
+                                                ))}
                                             </div>
+                                            {/* <div className="d-flex">
+                                                {[128, 256, 512].map((size) => (
+                                                    <div
+                                                        key={size}
+                                                        className={`d_sizebox d_gbsize d-flex justify-content-center align-items-center ${selectedgbsize === size ? 'active' : ''} ${size === 512 ? 'd_disable' : ''}`}
+                                                        onClick={() => size !== 512 && setSelectedGBSize(size)}
+                                                    >
+                                                        {size === 512 && <div className="d_diagonal-line"></div>}
+                                                        <p className="mb-0">{size} GB</p>
+                                                    </div>
+                                                ))}
+                                            </div> */}
                                         </div>
                                         <div className="col-12 col-sm-6 col-lg-12 col-xl-6 d_psdeliver">
                                             <div className="d_qun">Quantity :</div>
-                                            <div class="d_dropdownqun">
-                                                <button class="d_dropbtnqun" onClick={togglequantity}>
+                                            <div className="d_dropdownqun">
+                                                <button className="d_dropbtnqun" onClick={togglequantity}>
                                                     <div className="d-flex justify-content-between align-items-center">
-                                                    {selectedQuantity}
+                                                        {selectedQuantity}
                                                         <MdKeyboardArrowDown className='ms-2 d_dropicon' />
                                                     </div>
                                                 </button>
                                                 {isquantityOpen && (
                                                     <div className="d_dropconqun">
-                                                        <a href="#select1" onClick={() => selectQuantity('1')}>1</a>
-                                                        <a href="#select2" onClick={() => selectQuantity('2')}>2</a>
-                                                        <a href="#select3" onClick={() => selectQuantity('3')}>3</a>
-                                                        <a href="#select4" onClick={() => selectQuantity('4')}>4</a>
-                                                        <a href="#select5" onClick={() => selectQuantity('5')}>5</a>
+                                                        {[1, 2, 3, 4, 5].map((quantity) => (
+                                                            <p key={quantity} onClick={() => selectQuantity(quantity)}>
+                                                                {quantity}
+                                                            </p>
+                                                        ))}
                                                     </div>
                                                 )}
                                             </div>
@@ -543,13 +530,13 @@ const WomenDetails = () => {
                                 <div className="d_delbtn">
                                     <div className="d-flex">
                                         <div className="d_cta d-flex justify-content-center align-items-center me-3">
-                                            <a href="" className='d_hearticon'><CiHeart className='' /></a>
+                                            <Link to="" className='d_hearticon'><CiHeart className='' /></Link>
                                         </div>
                                         <div className="d_cta  d-flex justify-content-center align-items-center me-3">
-                                            <a href="" className='text-decoration-none d_buy text-center'>Buy Now</a>
+                                            <Link to="" className='text-decoration-none d_buy text-center'>Buy Now</Link>
                                         </div>
                                         <div className="d_cta  d-flex justify-content-center align-items-center">
-                                            <a href="" className='text-decoration-none d_addcartbtn text-center d-block'>Add to cart</a>
+                                            <Link to="" className='text-decoration-none d_addcartbtn text-center d-block'>Add to cart</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -714,70 +701,70 @@ const WomenDetails = () => {
                                     </div>
                                     <div className="col-12 col-sm-9">
                                         <div className="d_rightbox">
-                                            <div class="d-flex align-items-center d_rating">
-                                                <div class="progress ">
-                                                    <div class="progress-bar" role="progressbar" style={{ width: "70%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div className="d-flex align-items-center d_rating">
+                                                <div className="progress ">
+                                                    <div className="progress-bar" role="progressbar" style={{ width: "70%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="ms-3">
+                                                <div className="ms-3">
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                 </div>
-                                                <div class="ms-3 d_percetage">70%</div>
+                                                <div className="ms-3 d_percetage">70%</div>
                                             </div>
-                                            <div class="d-flex align-items-center d_rating">
-                                                <div class="progress ">
-                                                    <div class="progress-bar" role="progressbar" style={{ width: "15%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div className="d-flex align-items-center d_rating">
+                                                <div className="progress ">
+                                                    <div className="progress-bar" role="progressbar" style={{ width: "15%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="ms-3">
+                                                <div className="ms-3">
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                 </div>
-                                                <div class="ms-3 d_percetage">15%</div>
+                                                <div className="ms-3 d_percetage">15%</div>
                                             </div>
-                                            <div class="d-flex align-items-center d_rating">
-                                                <div class="progress ">
-                                                    <div class="progress-bar" role="progressbar" style={{ width: "10%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div className="d-flex align-items-center d_rating">
+                                                <div className="progress ">
+                                                    <div className="progress-bar" role="progressbar" style={{ width: "10%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="ms-3">
+                                                <div className="ms-3">
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                 </div>
-                                                <div class="ms-3 d_percetage">10%</div>
+                                                <div classNamelass="ms-3 d_percetage">10%</div>
                                             </div>
-                                            <div class="d-flex align-items-center d_rating">
-                                                <div class="progress ">
-                                                    <div class="progress-bar" role="progressbar" style={{ width: "3%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div className="d-flex align-items-center d_rating">
+                                                <div className="progress ">
+                                                    <div className="progress-bar" role="progressbar" style={{ width: "3%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="ms-3">
+                                                <div className="ms-3">
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                 </div>
-                                                <div class="ms-3 d_percetage">03%</div>
+                                                <div className="ms-3 d_percetage">03%</div>
                                             </div>
-                                            <div class="d-flex align-items-center d_rating">
-                                                <div class="progress ">
-                                                    <div class="progress-bar" role="progressbar" style={{ width: "2%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div className="d-flex align-items-center d_rating">
+                                                <div className="progress ">
+                                                    <div className="progress-bar" role="progressbar" style={{ width: "2%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="ms-3">
+                                                <div className="ms-3">
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                 </div>
-                                                <div class="ms-3 d_percetage">02%</div>
+                                                <div className="ms-3 d_percetage">02%</div>
                                             </div>
                                         </div>
                                     </div>

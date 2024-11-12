@@ -3,6 +3,7 @@ import { FaPlus, FaStar } from 'react-icons/fa';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import './../css/Bought.css'
 import './../css/trending.css'
+import { Link } from 'react-router-dom';
 
 const Bought = () => {
 
@@ -107,7 +108,7 @@ const Bought = () => {
                                 <div className="d_boughtbox">
                                     <div className="d_boughttotal"><span>Total Price :</span> $240</div>
                                     <div className="d_cta">
-                                        <a href="" className='text-center text-decoration-none d-block'>Add all 2 to cart</a>
+                                        <Link to="" className='text-center text-decoration-none d-block'>Add all 2 to cart</Link>
                                     </div>
                                 </div>
                             </div>

@@ -254,27 +254,31 @@
     font-weight: 500;
     color: #fff;
 }
+.d_firstbg .owl-theme .owl-dots .owl-dot span{
+    width: 8px;
+    height: 8px;
+    margin: 5px;
+}
+.d_firstbg .owl-theme .owl-dots .owl-dot span{
+    background-color: #6A6A6A;
+}
+.d_firstbg .owl-theme .owl-dots .owl-dot.active span{
+    background-color: #2B221E;
+    width: 40px ;
+}
+.d_firstbg .owl-theme .owl-dots .owl-dot:first-child span,
+.d_firstbg .owl-theme .owl-dots .owl-dot:last-child span{
+    width: 4px;
+    height: 4px;
+    margin-bottom: 6px;
+}
+.d_firstbg .owl-theme .owl-dots .owl-dot:first-child.active span,
+.d_firstbg .owl-theme .owl-dots .owl-dot:last-child.active span {
+    width: 40px;
+    height: 8px;
+}
 
-/* .d_culbg{
-    background-image: url('./../d_img/culture.png');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    padding: 36px 0;
-}
-.d_culbg .d_heading{
-    max-width: 640px;
-}
-.d_culbg .d_heading h5{
-    font-size: 70px;
-    color: #2B221E;
-    font-weight: 800;
-}
-.d_culbg .d_imgcol img{
-    width: 200px;
-    height: 450px;
-    object-fit: cover;
-} */
+
 .d_culbg {
     background-image: url('./../d_img/culture.png');
     background-position: center;

@@ -75,21 +75,21 @@ const Invoice = () => {
                                                 <tbody>
                                                     <tr>
                                                         <td>
-                                                            <div class="ds_table-title">Traditional Chaniya Choli</div>
-                                                            <div class="ds_table-desc">Elegant peach color silk chaniya choli with dupatta & accessories</div>
+                                                            <div className="ds_table-title">Traditional Chaniya Choli</div>
+                                                            <div className="ds_table-desc">Elegant peach color silk chaniya choli with dupatta & accessories</div>
                                                         </td>
                                                         <td className="ds_table-quantity">1</td>
-                                                        <td class="ds_table-price">$120.00</td>
-                                                        <td class="ds_table-price">$120.00</td>
+                                                        <td className="ds_table-price">$120.00</td>
+                                                        <td className="ds_table-price">$120.00</td>
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <div class="ds_table-title">Traditional Chaniya Choli</div>
-                                                            <div class="ds_table-desc">Elegant peach color silk chaniya choli with dupatta & accessories</div>
+                                                            <div className="ds_table-title">Traditional Chaniya Choli</div>
+                                                            <div className="ds_table-desc">Elegant peach color silk chaniya choli with dupatta & accessories</div>
                                                         </td>
                                                         <td className="ds_table-quantity">1</td>
-                                                        <td class="ds_table-price">$120.00</td>
-                                                        <td class="ds_table-price">$120.00</td>
+                                                        <td className="ds_table-price">$120.00</td>
+                                                        <td className="ds_table-price">$120.00</td>
                                                     </tr>
                                                 </tbody>
                                             </table>

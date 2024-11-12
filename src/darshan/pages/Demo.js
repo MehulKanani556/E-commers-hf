@@ -517,8 +517,8 @@ const Demo = () => {
                                         </div>
                                         <div className="col-12 col-sm-6 col-lg-12 col-xl-6 d_psdeliver">
                                             <div className="d_qun">Quantity :</div>
-                                            <div class="d_dropdownqun">
-                                                <button class="d_dropbtnqun" onClick={togglequantity}>
+                                            <div className="d_dropdownqun">
+                                                <button className="d_dropbtnqun" onClick={togglequantity}>
                                                     <div className="d-flex justify-content-between align-items-center">
                                                         Select
                                                         <MdKeyboardArrowDown className='ms-2 d_dropicon' />
@@ -711,70 +711,70 @@ const Demo = () => {
                                     </div>
                                     <div className="col-12 col-sm-9">
                                         <div className="d_rightbox">
-                                            <div class="d-flex align-items-center d_rating">
-                                                <div class="progress ">
-                                                    <div class="progress-bar" role="progressbar" style={{ width: "70%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div className="d-flex align-items-center d_rating">
+                                                <div className="progress ">
+                                                    <div className="progress-bar" role="progressbar" style={{ width: "70%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="ms-3">
+                                                <div className="ms-3">
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                 </div>
-                                                <div class="ms-3 d_percetage">70%</div>
+                                                <div className="ms-3 d_percetage">70%</div>
                                             </div>
-                                            <div class="d-flex align-items-center d_rating">
-                                                <div class="progress ">
-                                                    <div class="progress-bar" role="progressbar" style={{ width: "15%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div className="d-flex align-items-center d_rating">
+                                                <div className="progress ">
+                                                    <div className="progress-bar" role="progressbar" style={{ width: "15%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="ms-3">
+                                                <div className="ms-3">
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                 </div>
-                                                <div class="ms-3 d_percetage">15%</div>
+                                                <div className="ms-3 d_percetage">15%</div>
                                             </div>
-                                            <div class="d-flex align-items-center d_rating">
-                                                <div class="progress ">
-                                                    <div class="progress-bar" role="progressbar" style={{ width: "10%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div className="d-flex align-items-center d_rating">
+                                                <div className="progress ">
+                                                    <div className="progress-bar" role="progressbar" style={{ width: "10%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="ms-3">
+                                                <div className="ms-3">
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                 </div>
-                                                <div class="ms-3 d_percetage">10%</div>
+                                                <div className="ms-3 d_percetage">10%</div>
                                             </div>
-                                            <div class="d-flex align-items-center d_rating">
-                                                <div class="progress ">
-                                                    <div class="progress-bar" role="progressbar" style={{ width: "3%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div className="d-flex align-items-center d_rating">
+                                                <div className="progress ">
+                                                    <div className="progress-bar" role="progressbar" style={{ width: "3%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="ms-3">
+                                                <div className="ms-3">
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                 </div>
-                                                <div class="ms-3 d_percetage">03%</div>
+                                                <div className="ms-3 d_percetage">03%</div>
                                             </div>
-                                            <div class="d-flex align-items-center d_rating">
-                                                <div class="progress ">
-                                                    <div class="progress-bar" role="progressbar" style={{ width: "2%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div className="d-flex align-items-center d_rating">
+                                                <div className="progress ">
+                                                    <div className="progress-bar" role="progressbar" style={{ width: "2%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="ms-3">
+                                                <div className="ms-3">
                                                     <FaStar className='me-1 d_staricon' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                     <FaStar className='me-1 d_emptystar' />
                                                 </div>
-                                                <div class="ms-3 d_percetage">02%</div>
+                                                <div className="ms-3 d_percetage">02%</div>
                                             </div>
                                         </div>
                                     </div>

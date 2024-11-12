@@ -3,6 +3,7 @@ import { FaStar } from "react-icons/fa";
 
 import './../css/trending.css'
 import { IoMdHeartEmpty } from 'react-icons/io';
+import { Link } from 'react-router-dom';
 
 const Trending = () => {
 
@@ -139,7 +140,7 @@ const Trending = () => {
           <div className="d_margin">
             <div className="d_head d-flex justify-content-between align-items-center">
               <h4 className='mb-0'>trending Navratri Collection for you</h4>
-              <p className='mb-0'><a href="" className='text-decoration-none'>View More</a></p>
+              <p className='mb-0'><Link to="" className='text-decoration-none'>View More</Link></p>
             </div>
             <div className="row gy-4">
               {trendingItems.map((item, index) => {

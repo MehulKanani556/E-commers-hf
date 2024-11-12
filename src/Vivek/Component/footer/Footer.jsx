@@ -28,7 +28,7 @@ const Footer = () => {
                                     <img src={require('../../assets/instagram.png')} className='w-100' alt='Instagram' />
                                 </div>
                                 <div className='VK_footer_img'>
-                                    <img src={require('../../assets/twitter.png')} lassName='w-100' alt='Twitter' />
+                                    <img src={require('../../assets/twitter.png')} className='w-100' alt='Twitter' />
                                 </div>
                                 <div className='VK_footer_img'>
                                     <img src={require('../../assets/youtube.png')} className='w-100' alt='Youtube' />

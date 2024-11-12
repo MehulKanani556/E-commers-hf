@@ -349,7 +349,7 @@ const Profile = () => {
                                                                 <li className='py-4 px-4'>
                                                                     <div className='d-flex gap-2 align-items-center'>
                                                                         <span className='d-inline-block pe-2'>
-                                                                            <svg width="12" height="16" viewBox="0 0 12 16" xmlns="http://www.w3.org/2000/svg" class="icon">
+                                                                            <svg width="12" height="16" viewBox="0 0 12 16" xmlns="http://www.w3.org/2000/svg" className="icon">
                                                                                 <path d="M6.00176 6.79997C7.87952 6.79997 9.40175 5.27775 9.40175 3.39999C9.40175 1.52223 7.87952 0 6.00176 0C4.124 0 2.60178 1.52223 2.60178 3.39999C2.60178 5.27775 4.124 6.79997 6.00176 6.79997Z" />
                                                                                 <path d="M6.0002 7.60156C2.68651 7.60156 0.000213623 10.2879 0.000213623 13.6015C0.000213623 14.4852 0.716572 15.2016 1.60022 15.2016H10.4002C11.2839 15.2016 12.0002 14.4852 12.0002 13.6015C12.0002 10.2879 9.31388 7.60156 6.0002 7.60156Z" />
                                                                             </svg>

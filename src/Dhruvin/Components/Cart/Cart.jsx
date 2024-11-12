@@ -260,9 +260,9 @@ const Cart = () => {
                       <div className="hello">
                         <div className="row mt-5">
                           <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                              <label class="form-check-label" for="flexCheckDefault">
+                            <div className="form-check">
+                              <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                              <label className="form-check-label" for="flexCheckDefault">
                                 Select All
                               </label>
                             </div>
@@ -302,7 +302,7 @@ const Cart = () => {
                             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 ">
                               <div className="d-flex align-items-center">
                                 <div>
-                                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                  <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                                 </div>
                                 <div className="ms-4">
                                   <img src={require("../Img/img.png")} className="ds_add-img" alt="" />
@@ -348,7 +348,7 @@ const Cart = () => {
                             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 ">
                               <div className="d-flex align-items-center">
                                 <div>
-                                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                  <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                                 </div>
                                 <div className="ms-4">
                                   <img src={require("../Img/img1.png")} className="ds_add-img" alt="" />
@@ -375,7 +375,7 @@ const Cart = () => {
                               <div>
                                 <div className="ds_add-count">
                                   <div className="d-flex align-items-center justify-content-between">
-                                    <i class="fa-solid fa-trash-can"></i>
+                                    <i className="fa-solid fa-trash-can"></i>
                                     <div>1</div>
                                     <i className="fa-solid fa-plus"></i>
                                   </div>
@@ -392,7 +392,7 @@ const Cart = () => {
                             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 ">
                               <div className="d-flex align-items-center">
                                 <div>
-                                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                  <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                                 </div>
                                 <div className="ms-4">
                                   <img src={require("../Img/img2.png")} className="ds_add-img" alt="" />
@@ -421,7 +421,7 @@ const Cart = () => {
                               <div>
                                 <div className="ds_add-count">
                                   <div className="d-flex align-items-center justify-content-between">
-                                    <i class="fa-solid fa-trash-can"></i>
+                                    <i className="fa-solid fa-trash-can"></i>
                                     <div>1</div>
                                     <i className="fa-solid fa-plus"></i>
                                   </div>
@@ -657,27 +657,27 @@ const Cart = () => {
                       <div className="px-3 mt-3">
                         <form action="" className="position-relative">
                           <img className="ds_add-cupan" src={require("../Img/cupon.png")} alt="" />
-                          <input type="text" class="form-control ds_add-input" id="exampleInputEmail1" placeholder="Enter coupon code" aria-describedby="emailHelp" />
+                          <input type="text" className="form-control ds_add-input" id="exampleInputEmail1" placeholder="Enter coupon code" aria-describedby="emailHelp" />
                           <button className=" ds_add-apply">Apply</button>
                         </form>
                       </div>
                     </div>
                     <div className="px-3 mt-3 fw-500">
                       <p className="ds_add-special">Special offers</p>
-                      <div class="form-check d-flex align-items-center">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                      <div className="form-check d-flex align-items-center">
+                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
                         <div className="ms-2">
-                          <label class="form-check-label fw-bold ds_add-label" for="flexRadioDefault1">NEW100</label>
+                          <label className="form-check-label fw-bold ds_add-label" for="flexRadioDefault1">NEW100</label>
                           <p className="text-muted ds_add-offer-txt mb-0" style={{ lineHeight: "18px" }}>
                             Get Flat $100 Off on cart value of 500 & Above
                           </p>
-                          <label class="form-check-label ds_add-save" for="flexRadioDefault1">Save $100</label>
+                          <label className="form-check-label ds_add-save" for="flexRadioDefault1">Save $100</label>
                         </div>
                       </div>
-                      <div class="form-check d-flex align-items-center mt-3">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                      <div className="form-check d-flex align-items-center mt-3">
+                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
                         <div className="ms-2">
-                          <label class="form-check-label fw-bold ds_add-label" for="flexRadioDefault1">
+                          <label className="form-check-label fw-bold ds_add-label" for="flexRadioDefault1">
                             NEW100
                           </label>
                           <p className="text-muted ds_add-offer-txt mb-0" style={{ lineHeight: "18px" }}>
@@ -685,7 +685,7 @@ const Cart = () => {
                             facilisis scelerisque iaculis habitant congue est
                             blandit amet.{" "}
                           </p>
-                          <label class="form-check-label ds_add-save" for="flexRadioDefault1">
+                          <label className="form-check-label ds_add-save" for="flexRadioDefault1">
                             Save $100
                           </label>
                         </div>
@@ -862,14 +862,14 @@ const Cart = () => {
       </Modal>
 
       {/* /* {************** Change Address Popup *******************} */}
-      <div class="modal fade " id="ds_modal" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered ds_modal-dialog" >
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Address</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div className="modal fade " id="ds_modal" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered ds_modal-dialog" >
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">Address</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <div className="row">
                 <div className="col-xl-6 col-lg-6 col-md-6 mt-md-2 mt-3 ">
                   <div className="ds_change-inner">
@@ -1030,7 +1030,7 @@ const Cart = () => {
                     </div>
                     <p className="ds_con-price fw-600">$120</p>
                   </div>
-                  <div class="ds_con-line mt-3"></div>
+                  <div className="ds_con-line mt-3"></div>
 
                   <div>
                     <div className="d-flex px-3 mt-3 justify-content-between">
@@ -1126,21 +1126,21 @@ const Cart = () => {
                         <tbody>
                           <tr>
                             <td>
-                              <div class="ds_table-title">Traditional Chaniya Choli</div>
-                              <div class="ds_table-desc">Elegant peach color silk chaniya choli with dupatta & accessories</div>
+                              <div className="ds_table-title">Traditional Chaniya Choli</div>
+                              <div className="ds_table-desc">Elegant peach color silk chaniya choli with dupatta & accessories</div>
                             </td>
                             <td className="ds_table-quantity">1</td>
-                            <td class="ds_table-price">$120.00</td>
-                            <td class="ds_table-price">$120.00</td>
+                            <td className="ds_table-price">$120.00</td>
+                            <td className="ds_table-price">$120.00</td>
                           </tr>
                           <tr>
                             <td>
-                              <div class="ds_table-title">Traditional Chaniya Choli</div>
-                              <div class="ds_table-desc">Elegant peach color silk chaniya choli with dupatta & accessories</div>
+                              <div className="ds_table-title">Traditional Chaniya Choli</div>
+                              <div className="ds_table-desc">Elegant peach color silk chaniya choli with dupatta & accessories</div>
                             </td>
                             <td className="ds_table-quantity">1</td>
-                            <td class="ds_table-price">$120.00</td>
-                            <td class="ds_table-price">$120.00</td>
+                            <td className="ds_table-price">$120.00</td>
+                            <td className="ds_table-price">$120.00</td>
                           </tr>
                         </tbody>
                       </table>

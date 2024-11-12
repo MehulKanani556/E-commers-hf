@@ -75,10 +75,10 @@ const Gridcomponent = () => {
                     <Row className='m-0'>
                         <Col className='p-0'>
                             <div>
-                                <div class="parent">
+                                <div className="parent">
                                     <Map data={gridview}>
                                         {(item) => (
-                                            <div class={`div${cnt++} VK_grid_parent`}>
+                                            <div className={`div${cnt++} VK_grid_parent`}>
                                                 <div className={`${item.status ? 'me-lg-3 h-100 position-relative' : "h-100 position-relative"}`}>
                                                 <img src={require(`../../assets/${item.image}`)} className='w-100 h-100 object_center' alt="" />
                                                 <div className='VK_grid_child'>

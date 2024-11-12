@@ -107,7 +107,7 @@ const Elecroniccollection = () => {
 
     useEffect(() => {
         setelectoincproduct(data)
-    }, [])
+    }, []);
 
 
     return (

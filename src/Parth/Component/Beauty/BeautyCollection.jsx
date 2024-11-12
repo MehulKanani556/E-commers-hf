@@ -142,7 +142,7 @@ const Elecroniccollection = () => {
                                                         null
                                                     )
                                                 }
-                                                <div className='ms-auto pe-3 mt-1'>
+                                                <div className='ms-auto pe-3 mt-lg-3 mt-2'>
                                                     <button className='border-0 bg-transparent VK_btn_shadow p-0 rounded-circle VK_wishlist_icn'>
                                                         <FaRegHeart />
                                                     </button>
