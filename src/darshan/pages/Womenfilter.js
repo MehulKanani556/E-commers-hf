@@ -1560,7 +1560,7 @@ const Womenfilter = () => {
                                                                     (<div className="d_seller">Best Seller</div>)}
                                                                 {item.isNewArrial &&
                                                                     (<div className="d_arrival">New Arrival</div>)}
-                                                                <div className="d_trendicon d-flex justify-content-center align-items-center">
+                                                                <div className="d_trendicon d-flex justify-content-center align-items-center d_cur">
                                                                     <IoMdHeartEmpty className='d_icon ' />
                                                                 </div>
                                                             </div>

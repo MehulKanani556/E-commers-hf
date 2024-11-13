@@ -17,7 +17,7 @@ const Like = () => {
             isNewArrial: true,
             name: "Premium Lehenga choli",
             rating: 4.5,
-            description: "Purple lehenga choli in silk efhdefdhfsdfsdfhbsdhfbjhsdjhfbhsdjfbsdhjfbhsdjbfjhsdhfjsdjhbfhsdfhjbsdjhfefhdefdhfsdfsdfhbsdhfbjhsdjhfbhsdjfbsdhjfbhsdjbfjhsdhfjsdjhbfhsdfhjbsdjhf",
+            description: "Purple lehenga choli in silk",
             colors: [
                 { id: 1, color: "#B16AAF", isActive: true },
             ],
@@ -139,7 +139,6 @@ const Like = () => {
                     </div>
                     <Slider {...settings} prevArrow={<CustomPrevArrow />} nextArrow={<CustomNextArrow />}>
                         {filterItems.map((item, index) => {
-                            console.log(item.length)
                             return (
                                 <div key={item.id} className="slider-item">
                                     <div className="d_box">
@@ -149,7 +148,7 @@ const Like = () => {
                                                 (<div className="d_seller">Best Seller</div>)}
                                             {item.isNewArrial &&
                                                 (<div className="d_arrival">New Arrival</div>)}
-                                            <div className="d_trendicon d-flex justify-content-center align-items-center">
+                                            <div className="d_trendicon d-flex justify-content-center align-items-center d_cur">
                                                 <IoMdHeartEmpty className='d_icon ' />
                                             </div>
                                         </div>

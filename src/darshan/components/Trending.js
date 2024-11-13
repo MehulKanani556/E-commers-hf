@@ -151,7 +151,7 @@ const Trending = () => {
                         <img src={require(`./../d_img/${item.image}`)} alt="" />
                         {item.isBestSeller &&
                           (<div className="d_seller">Best Seller</div>)}
-                        <div className="d_trendicon d-flex justify-content-center align-items-center">
+                        <div className="d_trendicon d-flex justify-content-center align-items-center d_cur">
                           <IoMdHeartEmpty className='d_icon ' />
                         </div>
                       </div>

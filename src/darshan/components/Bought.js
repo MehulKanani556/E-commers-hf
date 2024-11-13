@@ -15,7 +15,7 @@ const Bought = () => {
             isNewArrial: true,
             name: "Traditional Chaniya choli ",
             rating: 4.5,
-            description: "Peach cotton silk chaniya choli efhdefdhfsdfsdfhbsdhfbjhsdjhfbhsdjfbsdhjfbhsdjbfjhsdhfjsdjhbfhsdfhjbsdjhfefhdefdhfsdfsdfhbsdhfbjhsdjhfbhsdjfbsdhjfbhsdjbfjhsdhfjsdjhbfhsdfhjbsdjhfsdsddddd",
+            description: "Peach cotton silk chaniya choli",
             colors: [
                 { id: 1, color: "#E15939", isActive: true },
                 { id: 2, color: "#1D45A9", isActive: true },
@@ -62,7 +62,7 @@ const Bought = () => {
                                                         (<div className="d_seller">Best Seller</div>)}
                                                     {item.isNewArrial &&
                                                         (<div className="d_arrival">New Arrival</div>)}
-                                                    <div className="d_trendicon d-flex justify-content-center align-items-center">
+                                                    <div className="d_trendicon d-flex justify-content-center align-items-center d_cur">
                                                         <IoMdHeartEmpty className='d_icon ' />
                                                     </div>
                                                 </div>

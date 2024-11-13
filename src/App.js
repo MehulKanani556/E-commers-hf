@@ -77,7 +77,7 @@ function App() {
           <Route path="/luggage" element={<Luggage />} />
 
           {/* sport */}
-          <Route path="/sport" element={<Sports />} />
+          <Route path="/sports" element={<Sports />} />
 
           {/* HELP  */}
           <Route path="/help" element={<HelpSupport />} />

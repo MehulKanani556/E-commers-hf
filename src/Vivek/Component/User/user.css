@@ -8,6 +8,9 @@
     background-color: #2B221E;
     color: #fff;
 }
+.dropdown-item:focus{
+    color: #fff;
+}
 .btn-close:focus{
     box-shadow: none;
 }
@@ -115,6 +118,7 @@
 }
 
 .VK_from_input {
+    color: #000000;
     outline: none;
     background-color: #EDEDED;
     border: none;
@@ -830,7 +834,7 @@
     display: none !important;
 }
 
-::-webkit-scrollbar {
+.VK_subtrack::-webkit-scrollbar {
     display: none;
 }
 
@@ -1104,6 +1108,9 @@
     }
     .V_back-line3 {
         width: 160%;
+    }
+    .V_back-line2{
+        width: 125%;
     }
     .V_back-line{
         width: 80%;

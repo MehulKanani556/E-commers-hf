@@ -82,7 +82,7 @@ function MyOrderwithTracking() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-lg-8 py-3 pt-lg-0 pt-xl-3 position-relative">
+                                        <div className="col-lg-8 py-3 VK_subtrack pt-lg-0 pt-xl-3 position-relative overflow-auto">
                                             <div className='V_back-line2'></div>
                                             <div className="d-flex justify-content-between px-md-3 px-lg-5 ">
                                                 <div className='text-center'>
@@ -162,10 +162,6 @@ function MyOrderwithTracking() {
                     </div>
                 </div>
             </section>
-
-
-
-
 
             {/* Cancle ordered model */}
             <Modal

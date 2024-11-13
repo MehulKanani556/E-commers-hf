@@ -36,9 +36,6 @@ function TrackOrder() {
                         Track Order
                     </h2>
 
-
-
-
                     {/* empty order */}
                     <div className='VK_my_order d-flex justify-content-center align-items-center h-100 d-none'>
                         <div className='VK_empty_order text-center'>
@@ -58,7 +55,6 @@ function TrackOrder() {
                             </div>
                         </div>
                     </div>
-
 
                     {/* my order */}
                     <div>
@@ -86,7 +82,7 @@ function TrackOrder() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-lg-8 py-3 pt-lg-0 pt-xl-3 position-relative VK_padding overflow-auto">
+                                        <div className="col-lg-8 py-3 pt-lg-0 pt-xl-3 VK_subtrack position-relative VK_padding overflow-auto">
                                             <div className='V_back-line4'></div>
                                             <div className="d-flex justify-content-between px-md-3 px-lg-5 ">
                                                 <div className='text-center'>

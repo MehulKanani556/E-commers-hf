@@ -467,6 +467,10 @@ canvas {
     border: 1px solid #2B221E;
     padding: 14px 14px;
 }
+.d_womendetail .d_delbtn .d_notifybtn {
+    width: 390px;
+    background-color: #2B221E;
+}
 
 .d_womendetail .d_delbtn .d_cta .d_hearticon {
     padding: 7px 21px;
@@ -1111,6 +1115,9 @@ input:focus-visible {
     canvas {
         height: 685px;
     }
+    .d_womendetail .d_delbtn .d_notifybtn{
+        width: 290px;
+    }
 
     /* .d_imagemodal .modal-lg {
         --bs-modal-width: 1200px;
@@ -1356,6 +1363,9 @@ input:focus-visible {
     canvas {
         height: 645px;
     }
+    .d_womendetail .d_delbtn .d_notifybtn {
+        width: 360px;
+    }
 
     /* .d_imagemodal .d_item {
         height: 450px;
@@ -1497,6 +1507,9 @@ input:focus-visible {
     canvas {
         height: 500px;
     }
+    .d_womendetail .d_delbtn .d_notifybtn{
+        width: 405px;
+    }
 
     /* .d_imagemodal .modal-lg {
         width: 400px;
@@ -1587,7 +1600,15 @@ input:focus-visible {
     .d_offermodal .modal-dialog {
         width: 350px;
     }
-
+    .d_womendetail .d_delbtn .d_notifybtn{
+        width: 355px;
+    }
+    .d_womendetail .d_delbtn .d_cta .d_hearticon {
+        font-size: 24px;
+    }
+    .d_womendetail .d_delbtn .d_cta a{
+        font-size: 14px;
+    }
     /* .d_imagemodal .modal-lg {
         width: 350px;
     }
@@ -1628,6 +1649,9 @@ input:focus-visible {
 
     canvas {
         height: 400px;
+    }
+    .d_womendetail .d_delbtn .d_notifybtn {
+        width: 300px;
     }
     .d_reactglass>div>div:last-child {
         height: 400px !important;

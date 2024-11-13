@@ -15,12 +15,7 @@ import OwlCarousel from 'react-owl-carousel';
 // import { FiPlus } from 'react-icons/fi';
 
 function Luggage() {
-
-
-
-
-
-
+    
     return (
         <>
 

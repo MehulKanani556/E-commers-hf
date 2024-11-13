@@ -1541,7 +1541,7 @@ const Profile = () => {
 
                         <div className='my-3'>
                             <div className='d-flex align-items-center justify-content-center w-100 gap-sm-4 gap-2'>
-                                <button className='VK_stay'>
+                                <button className='VK_stay' onClick={() => setdeactivemodal(false)}>
                                     Let me stay
                                 </button>
                                 <button className='VK_dactivete'>
@@ -1556,7 +1556,7 @@ const Profile = () => {
 
             {/* Deactive account modal */}
 
-            {/* add address model */}
+            {/* add address model */} 
             <Modal
                 show={address_model}
                 onHide={() => { setadderss_model(false) }}

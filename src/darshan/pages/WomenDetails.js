@@ -133,7 +133,7 @@ const WomenDetails = () => {
     useEffect(() => {
         const handleResize = () => {
             const canvas = canvasRef.current;
-            const viewer = viewerRef.current;
+            const viewer = viewerRef.current;   
 
             if (viewer && canvas) {
                 // Set canvas width to match viewer's width
@@ -209,6 +209,8 @@ const WomenDetails = () => {
             }
         }
     };
+
+    
 
     // Re-render the image when the current frame changes
     // useEffect(() => {
@@ -307,7 +309,7 @@ const WomenDetails = () => {
                                         {galleryItems.map((item, index) => (
                                             <div
                                                 key={index}
-                                                className="d_img cursor-pointer"
+                                                className="d_img d_cur"
                                                 onClick={() => handleThumbnailClick(item, index)}
                                             >
                                                 {item.type === 'image' ? (
@@ -365,7 +367,7 @@ const WomenDetails = () => {
                                                             alt="360 View"
                                                             onClick={() => {
                                                                 toggle360View();
-                                                                setCurrentFrame(1); // Ensure you have this function defined
+                                                                setCurrentFrame(1); 
                                                             }}
                                                             style={{ cursor: 'pointer' }}
                                                         />
@@ -468,9 +470,9 @@ const WomenDetails = () => {
                                 <div className="d_color">
                                     <div className="d_title">Colors :</div>
                                     <div className="d-flex">
-                                        <div className={`d_colorcircle ${selectedColor === '#E15939' ? 'active' : ''}`} style={{ background: '#E15939' }} onClick={() => setSelectedColor('#E15939')}></div>
-                                        <div className={`d_colorcircle ${selectedColor === '#1D45A9' ? 'active' : ''}`} style={{ background: '#1D45A9' }} onClick={() => setSelectedColor('#1D45A9')}></div>
-                                        <div className={`d_colorcircle ${selectedColor === '#172631' ? 'active' : ''}`} style={{ background: '#172631' }} onClick={() => setSelectedColor('#172631')}></div>
+                                        <div className={`d_colorcircle d_cur ${selectedColor === '#E15939' ? 'active' : ''}`} style={{ background: '#E15939' }} onClick={() => setSelectedColor('#E15939')}></div>
+                                        <div className={`d_colorcircle d_cur ${selectedColor === '#1D45A9' ? 'active' : ''}`} style={{ background: '#1D45A9' }} onClick={() => setSelectedColor('#1D45A9')}></div>
+                                        <div className={`d_colorcircle d_cur ${selectedColor === '#172631' ? 'active' : ''}`} style={{ background: '#172631' }} onClick={() => setSelectedColor('#172631')}></div>
                                     </div>
                                 </div>
                                 <div className="d_size">
@@ -484,7 +486,7 @@ const WomenDetails = () => {
                                                 {[34, 36, 38, 40, 42, 44, 46].map((size) => (
                                                     <div
                                                         key={size}
-                                                        className={`d_sizebox d-flex justify-content-center align-items-center ${selectedSize === size ? 'active' : ''} ${size === 34 ? 'd_disable' : ''}`}
+                                                        className={`d_sizebox d-flex justify-content-center align-items-center d_cur ${selectedSize === size ? 'active' : ''} ${size === 34 ? 'd_disable' : ''}`}
                                                         onClick={() => size !== 34 && setSelectedSize(size)}
                                                     >
                                                         {size === 34 && <div className="d_diagonal-line"></div>}
@@ -496,7 +498,7 @@ const WomenDetails = () => {
                                                 {[128, 256, 512].map((size) => (
                                                     <div
                                                         key={size}
-                                                        className={`d_sizebox d_gbsize d-flex justify-content-center align-items-center ${selectedgbsize === size ? 'active' : ''} ${size === 512 ? 'd_disable' : ''}`}
+                                                        className={`d_sizebox d_gbsize d-flex justify-content-center align-items-center d_cur ${selectedgbsize === size ? 'active' : ''} ${size === 512 ? 'd_disable' : ''}`}
                                                         onClick={() => size !== 512 && setSelectedGBSize(size)}
                                                     >
                                                         {size === 512 && <div className="d_diagonal-line"></div>}
@@ -540,6 +542,13 @@ const WomenDetails = () => {
                                         </div>
                                     </div>
                                 </div>
+                                {/* <div className="d_delbtn">
+                                    <div className="d-flex">
+                                        <div className="d_cta  d-flex justify-content-center align-items-center">
+                                            <Link to="" className='text-decoration-none d_notifybtn text-center d-block'>Notify me</Link>
+                                        </div>
+                                    </div>
+                                </div> */}
                                 <div className="d_feau">
                                     <div className="d-flex flex-wrap">
                                         <div className="d-flex align-items-center d_feabg">
