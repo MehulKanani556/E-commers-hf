@@ -215,7 +215,7 @@
         height: 380px;
     }
     .d_trend .d_box .d_content .d_desc {
-        line-height: 16px;
+        line-height: 19px;
     }
 }
 @media(max-width:575px)

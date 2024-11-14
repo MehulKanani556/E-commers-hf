@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaStar } from "react-icons/fa";
 
 import './../css/trending.css'
-import { IoMdHeartEmpty } from 'react-icons/io';
+import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 
 const Trending = () => {
@@ -132,6 +132,18 @@ const Trending = () => {
     },
   ];
 
+  const [isSelectedwishlist, setIsSelectedWishlist] = useState([]);
+
+  const handleClickwishlist = (item) => {
+    setIsSelectedWishlist(prev => {
+      if (prev.includes(item.id)) {
+        return prev.filter(itemId => itemId !== item.id);
+      } else {
+        return [...prev, item.id];
+      }
+    });
+  };
+
   return (
     <>
 
@@ -151,8 +163,8 @@ const Trending = () => {
                         <img src={require(`./../d_img/${item.image}`)} alt="" />
                         {item.isBestSeller &&
                           (<div className="d_seller">Best Seller</div>)}
-                        <div className="d_trendicon d-flex justify-content-center align-items-center d_cur">
-                          <IoMdHeartEmpty className='d_icon ' />
+                        <div className="d_trendicon d-flex justify-content-center align-items-center d_cur" onClick={() => handleClickwishlist(item)}>
+                          {isSelectedwishlist.includes(item.id) ? <IoMdHeart className='d_icon' style={{ color: 'red' }} /> : <IoMdHeartEmpty className='d_icon' style={{ color: '#6a6a6a' }} />}
                         </div>
                       </div>
                       <div className="d_content">

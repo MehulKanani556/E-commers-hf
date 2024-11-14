@@ -10,7 +10,7 @@ const Banner = () => {
         <>
 
             <section className='d_firstbg'>
-                <OwlCarousel className='owl-theme' loop items={1}>
+                <OwlCarousel className='owl-theme' loop={false} items={1}>
                     <div className='item owl_height'>
                         <div className=" d_womenbannerbg overflow-hidden">
                             <div className="d_container">
@@ -91,9 +91,9 @@ const Banner = () => {
                     </div>
                     <div className='item owl_height'>
                         <div className="d_bannersilder2 h-100 overflow-hidden">
-                            <div className="d_container ">
-                                <div className="row">
-                                    <div className="col-6 ">
+                            <div className="d_container h-100">
+                                <div className="row align-items-center h-100 flex-sm-row flex-column-reverse">
+                                    <div className="col-12 col-sm-6 ">
                                         <div className="d_content">
                                             <h2>FASTRACK</h2>
                                             <h3>BLACK FABRIC STRAP</h3>
@@ -101,6 +101,11 @@ const Banner = () => {
                                             <div className="d_cta mt-5">
                                                 <a href="" className='text-decoration-none'>Buy Now</a>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-12 col-sm-6 d-flex justify-content-center">
+                                        <div className="d_img">
+                                            <img src={require('./../d_img/watch.png')} alt="" />
                                         </div>
                                     </div>
                                 </div>

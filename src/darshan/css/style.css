@@ -1,4 +1,4 @@
-/* Banner section css start */
+* Banner section css start */
 
 .d_firstbg {
     overflow: hidden;
@@ -160,7 +160,7 @@
 }
 
 .d_bannersilder2 {
-    background-image: url('./../d_img/womenbanner2.png');
+    background-image: url('./../d_img/banner2.png');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -168,9 +168,9 @@
 }
 
 .d_bannersilder2 .d_content {
-    position: absolute;
+    /* position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-50%); */
 }
 
 .d_bannersilder2 .d_content h2 {
@@ -189,7 +189,7 @@
 }
 
 .d_bannersilder2 .d_content p {
-    max-width: 490px;
+    max-width: 450px;
     font-size: 14px;
     color: #fff;
     font-weight: 500;
@@ -205,6 +205,15 @@
     font-size: 16px;
     font-weight: 500;
     color: #2B221E;
+}
+.d_bannersilder2 .d_img{
+    width: 695px;
+    height: 695px;
+}
+.d_bannersilder2 .d_img img{
+    width: 100%;
+    height: 100%;
+    object-position: 150px 0px;
 }
 
 .d_bannersilder3 {
@@ -365,6 +374,13 @@
     .d_bannersilder2 .d_content p {
         line-height: 20px;
     }
+    .d_bannersilder2 .d_img{
+        width: 550px;
+        height: 550px;
+    }
+    .d_bannersilder2 .d_img img{
+        object-position: 100px 0px;
+    }
 
     .d_culbg h2 {
         font-size: 58px;
@@ -402,6 +418,12 @@
 
     .d_bannersilder2 .d_content h3 {
         font-size: 26px;
+    }
+    .d_bannersilder2 .d_img{
+        height: 500px;
+    }
+    .d_bannersilder2 .d_img img{
+        object-position: 0 0px;
     }
 
     .owl_height {
@@ -513,6 +535,13 @@
 
     .d_womenbannerbg .d_popbox .d_text .d_price {
         font-size: 14px;
+    }
+    .d_bannersilder2 .d_img{
+        width: 100%;
+        height: 100%;
+    }
+    .d_bannersilder2 .d_img img{
+        object-position: 60px 0px;
     }
 
     .d_bannersilder3 .d_text h6 {
@@ -640,6 +669,16 @@
         height: 328px;
         width: 550px;
     }
+    .d_bannersilder2 .d_img {
+        width: 220px;
+        height: 220px;
+    }
+    .d_bannersilder2 .d_img img{
+        object-position: 0 0;
+    }
+    .d_bannersilder2 .d_content{
+        padding-bottom: 30px;
+    }
 
     .d_bannersilder3 {
         background-position: right;
@@ -680,6 +719,10 @@
 
     .d_womenbannerbg .d_pls .d_popbox::after {
         left: -8px;
+    }
+    .d_bannersilder2 .d_img {
+        width: 260px;
+        height: 260px;
     }
     .owl_height {
         height: 580px;

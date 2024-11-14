@@ -55,6 +55,7 @@ const Womenfilter = () => {
         patterns: {},
         styles: {},
     });
+    const [selectedFilters, setSelectedFilters] = useState([]);
 
     const filterItems = [
         {
@@ -64,7 +65,7 @@ const Womenfilter = () => {
             isNewArrial: true,
             name: "Premium Lehenga choli ",
             rating: 4.5,
-            description: "Purple lehenga choli in silk efhdefdhfsdfsdfhbsdhfbjhsdjhfbhsdjfbsdhjfbhsdjbfjhsdhfjsdjhbfhsdfhjbsdjhfefhdefdhfsdfsdfhbsdhfbjhsdjhfbhsdjfbsdhjfbhsdjbfjhsdhfjsdjhbfhsdfhjbsdjhf",
+            description: "Purple lehenga choli in silk",
             colors: [
                 { id: 1, color: "#B16AAF", isActive: true },
             ],
@@ -602,16 +603,29 @@ const Womenfilter = () => {
         { id: 4, stylename: "Kanjivaram" },
     ]
 
-    // Checkbox checked
+    // Handle checkbox changes
 
-    const handleCheckboxChange = (type, id) => {
-        setCheckedFilters(prevState => ({
-            ...prevState,
+    const handleCheckboxChange = (type, id, label) => {
+        // Update checked filters
+        setCheckedFilters(prev => ({
+            ...prev,
             [type]: {
-                ...prevState[type],
-                [id]: !prevState[type][id] // Toggle checked state
+                ...prev[type],
+                [id]: !prev[type][id]
             }
         }));
+
+        // Update selected filters
+        if (!checkedFilters[type][id]) {
+            setSelectedFilters(prev => [...prev, { type, id, label }]);
+        } else {
+            setSelectedFilters(prev => prev.filter(filter => !(filter.type === type && filter.id === id)));
+        }
+    };
+
+    // Remove filter when close button is clicked
+    const handleRemoveFilter = (type, id) => {
+        handleCheckboxChange(type, id);
     };
 
     // const handleCheckboxChange = (type, id) => {
@@ -627,7 +641,7 @@ const Womenfilter = () => {
     //             [id]: true
     //         }
     //     }));
-    // };
+    // };       
 
     // Price Range
 
@@ -656,7 +670,6 @@ const Womenfilter = () => {
         const { name, value } = e.target;
 
         if (name === "brand") {
-            console.log(value);
             setSearchbrand(value);
         } else if (name === "material") {
             setSearchmaterial(value);
@@ -672,8 +685,7 @@ const Womenfilter = () => {
     const filteredBrands = brands.filter(brand =>
         brand.brandname.toLowerCase().includes(searchbrand.toLowerCase())
     );
-    const displayedbrands = showMore.brand ? filteredBrands : filteredBrands.slice(0, initialDisplayCount);
-
+    const displayedbrands = showMore.brand ? filteredBrands : filteredBrands.slice(0, initialDisplayCount)
     // color
     const displayedcolor = showMore.color ? color : color.slice(0, initialDisplayCount);
 
@@ -739,8 +751,8 @@ const Womenfilter = () => {
     return (
         <>
 
-        {/* Header section start */}
-        <Header />
+            {/* Header section start */}
+            <Header />
 
             {/* Banner section Start */}
 
@@ -784,7 +796,7 @@ const Womenfilter = () => {
                                         </div>
                                     </div>
                                     <div className="d_category">
-                                        <div className="d_filterlist d-flex flex-wrap">
+                                        {/* <div className="d_filterlist d-flex flex-wrap">
                                             <div className="d_close">30% & more <IoClose className="d_closeicon" /></div>
                                             <div className="d_close">M <IoClose className="d_closeicon" /></div>
                                             <div className="d_close">BIBA <IoClose className="d_closeicon" /></div>
@@ -799,6 +811,42 @@ const Womenfilter = () => {
                                             <div className="d_close">Polka Print <IoClose className="d_closeicon" /></div>
                                             <div className="d_close">Party <IoClose className="d_closeicon" /></div>
                                             <div className="d_close">Daily Wear <IoClose className="d_closeicon" /></div>
+                                        </div> */}
+                                        <div className="d_filterlist d-flex flex-wrap">
+                                            {selectedFilters.map((filter, index) => (
+                                                <div key={index} className="d_close">
+                                                    <div className="d-flex align-items-center">
+                                                        {/* Show color circle for color filters */}
+                                                        {filter.type === 'colors' && (
+                                                            <div
+                                                                className="d_circle"
+                                                                style={{ background: filter.label }}
+                                                            />
+                                                        )}
+
+                                                        {/* Show discount text */}
+                                                        {filter.type === 'discounts' ? (
+                                                            `${filter.label}% & more`
+                                                        ) : (
+                                                            // Show rating with star icon
+                                                            filter.type === 'ratings' ? (
+                                                                <span>
+                                                                    {filter.label} <FaStar className="d_staricon" /> & above
+                                                                </span>
+                                                            ) : (
+                                                                // Show regular label
+                                                                filter.label
+                                                            )
+                                                        )}
+
+                                                        {/* Close button */}
+                                                        <IoClose
+                                                            className="d_closeicon d_cur"
+                                                            onClick={() => handleRemoveFilter(filter.type, filter.id)}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            ))}
                                         </div>
                                         <div className="d_categorylist">
                                             <div className="d_acc">
@@ -812,7 +860,7 @@ const Womenfilter = () => {
                                                             <div className='mt-3'>
                                                                 {categories.map((category, index) => (
                                                                     <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('categories', category.id)} checked={!!checkedFilters.categories[category.id]} id={`category-${category.id}`} />
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('categories', category.id, category.label)} checked={!!checkedFilters.categories[category.id]} id={`category-${category.id}`} />
                                                                         <label htmlFor={`category-${category.id}`} className="d_checkmark"></label>
                                                                         <p className="mb-0">{category.label}</p>
                                                                     </div>
@@ -836,7 +884,7 @@ const Womenfilter = () => {
                                                             <div className='mt-3'>
                                                                 {discount.map((discount, index) => (
                                                                     <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('discounts', discount.id)} checked={!!checkedFilters.discounts[discount.id]} id={`discount-${discount.id}`} />
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('discounts', discount.id, discount.no)} checked={!!checkedFilters.discounts[discount.id]} id={`discount-${discount.id}`} />
                                                                         <label htmlFor={`discount-${discount.id}`} className="d_checkmark"></label>
                                                                         <p className="mb-0">{discount.no}% or more</p>
                                                                     </div>
@@ -898,7 +946,7 @@ const Womenfilter = () => {
                                                             <div className='mt-3'>
                                                                 {displayedSizes.map((size, index) => (
                                                                     <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('sizes', size.id)} checked={!!checkedFilters.sizes[size.id]} id={`size-${size.id}`} />
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('sizes', size.id, size.sizename)} checked={!!checkedFilters.sizes[size.id]} id={`size-${size.id}`} />
                                                                         <label htmlFor={`size-${size.id}`} className="d_checkmark"></label>
                                                                         <p className="mb-0">{size.sizename}</p>
                                                                     </div>
@@ -929,7 +977,7 @@ const Womenfilter = () => {
                                                             </div>
                                                             {displayedbrands.map((brand, index) => (
                                                                 <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                    <input type="checkbox" onChange={() => handleCheckboxChange('brands', brand.id)} checked={!!checkedFilters.brands[brand.id]} id={`brand-${brand.id}`} />
+                                                                    <input type="checkbox" onChange={() => handleCheckboxChange('brands', brand.id, brand.brandname)} checked={!!checkedFilters.brands[brand.id]} id={`brand-${brand.id}`} />
                                                                     <label htmlFor={`brand-${brand.id}`} className="d_checkmark"></label>
                                                                     <p className="mb-0">{brand.brandname}<span>(10)</span></p>
                                                                 </div>
@@ -956,7 +1004,7 @@ const Womenfilter = () => {
                                                             <div className='mt-3'>
                                                                 {displayedcolor.map((color, index) => (
                                                                     <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('colors', color.id)} checked={!!checkedFilters.colors[color.id]} id={`color-${color.id}`} />
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('colors', color.id, color.colorname)} checked={!!checkedFilters.colors[color.id]} id={`color-${color.id}`} />
                                                                         <label htmlFor={`color-${color.id}`} className="d_checkmark"></label>
                                                                         <div className="d-flex align-items-center">
                                                                             <div className="d_color" style={{ background: color.colorname }}></div>
@@ -987,7 +1035,7 @@ const Womenfilter = () => {
                                                             <div className='mt-3'>
                                                                 {rating.map((rate, index) => (
                                                                     <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('ratings', rate.id)} checked={!!checkedFilters.ratings[rate.id]} id={`rate-${rate.id}`} />
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('ratings', rate.id, rate.rating)} checked={!!checkedFilters.ratings[rate.id]} id={`rate-${rate.id}`} />
                                                                         <label htmlFor={`rate-${rate.id}`} className="d_checkmark"></label>
                                                                         <p className="mb-0">{rate.rating} <FaStar className="d_staricon" /> & above</p>
                                                                     </div>
@@ -1010,7 +1058,7 @@ const Womenfilter = () => {
                                                             <div className='mt-3'>
                                                                 {displayedsleeve.map((sleeve, index) => (
                                                                     <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('sleeves', sleeve.id)} checked={!!checkedFilters.sleeves[sleeve.id]} id={`sleeve-${sleeve.id}`} />
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('sleeves', sleeve.id, sleeve.sleevename)} checked={!!checkedFilters.sleeves[sleeve.id]} id={`sleeve-${sleeve.id}`} />
                                                                         <label htmlFor={`sleeve-${sleeve.id}`} className="d_checkmark"></label>
                                                                         <p className="mb-0">{sleeve.sleevename}<span>(10)</span></p>
                                                                     </div>
@@ -1041,7 +1089,7 @@ const Womenfilter = () => {
                                                             </div>
                                                             {displayedmaterial.map((material, index) => (
                                                                 <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                    <input type="checkbox" onChange={() => handleCheckboxChange('materials', material.id)} checked={!!checkedFilters.materials[material.id]} id={`material-${material.id}`} />
+                                                                    <input type="checkbox" onChange={() => handleCheckboxChange('materials', material.id, material.materialname)} checked={!!checkedFilters.materials[material.id]} id={`material-${material.id}`} />
                                                                     <label htmlFor={`material-${material.id}`} className="d_checkmark"></label>
                                                                     <p className="mb-0">{material.materialname}<span>(10)</span></p>
                                                                 </div>
@@ -1068,7 +1116,7 @@ const Womenfilter = () => {
                                                             <div className='mt-3'>
                                                                 {displayedpattern.map((pattern, index) => (
                                                                     <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('patterns', pattern.id)} checked={!!checkedFilters.patterns[pattern.id]} id={`pattern-${pattern.id}`} />
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('patterns', pattern.id, pattern.patternname)} checked={!!checkedFilters.patterns[pattern.id]} id={`pattern-${pattern.id}`} />
                                                                         <label htmlFor={`pattern-${pattern.id}`} className="d_checkmark"></label>
                                                                         <p className="mb-0">{pattern.patternname}<span>(10)</span></p>
                                                                     </div>
@@ -1096,7 +1144,7 @@ const Womenfilter = () => {
                                                             <div className='mt-3'>
                                                                 {displayedoccasion.map((occasion, index) => (
                                                                     <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('occasions', occasion.id)} checked={!!checkedFilters.occasions[occasion.id]} id={`occasion-${occasion.id}`} />
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('occasions', occasion.id, occasion.occasionname)} checked={!!checkedFilters.occasions[occasion.id]} id={`occasion-${occasion.id}`} />
                                                                         <label htmlFor={`occasion-${occasion.id}`} className="d_checkmark"></label>
                                                                         <p className="mb-0">{occasion.occasionname}<span>(10)</span></p>
                                                                     </div>
@@ -1128,7 +1176,7 @@ const Womenfilter = () => {
                                                             </div>
                                                             {displayedstyle.map((style, index) => (
                                                                 <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                    <input type="checkbox" onChange={() => handleCheckboxChange('styles', style.id)} checked={!!checkedFilters.styles[style.id]} id={`style-${style.id}`} />
+                                                                    <input type="checkbox" onChange={() => handleCheckboxChange('styles', style.id, style.stylename)} checked={!!checkedFilters.styles[style.id]} id={`style-${style.id}`} />
                                                                     <label htmlFor={`style-${style.id}`} className="d_checkmark"></label>
                                                                     <p className="mb-0">{style.stylename}<span>(10)</span></p>
                                                                 </div>
@@ -1604,7 +1652,7 @@ const Womenfilter = () => {
                 {/* Backdrop for mobile */}
                 {showOffcanvas && (
                     <div
-                        className="offcanvas-backdrop show"
+                        className="offcanvas-backdrop show" 
                         onClick={() => setShowOffcanvas(false)}
                     ></div>
                 )}

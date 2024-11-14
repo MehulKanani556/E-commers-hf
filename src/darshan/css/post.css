@@ -43,7 +43,7 @@
 @media(max-width:425px)
 {
     .d_post .d_box .d_img{
-        height: 200px;   
+        height: 300px;   
     }
     .d_post .d_box .d_img img{
         object-position: top;

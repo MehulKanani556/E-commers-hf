@@ -89,6 +89,7 @@ input:focus {
 }
 
 .d_acc .d_acctitle {
+    cursor: pointer;
     /* margin-bottom: 20px; */
 }
 
