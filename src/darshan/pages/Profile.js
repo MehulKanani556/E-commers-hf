@@ -644,7 +644,7 @@ const Profile = () => {
                                                                     navigate('/combine');
                                                                 }
                                                             }}>
-                                                                <div className='VK_order_product h-100 w-100 justify-content-between d-flex flex-wrap'>
+                                                                <div className={`VK_order_product h-100 w-100 justify-content-between d-flex flex-wrap ${item.status === "Delivered" ? 'd_cur' : ""}`}>
                                                                     <div className='VK_order_detail d-flex flex-sm-row flex-column'>
                                                                         <div>
                                                                             <img src={require(`../../Vivek/assets/${item.image}`)} className='VK_order_images object_cover' alt={item.name} />
@@ -671,7 +671,7 @@ const Profile = () => {
                                                                                 <span className='VK_order_date ps-2'>On {item.status_date}</span>
                                                                             </h4>
                                                                             <p className='font_14 fw-bold light_color'>{item.message}</p>
-                                                                            <p className='mt-auto text-lg-end m-0 font_16 VK_track fw-500 d_cur' onClick={() => handleOrderNavigation(item.status)}>
+                                                                            <p className='mt-auto text-lg-end m-0 font_16 VK_track fw-500 d_cur' onClick={(e) => {e.stopPropagation();  handleOrderNavigation(item.status)}}>
                                                                                 {
                                                                                     item.status === 'Delivered' ? 'Add Rate & Review' :
                                                                                         item.status === 'arriving' ? 'Track Order' :

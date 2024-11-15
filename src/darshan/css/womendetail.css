@@ -801,6 +801,7 @@ input:focus-visible {
 }
 
 .d_sizemodal .d_inch .d_inchbg {
+    text-align: center;
     background-color: #E6E6E6;
     color: #6A6A6A;
     font-size: 17px;
@@ -840,7 +841,9 @@ input:focus-visible {
 .d_sizemodal .table>:not(caption)>*>* {
     padding: 3px;
 }
-
+.d_sizemodal .d_inch ::-webkit-scrollbar{
+    display: none;
+}
 
 /* size chart css end */
 

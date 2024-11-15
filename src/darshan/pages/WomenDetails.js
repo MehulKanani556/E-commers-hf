@@ -338,7 +338,6 @@ const WomenDetails = () => {
                                     <div className="d_mainimg">
                                         {mainContent.type === 'image' && !is360Active && (
                                             <div className="d_img ">
-
                                                 <div className='d_reactglass'>
                                                     <ReactImageMagnify
                                                         {...{
@@ -507,7 +506,7 @@ const WomenDetails = () => {
                                                 ))}
                                             </div> */}
                                         </div>
-                                        <div className="col-12 col-sm-6 col-lg-12 col-xl-6 d_psdeliver">
+                                        <div className="col-6 col-sm-6 col-lg-12 col-xl-6 d_psdeliver">
                                             <div className="d_qun">Quantity :</div>
                                             <div className="d_dropdownqun">
                                                 <button className="d_dropbtnqun" onClick={togglequantity}>

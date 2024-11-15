@@ -603,30 +603,65 @@ const Womenfilter = () => {
         { id: 4, stylename: "Kanjivaram" },
     ]
 
-    // Handle checkbox changes
 
+    // handle checkbox
     const handleCheckboxChange = (type, id, label) => {
-        // Update checked filters
-        setCheckedFilters(prev => ({
-            ...prev,
-            [type]: {
-                ...prev[type],
-                [id]: !prev[type][id]
-            }
-        }));
+        // Only proceed with updates if we have all required parameters
+        if (type && id !== undefined) {
+            setCheckedFilters(prev => ({
+                ...prev,
+                [type]: {
+                    ...prev[type],
+                    [id]: !prev[type]?.[id]
+                }
+            }));
 
-        // Update selected filters
-        if (!checkedFilters[type][id]) {
-            setSelectedFilters(prev => [...prev, { type, id, label }]);
-        } else {
-            setSelectedFilters(prev => prev.filter(filter => !(filter.type === type && filter.id === id)));
+            if (!checkedFilters[type]?.[id]) {
+                setSelectedFilters(prev => [...prev, { type, id, label }]);
+            } else {
+                setSelectedFilters(prev =>
+                    prev.filter(filter => !(filter.type === type && filter.id === id))
+                );
+            }
         }
     };
 
-    // Remove filter when close button is clicked
+    // Remove individual filter
     const handleRemoveFilter = (type, id) => {
-        handleCheckboxChange(type, id);
+        if (type && id !== undefined) {
+            setCheckedFilters(prev => ({
+                ...prev,
+                [type]: {
+                    ...prev[type],
+                    [id]: false
+                }
+            }));
+            setSelectedFilters(prev =>
+                prev.filter(filter => !(filter.type === type && filter.id === id))
+            );
+        }
     };
+
+    // Clear all filters
+    const handleClearAll = (e) => {
+        e.preventDefault();
+
+        setCheckedFilters({
+            categories: {},
+            discounts: {},
+            sizes: {},
+            brands: {},
+            colors: {},
+            ratings: {},
+            sleeves: {},
+            materials: {},
+            occasions: {},
+            patterns: {},
+            styles: {},
+        });
+        setSelectedFilters([]);
+    };
+
 
     // const handleCheckboxChange = (type, id) => {
     //     debugger
@@ -792,7 +827,7 @@ const Womenfilter = () => {
                                     <div className="d_head d-flex justify-content-between">
                                         <h5 className='mb-0'>Filters</h5>
                                         <div className="d_cta">
-                                            <Link to="" className='text-decoration-none'>Clear All</Link>
+                                            <Link to="" className='text-decoration-none' onClick={handleClearAll}>Clear All</Link>
                                         </div>
                                     </div>
                                     <div className="d_category">
@@ -1652,7 +1687,7 @@ const Womenfilter = () => {
                 {/* Backdrop for mobile */}
                 {showOffcanvas && (
                     <div
-                        className="offcanvas-backdrop show" 
+                        className="offcanvas-backdrop show"
                         onClick={() => setShowOffcanvas(false)}
                     ></div>
                 )}

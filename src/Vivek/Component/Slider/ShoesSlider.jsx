@@ -97,42 +97,54 @@ const ShoesSlider = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [carouselIndex, setCarouselIndex] = useState(0);
 
-    const colors = [
-        'linear-gradient(105.54deg, #F4A764 -2.93%, #FFDEC2 72.14%)',
-        'linear-gradient(to right, #ADB0B0, #E1E1E1)',
-        'linear-gradient(105.54deg, #30A357 -2.93%, #75E39A 72.14%)',
-        'linear-gradient(105.54deg, #F24F4F -2.93%, #FFA895 72.14%)',
-    ];
-
-    const images = [
-        require('../../assets/watch1.png'),
-        require('../../assets/watch2.png'),
-        require('../../assets/watch3.png'),
-        require('../../assets/watch4.png')
+    const slides = [
+        {
+            bgColor: 'linear-gradient(105.54deg, #F4A764 -2.93%, #FFDEC2 72.14%)',
+            image: require('../../assets/watch1.png'),
+            heading: 'Exquisite Watches',
+            subHeading: 'Choose Luxury, Choose Us',
+            description: 'Discover the Perfect Watch for Every Occasion and Elevate Your Style with Timeless Elegance and Precision Craftsmanship - watch',
+            price: '$430.00',
+        },
+        {
+            bgColor: 'linear-gradient(to right, #ADB0B0, #E1E1E1)',
+            image: require('../../assets/watch2.png'),
+            heading: 'Modern Timepieces',
+            subHeading: 'Elevate Your Look, Choose Us',
+            description: 'Experience cutting-edge designs with a blend of tradition and innovation in every piece.',
+            price: '$550.00',
+        },
+        {
+            bgColor: 'linear-gradient(105.54deg, #30A357 -2.93%, #75E39A 72.14%)',
+            image: require('../../assets/watch3.png'),
+            heading: 'Classic Elegance',
+            subHeading: 'Timeless Beauty, Choose Us',
+            description: 'Cherish the essence of timeless beauty with precision-crafted watches for any occasion.',
+            price: '$380.00',
+        },
+        {
+            bgColor: 'linear-gradient(105.54deg, #F24F4F -2.93%, #FFA895 72.14%)',
+            image: require('../../assets/watch4.png'),
+            heading: 'Luxury Redefined',
+            subHeading: 'Exclusive Designs, Choose Us',
+            description: 'Indulge in luxury with our exclusive collection designed for connoisseurs.',
+            price: '$700.00',
+        },
     ];
 
     const handlechangewatch = (direction, e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        setCarouselIndex(1); // Ensure we stay on the current slide index
+        setCarouselIndex(1); // Keep the carousel active
+
         setCurrentImageIndex((prevIndex) => {
             let newIndex = direction === 'left' ? prevIndex - 1 : prevIndex + 1;
-            if (newIndex < 0) newIndex = images.length - 1;
-            else if (newIndex >= images.length) newIndex = 0;
-
-
+            if (newIndex < 0) newIndex = slides.length - 1;
+            if (newIndex >= slides.length) newIndex = 0;
             return newIndex;
         });
-
-        // Update background color
-        setBgColor((prevColor) => {
-            const currentIndex = colors.indexOf(prevColor);
-            const nextIndex = (currentIndex + 1) % colors.length;
-            return colors[nextIndex];
-        });
     };
-
     // Headphone slider 
 
     const [headphonecurrentImage, setHeadphoneCurrentImage] = useState(0);
@@ -238,18 +250,18 @@ const ShoesSlider = () => {
 
                 {/* Watch slider item */}
                 <div className="item VK_owl_item" style={{ display: carouselIndex === 1 ? 'block' : 'none' }}>
-                    <div className="VK_slider_gradient h-100" style={{ background: bgColor }}>
-                        <div className="d-flex h-100 align-items-center VK_watch_slider_size flex-sm-row flex-column-reverse">
+                    <div className="VK_slider_gradient h-100" style={{ background: slides[currentImageIndex].bgColor }}>
+                        <div className="d-flex justify-content-between h-100 align-items-center VK_watch_slider_size flex-sm-row flex-column-reverse">
                             <div>
-                                <h2 className='VK_watch_heading'>Exquisite Watches</h2>
-                                <h5 className='text-white VK_watch_sub'>Choose Luxury,<span className='text-black ps-2'>Choose Us</span></h5>
+                                <h2 className='VK_watch_heading'>{slides[currentImageIndex].heading}</h2>
+                                <h5 className='text-white VK_watch_sub'>{slides[currentImageIndex].subHeading.split(',')[0]},<span className='text-black ps-2'>{slides[currentImageIndex].subHeading.split(',')[1]}</span></h5>
                                 <div className='mt-lg-5 mt-sm-3 mt-1'>
                                     <p className='VK_watch_desc'>
-                                        Discover the Perfect Watch for Every Occasion and Elevate Your Style with Timeless Elegance and Precision Craftsmanship - watch
+                                    {slides[currentImageIndex].description}
                                     </p>
                                 </div>
                                 <div className='mt-lg-5 mt-sm-3 mt-1'>
-                                    <h2 className='VK_watch_price text-white'>$430.00</h2>
+                                    <h2 className='VK_watch_price text-white'>{slides[currentImageIndex].price}</h2>
                                 </div>
                                 <div className='mt-sm-4 mt-1 pb-3'>
                                     <button className='VK_theme_btn'>Order Now</button>
@@ -258,7 +270,7 @@ const ShoesSlider = () => {
                             <div className='VK_watch_slider'>
                                 <div className='VK_watch_container overflow d-flex flex-nowrap' ref={containerRef1}>
                                     <div className='w-100 h-100'>
-                                        <img src={images[currentImageIndex]} className='w-100 h-100' alt="" />
+                                        <img src={slides[currentImageIndex].image} className='w-100 h-100' alt="" />
                                     </div>
                                 </div>
                                 <div className='VK_slider_controls'>
