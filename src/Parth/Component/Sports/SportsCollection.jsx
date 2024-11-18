@@ -32,7 +32,7 @@ const Elecroniccollection = () => {
             image: "adidas running.png"
         },
         {
-            compnay: "Nike cortez",
+            compnay: "Nike cortez shoes",
             name: "Nike cortez textile collection",
             colors: [
                 "#353535", "#6BC89B", "#C796D8", "#6B8AC8"
@@ -158,7 +158,7 @@ const Elecroniccollection = () => {
                                                             {item.compnay}
                                                         </h5>
                                                     </div>
-                                                    <div>
+                                                    <div className='d-flex'>
                                                         <span className='text-warning pe-2'>
                                                             <FaStar className='icn' />
                                                         </span>

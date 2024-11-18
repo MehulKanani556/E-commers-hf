@@ -1,19 +1,29 @@
-.btn-check:active+.btn-primary:focus, .btn-check:checked+.btn-primary:focus, .btn-primary.active:focus, .btn-primary:active:focus, .show>.btn-primary.dropdown-toggle:focus{
+.btn-check:active+.btn-primary:focus,
+.btn-check:checked+.btn-primary:focus,
+.btn-primary.active:focus,
+.btn-primary:active:focus,
+.show>.btn-primary.dropdown-toggle:focus {
     box-shadow: none;
 }
-.btn-primary:focus{
+
+.btn-primary:focus {
     box-shadow: none;
 }
-.dropdown-item.active, .dropdown-item:active{
+
+.dropdown-item.active,
+.dropdown-item:active {
     background-color: #2B221E;
     color: #fff;
 }
-.dropdown-item:focus{
+
+.dropdown-item:focus {
     color: #fff;
 }
-.btn-close:focus{
+
+.btn-close:focus {
     box-shadow: none;
 }
+
 .VK_user_sidebar {
     box-sizing: border-box;
     border-radius: 5px;
@@ -319,12 +329,12 @@
 }
 
 .VK_order_card {
-    padding: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.154);
 }
 
 .VK_order_product {
     min-height: 150px;
+    padding: 20px;
 }
 
 .VK_order_price p {
@@ -428,12 +438,14 @@
 }
 
 
-
+.V_border_bottom{
+    border-bottom: 1px solid #6A6A6A;
+}
 
 /* payment method */
 .VK_border_bottom {
     border-bottom: 1px solid #6A6A6A;
-    padding-bottom: 2rem !important;
+    padding-bottom: 1rem !important;
 }
 
 .VK_card_box {
@@ -543,7 +555,9 @@
 /* Track Order */
 
 
-
+.V_pad {
+    padding: 20px;
+}
 
 .VK_trackorder_heading {
     font-size: 28px;
@@ -629,6 +643,7 @@
     z-index: -1;
     left: 125px;
 }
+
 .V_back-line4 {
     position: absolute;
     width: 78%;
@@ -830,7 +845,7 @@
     height: 44px;
 }
 
-.dropdown-toggle::after{
+.dropdown-toggle::after {
     display: none !important;
 }
 
@@ -1028,7 +1043,7 @@
         width: 75%;
     }
 
-   
+
 }
 
 @media (max-width:426px) {
@@ -1051,7 +1066,8 @@
         top: 53px;
         width: 120%;
     }
-    .V_back-line4{
+
+    .V_back-line4 {
         top: 53px;
         width: 95%;
         left: 65px;
@@ -1067,21 +1083,26 @@
     .VK_return_input {
         font-size: 11px;
     }
+
     .V_back-line3 {
         width: 145%;
     }
+
     .V_back-line2 {
         width: 113%;
     }
-    .V_back-line{
+
+    .V_back-line {
         width: 72%;
     }
-    .V_label_value{
+
+    .V_label_value {
         padding-left: 0 !important;
     }
+
     .V_back-line4 {
         width: 110%;
-}
+    }
 }
 
 @media (max-width:350px) {
@@ -1106,18 +1127,22 @@
     .VK_from_input {
         font-size: 10px;
     }
+
     .V_back-line3 {
         width: 160%;
     }
-    .V_back-line2{
+
+    .V_back-line2 {
         width: 125%;
     }
-    .V_back-line{
+
+    .V_back-line {
         width: 80%;
     }
+
     .V_back-line4 {
         width: 120%;
-}
+    }
 }
 
 /* small device */
@@ -1519,7 +1544,8 @@
         width: 30px;
         height: 30px;
     }
-    .V_back-line4{
+
+    .V_back-line4 {
         width: 72%;
         top: 51px;
         left: 105px;
@@ -1640,7 +1666,8 @@
     .V_full_pair_review {
         font-size: 20px;
     }
-    .V_back-line4{
+
+    .V_back-line4 {
         top: 36px;
         width: 62%;
     }
@@ -1705,6 +1732,7 @@
     .VK_border_bottom1 {
         width: 1150px;
     }
+
     .V_back-line4 {
         width: 68%;
         left: 123px;

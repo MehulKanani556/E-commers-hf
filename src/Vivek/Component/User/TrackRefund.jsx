@@ -44,12 +44,14 @@ function TrackRefund() {
                     <div>
                         <div className='VK_order_parent'>
                             <div className='VK_order_card my-sm-3'>
-                                <div className='d-flex justify-content-between flex-wrap align-items-center VK_border_bottom pb-4'>
-                                    <div>
-                                        <p className='m-0 fw-600 font_18'>
-                                            Order Details
-                                        </p>
-                                    </div>
+
+                                <div className='V_pad'>
+                                    <p className='m-0 fw-600 font_18'>
+                                        Order Details
+                                    </p>
+                                </div>
+
+                                <div className='d-flex justify-content-between flex-wrap align-items-center V_border_bottom '>
                                 </div>
                                 <div className='VK_order_product h-100 w-100 justify-content-between d-flex flex-wrap  py-3'>
                                     <div className="row m-0 flex-lg-row flex-column-reverse w-100 ">
@@ -88,7 +90,7 @@ function TrackRefund() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="bottom  pt-lg-3 ">
+                                <div className="V_pad  pt-lg-3 ">
                                     <p className='V_label '>Order ID:   <span className='V_label_value ps-2'> #5656565656</span></p>
                                     <p className='V_label mb-0'>Order Date:   <span className='V_label_value ps-2'> 21/09/2024</span> </p>
                                 </div>

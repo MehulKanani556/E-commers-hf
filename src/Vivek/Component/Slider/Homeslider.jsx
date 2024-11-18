@@ -52,8 +52,10 @@ function Homeslider() {
                                         <img src={require('../../../Parth/assets/Main Girl.png')} alt="" className='V_main_girl' />
                                         <img src={require('../../../Parth/assets/Shadow.png')} alt="" className='V_shadow_girl' />
                                     </div>
-                                    <p className='V_featured'>FEATURED 
-                                        COLLECTION</p>
+                                    <div className='align-items-end'>
+                                        <p className='V_featured'>FEATURED
+                                            COLLECTION</p>
+                                    </div>
                                     <div className='V_both_denim'>
                                         <div className='V_blur V_blur2'>
                                             <div className=''>
