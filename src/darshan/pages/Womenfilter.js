@@ -720,7 +720,7 @@ const Womenfilter = () => {
     const filteredBrands = brands.filter(brand =>
         brand.brandname.toLowerCase().includes(searchbrand.toLowerCase())
     );
-    const displayedbrands = showMore.brand ? filteredBrands : filteredBrands.slice(0, initialDisplayCount)
+    const displayedbrands = showMore.brand ? filteredBrands : filteredBrands.slice(0, initialDisplayCount);
     // color
     const displayedcolor = showMore.color ? color : color.slice(0, initialDisplayCount);
 

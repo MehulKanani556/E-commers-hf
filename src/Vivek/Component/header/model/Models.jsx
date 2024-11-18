@@ -59,8 +59,6 @@ const Register_model = (props) => {
         setLoginpassword(true);
     }
 
-
-
     // login password
     var init_password_login = {
         password: ""
@@ -83,8 +81,6 @@ const Register_model = (props) => {
         setLoginpassword(false);
         setotpmodel(true)
     }
-
-
 
     // otp model
     const otp_validation = Yup.object({
@@ -142,8 +138,6 @@ const Register_model = (props) => {
         setchange(true)
     }
 
-
-
     // reset password
 
     const init_reset_password = {
@@ -175,23 +169,19 @@ const Register_model = (props) => {
         setresetpassword(false);
     };
 
-
-
-
     // Other state and logic
+
     const [loginmodel, setloginmodel] = useState(false);
     const [Loginpassword, setLoginpassword] = useState(false);
     const [forget, setforget] = useState(false);
     const [otpmodel, setotpmodel] = useState(false);
     const [resetpassword, setresetpassword] = useState(false)
-    const [type, setType] = useState('password')
-    const [change, setchange] = useState(false)
-
+    const [type, setType] = useState('password');
+    const [change, setchange] = useState(false);
 
     const handleInputType = () => {
         setType(type === 'password' ? 'text' : 'password');
     }
-
 
     // otp model focus
     const handleInput = (e, index) => {
@@ -227,11 +217,11 @@ const Register_model = (props) => {
                         <form method='post' onSubmit={handleSubmit}>
                             <div className='mb-4'>
                                 <input type="text" placeholder='Name' name='name' value={values.name} className='w-100 model_input' onChange={handleChange} onBlur={handleBlur} />
-                                {errors.name && touched.name ? (<span className='VK_error_text'>{errors.name}</span>) : null}
+                                {errors.name && touched.name ? (<span className='VK_error_text text-danger'>{errors.name}</span>) : null}
                             </div>
                             <div className='mb-4'>
                                 <input type="text" placeholder='Mobile no.' name='mobile' value={values.mobile} className='w-100 model_input' onChange={handleChange} onBlur={handleBlur} />
-                                {errors.mobile && touched.mobile ? (<span className='VK_error_text'>{errors.mobile}</span>) : null}
+                                {errors.mobile && touched.mobile ? (<span className='VK_error_text text-danger'>{errors.mobile}</span>) : null}
                             </div>
                             <div className='mb-4'>
                                 <div className='input_password'>
@@ -240,7 +230,7 @@ const Register_model = (props) => {
                                         {type === 'password' ? (<img src={require('../../../assets/eye_close.png')} alt="Hide Password" />) : (<img src={require('../../../assets/eye_open.png')} alt="Show Password" />)}
                                     </button>
                                 </div>
-                                {errors.password && touched.password ? (<span className='VK_error_text'>{errors.password}</span>) : null}
+                                {errors.password && touched.password ? (<span className='VK_error_text text-danger'>{errors.password}</span>) : null}
                             </div>
                             <div className='mb-4'>
                                 <p className='light_color model_p fw-400'>
@@ -282,7 +272,7 @@ const Register_model = (props) => {
                         <form method='post' onSubmit={loginFormik.handleSubmit}>
                             <div className='mb-4 pb-sm-3'>
                                 <input type="text" placeholder='Mobile no.' name='mobile' value={loginFormik.values.mobile} className='w-100 model_input' onChange={loginFormik.handleChange} onBlur={loginFormik.handleBlur} />
-                                {loginFormik.errors.mobile && loginFormik.touched.mobile ? (<span className='VK_error_text'>{loginFormik.errors.mobile}</span>) : null}
+                                {loginFormik.errors.mobile && loginFormik.touched.mobile ? (<span className='VK_error_text text-danger'>{loginFormik.errors.mobile}</span>) : null}
                             </div>
                             <div className='mb-4'>
                                 <input type="submit" value={"Continue"} className='w-100 inter model_theme' />
@@ -331,7 +321,7 @@ const Register_model = (props) => {
                                     {type === 'password' ? (<img src={require('../../../assets/eye_close.png')} alt="Hide Password" />) : (<img src={require('../../../assets/eye_open.png')} alt="Show Password" />)}
                                 </button>
                             </div>
-                            {passwordLoginFormik.errors.password && passwordLoginFormik.touched.password ? (<span className='VK_error_text'>{passwordLoginFormik.errors.password}</span>) : null}
+                            {passwordLoginFormik.errors.password && passwordLoginFormik.touched.password ? (<span className='VK_error_text text-danger'>{passwordLoginFormik.errors.password}</span>) : null}
                             <div className='text-end mb-4 mt-2'>
                                 <button onClick={() => {
                                     setLoginpassword(false)
@@ -415,7 +405,7 @@ const Register_model = (props) => {
                                     (otpFormik.touched.otp2 && otpFormik.errors.otp2) ||
                                     (otpFormik.touched.otp3 && otpFormik.errors.otp3) ||
                                     (otpFormik.touched.otp4 && otpFormik.errors.otp4) ? (
-                                    <span className='VK_error_text'>
+                                    <span className='VK_error_text text-danger'>
                                         Please fill all OTP fields correctly
                                     </span>
                                 ) : null}
@@ -451,7 +441,7 @@ const Register_model = (props) => {
                         <form method='post' onSubmit={forgetFormik.handleSubmit}>
                             <div className='mb-4 pb-sm-3'>
                                 <input type="text" placeholder='Mobile no.' name='mobile' value={forgetFormik.values.mobile} className='w-100 model_input' onChange={forgetFormik.handleChange} onBlur={forgetFormik.handleBlur} />
-                                {forgetFormik.errors.mobile && forgetFormik.touched.mobile ? (<span className='VK_error_text'>{forgetFormik.errors.mobile}</span>) : null}
+                                {forgetFormik.errors.mobile && forgetFormik.touched.mobile ? (<span className='VK_error_text text-danger'>{forgetFormik.errors.mobile}</span>) : null}
                             </div>
                             <div className='mb-4 pt-2'>
                                 <input type="submit" value={"Get code"} className='w-100 inter model_theme' />
@@ -501,7 +491,7 @@ const Register_model = (props) => {
                                     </button>
                                 </div>
                                 {resetFormik.touched.password && resetFormik.errors.password ? (
-                                    <div className="error">{resetFormik.errors.password}</div>
+                                    <div className="error text-danger">{resetFormik.errors.password}</div>
                                 ) : null}
                             </div>
                             <div className='mb-md-5 mb-2'>
@@ -526,7 +516,7 @@ const Register_model = (props) => {
                                     </button>
                                 </div>
                                     {resetFormik.touched.confirm_password && resetFormik.errors.confirm_password ? (
-                                        <div className="error">{resetFormik.errors.confirm_password}</div>
+                                        <div className="error text-danger">{resetFormik.errors.confirm_password}</div>
                                     ) : null}
                             </div>
                             <div className='mb-4 pt-2'>
