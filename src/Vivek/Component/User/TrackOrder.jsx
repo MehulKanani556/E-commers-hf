@@ -175,7 +175,7 @@ function TrackOrder() {
         onHide={() => setDeletecard(false)}
         aria-labelledby="contained-modal-title-vcenter"
         centered
-        className='VK_add_address_model_'
+        className='VK_add_address_model_ '
     >
         <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">

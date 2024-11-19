@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import '../User/user.css';
 import Map from '../Map';
+import { useFormik } from 'formik';
 import { Modal } from 'react-bootstrap';
 import Header from '../../Component/header/Header.jsx'
 import Footer from '../footer/Footer.jsx';
+import * as Yup from 'yup'
+
 
 function MyOrderwithTracking() {
 
     const [returncard, setReturncard] = useState(false);
     const [canclecard, setCanclecard] = useState(false);
+    const [change, setchange] = useState(false);
+    const [otpmodel, setotpmodel] = useState(false);
+    const [resetpassword, setresetpassword] = useState(false);
 
     const handleReturnOrder = () => {
         setReturncard(true); // Show the cancel order modal
@@ -23,6 +29,56 @@ function MyOrderwithTracking() {
     const handleCloseSuccessModal = () => {
         setCanclecard(false); // Close the success modal
     };
+    // otp model
+    const otp_validation = Yup.object({
+        otp1: Yup.string().required('Required').matches(/^[0-9]$/, 'Must be a number'),
+        otp2: Yup.string().required('Required').matches(/^[0-9]$/, 'Must be a number'),
+        otp3: Yup.string().required('Required').matches(/^[0-9]$/, 'Must be a number'),
+        otp4: Yup.string().required('Required').matches(/^[0-9]$/, 'Must be a number'),
+        otp5: Yup.string().required('Required').matches(/^[0-9]$/, 'Must be a number'),
+        otp6: Yup.string().required('Required').matches(/^[0-9]$/, 'Must be a number'),
+    });
+
+    const otpFormik = useFormik({
+        initialValues: {
+            otp1: '',
+            otp2: '',
+            otp3: '',
+            otp4: '',
+            otp5: '',
+            otp6: ''
+        },
+        validationSchema: otp_validation,
+        onSubmit: (values) => {
+            otp_submit(values);
+        }
+    });
+
+    const otp_submit = (values) => {
+        const otp = values.otp1 + values.otp2 + values.otp3 + values.otp4;
+        console.log('OTP Submitted:', otp);
+        if (change) {
+            setresetpassword(true)
+        }
+        setotpmodel(false);
+    };
+
+    // otp model focus
+    const handleInput = (e, index) => {
+        const input = e.target;
+        const nextInput = input.nextElementSibling;
+        const prevInput = input.previousElementSibling;
+
+        if (input.value.length === 1 && nextInput) {
+            nextInput.focus();
+        } else if (input.value.length === 0 && prevInput) {
+            prevInput.focus();
+        }
+    };
+
+
+
+
     return (
         <React.Fragment>
             <Header />
@@ -217,46 +273,88 @@ function MyOrderwithTracking() {
                                 <span className='text-dark pb-3 pt-5'>
                                     Enter OTP to return order
                                 </span>
-                                <div className="d-flex justify-content-between mt-3">
-                                    <input
-                                        type="text"
-                                        maxLength="1"
-                                        style={{ width: "40px", height: "40px", textAlign: "center" }}
-                                        className="me-2"
-                                    />
-                                    <input
-                                        type="text"
-                                        maxLength="1"
-                                        style={{ width: "40px", height: "40px", textAlign: "center" }}
-                                        className="me-2"
-                                    />
-                                    <input
-                                        type="text"
-                                        maxLength="1"
-                                        style={{ width: "40px", height: "40px", textAlign: "center" }}
-                                        className="me-2"
-                                    />
-                                    <input
-                                        type="text"
-                                        maxLength="1"
-                                        style={{ width: "40px", height: "40px", textAlign: "center" }}
-                                        className="me-2"
-                                    />
-                                    <input
-                                        type="text"
-                                        maxLength="1"
-                                        style={{ width: "40px", height: "40px", textAlign: "center" }}
-                                        className="me-2"
-                                    />
-                                    <input
-                                        type="text"
-                                        maxLength="1"
-                                        style={{ width: "40px", height: "40px", textAlign: "center" }}
-                                        className="me-2"
-                                    />
-                                </div>
+                                <form method='post' onSubmit={otpFormik.handleSubmit}>
+                                    <div className=' my-3 my-sm-4 d-flex gap-3 justify-content-between'>
+                                        <input
+                                            type="text"
+                                            className='V_otp_input1'
+                                            maxLength="1"
+                                            name="otp1"
+                                            value={otpFormik.values.otp1}
+                                            onChange={otpFormik.handleChange}
+                                            onBlur={otpFormik.handleBlur}
+                                            onInput={(e) => handleInput(e, 0)}
+                                        />
+                                        <input
+                                            type="text"
+                                            className='V_otp_input1'
+                                            maxLength="1"
+                                            name="otp2"
+                                            value={otpFormik.values.otp2}
+                                            onChange={otpFormik.handleChange}
+                                            onBlur={otpFormik.handleBlur}
+                                            onInput={(e) => handleInput(e, 1)}
+                                        />
+                                        <input
+                                            type="text"
+                                            className='V_otp_input1'
+                                            maxLength="1"
+                                            name="otp3"
+                                            value={otpFormik.values.otp3}
+                                            onChange={otpFormik.handleChange}
+                                            onBlur={otpFormik.handleBlur}
+                                            onInput={(e) => handleInput(e, 2)}
+                                        />
+                                        <input
+                                            type="text"
+                                            className='V_otp_input1'
+                                            maxLength="1"
+                                            name="otp4"
+                                            value={otpFormik.values.otp4}
+                                            onChange={otpFormik.handleChange}
+                                            onBlur={otpFormik.handleBlur}
+                                            onInput={(e) => handleInput(e, 3)}
+                                        />
+                                        <input
+                                            type="text"
+                                            className='V_otp_input1'
+                                            maxLength="1"
+                                            name="otp5"
+                                            value={otpFormik.values.otp5}
+                                            onChange={otpFormik.handleChange}
+                                            onBlur={otpFormik.handleBlur}
+                                            onInput={(e) => handleInput(e, 4)}
+                                        />
+                                        <input
+                                            type="text"
+                                            className='V_otp_input1'
+                                            maxLength="1"
+                                            name="otp6"
+                                            value={otpFormik.values.otp6}
+                                            onChange={otpFormik.handleChange}
+                                            onBlur={otpFormik.handleBlur}
+                                            onInput={(e) => handleInput(e, 5)}
+                                        />
+                                    </div>
+
+                                    {/* Display validation errors
+                                    <div className='text-center'>
+                                        {(otpFormik.touched.otp1 && otpFormik.errors.otp1) ||
+                                            (otpFormik.touched.otp2 && otpFormik.errors.otp2) ||
+                                            (otpFormik.touched.otp3 && otpFormik.errors.otp3) ||
+                                            (otpFormik.touched.otp4 && otpFormik.errors.otp4) ? (
+                                            <span className='VK_error_text text-danger'>
+                                                Please fill all OTP fields correctly
+                                            </span>
+                                        ) : null}
+                                    </div> */}
+
+                                    {/* <div className='mb-4 pt-2'>
+                                        <input type="submit" value={"Submit OTP"} className='w-100 inter model_theme' />
+                                    </div> */}
+                                </form>
                             </div>
-                            <div className='mt-5 text-center'>
+                            <div className='mt-3 text-center'>
                                 <button type="submit" className='VK_add_address_submit mt-4'
                                     onClick={() => setCanclecard(true)}
                                 >
