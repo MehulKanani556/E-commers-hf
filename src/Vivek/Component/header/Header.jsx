@@ -70,13 +70,18 @@ const Header = () => {
     ]
 
     const handle_serachSuggestion = (event) => {
-        let search_text = event.target.value;
-        if (search_text.length > 1) {
-            setsuggestion(search_sug);
+        let search_text = event.target.value.toLowerCase(); 
+        if (search_text.length > 0) {
+            const filtered = search_sug.filter((element) =>
+                element.toLocaleLowerCase().includes(search_text)
+            );
+
+            setsuggestion(filtered.length > 0 ? filtered : null); 
+      
         } else {
-            setsuggestion(null);
+            setsuggestion(null); 
         }
-    }
+    };
 
 
     // image search model

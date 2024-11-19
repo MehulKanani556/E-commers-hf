@@ -121,17 +121,19 @@
     width: 100%;
     padding: 30px 30px 50px 50px;
     left: 0%;
-    opacity: 0;
-    visibility: hidden;
+    /* opacity: 0; */
+    /* visibility: hidden; */
     top: 128px;
     background-color: white;
     z-index: 3;
     /* transition: all 0.5s ease; */
+    display: none;
 }
 
 .VK_sub_menu:hover .VK_mega_menu {
-    opacity: 1;
-    visibility: visible;
+    /* opacity: 1; */
+    /* visibility: visible; */
+    display: block;
 }
 
 

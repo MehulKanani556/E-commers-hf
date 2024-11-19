@@ -202,7 +202,7 @@ function ContactUs() {
                         </div>
                         <div className="col-12 col-sm-8 col-md-7 col-lg-5  d-flex align-items-center">
                             <div className=' p-3 p-md-5 text-white V_text_white'>
-                                <h3 className='V_head_text py-2 py-md-5'>The Quickcart Group</h3>
+                                <h3 className='V_head_text py-2 py-md-5'>Technology & Innovation </h3>
                                 <p className='V_lorem pt-md-2'>Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque iaculis habitant congue est blandit amet. Tortor in vulputate nulla vitae quam.Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque.
                                 </p>
                             </div>

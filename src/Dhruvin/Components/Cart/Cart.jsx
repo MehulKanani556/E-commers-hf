@@ -175,6 +175,34 @@ const Cart = () => {
     });
   };
 
+  const handleNavAndTabs = (id) => {
+     if(id === 1){
+        // document.getElementById("ds_with-line").classList.remove("ds_solid-border")
+        // document.getElementById("ds_with-line").classList.add("ds_dashed-border")
+        document.getElementById("ds_cupon").classList.remove("d-none")
+        document.getElementById("ds_women-card").classList.remove("d-none")
+     }
+     else if (id === 2){
+        // document.getElementById("ds_with-line").classList.add("ds_solid-border")
+        document.getElementById("ds_cupon").classList.remove("d-none")
+        document.getElementById("ds_women-card").classList.add("d-none")
+        document.getElementById("ds_product").classList.remove("d-none")
+        document.getElementById("ds_express-card").classList.add("d-none")
+        document.getElementById("ds_Nav-Tabs").classList.add("d-none")
+     }
+     else if (id === 3){
+        document.getElementById("ds_cupon").classList.add("d-none")
+        document.getElementById("ds_women-card").classList.add("d-none")
+        document.getElementById("ds_product").classList.add("d-none")
+        document.getElementById("ds_express-card").classList.remove("d-none")
+        document.getElementById("ds_Nav-Tabs").classList.remove("d-none")
+
+     }
+
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   return (
     <div>
       <Header />
@@ -200,7 +228,7 @@ const Cart = () => {
       </section>
 
       {/* **************** Cart Without Address ************* */}
-      <section className="mb-5 mt-4" id="ds_cartsec">
+      <section className="mb-5 mt-4 d-non" id="ds_cartsec">
         <div>
           <div className="d_container">
             <div className="d-flex justify-content-between align-items-center">
@@ -212,18 +240,18 @@ const Cart = () => {
               <div className="col-xl-8 col-lg-8 col-md-12">
                 <div>
                   <div className="position-relative" style={{ zIndex: "2" }}>
-                    <div className="ds_with-line" id="ds_with-line"></div>
-                    <div className="ds_with-line2" id="ds_with-line2"></div>
+                    <div className="ds_with-line ds_dashed-border" id="ds_with-line"></div>
+                    <div className="ds_with-line2 ds_solid-border " id="ds_with-line2"></div>
                     <div className=" row justify-content-between w-100 m-0">
                       <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 p-0">
-                        <div className="ds_with-circle text-center" style={{ lineHeight: "35px" }}>
+                        <div className="ds_with-circle text-center ds_cursor" style={{ lineHeight: "35px" }} onClick={()=> handleNavAndTabs(1)}>
                           <img src={require("../Img/cart-icon.png")} alt="" />
                         </div>
-                        <p className="ds_with-text mt-1">Cart</p>
+                        <p className="ds_with-text mt-1 ms-1">Cart</p>
                       </div>
                       <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 p-0 ">
                         <div className="text-center mx-auto">
-                          <div className="ds_with-circle d-inline-block m-auto" style={{ lineHeight: "35px" }}>
+                          <div className="ds_with-circle d-inline-block m-auto ds_cursor" style={{ lineHeight: "35px" }} onClick={()=> handleNavAndTabs(2)}>
                             <img src={require("../Img/order.png")} alt="" />
                           </div>
                           <p className="ds_with-text mt-1">Order Summary</p>
@@ -231,7 +259,7 @@ const Cart = () => {
                       </div>
                       <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 p-0 ">
                         <div className="d-flex justify-content-end flex-column align-items-end">
-                          <div className="ds_with-circle me-sm-3" style={{ lineHeight: "35px" }}>
+                          <div className="ds_with-circle me-sm-3 ds_cursor" style={{ lineHeight: "35px" }} onClick={()=> handleNavAndTabs(3)}>
                             <img src={require("../Img/order.png")} alt="" />
                           </div>
                           <p className="ds_with-text mt-1">Payment</p>
@@ -240,6 +268,7 @@ const Cart = () => {
                     </div>
                   </div>
 
+                  {/* ------------ Address And Product ----------- */}
                   <div className="d-non" id="ds_product">
                     <div className="mt-3" id="ds_address">
                       <div className="ds_with-shadow">
@@ -262,7 +291,7 @@ const Cart = () => {
                           <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
                             <div className="form-check">
                               <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                              <label className="form-check-label" for="flexCheckDefault">
+                              <label className="form-check-label" htmlFor="flexCheckDefault">
                                 Select All
                               </label>
                             </div>
@@ -283,7 +312,7 @@ const Cart = () => {
                           </div>
                           <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
                             <div>
-                              <p className="fw-bold" style={{ color: "#6A6A6A" }}>
+                              <p className="fw-bold ms-xl-3 ms-4 " style={{ color: "#6A6A6A" }}>
                                 Qty
                               </p>
                             </div>
@@ -299,7 +328,7 @@ const Cart = () => {
                         <div className="ds_with-border"></div>
                         <div className="">
                           <div className="row mt-4">
-                            <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 ">
+                            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
                               <div className="d-flex align-items-center">
                                 <div>
                                   <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
@@ -309,8 +338,8 @@ const Cart = () => {
                                 </div>
                               </div>
                             </div>
-                            <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 ">
-                              <div>
+                            <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 ">
+                              <div className="ds_add-body">
                                 <p className="fw-bold mb-0">
                                   Full pair stretched
                                 </p>
@@ -331,9 +360,9 @@ const Cart = () => {
                               <div>
                                 <div className="ds_add-count">
                                   <div className="d-flex align-items-center justify-content-between">
-                                    <i className="fa-solid fa-minus"></i>
-                                    <div>2</div>
-                                    <i className="fa-solid fa-plus"></i>
+                                    <i className="fa-solid fa-minus mx-1"></i>
+                                    <div className="mx-1">2</div>
+                                    <i className="fa-solid fa-plus mx-1"></i>
                                   </div>
                                 </div>
                               </div>
@@ -345,7 +374,7 @@ const Cart = () => {
                             </div>
                           </div>
                           <div className="row mt-4">
-                            <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 ">
+                            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
                               <div className="d-flex align-items-center">
                                 <div>
                                   <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
@@ -355,8 +384,8 @@ const Cart = () => {
                                 </div>
                               </div>
                             </div>
-                            <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 ">
-                              <div>
+                            <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 ">
+                              <div className="ds_add-body">
                                 <p className="fw-bold mb-0">
                                   Samsung S24 Ultra
                                 </p>
@@ -389,7 +418,7 @@ const Cart = () => {
                             </div>
                           </div>
                           <div className="row mt-4">
-                            <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 ">
+                            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
                               <div className="d-flex align-items-center">
                                 <div>
                                   <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
@@ -399,8 +428,8 @@ const Cart = () => {
                                 </div>
                               </div>
                             </div>
-                            <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 ">
-                              <div>
+                            <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 ">
+                              <div className="ds_add-body">
                                 <p className="fw-bold mb-0">
                                   Rule zip jacket
                                 </p>
@@ -667,17 +696,17 @@ const Cart = () => {
                       <div className="form-check d-flex align-items-center">
                         <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
                         <div className="ms-2">
-                          <label className="form-check-label fw-bold ds_add-label" for="flexRadioDefault1">NEW100</label>
+                          <label className="form-check-label fw-bold ds_add-label" htmlFor="flexRadioDefault1">NEW100</label>
                           <p className="text-muted ds_add-offer-txt mb-0" style={{ lineHeight: "18px" }}>
                             Get Flat $100 Off on cart value of 500 & Above
                           </p>
-                          <label className="form-check-label ds_add-save" for="flexRadioDefault1">Save $100</label>
+                          <label className="form-check-label ds_add-save" htmlFor="flexRadioDefault1">Save $100</label>
                         </div>
                       </div>
                       <div className="form-check d-flex align-items-center mt-3">
                         <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
                         <div className="ms-2">
-                          <label className="form-check-label fw-bold ds_add-label" for="flexRadioDefault1">
+                          <label className="form-check-label fw-bold ds_add-label" htmlFor="flexRadioDefault1">
                             NEW100
                           </label>
                           <p className="text-muted ds_add-offer-txt mb-0" style={{ lineHeight: "18px" }}>
@@ -685,7 +714,7 @@ const Cart = () => {
                             facilisis scelerisque iaculis habitant congue est
                             blandit amet.{" "}
                           </p>
-                          <label className="form-check-label ds_add-save" for="flexRadioDefault1">
+                          <label className="form-check-label ds_add-save" htmlFor="flexRadioDefault1">
                             Save $100
                           </label>
                         </div>
@@ -734,6 +763,7 @@ const Cart = () => {
             </div>
           </div>
 
+          {/* ---------- Women Card --------- */}
           <div className="mt-5" id="ds_women-card">
             <div className="d_container">
               <div>
@@ -920,7 +950,7 @@ const Cart = () => {
             <div className="row">
               <div className="col-xl-8 col-lg-8">
                 <div>
-                  <iframe className="ds_con-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7439.261324736735!2d72.87650904796955!3d21.2068260871905!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04f76476e9ea7%3A0x361d912920aa035b!2sSilver%20Chowk%2C%20Punagam%20Parmukhpark%20Society%2C%20Yoginagar%20Society%2C%20Surat%2C%20Gujarat%20395010!5e0!3m2!1sen!2sin!4v1730193943220!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                  <iframe className="ds_con-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7439.261324736735!2d72.87650904796955!3d21.2068260871905!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04f76476e9ea7%3A0x361d912920aa035b!2sSilver%20Chowk%2C%20Punagam%20Parmukhpark%20Society%2C%20Yoginagar%20Society%2C%20Surat%2C%20Gujarat%20395010!5e0!3m2!1sen!2sin!4v1730193943220!5m2!1sen!2sin"  loading="lazy" ></iframe>
                 </div>
                 <div className="ds_con-box mt-4">
                   <div>
@@ -1056,7 +1086,7 @@ const Cart = () => {
       </section>
 
       {/* /* {************** Invoice *******************} */}
-      <section className="d-non d-none">
+      <section className="d-none">
         <div>
           <div className="d_container">
             <div className="mt-4">
@@ -1070,7 +1100,7 @@ const Cart = () => {
                         <h6 className="ds_in-email">example@gmail.com</h6>
                         <h6 className="ds_in-email">+1 565 5656 565</h6>
                       </div>
-                      <div className="d-flex justify-content-between mt-4">
+                      <div className="d-flex justify-content-between mt-4 ds_in-flex-manage">
                         <div>
                           <p className="ds_in-text mb-0">Invoice No</p>
                           <p className="ds_in-text mb-0">Invoice Date</p>
