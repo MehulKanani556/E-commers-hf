@@ -210,11 +210,11 @@ const UserSidebar = ({ setModalShow }) => {
                                         </li>
                                     </Link>
                                     <hr className='m-0' />
-                                    <Link to={"/user/profile"} className='text-decoration-none' onClick={handleClose}>
-                                        <li>
+                                    <Link to={"/user/profile"} className='text-decoration-none' >
+                                        <li >
                                             <Accordion>
                                                 <Accordion.Item eventKey="0" className='px-4 border-0'>
-                                                    <Accordion.Header className='VK_payment_acoridan'>
+                                                    <Accordion.Header className='VK_payment_acoridan '>
                                                         <div className='d-flex align-items-center gap-2 py-4'>
                                                             <span className='d-inline-block pe-2'>
                                                                 <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" className='icon'>
@@ -227,10 +227,10 @@ const UserSidebar = ({ setModalShow }) => {
                                                     </Accordion.Header>
                                                     <Accordion.Body className='p-0 py-3'>
                                                         <ul className='VK_ul'>
-                                                            <li>
+                                                            <li onClick={handleClose}>
                                                                 Credit / Debit Cards
                                                             </li>
-                                                            <li>
+                                                            <li onClick={handleClose}>
                                                                 UPI ID
                                                             </li>
                                                         </ul>

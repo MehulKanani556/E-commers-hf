@@ -866,6 +866,19 @@
     display: none;
 }
 
+
+/* --- Payment Method -----  */
+.VK_payment .accordion-item .accordion-header button{
+    border-radius: 0 !important;
+}
+
+.VK_accor-body .accordion-collapse .accordion-body{
+    --bs-accordion-border-radius: 0px !important; 
+}
+
+
+
+
 /* -------------------------------------------------------- media query -------------------------------------------------------- */
 
 
@@ -879,11 +892,11 @@
     }
 
     .VK_edit_profile_model .modal-dialog {
-        width: 100% !important;
+        width: 85% !important;
     }
 
     .VK_deactive_model .modal-dialog {
-        width: 100% !important;
+        width: 90% !important;
     }
 
     .VK_logout_model .modal-dialog {
@@ -1104,11 +1117,17 @@
         --bs-modal-width: 350px !important;
         width: 350px !important;
     }
+
+/* ---------- Log Out Modal ----------- */
+.VK_logout_model .modal-dialog{
+    width: 300px;
+}
+
 }
 
 @media(max-width:375px) {
     .VK_from_input {
-        padding: 5px !important;
+        padding: 10px 7px !important;
         font-size: 14px;
     }
 

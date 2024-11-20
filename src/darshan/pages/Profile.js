@@ -236,9 +236,9 @@ const Profile = () => {
                                                         </li>
                                                     </NavLink>
                                                     <hr className='m-0' />
-                                                    <NavLink to="" onClick={() => { setActiveSection('payment'); }} className={({ isActive }) => `text-decoration-none d-block ${activeSection === "payment" ? 'VK_payment_acc_active' : ''}`}>
+                                                    <NavLink to="" onClick={() => { setActiveSection('payment'); }} className={({ isActive }) => `text-decoration-none d-block   ${activeSection === "payment" ? 'VK_user_active' : ''}`}>
                                                         <li>
-                                                            <Accordion className='VK_payment'>
+                                                            <Accordion className='VK_payment '>
                                                                 <Accordion.Item eventKey="0">
                                                                     <Accordion.Header className='py-0'>
                                                                         <div className='d-flex align-items-center gap-2'>
@@ -251,16 +251,18 @@ const Profile = () => {
                                                                             Payment Methods
                                                                         </div>
                                                                     </Accordion.Header>
-                                                                    <Accordion.Body className=''>
-                                                                        <ul className='VK_ul'>
-                                                                            <li onClick={() => setPaymentMethod('credit')} className={paymentMethod === 'credit' ? 'VK_paymentselect' : ''}>
-                                                                                Credit / Debit Cards
-                                                                            </li>
-                                                                            <li onClick={() => setPaymentMethod('upi')} className={paymentMethod === 'upi' ? 'VK_paymentselect' : ''}>
-                                                                                UPI ID
-                                                                            </li>
-                                                                        </ul>
-                                                                    </Accordion.Body>
+                                                                    <div className='VK_accor-body'>
+                                                                        <Accordion.Body className=''>
+                                                                            <ul className='VK_ul'>
+                                                                                <li onClick={() => setPaymentMethod('credit')} className={paymentMethod === 'credit' ? 'VK_paymentselect' : ''}>
+                                                                                    Credit / Debit Cards
+                                                                                </li>
+                                                                                <li onClick={() => setPaymentMethod('upi')} className={paymentMethod === 'upi' ? 'VK_paymentselect' : ''}>
+                                                                                    UPI ID
+                                                                                </li>
+                                                                            </ul>
+                                                                        </Accordion.Body>
+                                                                    </div>
                                                                 </Accordion.Item>
                                                             </Accordion>
                                                         </li>
@@ -710,7 +712,7 @@ const Profile = () => {
                                                                             Credit / Debit Cards
                                                                         </p>
                                                                     </div>
-                                                                    <div className='ms-auto'>
+                                                                    <div className=''>
                                                                         <button className='VK_theme_btn' onClick={() => { setAddcredit(true) }}>
                                                                             Add Credit / Debit Card
                                                                         </button>

@@ -290,7 +290,7 @@ const Cart = () => {
                         <div className="row mt-5">
                           <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
                             <div className="form-check">
-                              <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                              <input className="form-check-input ds_cursor" type="checkbox" value="" id="flexCheckDefault" />
                               <label className="form-check-label" htmlFor="flexCheckDefault">
                                 Select All
                               </label>
@@ -331,7 +331,7 @@ const Cart = () => {
                             <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
                               <div className="d-flex align-items-center">
                                 <div>
-                                  <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                  <input className="form-check-input ds_cursor" type="checkbox" value="" id="flexCheckDefault" />
                                 </div>
                                 <div className="ms-4">
                                   <img src={require("../Img/img.png")} className="ds_add-img" alt="" />
@@ -360,9 +360,9 @@ const Cart = () => {
                               <div>
                                 <div className="ds_add-count">
                                   <div className="d-flex align-items-center justify-content-between">
-                                    <i className="fa-solid fa-minus mx-1"></i>
+                                    <i className="fa-solid fa-minus mx-1 ds_cursor"></i>
                                     <div className="mx-1">2</div>
-                                    <i className="fa-solid fa-plus mx-1"></i>
+                                    <i className="fa-solid fa-plus mx-1 ds_cursor"></i>
                                   </div>
                                 </div>
                               </div>
@@ -377,7 +377,7 @@ const Cart = () => {
                             <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
                               <div className="d-flex align-items-center">
                                 <div>
-                                  <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                  <input className="form-check-input ds_cursor" type="checkbox" value="" id="flexCheckDefault" />
                                 </div>
                                 <div className="ms-4">
                                   <img src={require("../Img/img1.png")} className="ds_add-img" alt="" />
@@ -404,9 +404,9 @@ const Cart = () => {
                               <div>
                                 <div className="ds_add-count">
                                   <div className="d-flex align-items-center justify-content-between">
-                                    <i className="fa-solid fa-trash-can"></i>
+                                    <i className="fa-solid fa-trash-can ds_cursor"></i>
                                     <div>1</div>
-                                    <i className="fa-solid fa-plus"></i>
+                                    <i className="fa-solid fa-plus ds_cursor"></i>
                                   </div>
                                 </div>
                               </div>
@@ -421,7 +421,7 @@ const Cart = () => {
                             <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
                               <div className="d-flex align-items-center">
                                 <div>
-                                  <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                  <input className="form-check-input ds_cursor" type="checkbox" value="" id="flexCheckDefault" />
                                 </div>
                                 <div className="ms-4">
                                   <img src={require("../Img/img2.png")} className="ds_add-img" alt="" />
@@ -450,9 +450,9 @@ const Cart = () => {
                               <div>
                                 <div className="ds_add-count">
                                   <div className="d-flex align-items-center justify-content-between">
-                                    <i className="fa-solid fa-trash-can"></i>
+                                    <i className="fa-solid fa-trash-can ds_cursor"></i>
                                     <div>1</div>
-                                    <i className="fa-solid fa-plus"></i>
+                                    <i className="fa-solid fa-plus ds_cursor"></i>
                                   </div>
                                 </div>
                               </div>
@@ -694,7 +694,7 @@ const Cart = () => {
                     <div className="px-3 mt-3 fw-500">
                       <p className="ds_add-special">Special offers</p>
                       <div className="form-check d-flex align-items-center">
-                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                        <input className="form-check-input ds_cursor" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
                         <div className="ms-2">
                           <label className="form-check-label fw-bold ds_add-label" htmlFor="flexRadioDefault1">NEW100</label>
                           <p className="text-muted ds_add-offer-txt mb-0" style={{ lineHeight: "18px" }}>
@@ -704,7 +704,7 @@ const Cart = () => {
                         </div>
                       </div>
                       <div className="form-check d-flex align-items-center mt-3">
-                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                        <input className="form-check-input ds_cursor" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
                         <div className="ms-2">
                           <label className="form-check-label fw-bold ds_add-label" htmlFor="flexRadioDefault1">
                             NEW100

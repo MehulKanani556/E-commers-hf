@@ -19,7 +19,7 @@ const Invoice = () => {
                                                 <h6 className="ds_in-email">example@gmail.com</h6>
                                                 <h6 className="ds_in-email">+1 565 5656 565</h6>
                                             </div>
-                                            <div className="d-flex justify-content-between mt-4">
+                                            <div className="d-flex justify-content-between mt-4 ds_in-flex-manage">
                                                 <div>
                                                     <p className="ds_in-text mb-0">Invoice No</p>
                                                     <p className="ds_in-text mb-0">Invoice Date</p>

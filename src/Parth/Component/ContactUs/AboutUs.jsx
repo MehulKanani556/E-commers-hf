@@ -80,7 +80,7 @@ function ContactUs() {
                 <div className='row m-0'>
                     <div className="col p-0">
                         <div >
-                            <img src={require('../../assets/world map.png')} alt="" className=' w-100' />
+                            <img src={require('../../assets/world map.png')} alt="" className='w-100' />
                         </div>
                     </div>
                 </div>
