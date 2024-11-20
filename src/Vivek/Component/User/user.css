@@ -421,6 +421,8 @@
     margin: 0px;
 }
 
+
+
 .VK_address_form input {
     font-size: 14px;
 }
@@ -438,7 +440,7 @@
 }
 
 
-.V_border_bottom{
+.V_border_bottom {
     border-bottom: 1px solid #6A6A6A;
 }
 
@@ -834,6 +836,17 @@
     border: none;
 }
 
+
+.V_otp_input1 {
+    height: 50px;
+    width: 50px;
+    background-color: #ffffff;
+    border: 1px solid #727272;
+    border-radius: 5px;
+    outline: none;
+    text-align: center;
+}
+
 .VK_border_bottom1 {
     border-bottom: 1px solid #6A6A6A;
     padding-bottom: 2rem !important;
@@ -1036,6 +1049,11 @@
         margin-right: 10px;
     }
 
+
+    .V_otp_input1 {
+        height: 35px;
+        width: 35px;
+    }
 }
 
 @media (max-width:550px) {
@@ -1045,7 +1063,16 @@
 
 
 }
-
+@media (min-width:427px) and (max-width:480px){
+    .V_otp_input1 {
+        height: 40px;
+        width: 40px;
+    }
+    .VK_add_address_model_ .modal-dialog {
+        --bs-modal-width: 400px !important;
+        width: 400px !important;
+    }
+}
 @media (max-width:426px) {
     .V_back-line {
         width: 65%;
@@ -1071,6 +1098,11 @@
         top: 53px;
         width: 95%;
         left: 65px;
+    }
+
+    .VK_add_address_model_ .modal-dialog {
+        --bs-modal-width: 350px !important;
+        width: 350px !important;
     }
 }
 
@@ -1103,6 +1135,12 @@
     .V_back-line4 {
         width: 110%;
     }
+
+    .V_otp_input1 {
+        height: 28px;
+        width: 28px;
+    }
+
 }
 
 @media (max-width:350px) {
@@ -1120,6 +1158,11 @@
 
     .VK_from_input {
         font-size: 12px;
+    }
+
+    .VK_add_address_model_ .modal-dialog {
+        --bs-modal-width: 300px !important;
+        width: 300px !important;
     }
 }
 
@@ -1293,6 +1336,15 @@
         width: 30px;
         height: 30px;
     }
+
+    .VK_add_address_model_ .modal-dialog {
+        --bs-modal-width: 410px !important;
+        width: 410px !important;
+    }
+    .V_otp_input1 {
+        height: 46px;
+        width: 46px;
+    }
 }
 
 
@@ -1419,6 +1471,13 @@
         height: 30px;
     }
 
+
+    .VK_add_address_model_ .modal-dialog {
+        --bs-modal-width: 550px !important;
+        width: 550px !important;
+    }
+
+    
 }
 
 
