@@ -94,7 +94,7 @@ function App() {
           <Route path='/ratereview' element={<RateReview />} />
           <Route path='/combine' element={<Combined />} />
          
-          {/* user */}
+          {/* user */}                                                                                                                                                                                                                                                      
           
           {/* <Route path="/user" element={<User />}>
             <Route path='profile' element={<UserProfile />} />
