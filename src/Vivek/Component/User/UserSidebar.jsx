@@ -92,9 +92,9 @@ const UserSidebar = ({ setModalShow }) => {
                                                     <li>
                                                         Credit / Debit Cards
                                                     </li>
-                                                    <NavLink to="/user/payment/upi">
+                                                    
                                                         <li>UPI ID</li>
-                                                    </NavLink>
+                
                                                 </ul>
                                             </Accordion.Body>
                                         </Accordion.Item>
@@ -210,7 +210,7 @@ const UserSidebar = ({ setModalShow }) => {
                                         </li>
                                     </Link>
                                     <hr className='m-0' />
-                                    <Link to={"/user/profile"} className='text-decoration-none' onClick={handleClose}>
+                                    <Link to={"/user/payment"} className='text-decoration-none' onClick={handleClose}>
                                         <li>
                                             <Accordion>
                                                 <Accordion.Item eventKey="0" className='px-4 border-0'>

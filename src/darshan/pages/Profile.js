@@ -119,6 +119,7 @@ const Profile = () => {
     const [deleteupimodal, setDeleteupimodal] = useState(false);
     const [upiId, setUpiId] = useState(''); 
 
+    console.log(activeSection);
 
     let [card, setcard] = useState([])
     let [upi, setupi] = useState([])
@@ -254,7 +255,7 @@ const Profile = () => {
                                                                     <Accordion.Body className=''>
                                                                         <ul className='VK_ul'>
                                                                             <li onClick={() => setPaymentMethod('credit')} className={paymentMethod === 'credit' ? 'VK_paymentselect' : ''}>
-                                                                                Credit / Debit Cards
+                                                                                  Credit / Debit Cards
                                                                             </li>
                                                                             <li onClick={() => setPaymentMethod('upi')} className={paymentMethod === 'upi' ? 'VK_paymentselect' : ''}>
                                                                                 UPI ID
@@ -372,7 +373,7 @@ const Profile = () => {
                                                                 </li>
                                                             </Link>
                                                             <hr className='m-0' />
-                                                            <Link to="" className='text-decoration-none' onClick={handleClose}>
+                                                            <Link to=""  onClick={() => { setActiveSection('payment') }} className='text-decoration-none' >
                                                                 <li>
                                                                     <Accordion>
                                                                         <Accordion.Item eventKey="0" className='px-4 border-0'>
@@ -389,12 +390,16 @@ const Profile = () => {
                                                                             </Accordion.Header>
                                                                             <Accordion.Body className='p-0 py-3'>
                                                                                 <ul className='VK_ul'>
+                                                                                    <Link onClick={() => { setPaymentMethod('credit'); handleClose() }} className={paymentMethod === 'credit' ? 'VK_paymentselect' : ''}>
                                                                                     <li>
                                                                                         Credit / Debit Cards
                                                                                     </li>
+                                                                                    </Link>
+                                                                                    <Link onClick={() => { setPaymentMethod('upi'); handleClose() }} className={paymentMethod === 'upi' ? 'VK_paymentselect' : ''}>
                                                                                     <li>
                                                                                         UPI ID
                                                                                     </li>
+                                                                                    </Link>
                                                                                 </ul>
                                                                             </Accordion.Body>
                                                                         </Accordion.Item>
