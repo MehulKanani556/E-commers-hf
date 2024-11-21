@@ -15,20 +15,20 @@ import ContactUs from './Parth/Component/ContactUs/ContactUs';
 import AboutUs from './Parth/Component/ContactUs/AboutUs';
 import Luggage from './Parth/Component/Luggage/Luggage';
 import Sports from './Parth/Component/Sports/Sports';
-import User from './Vivek/Component/User/User';
-import UserProfile from './Vivek/Component/User/UserProfile'
-import MyOrder from './Vivek/Component/User/MyOrder';
-import UserFaq from './Vivek/Component/User/UserFaq';
+// import User from './Vivek/Component/User/User';
+// import UserProfile from './Vivek/Component/User/UserProfile'
+// import MyOrder from './Vivek/Component/User/MyOrder';
+// import UserFaq from './Vivek/Component/User/UserFaq';
 import HelpSupport from './Parth/Component/HelpSupprt/HelpSupport';
-import UserAddress from './Vivek/Component/User/UserAddress';
-import UserDeactive from './Vivek/Component/User/UserDeactive';
-import TermOfServices from './Vivek/Component/User/TermOfServices'
-import UserpaymentMethod from './Vivek/Component/User/UserpaymentMethod';
-import UserUpiPayment from './Vivek/Component/User/UserUpiPayment';
+// import UserAddress from './Vivek/Component/User/UserAddress';
+// import UserDeactive from './Vivek/Component/User/UserDeactive';
+// import TermOfServices from './Vivek/Component/User/TermOfServices'
+// import UserpaymentMethod from './Vivek/Component/User/UserpaymentMethod';
+// import UserUpiPayment from './Vivek/Component/User/UserUpiPayment';
 import Wishlist from './Vivek/Component/Wishlist/Wishlist';
 import Profile from './darshan/pages/Profile';
 
-import GooglepayUPIMethod from './Vivek/Component/User/GooglepayUPIMethod'
+// import GooglepayUPIMethod from './Vivek/Component/User/GooglepayUPIMethod'
 import TrackOrder from './Vivek/Component/User/TrackOrder';
 import TrackRefund from './Vivek/Component/User/TrackRefund';
 import MyOrderwithTracking from './Vivek/Component/User/MyOrderwithTracking';

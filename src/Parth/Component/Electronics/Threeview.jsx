@@ -17,7 +17,7 @@ const Threeview = () => {
                         </div>
                     </Col>
                     <Col lg={4} sm={6} className='my-3'>
-                        <div className='VK_three_col VK_margig'>
+                        <div className='VK_three_col VK_margig1'>
                             <img src={require('../../assets/V_best_deal_img_2.png')} className='w-100 h-100' alt="" />
                             <div className='VK_three_child'>
                                 <h3 className='text-white'>

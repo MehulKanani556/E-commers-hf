@@ -92,9 +92,9 @@ const UserSidebar = ({ setModalShow }) => {
                                                     <li>
                                                         Credit / Debit Cards
                                                     </li>
-                                                    <NavLink to="/user/payment/upi">
+                                                    
                                                         <li>UPI ID</li>
-                                                    </NavLink>
+                
                                                 </ul>
                                             </Accordion.Body>
                                         </Accordion.Item>
