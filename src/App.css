@@ -21,11 +21,13 @@ body {
     margin-left: auto; */
     padding-left: 10px;
     padding-right: 10px;
+    margin: auto;
 }
 
 @media (min-width: 1650px) {
     .d_container {
         width: 1620px;
+        margin: auto;
     }
 }
 
@@ -33,6 +35,7 @@ body {
     .d_container {
         width: 1199px;
         max-width: none;
+        margin: auto;
     }
 }
 
@@ -40,6 +43,7 @@ body {
     .d_container {
         width: 970px;
         max-width: none;
+        margin: auto;
     }
 }
 
@@ -47,12 +51,16 @@ body {
     .d_container {
         width: 750px;
         max-width: none;
+        margin: auto;
+
     }
 }
 
 @media (min-width: 480px) and (max-width: 767px) {
     .d_container {
         max-width: 750px;
+        margin: auto;
+
     }
 }
 
@@ -60,10 +68,9 @@ body {
     .d_container {
         max-width: 750px;
         padding: 0px 10px;
+        margin: auto;
     }
 }
-
-
 
 .outline_none {
     outline: none;

@@ -51,7 +51,7 @@ function App() {
         <Routes>
 
           {/* home page */}
-          <Route path='/home' element={<Home />} />
+          <Route path='/' element={<Home />} />
 
           {/* electronics */}
           <Route path='/electronics' element={<Electronics />} />

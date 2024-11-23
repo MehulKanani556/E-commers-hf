@@ -145,6 +145,7 @@ const ShoesSlider = () => {
             return newIndex;
         });
     };
+    
     // Headphone slider 
 
     const [headphonecurrentImage, setHeadphoneCurrentImage] = useState(0);
