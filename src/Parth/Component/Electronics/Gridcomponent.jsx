@@ -63,7 +63,7 @@ const Gridcomponent = () => {
 
     return (
         <React.Fragment>
-            <section className='VK_sec_padding'>
+            <section className='d_p-80'>
                 <div className='d_container'>
                     <Row className='m-0 mb-4'>
                         <Col className='p-0'>

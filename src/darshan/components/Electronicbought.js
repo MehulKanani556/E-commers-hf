@@ -5,17 +5,17 @@ import './../css/Bought.css'
 import './../css/trending.css'
 import { Link } from 'react-router-dom';
 
-const Bought = () => {
+const Electronicbought = () => {
 
     const trendingItems = [
         {
             id: 1,
-            image: "itemimg5.png",
+            image: "itemimg7.png",
             isBestSeller: false,
             isNewArrial: true,
             name: "Traditional Chaniya choli ",
             rating: 4.5,
-            description: "Peach cotton silk chaniya choli",
+            description: "Midnight color with 256GB storage",
             colors: [
                 { id: 1, color: "#E15939", isActive: true },
                 { id: 2, color: "#1D45A9", isActive: true },
@@ -25,12 +25,12 @@ const Bought = () => {
         },
         {
             id: 2,
-            image: "itemimg6.png",
+            image: "itemimg8.png",
             isBestSeller: false,
             isNewArrial: false,
-            name: "Fun Homes Potli",
+            name: "C power adapter",
             rating: 4.7,
-            description: "Velvet Wedding Potli",
+            description: "20 Watt USB C power adapter",
             colors: [
                 { id: 1, color: "#DDC9AC", isActive: true },
                 { id: 2, color: "#000000", isActive: true },
@@ -43,7 +43,7 @@ const Bought = () => {
     return (
         <>
 
-            <section className='d_p-50 py-0 d_trend d_delcard d_bought'>
+            <section className='d_p-50 py-0 d_trend d_delcard d_bought d_eleitem'>
                 <div className="d_container">
                     <div className="d_head px-3 d-flex justify-content-between align-items-center">
                         <h4 className='mb-0'>Frequently bought together</h4>
@@ -54,8 +54,8 @@ const Bought = () => {
                                 console.log(item.length)
                                 return (
                                     <>
-                                        <div key={item.id} className="col-12 col-sm-6 col-lg-6 col-xl-3">
-                                            <Link to='/womendetails'>
+                                        <div key={item.id} className="col-12 col-sm-6 col-lg-4 col-xl-3">
+                                            <Link to='/electronicdetails'>
                                                 <div className="d_box">
                                                     <div className="d_img">
                                                         <img src={require(`./../d_img/${item.image}`)} alt="" />
@@ -106,7 +106,7 @@ const Bought = () => {
                                     </>
                                 )
                             })}
-                            <div className="col-12 col-sm-6 col-lg-6 col-xl-3 text-center align-self-center">
+                            <div className="col-12 col-sm-6 col-lg-4 col-xl-3 text-center align-self-center">
                                 <div className="d_boughtbox">
                                     <div className="d_boughttotal"><span>Total Price :</span> $240</div>
                                     <div className="d_cta">
@@ -123,4 +123,4 @@ const Bought = () => {
     )
 }
 
-export default Bought
+export default Electronicbought;

@@ -153,13 +153,14 @@ const Trending = () => {
         <div className="d_container">
           <div className="d_margin">
             <div className="d_head d-flex justify-content-between align-items-center">
-              <h4 className='mb-0'>trending Navratri Collection for you</h4>
-              <p className='mb-0'><Link to="" className='text-decoration-none'>View More</Link></p>
+              <h4 className='mb-sm-0 mb-1'>trending Navratri Collection for you</h4>
+              <p className='mb-0'><Link to="/womenstore" className='text-decoration-none'>View More</Link></p>
             </div>
-            <div className="row gy-4">
+            <div className="row gy-xl-4 gy-4">
               {trendingItems.map((item, index) => {
                 return (
-                  <div key={item.id} className="col-12 col-sm-6 col-lg-4 col-xl-3">
+                  <div key={item.id} className="col-12 col-sm-6 col-lg-4 col-xl-3 px-2">
+                    <Link to='/womendetails'>
                     <div className="d_box mx-2">
                       <div className="d_img">
                         <img src={require(`./../d_img/${item.image}`)} alt="" />
@@ -195,6 +196,7 @@ const Trending = () => {
                         </div>
                       </div>
                     </div>
+                    </Link>
                   </div>
                 )
               })}

@@ -38,6 +38,7 @@ import Combined from './Vivek/Component/User/Combined';
 
 import Cart from './Dhruvin/Components/Cart/Cart';
 import Invoice from './Dhruvin/Components/Cart/Invoice';
+import Electronicdetails from './darshan/pages/Electronicdetails';
 
 // import WomenDetails from './darshan/pages/WomenDetails';
 
@@ -63,6 +64,7 @@ function App() {
           <Route path='/women' element={<Womenstore />} />
           <Route path='/womenstore' element={<Womenfilter />} />
           <Route path='/womendetails' element={<WomenDetails />} />
+          <Route path='/electronicdetails' element={<Electronicdetails />} />
 
           {/* Profile */}
           <Route path='/profile' element={<Profile />} />

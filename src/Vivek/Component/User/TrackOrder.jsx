@@ -4,7 +4,7 @@ import Map from '../Map';
 import { Modal } from 'react-bootstrap';
 import Header from '../../Component/header/Header.jsx'
 import Footer from '../footer/Footer.jsx';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function TrackOrder() {
 
@@ -235,10 +235,10 @@ function TrackOrder() {
                         <img src={require('../../assets/order cancle successfully.png')} alt="Order Cancelled Successfully" className='pt-5 pb-4' />
                         <p className='mb-0'>Your order has been cancelled successfully.</p>
                         <div className='mt-5 text-center'>
-                            <button type="submit" className='V_order_success px-4 py-2 mt-3 mx-3 text-dark bg-white'
+                            <Link to='/' type="submit" className='V_order_success px-4 py-2 mt-3 mx-3 text-dark bg-white text-decoration-none'
                             >
                                 Back to Home
-                            </button>
+                            </Link>
                             <button type="" onClick={() => navigate('/trackrefund')} className='V_order_success px-4 py-2 mt-3 mx-3 text-white bg-dark'
                             >
                                 Track Refund

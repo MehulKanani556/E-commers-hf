@@ -6,7 +6,7 @@ import Header from '../header/Header.jsx'
 import Footer from '../footer/Footer.jsx';
 import { Modal } from 'react-bootstrap';
 import { FaStar } from 'react-icons/fa6';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Combined() {
 
@@ -277,10 +277,10 @@ function Combined() {
                         <p className='mb-0 V_success_modal'>Your request for return product has been <br />
                             successfully received</p>
                         <div className='mt-3 text-center'>
-                            <button type="submit" className='V_order_success px-4 py-2 mt-3 mx-3 text-dark bg-white'
+                            <Link to='/' type="submit" className='V_order_success px-4 py-2 mt-3 mx-3 text-dark bg-white text-decoration-none'
                             >
                                 Back to Home
-                            </button>
+                            </Link>
                             <button type="submit" onClick={() => navigate('/trackrefund')} className='V_order_success px-4 py-2 mt-3 mx-3 text-white bg-dark'
                             >
                                 Track Return/Refund

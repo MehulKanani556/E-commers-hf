@@ -5,6 +5,7 @@ import { IoMdHeartEmpty } from 'react-icons/io';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import './../css/trending.css'
 import './../css/Bought.css'
+import { Link } from 'react-router-dom';
 
 const Customerlike = () => {
 
@@ -141,6 +142,7 @@ const Customerlike = () => {
                             console.log(item.length)
                             return (
                                 <div key={item.id} className="slider-item">
+                                    <Link to='/womendetails'></Link>
                                     <div className="d_box">
                                         <div className="d_img">
                                             <img src={require(`./../d_img/${item.image}`)} alt="" />

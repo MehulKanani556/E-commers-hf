@@ -145,7 +145,7 @@ const ShoesSlider = () => {
             return newIndex;
         });
     };
-    
+
     // Headphone slider 
 
     const [headphonecurrentImage, setHeadphoneCurrentImage] = useState(0);
@@ -230,20 +230,20 @@ const ShoesSlider = () => {
                                     isVisible={isAnimating}
                                 >
                                     <div className='VK_headphone_container overflow d-flex flex-nowrap' >
-                                        <div className='w-100 h-100'>
+                                        <div className='v_img'>
                                             <img src={headphoneimages[headphonecurrentImage]?.image} className='w-100 h-100' alt="" />
                                         </div>
                                     </div>
                                 </Animated>
-                                <div className='VK_headphone_slider_controls d-flex justify-content-end'>
-                                    <button className='VK_headphone_slider_nav' onClick={handleHeadphoneChange}>
-                                        {direction === 'right' ? (
-                                            <PiArrowRightFill className="icon" />
-                                        ) : (
-                                            <PiArrowLeftFill className="icon" />
-                                        )}
-                                    </button>
-                                </div>
+                            </div>
+                            <div className='VK_headphone_slider_controls'>
+                                <button className='VK_headphone_slider_nav' onClick={handleHeadphoneChange}>
+                                    {direction === 'right' ? (
+                                        <PiArrowRightFill className="icon" />
+                                    ) : (
+                                        <PiArrowRightFill className="icon" />
+                                    )}
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -258,7 +258,7 @@ const ShoesSlider = () => {
                                 <h5 className='text-white VK_watch_sub'>{slides[currentImageIndex].subHeading.split(',')[0]},<span className='text-black ps-2'>{slides[currentImageIndex].subHeading.split(',')[1]}</span></h5>
                                 <div className='mt-lg-5 mt-sm-3 mt-1'>
                                     <p className='VK_watch_desc'>
-                                    {slides[currentImageIndex].description}
+                                        {slides[currentImageIndex].description}
                                     </p>
                                 </div>
                                 <div className='mt-lg-5 mt-sm-3 mt-1'>
@@ -286,7 +286,7 @@ const ShoesSlider = () => {
                         </div>
                     </div>
                 </div>
-                <div className='item VK_silderh'>
+                <div className='item VK_owl_item'>
                     <div className='V_spring'>
                         <div className="">
                             <p className='V_50 mb-0'>50 % OFF SITEWIDE</p>
@@ -309,7 +309,7 @@ const ShoesSlider = () => {
                         </div>
                     </div>
                 </div>
-                <div className='item VK_silderh'>
+                <div className='item VK_owl_item'>
                     <div className='V_vintage_back'>
                         <div className='d_container h-100'>
                             <div className='row m-0 d-flex h-100'>

@@ -443,6 +443,12 @@ input:focus {
         left: -30%;
         min-width: -1px;
     }
+    .d_price-range{
+        width: 93%;
+    }
+    .d_womenfilter .d_filtermargin{
+        margin: 0 0;
+    }
 }
 
 @media (max-width:321px) {

@@ -1,5 +1,5 @@
 import React from 'react'
-import '../Beauty/BeautyPost.css'
+import '../Electronics/ElectronicPost.css'
 
 const Post = () => {
 
@@ -39,19 +39,19 @@ const Post = () => {
     return (
         <>
 
-            <section className='V_postb'>
+            <section className='V_poste'>
                 <div className="d_container">
                     <div className="V_margin">
                         <div className="row gy-4">
                             {postItems.map((item, index) => {
                                 return (
-                                    <div key={item.id} className="col-12 col-sm-4 col-lg-3 V_col-20b">
-                                        <div className="V_boxb">
-                                            <div className="V_img1b">
+                                    <div key={item.id} className="col-12 col-sm-4 col-lg-3 V_col-20e">
+                                        <div className="V_boxe">
+                                            <div className="V_img1e">
                                                 <img src={item.image} alt="" />
-                                                <div className="V_textb">
+                                                <div className="V_texte">
                                                     <p className='mb-0'>{item.title}</p>
-                                                    <div className="V_discounttextb">{item.discount}</div>
+                                                    <div className="V_discounttexte">{item.discount}</div>
                                                 </div>
                                             </div>
                                         </div>

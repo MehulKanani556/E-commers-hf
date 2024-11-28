@@ -14,11 +14,6 @@ import OwlCarousel from 'react-owl-carousel'
 
 function Luggage() {
 
-
-
-
-
-
     return (
         <>
 
@@ -48,7 +43,7 @@ function Luggage() {
                         </div>
                     </div>
                     <div className='item V_slider_height'>
-                        {/* <div className='V_slider2'>
+                        <div className='V_slider2'>
                             <div className='d_container h-100'>
                                 <Row className=' d-flex h-100'>
                                     <Col lg={6} className='align-self-center p-3'>
@@ -62,10 +57,10 @@ function Luggage() {
                                     </Col>
                                 </Row>
                             </div>
-                        </div> */}
+                        </div>
                     </div>
                     <div className='item V_slider_height'>
-                        {/* <div className='V_slider3'>
+                        <div className='V_slider3'>
                             <div className='d_container h-100'>
                                 <Row className=' d-flex h-100'>
                                     <Col lg={6} className='align-self-center p-3'>
@@ -81,7 +76,7 @@ function Luggage() {
                                     </Col>
                                 </Row>
                             </div>
-                        </div> */}
+                        </div>
                     </div>
                 </OwlCarousel>
             </section >
@@ -101,7 +96,7 @@ function Luggage() {
 
             <LuggageSlider />
 
-            <section className='text-white py-5'>
+            <section className='text-white py-4'>
                 <div className=''>
                     <Row className='p-md-5 m-0'>
                         <Col lg={4} className=' pt-3'>

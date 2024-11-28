@@ -1,10 +1,16 @@
+.d_black{
+    color: #000000;
+}
+
 .V_back_spe_off {
     background-image: url('../../assets/special_offer.png');
     height: 576px;
     background-position: center;
     background-size: cover;
 }
-
+.v_spacialpadd{
+    padding-left: 200px;
+}
 .V_special {
     width: 188px;
     clip-path: polygon(100% 0%, 90% 50%, 100% 100%, 0 100%, 0% 50%, 0 0);
@@ -196,7 +202,6 @@
 /* ///////////////////////////////////////////////////////// media Query ////////////////////////////////////////////////// */
 
 
-
 @media (min-width: 1650px) {
 
 
@@ -306,6 +311,10 @@
         height: 490px;
         margin-left: auto;
     }
+    .v_spacialpadd{
+        padding-left: 40px;
+    }
+    
 }
 
 @media (min-width: 1440px) and (max-width: 1649px) {
@@ -417,6 +426,9 @@
         width: 440px !important;
         height: 440px;
         margin-left: auto;
+    }
+    .v_spacialpadd{
+        padding-left: 40px;
     }
 
 }
@@ -530,6 +542,9 @@
         height: 420px;
         margin-left: auto;
     }
+    .v_spacialpadd{
+        padding-left: 40px;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -538,7 +553,7 @@
 
     .V_sale {
         width: 400px;
-        font-size: 48px;
+        font-size: 44px;
     }
 
     .V_thirty30 {
@@ -640,13 +655,16 @@
         height: 400px;
         margin-left: auto;
     }
+    .v_spacialpadd{
+        padding-left: 40px;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
 
     .V_sale {
         width: 320px;
-        font-size: 40px;
+        font-size: 34px;
     }
 
     .V_thirty30 {
@@ -751,6 +769,9 @@
         width: 300px !important;
         height: 300px;
         margin-left: auto;
+    }
+    .v_spacialpadd{
+        padding-left: 40px;
     }
 }
 
@@ -867,6 +888,7 @@
         height: 250px;
         margin-right: auto;
     }
+   
 }
 
 @media (min-width: 480px) and (max-width: 575px) {
@@ -981,13 +1003,16 @@
         height: 200px;
         margin-right: auto;
     }
+    .v_spacialpadd{
+        padding-left: 25px;
+    }
 }
 
 @media (min-width: 300px) and (max-width: 479px) {
 
     .V_sale {
-        width: 150px;
-        font-size: 20px;
+        width: 170px;
+        font-size: 16px;
     }
 
     .V_thirty30 {
@@ -1095,6 +1120,9 @@
         height: 180px;
         margin-right: auto;
     }
+    .v_spacialpadd{
+        padding-left: 25px;
+    }
 }
 
 
@@ -1152,12 +1180,12 @@
     opacity: 0;
     visibility: hidden;
     font-size: 20px;
-    height: 30px;
-    width: 30px;
-    height: 30px;
+    height: 34px;
+    width: 34px;
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    color: #6A6A6A;
 }
 
 .VK_ele_product_comp {
@@ -1176,6 +1204,7 @@
     text-overflow: ellipsis;
     width: 100%;
     display: block;
+    color: #000000;
 }
 
 .VK_product_col_dot {
@@ -1234,6 +1263,9 @@
     .VK_three_child h3 {
         font-size: 18px;
     }
+    .VK_card_imgs{
+        height: 300px;
+    }
 }
 
 
@@ -1260,6 +1292,7 @@
     .VK_three_child h3 {
         font-size: 18px;
     }
+    
 }
 
 
@@ -1272,6 +1305,9 @@
 
     .VK_three_child h3 {
         font-size: 18px;
+    }
+    .VK_card_imgs {
+        height: 300px;
     }
 }
 
@@ -1286,6 +1322,9 @@
     .VK_three_child h3 {
         font-size: 20px;
     }
+    .VK_card_imgs {
+        height: 260px;
+    }
 }
 
 
@@ -1298,6 +1337,9 @@
 
     .VK_three_child h3 {
         font-size: 24px;
+    }
+    .VK_card_imgs {
+        height: 300px;
     }
 }
 

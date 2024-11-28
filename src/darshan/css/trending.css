@@ -157,6 +157,13 @@
     height: 170px;
 }
 
+.d_eleitem .d_box .d_img{
+    height: 525px;
+}
+.d_eleitem .d_box .d_img img{
+    height: 385px;
+}
+
 @media(max-width:1680px){
     .d_womenfilter .d_right .d_trend .d_box .d_content{
         height: 183px;
@@ -178,7 +185,18 @@
     .d_trend .d_box .d_content .d_name {
         letter-spacing: 0px;
         line-height: 24px;
+        font-size: 18px;
     }
+    .d_eleitem .d_box .d_img img {
+        height: 350px;
+    }
+    .d_eleitem .d_box .d_img{
+        height: 450px;
+    }
+    .d_eleitem .d_box .d_content {
+        height: 125px;
+    }
+
    
 }
 @media(max-width:1199px)
@@ -201,6 +219,9 @@
     }
     .d_womenfilter .d_right .d_trend .d_box .d_content{
         height: 150px;
+    }
+    .d_eleitem .d_box .d_img img {
+        height: 315px;
     }
 }
 @media(max-width:991px){
@@ -234,5 +255,19 @@
         font-size: 18px;
         display: flex;
         justify-content: center;
+    }
+    .d_eleitem .d_box .d_img {
+        height: 480px;
+    }
+    .d_eleitem .d_box .d_img img {
+        height: 350px;
+    }
+}
+@media(max-width:320px){
+    .d_trend .d_box .d_img{
+        height: 450px;
+    }
+    .d_eleitem .d_box .d_img img {
+        height: 320px;
     }
 }

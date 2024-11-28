@@ -5,13 +5,13 @@ import { Col, Row } from 'react-bootstrap'
 const Collection = () => {
     return (
         <>
-            <section className='py-5'>
+            <section className=''>
                 <div className='d_container p-0 inter'>
                     <Row className='m-0'>
                         <Col lg={6} className='my-2'>
-                            <div className='VK_watch_cont'>
+                            <div className='VK_watch_cont VK_first_cont'>
                                 <div className='h-100'>
-                                    <img src={require('../../assets/watch.jfif')} className='w-100 h-100 object_cover object_bottom' alt="" />
+                                    <img src={require('../../assets/watch.jfif')} className='w-100 h-100 object_cover' alt="" />
                                     <div className='VK_watch_abs text-white'>
                                         <h5 className='VK_watch_h5'>
                                             NEW COLLECTION
@@ -29,7 +29,7 @@ const Collection = () => {
                             </div>
                         </Col>
                         <Col lg={6} className='my-2'>
-                            <div className='VK_watch_cont'>
+                            <div className='VK_watch_cont VK_second_cont'>
                                 <div className='h-100'>
                                     <img src={require('../../assets/mobile.png')} className='w-100 h-100 object_cover object_bottom' alt="" />
                                     <div className='VK_watch_abs text-white'>

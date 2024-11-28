@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import './SportsSlider.css'
 import OwlCarousel from 'react-owl-carousel';
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";

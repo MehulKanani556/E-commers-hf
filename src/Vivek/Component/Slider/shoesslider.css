@@ -361,15 +361,15 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
-
+.VK_headphone_container .v_img{
+    width: 400px;
+}
 .VK_headphone_slider_controls {
     position: absolute;
     top: 50%;
-    left: 50%;
-    display: flex;
-    width: 125%;
-    transform: translateY(-50%) translateX(-50%);
-    justify-content: space-between;
+    left: 94%;
+    width: 100%;
+    transform: translateY(-50%);
 }
 
 .VK_headphone_slider_nav {
@@ -900,6 +900,9 @@
         height: 450px;
         width: 350px;
     }
+    .VK_headphone_slider_controls{
+        left: 92%;
+    }
 }
 
 @media(max-width:991px) {
@@ -921,6 +924,9 @@
     .VK_headphone_slider_nav {
         width: 50px;
         height: 50px;
+    }
+    .VK_headphone_slider_controls{
+        left: 93%;
     }
 }
 
@@ -951,6 +957,9 @@
     .VK_headphone_container{
         width: 270px;
         height: 330px;
+    }
+    .VK_headphone_slider_controls{
+        left: 85%;
     }
 }
 

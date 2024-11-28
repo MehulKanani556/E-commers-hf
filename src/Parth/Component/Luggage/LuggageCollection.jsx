@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import Map from '../../../Vivek/Component/Map'
 import { FaRegHeart, FaStar } from 'react-icons/fa'
-import './LuggageCollection.css'
+import './../Electronics/Electronic.css'
 
 const Elecroniccollection = () => {
 
@@ -113,12 +113,12 @@ const Elecroniccollection = () => {
 
     return (
         <React.Fragment>
-            <section className='VK_sec_padding'>
-                <div className='d_container inter p-0'>
+            <section className='d_p-80'>
+                <div className='d_container inter '>
                     <Row className='m-0 mb-4'>
-                        <Col className='d-flex justify-content-between align-items-center'>
-                            <h2 className='section_title m-0'>
-                                NEW COLLECTION OF ELECTRONICS
+                        <Col className='d-flex flex-column flex-sm-row justify-content-between align-items-center'>
+                            <h2 className='section_title mb-1 mb-sm-0'>
+                                new collection of Bags
                             </h2>
                             <p className='m-0 font_14 primary_color white_space fw-500 inter'>
                                 VIEW ALL
@@ -128,7 +128,7 @@ const Elecroniccollection = () => {
                     <Row className='m-0'>
                         <Map data={electronicProduct}>
                             {(item) => (
-                                <div className='col-xl-3 col-md-4 col-sm-6 my-3 px-4' >
+                                <div className='col-xl-3 col-lg-4 col-sm-6 my-3 px-sm-3 px-0' >
                                     <div className='VK_shadow VK_ele_card_per'>
                                         <div>
                                             <div className='VK_best-seller d-flex'>
@@ -143,7 +143,7 @@ const Elecroniccollection = () => {
                                                         null
                                                     )
                                                 }
-                                                <div className='ms-auto pe-3 mt-1'>
+                                                <div className='ms-auto pe-3 mt-2'>
                                                     <button className='border-0 bg-transparent VK_btn_shadow p-0 rounded-circle VK_wishlist_icn'>
                                                         <FaRegHeart />
                                                     </button>

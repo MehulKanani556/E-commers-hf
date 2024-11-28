@@ -55,7 +55,7 @@ const Bestsellers = () => {
 
     return (
         <React.Fragment>
-            <div className='VK_sec_padding'>
+            <div className='py-5'>
                 <div className='d_container inter'>
                     <Row className='m-0 mb-4'>
                         <Col className='d-flex justify-content-between align-items-center'>
@@ -67,7 +67,7 @@ const Bestsellers = () => {
                     <Row className='m-0'>
                         <Map data={seller}>
                             {(item) => (
-                                <div className="col-xxl-3 col-lg-4 col-sm-6 my-3" key={item.name}>
+                                <div className="col-xxl-3 col-lg-4 col-sm-6 my-3 px-0 px-sm-2" key={item.name}>
                                     <div className="product-item">
                                         <div className='best_seller_img'>
                                             <img
@@ -78,7 +78,7 @@ const Bestsellers = () => {
                                         </div>
                                         <div className='Ele_description mt-2'>
                                             <h4 className='font_16 pt-1 mb-1'>{item.name}</h4>
-                                            <p className='fw-bold font_18'>{item.offer}</p>
+                                            <p className='fw-bold font_18 mb-0'>{item.offer}</p>
                                         </div>
                                     </div>
                                 </div>

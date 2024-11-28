@@ -46,12 +46,21 @@
         width: 20%;
     }
 }
+
 @media(max-width:425px)
 {
-    /* .V_poste .V_boxe .V_img1e{
-        height: 200px;   
-    } */
+    .V_poste .V_boxe .V_img1e{
+        height: 400px;   
+    }
     .V_poste .V_boxe .V_img1e img{
-        object-position: top;
+        object-position: bottom;
+    }
+}
+@media(max-width:375px){
+    .V_poste .V_boxe .V_img1e{
+        height: 300px;   
+    }
+    .VK_three_child h3{
+        font-size: 15px;
     }
 }

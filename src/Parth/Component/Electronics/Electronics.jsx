@@ -204,7 +204,7 @@ function Electronics() {
           <Row className='m-0'>
             <Col className='p-0'>
               <div className='V_back_spe_off d-flex align-items-center'>
-                <div className="d_container">
+                <div className="v_spacialpadd">
                   <div className='V_special '>
                     <p className='px-3 py-2 text-white text-center'>Special Offer</p>
                   </div>

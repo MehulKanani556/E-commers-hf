@@ -7,17 +7,17 @@ import './../css/trending.css'
 import './../css/Bought.css'
 import { Link } from 'react-router-dom';
 
-const Recentlyviewed = () => {
+const Electronicrecentlyview = () => {
 
     const filterItems = [
         {
             id: 1,
-            image: "itemimg1.png",
-            isBestSeller: false,
-            isNewArrial: true,
-            name: "Premium Lehenga choli",
+            image: "itemimg10.png",
+            isBestSeller: true,
+            isNewArrial: false,
+            name: "Vivo V7",
             rating: 4.5,
-            description: "Purple lehenga choli in silk",
+            description: "Light Purple",
             colors: [
                 { id: 1, color: "#B16AAF", isActive: true },
             ],
@@ -26,54 +26,45 @@ const Recentlyviewed = () => {
         },
         {
             id: 2,
-            image: "itemimg2.png",
+            image: "itemimg10.png",
             isBestSeller: false,
             isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.7,
-            description: "Blue prinetd chaniya choli with dupatta",
+            name: "Vivo V7",
+            rating: 4.5,
+            description: "Light Purple",
             colors: [
-                { id: 1, color: "#BF002A", isActive: true },
-                { id: 2, color: "#6BC89B", isActive: false },
-                { id: 3, color: "#C796D8", isActive: false },
-                { id: 4, color: "#6B8AC8", isActive: false }
+                { id: 1, color: "#B16AAF", isActive: true },
             ],
-            price: 250,
-            originalPrice: 300
+            price: 120,
+            originalPrice: 140
         },
         {
             id: 3,
-            image: "itemimg3.png",
-            isBestSeller: false,
-            isNewArrial: true,
-            name: "Premium Saree",
-            rating: 4.7,
-            description: "Mustard yellow cotton silk chaniya choli",
+            image: "itemimg10.png",
+            isBestSeller: true,
+            isNewArrial: false,
+            name: "Vivo V7",
+            rating: 4.5,
+            description: "Light Purple",
             colors: [
-                { id: 1, color: "#FFB804", isActive: true },
-                { id: 2, color: "#6BC89B", isActive: false },
-                { id: 3, color: "#C796D8", isActive: false },
-                { id: 4, color: "#6B8AC8", isActive: false }
+                { id: 1, color: "#B16AAF", isActive: true },
             ],
-            price: 250,
-            originalPrice: 300
+            price: 120,
+            originalPrice: 140
         },
         {
             id: 4,
-            image: "itemimg4.png",
+            image: "itemimg10.png",
             isBestSeller: false,
-            isNewArrial: true,
-            name: "Traditional Chaniya choli",
-            rating: 4.7,
-            description: "Black cotton silk chaniya choli for navratri",
+            isNewArrial: false,
+            name: "Vivo V7",
+            rating: 4.5,
+            description: "Light Purple",
             colors: [
-                { id: 1, color: "#272629", isActive: true },
-                { id: 2, color: "#EC1B1B", isActive: false },
-                { id: 3, color: "#49C0C0", isActive: false },
-                { id: 4, color: "#077E35", isActive: false }
+                { id: 1, color: "#B16AAF", isActive: true },
             ],
-            price: 250,
-            originalPrice: 300
+            price: 120,
+            originalPrice: 140
         },
     ];
 
@@ -132,7 +123,7 @@ const Recentlyviewed = () => {
     return (
         <>
 
-            <section className='d_p-50 pb-0 d_trend d_like'>
+            <section className='d_p-50 pb-0 d_trend d_like d_eleitem'>
                 <div className="d_container">
                     <div className="d_head px-3 d-flex justify-content-between align-items-center">
                         <h4 className='mb-0'>Recently Viewed items</h4>
@@ -142,7 +133,7 @@ const Recentlyviewed = () => {
                             console.log(item.length)
                             return (
                                 <div key={item.id} className="slider-item">
-                                    <Link to='/womendetails'>
+                                    <Link to='/electronicdetails'>
                                         <div className="d_box">
                                             <div className="d_img">
                                                 <img src={require(`./../d_img/${item.image}`)} alt="" />
@@ -192,4 +183,4 @@ const Recentlyviewed = () => {
     )
 }
 
-export default Recentlyviewed
+export default Electronicrecentlyview

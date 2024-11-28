@@ -46,7 +46,7 @@ const Toptoys = () => {
 
     return (
         <React.Fragment>
-            <section className='py-5'>
+            <section className='py-5 pt-0'>
                 <div className='d_container inter p-0'>
                     <Row className='m-0 mb-4'>
                         <Col className='d-flex justify-content-between align-items-center'>

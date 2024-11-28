@@ -31,7 +31,7 @@ const Jewery = () => {
                         </Col>
                         <Col lg={6} className='h-100 p-0 px-sm-2'>
                             <div className='d-flex flex-column h-100'>
-                                <div className='h-50 pb-lg-2 py-3 py-lg-0 VK_jewery_col VK_jewery_div'>
+                                <div className='h-50 pb-lg-2 py-3 py-lg-0 VK_jewery_col VK_jewery_div VK_jewery_per'>
                                     <img src={require('../../assets/aunty.png')} className='h-100 w-100 object_cover' alt="" />
                                     <div className='VK_aunty_text'>
                                         <div className='text-center'>

@@ -1192,7 +1192,7 @@
 
 
     .V_vintage_back {
-        background-position-y: -380px;
+        background-position-y: -340px;
         height: 100%;
         width: 100%;
     }
@@ -1213,14 +1213,14 @@
 
     .V_vintage_btn {
         margin-left: 50px;
-        margin-top: -20px;
+        margin-top: -90px;
         font-size: 10px;
     }
 
     .V_main_girl {
         margin-left: 100px;
-        margin-top: -20px;
-        height: 200px;
+        margin-top: -90px;
+        height: 230px;
     }
 
     .V_shadow_girl {
@@ -1287,5 +1287,18 @@
 
     .V_blur2 {
         z-index: 5;
+    }
+}
+@media(max-width:375px){
+    .V_both_denim{
+        bottom: 8%;
+    }
+}
+@media(max-width:320px){
+    .V_main_girl{
+        margin-left: 85px;
+    }
+    .V_both_denim{
+        bottom: 0;
     }
 }

@@ -246,13 +246,40 @@
 }
 
 
-/* xl device */
-@media (max-width:1199px) and (min-width:992px) {}
-
-
-/* 2xl device */
-@media (max-width:1440px) and (min-width:1200px) {}
-
-
-/* 3xl device */
-@media (min-width:1441px) {}
+@media(max-width:1024px){
+    .VK_pro_heading{
+        font-size: 30px;
+    } 
+}
+@media(max-width:991px){
+    .VK_pro_heading{
+        font-size: 28px;
+    }
+    .parent>div {
+        height: 360px;
+    }
+}
+@media(max-width:575px){
+    .VK_pro_heading{
+        font-size: 24px;
+    }
+    .VK_pro_button{
+        padding: 10px;
+    }
+    .parent>div{
+        height: 300px;
+    }
+}
+@media(max-width:375px){
+    .VK_grid_child{
+        padding: 20px;
+    }
+}
+@media(max-width:320px){
+    .VK_pro_heading{
+        font-size: 20px;
+    }
+    .parent>div {
+        height: 280px;
+    }
+}

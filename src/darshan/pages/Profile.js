@@ -2,13 +2,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Accordion, Col, Modal, Offcanvas, Row, Form, Dropdown } from 'react-bootstrap';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaBars, FaChevronDown } from 'react-icons/fa';
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import '../../Vivek/Component/User/user.css'
 import Map from '../../Vivek/Component/Map';
 
 const Profile = () => {
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     let Address = [
         {
@@ -94,7 +95,7 @@ const Profile = () => {
         }
     ]
 
-    const [activeSection, setActiveSection] = useState('profile'); // Default to profile section
+    const [activeSection, setActiveSection] = useState(location.state?.activeSection || 'profile'); // Default to profile section
     const [modalShow, setModalShow] = useState(false);
 
     const [show, setShow] = useState(false);

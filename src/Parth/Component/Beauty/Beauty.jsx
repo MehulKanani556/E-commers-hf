@@ -95,9 +95,9 @@ function Beauty() {
 
             <BeautySlider />
 
-            <section className='text-white py-5'>
+            <section className='text-white py-3'>
                 <div className=''>
-                    <Row className='p-md-5 m-0'>
+                    <Row className='px-md-3 m-0'>
                         <Col lg={4} className=' pt-3'>
                             <div className=' V_skin_care V_beauty_product_1'>
                                 <div className=' pt-lg-3'>

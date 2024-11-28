@@ -96,7 +96,7 @@ function Luggage() {
 
             < SportsSlider />
 
-            <section className='text-white pb-5'>
+            <section className='text-white pb-4'>
                 <div className=''>
                     <Row className='p-md-5 m-0'>
                         <Col lg={4} className=' pt-3'>

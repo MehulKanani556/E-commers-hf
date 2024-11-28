@@ -17,7 +17,7 @@
 
 /* best seller */
 .best_seller_img {
-    height: 420px;
+    height: 400px;
 }
 
 
@@ -121,7 +121,7 @@
 
 /* poster */
 .VK_poster_img {
-    background-image: url('../../assets/Baneer.png');
+    background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)),url('../../assets/Baneer.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -144,7 +144,7 @@
 }
 
 .VK_poster_txt {
-    color: #6A6A6A;
+    color: #fff;
 }
 
 .VK_poster_btn {
@@ -160,6 +160,15 @@
 
 
 /*  extra small device */
+@media(max-width:425px){
+    .VK_second_cont img{
+        object-position: -220px;
+    }
+    .VK_first_cont img{
+        object-position: -500px;
+    }
+
+}
 @media (max-width:480px) {
     .VK_sec_padding {
         padding: 40px 0px;
@@ -215,6 +224,16 @@
 
     .VK_poster_exclusive {
         font-size: 20px;
+    }
+    .best_seller_img{
+        height: 330px;
+    }
+    .VK_poster_exclusive{
+        color: #fff;
+    }
+    .VK_jewery_per img{
+        object-fit: cover;
+        object-position: right;
     }
 }
 
@@ -272,6 +291,13 @@
     .VK_poster_exclusive {
         font-size: 20px;
     }
+    .best_seller_img{
+        height: 330px;
+    }
+    .VK_poster_exclusive{
+        color: #fff;
+    }
+  
 }
 
 
@@ -324,6 +350,12 @@
     .VK_poster_exclusive {
         font-size: 25px;
     }
+    .best_seller_img{
+        height: 330px;
+    }
+    .VK_poster_exclusive{
+        color: #fff;
+    }
 }
 
 
@@ -375,6 +407,10 @@
     .VK_poster_exclusive {
         font-size: 30px;
     }
+    .best_seller_img{
+        height: 350px;
+    }
+ 
 
 }
 
@@ -416,6 +452,9 @@
         background-position: right;
         height: 400px;
     }
+    .best_seller_img {
+        height: 300px;
+    }
 
 }
 
@@ -451,6 +490,9 @@
     .VK_poster_img {
         background-position: right;
     }
+    .best_seller_img {
+        height: 350px;
+    }
 
 }
 
@@ -462,7 +504,7 @@
     }
 
     .VK_poster_txt {
-        color: #6A6A6A;
+        color: #fff;
         width: 650px;
     }
 

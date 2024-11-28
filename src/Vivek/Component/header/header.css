@@ -1,5 +1,14 @@
 /* nav bar */
-
+.d_theme{
+    color: #212529;
+}
+.d_headertext{
+    color: #090909;
+}
+.VK_header_nav .VK_sub_menu a:hover{
+    font-weight: 500;
+    color: #090909;
+}
 .header {
     background-color: #2B221E;
 }
@@ -113,6 +122,13 @@
     padding: 0px 10px;
     flex-grow: 1;
     box-sizing: border-box;
+}
+.VK_menu_list li{
+    transition: .3s;
+}
+.VK_menu_list li:hover{
+    color: #2B221E;
+    font-weight: 600;
 }
 
 

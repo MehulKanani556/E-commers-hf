@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
-import './gridLuggage.css'
 import Map from '../../../Vivek/Component/Map'
 
 const Gridcomponent = () => {
@@ -62,7 +61,7 @@ const Gridcomponent = () => {
 
     return (
         <React.Fragment>
-            <section className='VK_sec_padding'>
+            <section className='d_p-80'>
                 <div className='d_container'>
                     <Row className='m-0 mb-4'>
                         <Col className='p-0'>
