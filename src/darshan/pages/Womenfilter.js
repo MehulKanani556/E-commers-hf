@@ -1232,7 +1232,7 @@ const Womenfilter = () => {
 
                             {/* Mobile Offcanvas */}
                             <div
-                                className={`offcanvas offcanvas-start ${showOffcanvas ? 'show' : ''}`}
+                                className={`offcanvas d_offcanvas offcanvas-start ${showOffcanvas ? 'show' : ''}`}
                                 tabIndex="-1"
                                 style={{
                                     visibility: showOffcanvas ? 'visible' : 'hidden',

@@ -452,7 +452,7 @@ input:focus {
 }
 
 @media (max-width:321px) {
-    .offcanvas {
+    .d_offcanvas {
         width: 275px !important;
     }
     .d_filtermargin {

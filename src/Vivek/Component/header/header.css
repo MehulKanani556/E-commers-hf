@@ -293,8 +293,15 @@
     .model_padding {
         padding: 20px 20px;
     }
+    .offcanvas {
+        max-width: 320px !important;
+    }
 }
-
+@media(max-width:375px) {
+    .offcanvas {
+        max-width: 275px !important;
+    }
+}
 
 /* small device */
 @media (max-width:575px) and (min-width:481px) {

@@ -122,6 +122,6 @@
 @media(max-width:425px)
 {
     .d_minisider .owl-carousel .owl-nav button span{
-        margin-bottom: 50px;
+        margin-bottom: 25px;
     }
 }

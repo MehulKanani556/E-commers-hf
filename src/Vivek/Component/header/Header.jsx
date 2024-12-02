@@ -134,14 +134,14 @@ const Header = () => {
                                             </Dropdown.Menu>
                                         </Dropdown>
                                     </div>
-                                    <div className='d-md-none ms-auto'>
+                                    <div className='d-md-none ms-auto VK_offcanvas'>
                                         <Button className="bg-transparent shadow-none border-0 font_22">
                                             <IoSearch />
                                         </Button>
                                         <Button onClick={handleShow} className="bg-transparent shadow-none border-0 font_22">
                                             <FaBars />
                                         </Button>
-                                        <Offcanvas show={show} onHide={handleClose} placement='end'>
+                                        <Offcanvas show={show} onHide={handleClose} placement='end' className="VK_offcanvas">
                                             <Offcanvas.Header closeButton>
                                                 <Offcanvas.Title>
                                                     LOGO
