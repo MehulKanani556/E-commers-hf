@@ -6,8 +6,12 @@ import { IoSearch } from 'react-icons/io5'
 import { BsCart3 } from 'react-icons/bs'
 import Models from './model/Models'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 const Header = () => {
+
+    const BaseUrl = process.env.REACT_APP_BASEURL;
+    const token = localStorage.getItem('token');
 
     // login 
     const [modalShow, setModalShow] = React.useState(false);
@@ -94,6 +98,21 @@ const Header = () => {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    useEffect(() => {
+        const fetchMainCategory = async () => {
+            try {
+                const response = await axios.get(`${BaseUrl}/api/allMainCategory`, {
+                    headers: {Authorization: `Bearer ${token}`}
+                });
+                console.log("REsponse",response.data);
+                
+            } catch (error) {
+                console.error('Main Category Fetching Error:',error);
+            }
+        }
+        fetchMainCategory();
+    },[]);
 
     return (
         <React.Fragment>

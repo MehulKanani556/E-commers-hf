@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useFormik } from 'formik'
-import React, { useState } from 'react'
+import { jwtDecode } from 'jwt-decode'
+import React, { useRef, useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import * as Yup from 'yup'
 
@@ -8,16 +9,19 @@ const Register_model = (props) => {
 
     const BaseUrl = process.env.REACT_APP_BASEURL;
 
+    const [mobile, setMobile] = useState('');
+    const [flowType, setFlowType] = useState('register');
+
     // register model 
     var init_register = {
         name: "",
-        mobile: "",
+        mobileNo: "",
         password: ""
     }
 
     var register_validation = Yup.object({
         name: Yup.string().min(2, "At least 2 characters required").max(25, "Too long for a name").required("Name is required"),
-        mobile: Yup.string("Mobile Number Must Be in Digit").min(10, "Must be 10 digits").max(10, "Must be 10 digits").required("Mobile is required"),
+        mobileNo: Yup.string("Mobile Number Must Be in Digit").min(10, "Must be 10 digits").max(10, "Must be 10 digits").required("Mobile is required"),
         password: Yup.string().min(8, "At least 8 characters required").max(20, "Too long for a password").required("Password is required")
     })
 
@@ -29,8 +33,10 @@ const Register_model = (props) => {
                 const response = await axios.post(`${BaseUrl}/api/createUser`, values);
                 console.log("response", response.data.user.otp);
                 if (response.data.status === 201) {
+                    setMobile(response.data.user.mobileNo);
                     props.setmodel(false);
                     setloginmodel(false);
+                    setFlowType('register');
                     setotpmodel(true);
                     resetForm();
                 }
@@ -43,58 +49,58 @@ const Register_model = (props) => {
 
     // login model
     var init_login = {
-        mobile: ""
+        mobileNo: "",
+        password: ""
     }
 
     var login_validation = Yup.object({
-        mobile: Yup.string().min(10, "Must be 10 digits").max(10, "Must be 10 digits").required("Mobile is required"),
+        mobileNo: Yup.string().min(10, "Must be 10 digits").max(10, "Must be 10 digits").required("Mobile is required"),
+        password: Yup.string().min(8, "At least 8 characters required").max(20, "Too long for a password").required("Password is required")
     })
 
     let loginFormik = useFormik({
         initialValues: init_login,
         validationSchema: login_validation,
-        onSubmit: (values) => {
-            login_submit(values)
+        onSubmit: async (values, { resetForm,setFieldError }) => {
+
+            try {
+                const response = await axios.post(`${BaseUrl}/api/login`, values);
+
+                console.log("respose>>>>>>>>", response.data);
+                if (response.data.status === 200) {
+                    const token = response.data.token;
+                    localStorage.setItem('token', token);
+                    resetForm();
+                    setloginmodel(false);
+                }
+            } catch (error) {
+                console.error('USer Login Error:', error);
+                if (error.response && error.response.data && error.response.data.message) {
+                    setFieldError("password",error.response.data.message);
+                }
+            }
         }
     })
 
-    const login_submit = (values) => {
-        console.log(values);
-        setloginmodel(false);
-        setLoginpassword(true);
-    }
+    // OTP Model
+    const otpInputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
 
-    // login password
-    var init_password_login = {
-        password: ""
-    }
+    const handleInput = (e, index) => {
+        const value = e.target.value;
 
-    var password_login_validation = Yup.object({
-        password: Yup.string().min(8, "At least 8 characters required").max(20, "Too long for a password").required("Password is required")
-    })
-
-    let passwordLoginFormik = useFormik({
-        initialValues: init_password_login,
-        validationSchema: password_login_validation,
-        onSubmit: (values) => {
-            password_login_submit(values);
+        // If a digit was entered and there's a next input, focus it
+        if (value && index < 3) {
+            otpInputRefs[index + 1].current.focus();
         }
-    })
+    };
 
-    const password_login_submit = (values) => {
-        console.log(values);
-        setLoginpassword(false);
-        setotpmodel(true)
-    }
-
-    // otp model
-    const otp_validation = Yup.object({
-        otp1: Yup.string().required('Required').matches(/^[0-9]$/, 'Must be a number'),
-        otp2: Yup.string().required('Required').matches(/^[0-9]$/, 'Must be a number'),
-        otp3: Yup.string().required('Required').matches(/^[0-9]$/, 'Must be a number'),
-        otp4: Yup.string().required('Required').matches(/^[0-9]$/, 'Must be a number'),
-    });
-
+    // Handle backspace key to move to previous input
+    const handleKeyDown = (e, index) => {
+        // If backspace is pressed and the current input is empty
+        if (e.key === 'Backspace' && !otpFormik.values[`otp${index + 1}`] && index > 0) {
+            otpInputRefs[index - 1].current.focus();
+        }
+    };
 
     const otpFormik = useFormik({
         initialValues: {
@@ -103,20 +109,26 @@ const Register_model = (props) => {
             otp3: '',
             otp4: ''
         },
-        validationSchema: otp_validation,
         onSubmit: async (values) => {
             // otp_submit(values);
             try {
                 const enterOtp = values.otp1 + values.otp2 + values.otp3 + values.otp4;
                 const resposnse = await axios.post(`${BaseUrl}/api/verifyOtp`, {
-                    otp: enterOtp
+                    otp: enterOtp,
+                    mobileNo: mobile
                 });
 
-                console.log("response", resposnse.data);
+                // console.log("response", resposnse.data);
                 if (resposnse.data.status === 200) {
                     setotpmodel(false);
-                    const token = resposnse.data.token;
-                    localStorage.setItem('token', token);
+                    setMobile('');
+
+                    if (flowType === 'forgotPassword') {
+                        setresetpassword(true);
+                    } else {
+                        setloginmodel(true);
+                    }
+                    resetForm();
                 }
             } catch (error) {
                 console.error('Otp Verify Error:', error);
@@ -129,104 +141,91 @@ const Register_model = (props) => {
 
     // forget password
     var init_forget_password = {
-        mobile: ""
+        mobileNo: ""
     }
 
     var forget_password_validation = Yup.object({
-        mobile: Yup.string().min(10, "Must be 10 digits").max(10, "Must be 10 digits").required("Mobile is required"),
+        mobileNo: Yup.string().min(10, "Must be 10 digits").max(10, "Must be 10 digits").required("Mobile is required"),
     })
 
     let forgetFormik = useFormik({
         initialValues: init_forget_password,
         validationSchema: forget_password_validation,
-        onSubmit: (values) => {
-            forget_submit(values);
+        onSubmit: async (values, { resetForm }) => {
+            // forget_submit(values);
+            try {
+                const response = await axios.post(`${BaseUrl}/api/forgotPassword`, values);
+                console.log("resposne.otp", response.data.otp);
+                if (response.data.status === 200) {
+                    setMobile(values.mobileNo);
+                    setFlowType('forgotPassword');
+                    resetForm();
+                    setforget(false);
+                    setotpmodel(true);
+                }
+            } catch (error) {
+                console.error('forgot password error:', error);
+            }
         }
     })
-
-    const forget_submit = (values) => {
-        console.log(values);
-        setforget(false);
-        setotpmodel(true)
-        setchange(true)
-    }
-
     // reset password
 
     const init_reset_password = {
-        password: "",
-        confirm_password: ""
+        newPassword: "",
+        confirmPassword: ""
     };
 
     const reset_password_validation = Yup.object({
-        password: Yup.string()
+        newPassword: Yup.string()
             .min(8, "At least 8 characters required")
             .max(20, "Too long for a password")
             .required("Password is required"),
-        confirm_password: Yup.string()
-            .oneOf([Yup.ref('password'), null], 'Passwords must match')
+        confirmPassword: Yup.string()
+            .oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
             .required('Confirm Password is required')
     });
 
     let resetFormik = useFormik({
         initialValues: init_reset_password,
         validationSchema: reset_password_validation,
-        onSubmit: (values) => {
-            reset_submit(values);
+        onSubmit: async (values, {resetForm}) => {
+            try {
+
+                const token = localStorage.getItem('token');
+                console.log("token", token);
+                const decode = jwtDecode(token);
+
+                const response = await axios.post(`${BaseUrl}/api/resetPassword/${decode._id}`, values);
+
+                console.log("REsponse",response.data );
+                if(response.data.status === 200){
+                    resetForm('');
+                    setresetpassword(false);
+                    setloginmodel(true);
+                }
+            } catch (error) {
+                console.error('Reset Password Error:', error);
+
+            }
         }
     });
 
-    const reset_submit = (values) => {
-        console.log(values);
-        setchange(false)
-        setresetpassword(false);
-    };
 
     // Other state and logic
 
     const [loginmodel, setloginmodel] = useState(false);
-    const [Loginpassword, setLoginpassword] = useState(false);
     const [forget, setforget] = useState(false);
     const [otpmodel, setotpmodel] = useState(false);
-    const [resetpassword, setresetpassword] = useState(false)
+    const [resetpassword, setresetpassword] = useState(false);
+    const [confirmPasswordType, setConfirmPasswordType] = useState('password');
     const [type, setType] = useState('password');
-    const [change, setchange] = useState(false);
 
     const handleInputType = () => {
         setType(type === 'password' ? 'text' : 'password');
     }
-
-    const handleInput = (e, index) => {
-        const input = e.target;
-        const value = input.value;
-
-        // Only allow numbers
-        if (!/^\d*$/.test(value)) {
-            // If not a number, clear the input
-            input.value = '';
-            return;
-        }
-
-        // Get all OTP inputs
-        const inputs = Array.from(document.querySelectorAll('.VK_otp_input'));
-
-        // If input has a value and there's a next input, focus on it
-        if (value.length === 1 && index < inputs.length - 1) {
-            inputs[index + 1].focus();
-        }
-    };
-
-    const handleKeyDown = (e, index) => {
-        // Get all OTP inputs
-        const inputs = Array.from(document.querySelectorAll('.VK_otp_input'));
-
-        // If backspace is pressed and input is empty and there's a previous input
-        if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
-            inputs[index - 1].focus();
-        }
-    };
-
-
+    const handleConfirmPasswordType = () => {
+        setConfirmPasswordType(confirmPasswordType === 'password' ? 'text' : 'password');
+    }
     return (
         <React.Fragment>
             {/* Register Modal */}
@@ -249,8 +248,8 @@ const Register_model = (props) => {
                                 {errors.name && touched.name ? (<span className='VK_error_text text-danger'>{errors.name}</span>) : null}
                             </div>
                             <div className='mb-4'>
-                                <input type="text" placeholder='Mobile no.' name='mobile' value={values.mobile} className='w-100 model_input' onChange={handleChange} onBlur={handleBlur} />
-                                {errors.mobile && touched.mobile ? (<span className='VK_error_text text-danger'>{errors.mobile}</span>) : null}
+                                <input type="text" placeholder='Mobile no.' name='mobileNo' value={values.mobileNo} className='w-100 model_input' onChange={handleChange} onBlur={handleBlur} />
+                                {errors.mobileNo && touched.mobileNo ? (<span className='VK_error_text text-danger'>{errors.mobileNo}</span>) : null}
                             </div>
                             <div className='mb-4'>
                                 <div className='input_password'>
@@ -300,11 +299,26 @@ const Register_model = (props) => {
                     <div className='mt-lg-4'>
                         <form method='post' onSubmit={loginFormik.handleSubmit}>
                             <div className='mb-4 pb-sm-3'>
-                                <input type="text" placeholder='Mobile no.' name='mobile' value={loginFormik.values.mobile} className='w-100 model_input' onChange={loginFormik.handleChange} onBlur={loginFormik.handleBlur} />
-                                {loginFormik.errors.mobile && loginFormik.touched.mobile ? (<span className='VK_error_text text-danger'>{loginFormik.errors.mobile}</span>) : null}
+                                <input type="text" placeholder='Mobile no.' name='mobileNo' value={loginFormik.values.mobileNo} className='w-100 model_input' onChange={loginFormik.handleChange} onBlur={loginFormik.handleBlur} />
+                                {loginFormik.errors.mobileNo && loginFormik.touched.mobileNo ? (<span className='VK_error_text text-danger'>{loginFormik.errors.mobileNo}</span>) : null}
+                            </div>
+                            <div className='input_password'>
+                                <input type={type} placeholder='Password' name='password' value={loginFormik.values.password} className='w-100 model_input' onChange={loginFormik.handleChange} onBlur={loginFormik.handleBlur} />
+                                <button type='button' className='bg-transparent VK_eyes border-0' onClick={handleInputType}>
+                                    {type === 'password' ? (<img src={require('../../../assets/eye_close.png')} alt="Hide Password" />) : (<img src={require('../../../assets/eye_open.png')} alt="Show Password" />)}
+                                </button>
+                            </div>
+                            {loginFormik.errors.password && loginFormik.touched.password ? (<span className='VK_error_text text-danger'>{loginFormik.errors.password}</span>) : null}
+                            <div className='text-end mb-4 mt-2'>
+                                <button onClick={() => {
+                                    setforget(true);
+                                    setloginmodel(false);
+                                }} type='button' className='bg-transparent border-0'>
+                                    <p className='VK_forget_link m-0'>Forget Password?</p>
+                                </button>
                             </div>
                             <div className='mb-4'>
-                                <input type="submit" value={"Continue"} className='w-100 inter model_theme' />
+                                <input type="submit" value={"Login"} className='w-100 inter model_theme' />
                             </div>
                             <div className='mb-4'>
                                 <p className='light_color model_p fw-400'>
@@ -330,43 +344,6 @@ const Register_model = (props) => {
                 </Modal.Body>
             </Modal>
 
-            {/* Password Login Modal */}
-            <Modal
-                show={Loginpassword}
-                onHide={() => setLoginpassword(false)}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-                className='login_model'
-            >
-                <Modal.Body className='inter model_padding'>
-                    <h4 className='text-black text-center model_heading fw-600 mb-3'>Login</h4>
-                    <p className='text-center font_18 light_color fw-500 mb-3'>Log in to continue</p>
-                    <div className='mt-lg-4'>
-                        <form method='post' onSubmit={passwordLoginFormik.handleSubmit}>
-                            <div className='input_password'>
-                                <input type={type} placeholder='Password' name='password' value={passwordLoginFormik.values.password} className='w-100 model_input' onChange={passwordLoginFormik.handleChange} onBlur={passwordLoginFormik.handleBlur} />
-                                <button type='button' className='bg-transparent VK_eyes border-0' onClick={handleInputType}>
-                                    {type === 'password' ? (<img src={require('../../../assets/eye_close.png')} alt="Hide Password" />) : (<img src={require('../../../assets/eye_open.png')} alt="Show Password" />)}
-                                </button>
-                            </div>
-                            {passwordLoginFormik.errors.password && passwordLoginFormik.touched.password ? (<span className='VK_error_text text-danger'>{passwordLoginFormik.errors.password}</span>) : null}
-                            <div className='text-end mb-4 mt-2'>
-                                <button onClick={() => {
-                                    setLoginpassword(false)
-                                    setforget(true)
-                                }} type='button' className='bg-transparent border-0'>
-                                    <p className='VK_forget_link m-0'>Forget Password?</p>
-                                </button>
-                            </div>
-                            <div className='mb-4 pt-2'>
-                                <input type="submit" value={"Continue"} className='w-100 inter model_theme' />
-                            </div>
-                        </form>
-                    </div>
-                </Modal.Body>
-            </Modal>
-
             {/* otp validation */}
             <Modal
                 show={otpmodel}
@@ -381,7 +358,7 @@ const Register_model = (props) => {
                         Verify
                     </h4>
                     <p className='text-center light_color fw-500 mb-md-5 mb-3'>
-                        Enter the 4 digit verification code that we’ve sent to your phone
+                        Enter the 4 digit verification code that we've sent to your phone +91 {mobile}
                     </p>
                     <div className='mt-lg-4'>
                         <form method='post' onSubmit={otpFormik.handleSubmit}>
@@ -396,10 +373,11 @@ const Register_model = (props) => {
                                             value={otpFormik.values[field]}
                                             onChange={(e) => {
                                                 otpFormik.handleChange(e);
-                                                handleInput(e, index); // Pass the index to know which input we're on
+                                                handleInput(e, index);
                                             }}
-                                            onKeyDown={(e) => handleKeyDown(e, index)} // Pass the index here too
+                                            onKeyDown={(e) => handleKeyDown(e, index)}
                                             onBlur={otpFormik.handleBlur}
+                                            ref={otpInputRefs[index]}
                                         />
                                         {otpFormik.touched[field] && otpFormik.errors[field] && (
                                             <small className="text-danger text-center">{otpFormik.errors[field]}</small>
@@ -415,13 +393,12 @@ const Register_model = (props) => {
 
                         <div>
                             <p className='text-center text-black'>
-                                Didn’t receive code yet? <button type='button' className='bg-transparent border-0'>Resend</button>
+                                Didn't receive code yet? <button type='button' className='bg-transparent border-0'>Resend</button>
                             </p>
                         </div>
                     </div>
                 </Modal.Body>
             </Modal>
-
             {/* Forget Password Modal */}
             <Modal
                 show={forget}
@@ -437,8 +414,8 @@ const Register_model = (props) => {
                     <div className='mt-lg-4'>
                         <form method='post' onSubmit={forgetFormik.handleSubmit}>
                             <div className='mb-4 pb-sm-3'>
-                                <input type="text" placeholder='Mobile no.' name='mobile' value={forgetFormik.values.mobile} className='w-100 model_input' onChange={forgetFormik.handleChange} onBlur={forgetFormik.handleBlur} />
-                                {forgetFormik.errors.mobile && forgetFormik.touched.mobile ? (<span className='VK_error_text text-danger'>{forgetFormik.errors.mobile}</span>) : null}
+                                <input type="text" placeholder='Mobile no.' name='mobileNo' value={forgetFormik.values.mobileNo} className='w-100 model_input' onChange={forgetFormik.handleChange} onBlur={forgetFormik.handleBlur} />
+                                {forgetFormik.errors.mobileNo && forgetFormik.touched.mobileNo ? (<span className='VK_error_text text-danger'>{forgetFormik.errors.mobileNo}</span>) : null}
                             </div>
                             <div className='mb-4 pt-2'>
                                 <input type="submit" value={"Get code"} className='w-100 inter model_theme' />
@@ -471,8 +448,8 @@ const Register_model = (props) => {
                                     <input
                                         type={type}
                                         placeholder='New password'
-                                        name='password'
-                                        value={resetFormik.values.password}
+                                        name='newPassword'
+                                        value={resetFormik.values.newPassword}
                                         className='w-100 model_input'
                                         onChange={resetFormik.handleChange}
                                         onBlur={resetFormik.handleBlur}
@@ -487,17 +464,17 @@ const Register_model = (props) => {
                                             : <img src={require('../../../assets/eye_open.png')} alt="Show Password" />}
                                     </button>
                                 </div>
-                                {resetFormik.touched.password && resetFormik.errors.password ? (
-                                    <div className="error text-danger">{resetFormik.errors.password}</div>
+                                {resetFormik.touched.newPassword && resetFormik.errors.newPassword ? (
+                                    <div className="error text-danger">{resetFormik.errors.newPassword}</div>
                                 ) : null}
                             </div>
                             <div className='mb-md-5 mb-2'>
                                 <div className='input_password'>
                                     <input
-                                        type={type}
+                                        type={confirmPasswordType}
                                         placeholder='Confirm password'
-                                        name='confirm_password'
-                                        value={resetFormik.values.confirm_password}
+                                        name='confirmPassword'
+                                        value={resetFormik.values.confirmPassword}
                                         className='w-100 model_input'
                                         onChange={resetFormik.handleChange}
                                         onBlur={resetFormik.handleBlur}
@@ -505,15 +482,15 @@ const Register_model = (props) => {
                                     <button
                                         type='button'
                                         className='bg-transparent VK_eyes border-0'
-                                        onClick={handleInputType}
+                                        onClick={handleConfirmPasswordType}
                                     >
-                                        {type === 'password'
+                                        {confirmPasswordType === 'password'
                                             ? <img src={require('../../../assets/eye_close.png')} alt="Hide Password" />
                                             : <img src={require('../../../assets/eye_open.png')} alt="Show Password" />}
                                     </button>
                                 </div>
-                                {resetFormik.touched.confirm_password && resetFormik.errors.confirm_password ? (
-                                    <div className="error text-danger">{resetFormik.errors.confirm_password}</div>
+                                {resetFormik.touched.confirmPassword && resetFormik.errors.confirmPassword ? (
+                                    <div className="error text-danger">{resetFormik.errors.confirmPassword}</div>
                                 ) : null}
                             </div>
                             <div className='mb-4 pt-2'>
