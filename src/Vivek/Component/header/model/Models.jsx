@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
@@ -5,6 +6,7 @@ import * as Yup from 'yup'
 
 const Register_model = (props) => {
 
+    const BaseUrl = process.env.REACT_APP_BASEURL;
 
     // register model 
     var init_register = {
@@ -19,21 +21,24 @@ const Register_model = (props) => {
         password: Yup.string().min(8, "At least 8 characters required").max(20, "Too long for a password").required("Password is required")
     })
 
-    let { values, handleBlur, handleChange, handleSubmit, errors, touched } = useFormik({
+    let { values, handleBlur, handleChange, handleSubmit, errors, touched, resetForm } = useFormik({
         initialValues: init_register,
         validationSchema: register_validation,
-        onSubmit: (values) => {
-            register_submit(values)
+        onSubmit: async (values) => {
+            try {
+                const response = await axios.post(`${BaseUrl}/api/createUser`, values);
+                console.log("response", response.data.user.otp);
+                if (response.data.status === 201) {
+                    props.setmodel(false);
+                    setloginmodel(false);
+                    setotpmodel(true);
+                    resetForm();
+                }
+            } catch (error) {
+                console.error('User Register Error:', error);
+            }
         }
     })
-
-    const register_submit = (values) => {
-        console.log(values);
-
-        props.setmodel(true);
-        setloginmodel(false);
-    }
-
 
 
     // login model
@@ -90,6 +95,7 @@ const Register_model = (props) => {
         otp4: Yup.string().required('Required').matches(/^[0-9]$/, 'Must be a number'),
     });
 
+
     const otpFormik = useFormik({
         initialValues: {
             otp1: '',
@@ -98,21 +104,28 @@ const Register_model = (props) => {
             otp4: ''
         },
         validationSchema: otp_validation,
-        onSubmit: (values) => {
-            otp_submit(values);
+        onSubmit: async (values) => {
+            // otp_submit(values);
+            try {
+                const enterOtp = values.otp1 + values.otp2 + values.otp3 + values.otp4;
+                const resposnse = await axios.post(`${BaseUrl}/api/verifyOtp`, {
+                    otp: enterOtp
+                });
+
+                console.log("response", resposnse.data);
+                if (resposnse.data.status === 200) {
+                    setotpmodel(false);
+                    const token = resposnse.data.token;
+                    localStorage.setItem('token', token);
+                }
+            } catch (error) {
+                console.error('Otp Verify Error:', error);
+                if (error.response && error.response.data && error.response.data.message) {
+                    alert(error.response.data.message);
+                }
+            }
         }
     });
-
-    const otp_submit = (values) => {
-        const otp = values.otp1 + values.otp2 + values.otp3 + values.otp4;
-        console.log('OTP Submitted:', otp);
-        if (change) {
-            setresetpassword(true)
-        }
-        setotpmodel(false);
-    };
-
-
 
     // forget password
     var init_forget_password = {
@@ -183,23 +196,39 @@ const Register_model = (props) => {
         setType(type === 'password' ? 'text' : 'password');
     }
 
-    // otp model focus
     const handleInput = (e, index) => {
         const input = e.target;
-        const nextInput = input.nextElementSibling;
-        const prevInput = input.previousElementSibling;
+        const value = input.value;
 
-        if (input.value.length === 1 && nextInput) {
-            nextInput.focus();
-        } else if (input.value.length === 0 && prevInput) {
-            prevInput.focus();
+        // Only allow numbers
+        if (!/^\d*$/.test(value)) {
+            // If not a number, clear the input
+            input.value = '';
+            return;
+        }
+
+        // Get all OTP inputs
+        const inputs = Array.from(document.querySelectorAll('.VK_otp_input'));
+
+        // If input has a value and there's a next input, focus on it
+        if (value.length === 1 && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+        }
+    };
+
+    const handleKeyDown = (e, index) => {
+        // Get all OTP inputs
+        const inputs = Array.from(document.querySelectorAll('.VK_otp_input'));
+
+        // If backspace is pressed and input is empty and there's a previous input
+        if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+            inputs[index - 1].focus();
         }
     };
 
 
     return (
         <React.Fragment>
-
             {/* Register Modal */}
             <Modal
                 {...props}
@@ -357,58 +386,26 @@ const Register_model = (props) => {
                     <div className='mt-lg-4'>
                         <form method='post' onSubmit={otpFormik.handleSubmit}>
                             <div className='mb-md-5 mb-4 d-flex gap-3 justify-content-center'>
-                                <input
-                                    type="text"
-                                    className='VK_otp_input'
-                                    maxLength="1"
-                                    name="otp1"
-                                    value={otpFormik.values.otp1}
-                                    onChange={otpFormik.handleChange}
-                                    onBlur={otpFormik.handleBlur}
-                                    onInput={(e) => handleInput(e, 0)}
-                                />
-                                <input
-                                    type="text"
-                                    className='VK_otp_input'
-                                    maxLength="1"
-                                    name="otp2"
-                                    value={otpFormik.values.otp2}
-                                    onChange={otpFormik.handleChange}
-                                    onBlur={otpFormik.handleBlur}
-                                    onInput={(e) => handleInput(e, 1)}
-                                />
-                                <input
-                                    type="text"
-                                    className='VK_otp_input'
-                                    maxLength="1"
-                                    name="otp3"
-                                    value={otpFormik.values.otp3}
-                                    onChange={otpFormik.handleChange}
-                                    onBlur={otpFormik.handleBlur}
-                                    onInput={(e) => handleInput(e, 2)}
-                                />
-                                <input
-                                    type="text"
-                                    className='VK_otp_input'
-                                    maxLength="1"
-                                    name="otp4"
-                                    value={otpFormik.values.otp4}
-                                    onChange={otpFormik.handleChange}
-                                    onBlur={otpFormik.handleBlur}
-                                    onInput={(e) => handleInput(e, 3)}
-                                />
-                            </div>
-
-                            {/* Display validation errors */}
-                            <div className='text-center'>
-                                {(otpFormik.touched.otp1 && otpFormik.errors.otp1) ||
-                                    (otpFormik.touched.otp2 && otpFormik.errors.otp2) ||
-                                    (otpFormik.touched.otp3 && otpFormik.errors.otp3) ||
-                                    (otpFormik.touched.otp4 && otpFormik.errors.otp4) ? (
-                                    <span className='VK_error_text text-danger'>
-                                        Please fill all OTP fields correctly
-                                    </span>
-                                ) : null}
+                                {["otp1", "otp2", "otp3", "otp4"].map((field, index) => (
+                                    <div key={index} className="d-flex flex-column">
+                                        <input
+                                            type="text"
+                                            className='VK_otp_input'
+                                            maxLength="1"
+                                            name={field}
+                                            value={otpFormik.values[field]}
+                                            onChange={(e) => {
+                                                otpFormik.handleChange(e);
+                                                handleInput(e, index); // Pass the index to know which input we're on
+                                            }}
+                                            onKeyDown={(e) => handleKeyDown(e, index)} // Pass the index here too
+                                            onBlur={otpFormik.handleBlur}
+                                        />
+                                        {otpFormik.touched[field] && otpFormik.errors[field] && (
+                                            <small className="text-danger text-center">{otpFormik.errors[field]}</small>
+                                        )}
+                                    </div>
+                                ))}
                             </div>
 
                             <div className='mb-4 pt-2'>
@@ -515,9 +512,9 @@ const Register_model = (props) => {
                                             : <img src={require('../../../assets/eye_open.png')} alt="Show Password" />}
                                     </button>
                                 </div>
-                                    {resetFormik.touched.confirm_password && resetFormik.errors.confirm_password ? (
-                                        <div className="error text-danger">{resetFormik.errors.confirm_password}</div>
-                                    ) : null}
+                                {resetFormik.touched.confirm_password && resetFormik.errors.confirm_password ? (
+                                    <div className="error text-danger">{resetFormik.errors.confirm_password}</div>
+                                ) : null}
                             </div>
                             <div className='mb-4 pt-2'>
                                 <input

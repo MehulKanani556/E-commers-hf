@@ -39,6 +39,15 @@ import Combined from './Vivek/Component/User/Combined';
 import Cart from './Dhruvin/Components/Cart/Cart';
 import Invoice from './Dhruvin/Components/Cart/Invoice';
 import Electronicdetails from './darshan/pages/Electronicdetails';
+import User from './Vivek/Component/User/User';
+import UserProfile from './Vivek/Component/User/UserProfile';
+import UserpaymentMethod from './Vivek/Component/User/UserpaymentMethod';
+import GooglepayUPIMethod from './Vivek/Component/User/GooglepayUPIMethod';
+import MyOrder from './Vivek/Component/User/MyOrder';
+import UserFaq from './Vivek/Component/User/UserFaq';
+import TermOfServices from './Vivek/Component/User/TermOfServices';
+import UserDeactive from './Vivek/Component/User/UserDeactive';
+import UserAddress from './Vivek/Component/User/UserAddress';
 
 // import WomenDetails from './darshan/pages/WomenDetails';
 
@@ -94,11 +103,9 @@ function App() {
 
           <Route path='/returnrefund' element={<TrackReturnRefund />} />
           <Route path='/ratereview' element={<RateReview />} />
-          <Route path='/combine' element={<Combined />} />
-         
-          {/* user */}                                                                                                                                                                                                                                                      
-          
-          {/* <Route path="/user" element={<User />}>
+          <Route path='/combine' element={<Combined />} />                                                                                                                                                                                                                                                      
+          {/* User */}
+          <Route path="/user" element={<User />}>
             <Route path='profile' element={<UserProfile />} />
             <Route path='payment' element={<UserpaymentMethod />} />
             <Route path='payment/upi' element={<GooglepayUPIMethod />} />
@@ -108,7 +115,7 @@ function App() {
             <Route path='term' element={<TermOfServices />} />
             <Route path='deactive' element={<UserDeactive />} />
             <Route path='address' element={<UserAddress />} />
-          </Route> */}
+          </Route>
 
           {/* Cart  */}
 
