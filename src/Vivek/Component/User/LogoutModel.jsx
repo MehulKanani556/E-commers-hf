@@ -1,7 +1,16 @@
 import React from 'react'
 import { Modal } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 
 const LogoutModel = (props) => {
+
+    const navigate = useNavigate();
+    
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/');
+    }
+
     return (
         <Modal
             {...props}
@@ -25,12 +34,12 @@ const LogoutModel = (props) => {
                     <div className='mt-5'>
                         <div className='d-flex gap-2'>
                             <div className='w-100'>
-                                <button className='VK_logut_cancle h-100'>
+                                <button className='VK_logut_cancle h-100' onClick={props.onHide}>
                                     Cancel
                                 </button>
                             </div>
                             <div className='w-100'>
-                                <button className='VK_logout_ok h-100'>
+                                <button className='VK_logout_ok h-100' onClick={handleLogout}>
                                     Yes
                                 </button>
                             </div>

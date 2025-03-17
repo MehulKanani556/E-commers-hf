@@ -192,7 +192,7 @@ const Register_model = (props) => {
             try {
 
                 const token = localStorage.getItem('token');
-                console.log("token", token);
+                // console.log("token", token);
                 const decode = jwtDecode(token);
 
                 const response = await axios.post(`${BaseUrl}/api/resetPassword/${decode._id}`, values);

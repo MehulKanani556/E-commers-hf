@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import OwlCarousel from 'react-owl-carousel';
 import '../../../darshan/css/minisider.css';
+import axios from 'axios';
 
 const CommSlider = () => {
+
+    const BaseUrl = process.env.REACT_APP_BASEURL;
+    const token = localStorage.getItem('token');
+
+    const [category,setCategory] = useState([]);
 
     const settings = {
         loop: true,
@@ -52,9 +58,23 @@ const CommSlider = () => {
         },
     ];
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${BaseUrl}/api/allCategory`, {
+                    headers : { Authorization : `Bearer ${token}`}
+                });
+                // console.log("resposnse",response.data.category);
+                setCategory(response.data.category);
+                
+            } catch (error) {
+                console.error('Data Fetching Error:', error);
+            }
+        }
+        fetchData();
+    },[]);
     return (
         <>
-
             <section className='d_p-80 d_minisider'>
                 <div className="d_container p-0">
                     <div className="row m-0 justify-content-center">

@@ -1,18 +1,55 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './user.css';
 import '../common.css'
 import UserProfileModel from './UserProfileModel';
+import axios from 'axios';
 
 const UserProfile = () => {
 
+    const BaseUrl = process.env.REACT_APP_BASEURL;
+    const token = localStorage.getItem('token');
+
     const [show, setShow] = useState(false);
     const [contactmodel, setcontactmodel] = useState(false);
+    const [user,setUser] = useState({});
 
     const handleClose = () => setShow(false);
 
     const handlecloseContact = () => setcontactmodel(false);
 
+    const fetchUserData = async() => {
+        try {
 
+            const response = await axios.get(`${BaseUrl}/api/getUser`, {
+                headers:{ Authorization: `Bearer ${token}` }
+            });
+            // console.log("Response",response.data.user);
+            let userData = response.data.user;
+
+            if (userData.dateOfBirth) {
+                const dateObj = new Date(userData.dateOfBirth);
+                const formattedDate = dateObj.toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                });
+    
+                userData.dateOfBirth = formattedDate;
+            }
+    
+            // console.log("Response", userData);
+            setUser(response.data.user);
+        } catch (error) {
+            console.error('User Fetching Error:', error);   
+        }
+    }
+    useEffect(() => {
+        fetchUserData();
+    },[BaseUrl, token]);
+
+    const onUpdateSuccess = () => {
+        fetchUserData();
+    }
 
     return (
         <React.Fragment>
@@ -24,7 +61,7 @@ const UserProfile = () => {
                     <div className='VK_proflie_logo'>
                         <div className='VK_proflie_img'>
                             <p className='m-0'>
-                                JW
+                            {user.name ? `${user.name.split(' ')[0][0]}${user.name.split(' ')[1]?.[0] || ''}` : 'AB'}
                             </p>
                         </div>
                     </div>
@@ -53,13 +90,13 @@ const UserProfile = () => {
                                         <p className='VK_input_label m-0'>
                                             Name
                                         </p>
-                                        <input type="text" name="name" className='VK_from_input w-100 py-2 px-3' />
+                                        <p className='VK_from_input w-100 py-2 px-3'>{user.name || '--'}</p>
                                     </div>
                                     <div className='w-100 my-3 px-xxl-4'>
                                         <p className='VK_input_label m-0'>
                                             Date of Birth
                                         </p>
-                                        <input type="text" name="date" className='VK_from_input w-100 py-2 px-3' />
+                                        <p className='VK_from_input w-100 py-2 px-3'>{user.dateOfBirth || '--'}</p>
                                     </div>
                                 </div>
                                 <div className='d-flex flex-column flex-sm-row gap-5 w-100'>
@@ -67,7 +104,7 @@ const UserProfile = () => {
                                         <p className='VK_input_label m-0'>
                                             Gender
                                         </p>
-                                        <input type="text" name="gender" className='VK_from_input w-100 py-2 px-3' />
+                                        <p className='VK_from_input w-100 py-2 px-3'>{user.gender || '--'}</p>
                                     </div>
                                     <div className='w-100 px-xxl-4'>
                                     </div>
@@ -98,23 +135,13 @@ const UserProfile = () => {
                                         <p className='VK_input_label m-0'>
                                             Email
                                         </p>
-                                        <input type="text" name="name" className='VK_from_input w-100 py-2 px-3' />
+                                        <p className='VK_from_input w-100 py-2 px-3'>{user.email || '--'}</p>
                                     </div>
                                     <div className='w-100 px-xxl-4 my-3'>
                                         <p className='VK_input_label m-0'>
-                                            Password
+                                        Mobile No.
                                         </p>
-                                        <input type="text" name="date" className='VK_from_input w-100 py-2 px-3' />
-                                    </div>
-                                </div>
-                                <div className='d-flex flex-column flex-sm-row gap-5 w-100'>
-                                    <div className='w-100 px-xxl-4 my-3'>
-                                        <p className='VK_input_label m-0'>
-                                            Mobile No.
-                                        </p>
-                                        <input type="text" name="gender" className='VK_from_input w-100 py-2 px-3' />
-                                    </div>
-                                    <div className='w-100 px-xxl-4 my-3'>
+                                        <p className='VK_from_input w-100 py-2 px-3'>{user.mobileNo || '--'}</p>
                                     </div>
                                 </div>
                             </form>
@@ -124,9 +151,9 @@ const UserProfile = () => {
             </section>
 
 
-            <UserProfileModel show={show} handleClose={handleClose} contact={contactmodel} handlecontact={handlecloseContact} />
+            <UserProfileModel show={show} handleClose={handleClose} contact={contactmodel} handlecontact={handlecloseContact} userData={user} onUpdateSuccess={onUpdateSuccess}/>
         </React.Fragment>
     )
 }
 
-export default UserProfile
+export default UserProfile;

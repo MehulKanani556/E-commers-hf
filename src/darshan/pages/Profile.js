@@ -96,7 +96,6 @@ const Profile = () => {
     ]
 
     const [activeSection, setActiveSection] = useState(location.state?.activeSection || 'profile'); // Default to profile section
-    const [modalShow, setModalShow] = useState(false);
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -105,7 +104,6 @@ const Profile = () => {
     const [editpersonal, setEditpersonal] = useState(false);
     const [editcontact, setEditcontact] = useState(false);
     const [deactivemodal, setdeactivemodal] = useState(false);
-    const [logoutmodal, setlogoutmodal] = useState(false);
     const [activeKey, setActiveKey] = useState(null);
     let [address, setaddress] = useState([])
     const [address_model, setadderss_model] = useState(false);
@@ -325,7 +323,7 @@ const Profile = () => {
                                                     </NavLink>
                                                     <hr className='m-0' />
                                                     <NavLink className='text-decoration-none'>
-                                                        <li className='py-4 px-4' onClick={() => { setlogoutmodal(true) }}>
+                                                        <li className='py-4 px-4'>
                                                             <div className='d-flex gap-2 align-items-center'>
                                                                 <span className='d-inline-block pe-2'>
                                                                     <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" className='icon'>
@@ -466,7 +464,6 @@ const Profile = () => {
                                                             <hr className='m-0' />
                                                             <li className='py-4 px-4' onClick={() => {
                                                                 handleClose()
-                                                                setlogoutmodal(true)
                                                             }}>
                                                                 <div className='d-flex gap-2 align-items-center'>
                                                                     <span className='d-inline-block pe-2'>
@@ -1811,52 +1808,6 @@ const Profile = () => {
                 </Modal.Body>
             </Modal>
             {/* delete address model */}
-
-
-            {/* Logout Modal */}
-
-            <Modal
-                show={logoutmodal}
-                onHide={() => setlogoutmodal(false)}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-                className='VK_logout_model'
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        <span className='fw-bold m-0 ps-3'>
-                            Logout
-                        </span>
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <div className='d-flex flex-column p-md-5 p-2'>
-                        <p className='text-center VK_logout_txt m-0'>
-                            Are you sure you want to logout?
-                        </p>
-                        <div className='mt-5'>
-                            <div className='d-flex gap-2'>
-                                <div className='w-100'>
-                                    <button className='VK_logut_cancle h-100' onClick={() => setlogoutmodal(false)}>
-                                        Cancel
-                                    </button>
-                                </div>
-                                <div className='w-100'>
-                                    <button className='VK_logout_ok h-100'>
-                                        Yes
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </Modal.Body>
-            </Modal>
-
-            {/* Logout Modal */}
-
-
-
 
         </>
     )
