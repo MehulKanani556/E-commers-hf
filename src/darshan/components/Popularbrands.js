@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import '../../Parth/Component/Electronics/grid.css'
 import Map from './../../Vivek/Component/Map'
+import axios from 'axios'
 
 const Popularbrands = () => {
+
+    const BaseUrl = process.env.REACT_APP_BASEURL;
+    const [popularbarnd, setPopularbrand] = useState([]);
 
     let data = [
         {
@@ -52,10 +56,19 @@ const Popularbrands = () => {
 
     let cnt = 1
 
-    let [gridview, setgridview] = useState([]);
+    const fetchPopularbrand = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}/api/getAllBrands`);
+            setPopularbrand(response?.data?.popularBrand)
+            console.log(response?.data?.popularBrand)
+        } catch (error) {
+            console.error("Error fetching brand data:", error);
+        }
+    }
 
     useEffect(() => {
-        setgridview(data)
+        // setgridview(data)
+        fetchPopularbrand()
     }, []);
 
     return (
@@ -74,35 +87,33 @@ const Popularbrands = () => {
                         <Col className='p-0'>
                             <div>
                                 <div className="parent">
-                                    <Map data={gridview}>
-                                        {(item) => (
-                                            <div className={`div${cnt++} VK_grid_parent`}>
-                                                <img src={require(`./../d_img/${item.image}`)} className='w-100 h-100 object_center' alt="" />
-                                                <div className='VK_grid_child'>
-                                                    <div className='h-100 d-flex flex-column'>
-                                                        <div className='d-flex'>
-                                                            <div className='VK_grid_logo text-center'>
-                                                                <img src={require(`./../d_img/${item.logo}`)} className='object_contain' alt="" />
-                                                                <p className='m-0 text-white font_12 mt-2'>
-                                                                    {item.offer}
-                                                                </p>
-                                                            </div>
+                                    {popularbarnd.map((item,index) => (
+                                        <div className={`div${cnt++} VK_grid_parent`}>
+                                            <img src={`${BaseUrl}/${item?.brandImage}`} className='w-100 h-100 object_center' alt="" />
+                                            <div className='VK_grid_child'>
+                                                <div className='h-100 d-flex flex-column'>
+                                                    <div className='d-flex'>
+                                                        <div className='VK_grid_logo text-center'>
+                                                            <img src={`${BaseUrl}/${item?.brandLogo}`}className='mv_brand_logo_img' alt="" />
+                                                            <p className='m-0 text-white font_12 mt-2'>
+                                                                {item.offer}
+                                                            </p>
                                                         </div>
-                                                        <div className='mt-auto'>
-                                                            <h4 className='VK_pro_heading'>
-                                                                {item.title}
-                                                            </h4>
-                                                            <div>
-                                                                <button className='VK_pro_button'>
-                                                                    Go to Collection
-                                                                </button>
-                                                            </div>
+                                                    </div>
+                                                    <div className='mt-auto'>
+                                                        <h4 className='VK_pro_heading'>
+                                                            {item.title}
+                                                        </h4>
+                                                        <div>
+                                                            <button className='VK_pro_button'>
+                                                                Go to Collection
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        )}
-                                    </Map>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         </Col>

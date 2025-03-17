@@ -79,7 +79,10 @@
 .VK_pro_button:hover{
     background-color: rgb(207, 199, 199)
 }
-
+.mv_brand_logo_img{
+    width: 115px !important;
+    height: 25px !important;
+}
 /* -------------------------------------------------------- media query -------------------------------------------------------- */
 
 
