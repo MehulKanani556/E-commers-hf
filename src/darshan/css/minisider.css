@@ -76,6 +76,13 @@
 .d_minisider .owl-theme .owl-nav [class*='owl-']:hover{
     color: #000;
 }
+.mv_offer_bg_img {
+    height: 300px !important;
+    background-repeat: no-repeat !important;
+    width: 100% !important;
+    background-size: cover;
+    background-position: center;
+}
 
 @media(max-width:1440px){
     .d_minisider .owl-prev {

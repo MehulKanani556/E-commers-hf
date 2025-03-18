@@ -35,7 +35,7 @@ const Minisider = () => {
         setLoading(true);
         try {
             const response = await axios.get(`${BaseUrl}/api/allCategory`);
-            console.log("response", response.data.category);
+            // console.log("response", response.data.category);
             setCategory(response.data.category);
         } catch (error) {
             console.error('Data fetching Error:', error);
