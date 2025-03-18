@@ -220,13 +220,27 @@
     padding-left: 20px;
 }
 
-
-
-
-
-
-
-
+.slider_img1{
+    background-image: url('../../assets/men2.jpg');
+}
+.slider_img2{
+    background-image: url('../../assets/men3.jpg');
+}
+.slider_img3{
+    background-image: url('../../assets/men4.webp');
+}
+.slider_img4{
+    background-image: url('../../assets/baby1.jpg');
+}
+.slider_img5{
+    background-image: url('../../assets/baby2.jpg');
+}
+.slider_img6{
+    background-image: url('../../assets/home3.jpg');
+}
+.slider_img7{
+    background-image: url('../../assets/home2.webp');
+}
 
 /* ///////////////////////////////////////////////////////// container ////////////////////////////////////////////////// */
 
@@ -235,7 +249,7 @@
 @media (min-width: 1650px) {
 
     .V_slider_height {
-        height: 916px;
+        height: 800px;
     }
 
     .V_sports {

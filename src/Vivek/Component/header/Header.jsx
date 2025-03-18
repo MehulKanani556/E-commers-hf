@@ -119,7 +119,7 @@ const Header = () => {
                     }
                 });
 
-                console.log("response", response.data.data);
+                // console.log("response", response.data.data);
 
                 if (response.data && response.data.data) {
                     const categoryData = response.data.data;
@@ -332,7 +332,7 @@ const Header = () => {
                                     {mainCategories.map((mainCategory) => (
                                         <li className='VK_sub_menu' key={mainCategory._id}
                                             onMouseEnter={() => handleMainCategoryHover(mainCategory.mainCategoryName)}>
-                                            <Link to={`/${mainCategory.mainCategoryName.toLowerCase()}`} className='text-decoration-none d_headertext'>
+                                            <Link to={`/product/${mainCategory._id}`} className='text-decoration-none d_headertext'>
                                                 {mainCategory.mainCategoryName}
                                             </Link>
                                             <div className='VK_mega_menu'>

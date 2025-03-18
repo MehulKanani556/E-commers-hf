@@ -10,6 +10,8 @@ const Banner = () => {
         <>
 
             <section className='d_firstbg'>
+
+                {/* women slider */}
                 <OwlCarousel className='owl-theme' loop={false} items={1}>
                     <div className='item owl_height'>
                         <div className=" d_womenbannerbg overflow-hidden">

@@ -19,6 +19,8 @@ function Luggage() {
 
             <Header />
             <section className=''>
+
+                {/* Luggage Slider */}
                 <OwlCarousel className='owl-theme' loop items={1}>
                     <div className='item V_slider_height'>
                         <div className='V_pack'>
@@ -80,19 +82,6 @@ function Luggage() {
                     </div>
                 </OwlCarousel>
             </section >
-            {/* <section className='V_fresh'>
-                <div className='d_container h-100'>
-                    <Row className='h-100'>
-                        <Col lg={6} className='align-self-center'>
-                            <div className='V_lipstic pe-xxl-5'>
-                                <h1 className='V_try_fresh '>TRY FRESH PRODUCT
-                                    FOR YOUR LIPS</h1>
-                                <p className='V_try'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.</p>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
-            </section> */}
 
             <LuggageSlider />
 

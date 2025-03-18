@@ -4,8 +4,13 @@ import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const Minisider = () => {
+
+    const { id } = useParams();
+    // console.log("id", id);
+
     const BaseUrl = process.env.REACT_APP_BASEURL;
     const [category, setCategory] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -33,20 +38,22 @@ const Minisider = () => {
 
     const fetchMinisilder = async () => {
         setLoading(true);
-        try {
-            const response = await axios.get(`${BaseUrl}/api/allCategory`);
-            console.log("response", response.data.category);
-            setCategory(response.data.category);
-        } catch (error) {
-            console.error('Data fetching Error:', error);
-        } finally {
-            setLoading(false);
+        if (id) {
+            try {
+                const response = await axios.get(`${BaseUrl}/api/getMainCategoryAndCategory/${id}`);
+                // console.log("response", response.data.category);
+                setCategory(response.data.category);
+            } catch (error) {
+                console.error('Data fetching Error:', error);
+            } finally {
+                setLoading(false);
+            }
         }
     }
 
     useEffect(() => {
         fetchMinisilder();
-    }, []);
+    }, [id]);
 
     // Show loading state when data is being fetched
     if (loading) {
@@ -90,9 +97,9 @@ const Minisider = () => {
                                         <div className="d_bgimg">
                                             <div className="d_img">
                                                 {item.categoryImage && (
-                                                    <img 
-                                                        src={`${BaseUrl}/uploads/category/${item.categoryImage}`} 
-                                                        alt={item.categoryName} 
+                                                    <img
+                                                        src={`${BaseUrl}/${item.categoryImage}`}
+                                                        alt={item.categoryName}
                                                     />
                                                 )}
                                             </div>

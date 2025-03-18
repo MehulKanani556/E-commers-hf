@@ -31,32 +31,6 @@ const CommSlider = () => {
         },
     };
 
-    const images = [
-        {
-            image:"slid1.png",
-            name:"Men Store"
-        },
-        {
-            image:"slid2.png",
-            name:"Women Store"
-        },
-        {
-            image:"slid3.png",
-            name:"Children Wear"
-        },
-        {
-            image:"slid4.png",
-            name:"Skin care"
-        },
-        {
-            image:"slid5.png",
-            name:"Footwear"
-        },
-        {
-            image:"slid6.png",
-            name:"Home & Kitchen"
-        },
-    ];
 
     useEffect(() => {
         const fetchData = async () => {
@@ -72,7 +46,7 @@ const CommSlider = () => {
             }
         }
         fetchData();
-    },[]);
+    },[BaseUrl, token]);
     return (
         <>
             <section className='d_p-80 d_minisider'>
@@ -80,15 +54,15 @@ const CommSlider = () => {
                     <div className="row m-0 justify-content-center">
                         <div className="col-10 p-0">
                             <OwlCarousel className='owl-theme d_minisider' items={6} {...settings}>
-                                {images.map((image, index) => (
-                                    <div key={index} className="d-flex justify-content-center">
+                                {category.map((item) => (
+                                    <div key={item._id} className="d-flex justify-content-center">
                                         <div className="d_mini">
                                             <div className="d_bgimg">
                                                 <div className="d_img">
-                                                    <img src={require(`../../assets/${image.image}`)} className='' alt="" />
+                                                    <img src={`${BaseUrl}/${item.categoryImage}`} className='' alt={item.categoryName} />
                                                 </div>
                                             </div>
-                                            <p className='mb-0 d_category-label'>{image.name}</p>
+                                            <p className='mb-0 d_category-label'>{item.categoryName}</p>
                                         </div>
                                     </div>
                                 ))}

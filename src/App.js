@@ -48,6 +48,7 @@ import UserFaq from './Vivek/Component/User/UserFaq';
 import TermOfServices from './Vivek/Component/User/TermOfServices';
 import UserDeactive from './Vivek/Component/User/UserDeactive';
 import UserAddress from './Vivek/Component/User/UserAddress';
+import Product from './Vivek/Component/Home/Product';
 
 // import WomenDetails from './darshan/pages/WomenDetails';
 
@@ -74,6 +75,8 @@ function App() {
           <Route path='/womenstore' element={<Womenfilter />} />
           <Route path='/womendetails' element={<WomenDetails />} />
           <Route path='/electronicdetails' element={<Electronicdetails />} />
+
+          <Route path='/product/:id' element={<Product/>} />
 
           {/* Profile */}
           <Route path='/profile' element={<Profile />} />
