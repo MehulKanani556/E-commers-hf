@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './../css/card.css'
+import axios from 'axios'
 
 const Card = () => {
+
+    const BaseUrl = process.env.REACT_APP_BASEURL;
+    const [card, setCard] = useState([]);
 
     const cardData = [
         {
@@ -25,13 +29,27 @@ const Card = () => {
         }
     ];
 
+    const fetchBrandData = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}/api/getAllOffers`)
+            //   console.log("data" , response?.data);
+            setCard(response?.data?.offers)
+        } catch (error) {
+
+        }
+    }
+
+    useEffect(() => {
+        fetchBrandData()
+    }, []);
+
     return (
         <>
 
             <section className='d_p-80'>
                 <div className="container-fluid">
                     <div className="row gy-1">
-                        {cardData.map((card) => (
+                        {card.map((card) => (
                             <div key={card.id} className="col-12 col-sm-6 col-lg-4">
                                 <div className="d_card">
                                     <div
@@ -39,7 +57,7 @@ const Card = () => {
                                         style={{ backgroundImage: `url(${card.backgroundImage})` }}
                                     >
                                         <div className="d_title">
-                                            <h5 className='mb-0' dangerouslySetInnerHTML={{ __html: card.title }}></h5>
+                                            <h5 className='mb-0' dangerouslySetInnerHTML={{ __html: card.offerName }}></h5>
                                         </div>
                                     </div>
                                 </div>
