@@ -1,11 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaStar } from "react-icons/fa";
 
 import './../css/trending.css'
 import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const Trending = () => {
+
+  const { id } = useParams();
+
+  const BaseUrl = process.env.REACT_APP_BASEURL;
+  const token = localStorage.getItem('token');
 
   const trendingItems = [
     {
@@ -144,7 +150,21 @@ const Trending = () => {
     });
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${BaseUrl}/api/tredingProducts/${id}`, {
+          headers: {Authorization: `Bearer ${token}`}
+        });
 
+        console.log("resposnse",response.data.trendingProducts);
+        
+      } catch (error) {
+        console.error('Data fetching failed:', error);
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -161,41 +181,41 @@ const Trending = () => {
                 return (
                   <div key={item.id} className="col-12 col-sm-6 col-lg-4 col-xl-3 px-2">
                     <Link to='/womendetails'>
-                    <div className="d_box mx-2">
-                      <div className="d_img">
-                        <img src={require(`./../d_img/${item.image}`)} alt="" />
-                        {item.isBestSeller &&
-                          (<div className="d_seller">Best Seller</div>)}
-                        <div className="d_trendicon d-flex justify-content-center align-items-center d_cur" onClick={() => handleClickwishlist(item)}>
-                          {isSelectedwishlist.includes(item.id) ? <IoMdHeart className='d_icon' style={{ color: 'red' }} /> : <IoMdHeartEmpty className='d_icon' style={{ color: '#6a6a6a' }} />}
-                        </div>
-                      </div>
-                      <div className="d_content">
-                        <div className='d-flex flex-column h-100'>
-                          <div className="d-flex align-items-center justify-content-between">
-                            <div className="d_name">{item.name}</div>
-                            <div className='d-flex align-items-center'>
-                              <FaStar className='d_staricon me-1' />
-                              <div className="d_review">{item.rating}</div>
-                            </div>
-                          </div>
-                          <div className="d_desc">{item.description}</div>
-                          <div className="d-flex align-items-center justify-content-between mt-auto">
-                            <div className="d-flex align-items-center">
-                              {item.colors.map((colorobj, i) => {
-                                return (
-                                  <div key={colorobj.id} className={`d_color ${colorobj.isActive ? 'active' : ""}`} style={{ backgroundColor: colorobj.color }}></div>
-                                )
-                              })}
-                            </div>
-                            <div className="d-flex align-items-end">
-                              <div className="d_price">${item.price}</div>
-                              <div className="d_disprice ms-1 text-decoration-line-through">${item.originalPrice}</div>
-                            </div>
+                      <div className="d_box mx-2">
+                        <div className="d_img">
+                          <img src={require(`./../d_img/${item.image}`)} alt="" />
+                          {item.isBestSeller &&
+                            (<div className="d_seller">Best Seller</div>)}
+                          <div className="d_trendicon d-flex justify-content-center align-items-center d_cur" onClick={() => handleClickwishlist(item)}>
+                            {isSelectedwishlist.includes(item.id) ? <IoMdHeart className='d_icon' style={{ color: 'red' }} /> : <IoMdHeartEmpty className='d_icon' style={{ color: '#6a6a6a' }} />}
                           </div>
                         </div>
+                        <div className="d_content">
+                          <div className='d-flex flex-column h-100'>
+                            <div className="d-flex align-items-center justify-content-between">
+                              <div className="d_name">{item.name}</div>
+                              <div className='d-flex align-items-center'>
+                                <FaStar className='d_staricon me-1' />
+                                <div className="d_review">{item.rating}</div>
+                              </div>
+                            </div>
+                            <div className="d_desc">{item.description}</div>
+                            <div className="d-flex align-items-center justify-content-between mt-auto">
+                              <div className="d-flex align-items-center">
+                                {item.colors.map((colorobj, i) => {
+                                  return (
+                                    <div key={colorobj.id} className={`d_color ${colorobj.isActive ? 'active' : ""}`} style={{ backgroundColor: colorobj.color }}></div>
+                                  )
+                                })}
+                              </div>
+                              <div className="d-flex align-items-end">
+                                <div className="d_price">${item.price}</div>
+                                <div className="d_disprice ms-1 text-decoration-line-through">${item.originalPrice}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
                     </Link>
                   </div>
                 )

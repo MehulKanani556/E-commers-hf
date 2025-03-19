@@ -31,9 +31,47 @@ const Culture = ({ mainCategoryName }) => {
                     </div>
                 </section>
             ) : mainCategoryName === 'Men' ? (
-                <></>
+                <section className='my-5'>
+                <div className="d_culbg">
+                    <div className="d_container">
+                        <div className="row align-items-center">
+                            <div className="col-12 col-lg-5 col-xl-4 col-xxl-6">
+                                <h2>Where culture and style unite</h2>
+                            </div>
+                            <div className="col-12 col-lg-7 col-xl-8 col-xxl-6">
+                                <div className="d_imgcol position-relative ">
+                                    <img src={require('./../d_img/men6.jpg')} alt="Fashion 1" className="d_fimg1" />
+                                    <img src={require('./../d_img/men7.jpg')} alt="Fashion 2" className="d_fimg2" />
+                                    <img src={require('./../d_img/men8.jpg')} alt="Fashion 3" className="d_fimg3" />
+                                    <img src={require('./../d_img/men9.jpg')} alt="Fashion 4" className="d_fimg4" />
+                                    <img src={require('./../d_img/men10.jpg')} alt="Fashion 5" className="d_fimg5" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             ) : mainCategoryName === 'Baby & Kids' ? (
-                <></>
+                <section className='my-5'>
+                <div className="d_culbg">
+                    <div className="d_container">
+                        <div className="row align-items-center">
+                            <div className="col-12 col-lg-5 col-xl-4 col-xxl-6">
+                                <h2>Where culture and style unite</h2>
+                            </div>
+                            <div className="col-12 col-lg-7 col-xl-8 col-xxl-6">
+                                <div className="d_imgcol position-relative ">
+                                    <img src={require('./../d_img/baby5.jpg')} alt="Fashion 1" className="d_fimg1" />
+                                    <img src={require('./../d_img/baby6.jpg')} alt="Fashion 2" className="d_fimg2" />
+                                    <img src={require('./../d_img/baby4.jpg')} alt="Fashion 3" className="d_fimg3" />
+                                    <img src={require('./../d_img/baby2.jpg')} alt="Fashion 4" className="d_fimg4" />
+                                    <img src={require('./../d_img/baby3.jpg')} alt="Fashion 5" className="d_fimg5" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             ) : mainCategoryName === 'Luggage' ? (
                 <section className='pb-5'>
                     <div className='V_carry_your_load'>
@@ -98,7 +136,26 @@ const Culture = ({ mainCategoryName }) => {
                     </div>
                 </section>
             ) : mainCategoryName === 'Home & Kitchen' ? (
-                <></>
+                <section className='pb-5'>
+                    <div className=''>
+                        <Row className='m-0'>
+                            <Col className='p-0'>
+                                <div className='V_back_spe_off V_back_spe_off1  d-flex align-items-center'>
+                                    <div className="v_spacialpadd">
+                                        <div className='V_special '>
+                                            <p className='px-3 py-2 text-white text-center'>Special Offer</p>
+                                        </div>
+                                        <div>
+                                            <h1 className='V_sale'>On Kitchen Were
+                                                Sale Up To
+                                                <span className='V_thirty30'> 30%</span> Off</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Col>
+                        </Row>
+                    </div>
+                </section>
             ) : null}
 
         </>

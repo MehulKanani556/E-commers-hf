@@ -13,7 +13,6 @@ const Minisider = () => {
 
     const BaseUrl = process.env.REACT_APP_BASEURL;
     const [category, setCategory] = useState([]);
-    const [loading, setLoading] = useState(true);
 
     const settings = {
         loop: true,
@@ -37,7 +36,6 @@ const Minisider = () => {
     };
 
     const fetchMinisilder = async () => {
-        setLoading(true);
         if (id) {
             try {
                 const response = await axios.get(`${BaseUrl}/api/getMainCategoryAndCategory/${id}`);
@@ -45,53 +43,14 @@ const Minisider = () => {
                 setCategory(response.data.category);
             } catch (error) {
                 console.error('Data fetching Error:', error);
-            } finally {
-                setLoading(false);
-            }
-        // try {
-        //     const response = await axios.get(`${BaseUrl}/api/allCategory`);
-        //     // console.log("response", response.data.category);
-        //     setCategory(response.data.category);
-        // } catch (error) {
-        //     console.error('Data fetching Error:', error);
-        // } finally {
-        //     setLoading(false);
-        // }
+            } 
+        }
     }
-
     useEffect(() => {
         fetchMinisilder();
     }, [id]);
 
-    // Show loading state when data is being fetched
-    if (loading) {
-        return (
-            <section className='d_p-80 d_minisider'>
-                <div className="d_container">
-                    <div className="row justify-content-center">
-                        <div className="col-10">
-                            <div className="text-center">Loading categories...</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        );
-    }
 
-    // Return null if no data is available
-    if (category.length === 0) {
-        return (
-            <section className='d_p-80 d_minisider'>
-                <div className="d_container">
-                    <div className="row justify-content-center">
-                        <div className="col-10">
-                            <div className="text-center">No categories available</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        );
-    }
 
     return (
         <section className='d_p-80 d_minisider'>
