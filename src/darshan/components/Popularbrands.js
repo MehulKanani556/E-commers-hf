@@ -60,7 +60,7 @@ const Popularbrands = () => {
         try {
             const response = await axios.get(`${BaseUrl}/api/getAllBrands`);
             setPopularbrand(response?.data?.popularBrand)
-            console.log(response?.data?.popularBrand)
+            // console.log(response?.data?.popularBrand)
         } catch (error) {
             console.error("Error fetching brand data:", error);
         }

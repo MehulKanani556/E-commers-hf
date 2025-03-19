@@ -48,7 +48,15 @@ const Minisider = () => {
             } finally {
                 setLoading(false);
             }
-        }
+        // try {
+        //     const response = await axios.get(`${BaseUrl}/api/allCategory`);
+        //     // console.log("response", response.data.category);
+        //     setCategory(response.data.category);
+        // } catch (error) {
+        //     console.error('Data fetching Error:', error);
+        // } finally {
+        //     setLoading(false);
+        // }
     }
 
     useEffect(() => {
