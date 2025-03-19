@@ -1,11 +1,22 @@
 import Modal from 'react-bootstrap/Modal';
-import React, { useRef } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 const UserDeactive = () => {
+
+    const BaseUrl = process.env.REACT_APP_BASEURL;
+    const [mobileNumber, setMobileNumber] = useState('');
+    const [userdeactivate, setUserdeactivate] = useState([]);
+    const [userotp, setUserotp] = useState([]);
+    const [otpError, setOtpError] = useState('');
+    const [isResending, setIsResending] = useState(false);
 
     const [modalShow, setModalShow] = React.useState(false);
 
     const inputRefs = useRef([]);
+    const navigate = useNavigate()
+    const token =  localStorage.getItem('token')
 
     const handleInputChange = (e, index) => {
         const value = e.target.value;
@@ -17,6 +28,80 @@ const UserDeactive = () => {
             inputRefs.current[index + 1].focus();
         }
     };
+    
+    const loginData = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}/api/getUser`,{
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            });
+            // console.log("Response>>>>>>>",response.data);
+            setMobileNumber(response.data.user.mobileNo)
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+    
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}/api/deactiveUser`,{
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            });
+            // console.log("Response<<<<<<",response.data);
+            setUserdeactivate(response.data.deactiveUser);
+            setOtpError('');
+
+            inputRefs.current.forEach(input => {
+                if (input) input.value = '';
+            });
+
+            if (inputRefs.current[0]) inputRefs.current[0].focus();
+            setIsResending(false);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            setIsResending(false);
+            setOtpError('Failed to send OTP. Please try again.');
+        }
+    };
+
+    const handleDeactive = async() => {
+        const enteredOTP = inputRefs.current.map(input => input.value).join('');
+        try {
+            const response = await axios.put(`${BaseUrl}/api/deactiveAccountOtpVerify`, {
+                otp: enteredOTP
+            } , {
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            });
+            // console.log("Response===",response.data);
+            localStorage.removeItem('token');
+            navigate('/')
+            setUserotp(response.data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+
+            if (error.response) {
+                if (error.response.status === 400) {
+                    setOtpError('Invalid OTP. Please try again.');
+                } else if (error.response.status === 401) {
+                    setOtpError('OTP has expired. Please request a new one.');
+                } else {
+                    setOtpError('Verification failed. Please try again.');
+                }
+            } else {
+                setOtpError('Network error. Please check your connection.');
+            }
+        }
+    }
+
+    useEffect(() => {
+        loginData()
+        fetchData()
+    }, []);
 
     return (
         <React.Fragment>
@@ -86,8 +171,8 @@ const UserDeactive = () => {
                         </p>
                         <div className='my-3'>
                             <div className='d-flex w-100 VK_deactive_num px-3 rounded-1'>
-                                <input type="text" className='border-0 outline_none bg-transparent w-100 py-2' />
-                                <button className='border-0 bg-transparent VK_send_otp_btn w-auto text-nowrap'>
+                                <input type="text" value={mobileNumber} readOnly className='border-0 outline_none bg-transparent w-100 py-2' />
+                                <button onClick={() => fetchData()} className='border-0 bg-transparent VK_send_otp_btn w-auto text-nowrap'>
                                     Send OTP
                                 </button>
                             </div>
@@ -106,6 +191,11 @@ const UserDeactive = () => {
                                     />
                                 ))}
                             </div>
+                            {otpError && (
+                                <div className="text-danger mt-2">
+                                    {otpError}
+                                </div>
+                            )}
                         </div>
 
                         <div className='my-3'>
@@ -124,7 +214,7 @@ const UserDeactive = () => {
                                 <button className='VK_stay'>
                                     Let me stay
                                 </button>
-                                <button className='VK_dactivete'>
+                                <button className='VK_dactivete' value={userotp} onClick={() => handleDeactive()}>
                                     Deactivate
                                 </button>
                             </div>

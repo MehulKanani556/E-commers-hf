@@ -1,125 +1,173 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import Header from '../../../Vivek/Component/header/Header';
 import Footer from '../../../Vivek/Component/footer/Footer';
 import Process from '../../../Vivek/Component/common/Process';
 import Subscribe from '../../../Vivek/Component/common/Subscribe';
-import { Row, Col, Form } from 'react-bootstrap';
-import './ContactUs.css'
+import './ContactUs.css';
 
 function ContactUs() {
+  const BaseUrl = process.env.REACT_APP_BASEURL;
+  const token = localStorage.getItem('token');
 
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    contactNo: '',
+    subject: '',
+    message: ''
+  });
 
-    function ok () {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
+  // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    setSuccess('');
+    try {
+      const response = await axios.post(
+        `${BaseUrl}/api/createContctUs`,
+        formData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (response.status === 200) {
+        setSuccess('Your message has been sent successfully.');
+        setFormData({ name: '', email: '', contactNo: '', subject: '', message: '' });
+      }
+    } catch (err) {
+      setError('Failed to send message. Please try again.');
+      console.error('API Error:', err);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    return (
-        <>
-            <Header />
+  return (
+    <>
+      <Header />
 
-            
-           {/* ******************* Contact Us ***************** */}
-        <section className='mt-5 mb-5'>
-            <div className='d_container'>
-                <div className='text-center'>
-                    <h2 className='mb-0 h2'>Contact Us</h2>
-                    <p className='ds_us-text'>Any question or remarks? Just write us a message!</p>
-                </div>
-                <div className='ds_us-box mt-4'>
-                   <div className="row align-items-center">
-                     <div className="col-xl-4 col-lg-5 mt-3">
-                        <div className='ds_us-img'>
-                           <div className='ds_us-padding '>
-                              <h4 className='h4 text-light'>Contact Information</h4>
-                              <p className='ds_us-muted'>Feel free to ask your query anytime</p>
-                              <div className='mt-5 pt-sm-5'>
-                                 <div className='d-flex mb-4'>
-                                    <div>
-                                        <img src={require("../../assets/ds_phone-call.png")} alt="" />
-                                    </div>
-                                    <p className='text-light ms-3'>+1012 3456 789</p>
-                                 </div>
-                                 <div className='d-flex mb-4'>
-                                    <div>
-                                        <img src={require("../../assets/ds_sharp-email.png")} alt="" />
-                                    </div>
-                                    <p className='text-light ms-3'>demo@gmail.com</p>
-                                 </div>
-                                 <div className='d-flex mb-4'>
-                                    <div>
-                                        <img src={require("../../assets/ds_phone-call.png")} alt="" />
-                                    </div>
-                                    <p className='text-light ms-3'>132 Dartmouth Street Boston, <br/> Massachusetts 02156 United States</p>
-                                 </div>
-                              </div>
-                           </div>
+      <section className='mt-5 mb-5'>
+        <div className='d_container'>
+          <div className='text-center'>
+            <h2 className='mb-0 h2'>Contact Us</h2>
+            <p className='ds_us-text'>Any question or remarks? Just write us a message!</p>
+          </div>
+          <div className='ds_us-box mt-4'>
+            <div className="row align-items-center">
+              <div className="col-xl-4 col-lg-5 mt-3">
+                <div className='ds_us-img'>
+                  <div className='ds_us-padding '>
+                    <h4 className='h4 text-light'>Contact Information</h4>
+                    <p className='ds_us-muted'>Feel free to ask your query anytime</p>
+                    <div className='mt-5 pt-sm-5'>
+                      <div className='d-flex mb-4'>
+                        <div>
+                          <img src={require("../../assets/ds_phone-call.png")} alt="" />
                         </div>
-                     </div>
-                      <div className="col-xl-8 col-lg-7 mt-3">
-                        <div className='ms-sm-4'>
-                        <form>
-                            <div className="mb-3">
-                              <label  className="form-label ds_label mb-0">Name</label>
-                              <input type="text" className="form-control ds_us-email" id="exampleInputEmail1" aria-describedby="emailHelp"/>
-                            </div>
-                            <div className="mb-3">
-                              <label  className="form-label ds_label">Email</label>
-                              <input type="email" className="form-control ds_us-email" id="exampleInputPassword1"/>
-                            </div>
-                            <div className="mb-3">
-                              <label  className="form-label ds_label">Contact no.</label>
-                              <input type="number" className="form-control ds_us-email" id="exampleInputPassword1"/>
-                            </div>
-                            <div className='mt-4 pt-2'>
-                                <label htmlFor="" style={{fontWeight:'600'}}>Select Subject</label>
-                               <div className='d-flex flex-wrap mt-2'>
-                                   <div className="form-check ds_us-margin">
-                                     <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={()=>ok()} />
-                                     <label className="form-check-label" htmlFor="flexRadioDefault1" style={{color:"#6A6A6A"}}>
-                                        General Inquiry
-                                     </label>
-                                   </div>
-                                   <div className="form-check ms-sm-4 ds_us-margin">
-                                     <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"/>
-                                     <label className="form-check-label" htmlFor="flexRadioDefault2" style={{color:"#6A6A6A"}}>
-                                       Payment related
-                                   </label>
-                                   </div>
-                                   <div className="form-check ms-sm-4 ds_us-margin">
-                                     <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3"/>
-                                     <label className="form-check-label" htmlFor="flexRadioDefault3" style={{color:"#6A6A6A"}}>
-                                       Product related
-                                   </label>
-                                   </div>
-                               </div>
-                               <label htmlFor="" className='mt-4 mb-2' style={{color:"#6A6A6A"}}>Message</label>
-                               <div className="form-floating">
-                                   <textarea className="form-control ds_us-textarea"  placeholder="Leave a comment here" ></textarea>
-                                </div>
-                            </div>
-                              <div className='text-center mt-4'>
-                                <button type="submit" className="btn ds_us-submit">Submit</button>
-                              </div>
-                          </form>
-                        </div>
+                        <p className='text-light ms-3'>+1012 3456 789</p>
                       </div>
-                   </div>
+                      <div className='d-flex mb-4'>
+                        <div>
+                          <img src={require("../../assets/ds_sharp-email.png")} alt="" />
+                        </div>
+                        <p className='text-light ms-3'>demo@gmail.com</p>
+                      </div>
+                      <div className='d-flex mb-4'>
+                        <div>
+                          <img src={require("../../assets/ds_phone-call.png")} alt="" />
+                        </div>
+                        <p className='text-light ms-3'>132 Dartmouth Street Boston, <br /> Massachusetts 02156 United States</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </div>
+
+              <div className="col-xl-8 col-lg-7 mt-3">
+                <div className='ms-sm-4'>
+                  <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                      <label className="form-label ds_label">Name</label>
+                      <input type="text" className="form-control ds_us-email" name="name" value={formData.name} onChange={handleChange} required />
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label ds_label">Email</label>
+                      <input type="email" className="form-control ds_us-email" name="email" value={formData.email} onChange={handleChange} required />
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label ds_label">Contact no.</label>
+                      <input type="number" className="form-control ds_us-email" name="contactNo" value={formData.contactNo} onChange={handleChange} required />
+                    </div>
+
+                    <div className='mt-4 pt-2'>
+                      <label className='fw-bold'>Select Subject</label>
+                      <div className='d-flex flex-wrap mt-2'>
+                        {["General Inquiry", "Payment related", "Product related"].map((subject, index) => (
+                          <div key={index} className="form-check ds_us-margin ms-sm-4">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name="subject"
+                              value={subject}
+                              checked={formData.subject === subject}
+                              onChange={handleChange}
+                              required
+                            />
+                            <label className="form-check-label" style={{ color: "#6A6A6A" }}>
+                              {subject}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+
+                      <label className='mt-4 mb-2' style={{ color: "#6A6A6A" }}>Message</label>
+                      <div className="form-floating">
+                        <textarea
+                          className="form-control ds_us-textarea"
+                          name="message"
+                          value={formData.message}
+                          onChange={handleChange}
+                          placeholder="Leave a comment here"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    {error && <p className="text-danger mt-2">{error}</p>}
+                    {success && <p className="text-success mt-2">{success}</p>}
+
+                    <div className='text-center mt-4'>
+                      <button type="submit" className="btn ds_us-submit" disabled={loading}>
+                        {loading ? 'Submitting...' : 'Submit'}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-
-            
-
-
-
-
-            <Subscribe />
-            <Process />
-            <Footer />
-
-        </>
-    )
+      <Subscribe />
+      <Process />
+      <Footer />
+    </>
+  );
 }
 
-export default ContactUs
+export default ContactUs;

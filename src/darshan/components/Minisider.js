@@ -57,6 +57,7 @@ const Minisider = () => {
         // } finally {
         //     setLoading(false);
         // }
+        }
     }
 
     useEffect(() => {

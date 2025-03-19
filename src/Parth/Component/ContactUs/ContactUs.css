@@ -47,7 +47,10 @@
     color: white;
     padding: 10px 60px;
 }
-
+.ds_us-submit:hover{
+    background: #2B221E;
+    color: white;
+}
 
 
 
