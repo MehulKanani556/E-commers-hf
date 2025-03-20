@@ -4,7 +4,7 @@ import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const Minisider = () => {
 
@@ -43,7 +43,7 @@ const Minisider = () => {
                 setCategory(response.data.category);
             } catch (error) {
                 console.error('Data fetching Error:', error);
-            } 
+            }
         }
     }
     useEffect(() => {
@@ -62,14 +62,16 @@ const Minisider = () => {
                                 <div key={index} className="d-flex justify-content-center">
                                     <div className="d_mini">
                                         <div className="d_bgimg">
-                                            <div className="d_img">
-                                                {item.categoryImage && (
-                                                    <img
-                                                        src={`${BaseUrl}/${item.categoryImage}`}
-                                                        alt={item.categoryName}
-                                                    />
-                                                )}
-                                            </div>
+                                            <Link to={`/product/${item._id}`}>
+                                                <div className="d_img">
+                                                    {item.categoryImage && (
+                                                        <img
+                                                            src={`${BaseUrl}/${item.categoryImage}`}
+                                                            alt={item.categoryName}
+                                                        />
+                                                    )}
+                                                </div>
+                                            </Link>
                                         </div>
                                         <p className='mb-0 d_category-label'>{item.categoryName}</p>
                                     </div>

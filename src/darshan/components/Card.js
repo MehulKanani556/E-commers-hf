@@ -1,32 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import './../css/card.css'
 import axios from 'axios'
+import { useParams } from 'react-router-dom';
 
 const Card = () => {
     const BaseUrl = process.env.REACT_APP_BASEURL;
-    console.log("baseurl>>>>>>>>>>>>>", BaseUrl);
-
     const token = localStorage.getItem('token');
+
+    const { id } = useParams();
     const [card, setCard] = useState([]);
 
     const formatImagePath = (path) => {
         if (!path) return '';
 
         let formattedPath = path.replace(/\\/g, '/');
-
-
-        console.log("formattedPath???????????", `${BaseUrl}/${formattedPath}`);
-
         return formattedPath;
     };
 
     const fetchBrandData = async () => {
         try {
-            const response = await axios.get(`${BaseUrl}/api/getAllOffers`, {
+            const response = await axios.get(`${BaseUrl}/api/getProductOfferByMainCategoryId/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            console.log("data", response?.data.offers[0].offerImage);
-            setCard(response?.data?.offers);
+            // console.log("data", response?.data.productOffers);
+            setCard(response?.data.productOffers);
         } catch (error) {
             console.error("Error fetching offers:", error);
         }
@@ -34,7 +31,8 @@ const Card = () => {
 
     useEffect(() => {
         fetchBrandData();
-    }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id, BaseUrl, token]);
 
     const getRandomColor = () => {
         const r = Math.floor(Math.random() * 256);
@@ -46,33 +44,37 @@ const Card = () => {
 
     return (
         <>
-            <section className='d_p-80'>
-                <div className="container-fluid">
-                    <div className="row gy-1">
-                        {card.map((card) => {
-                            const imagePath = formatImagePath(card.offerImage);
-                            return (
-                                <div key={card.id} className="col-12 col-sm-6 col-lg-4">
-                                <div 
-                                    className="d_card"
-                                    style={{
-                                        backgroundImage: `url(${BaseUrl}/${imagePath})`,
-                                        backgroundColor: getRandomColor(),
-                                    }}
-                                >
-                                    <div className='d-flex align-items-center justify-content-between'>
-                                        <div className="d_title">
-                                            <h5 className='mb-0' dangerouslySetInnerHTML={{ __html: card.offerName }}></h5>
+            {card.length > 0 ? (
+                <section className='d_p-80'>
+                    <div className="container-fluid">
+                        <div className="row gy-1">
+                            {card.slice(0, 3).map((card) => {
+                                const imagePath = formatImagePath(card.offerImage);
+                                return (
+                                    <div key={card.id} className="col-12 col-sm-6 col-lg-4">
+                                        <div
+                                            className="d_card"
+                                            style={{
+                                                backgroundImage: `url(${BaseUrl}/${imagePath})`,
+                                                backgroundColor: getRandomColor(),
+                                            }}
+                                        >
+                                            <div className='d-flex align-items-center justify-content-between'>
+                                                <div className="d_title">
+                                                    <h5 className='mb-0' dangerouslySetInnerHTML={{ __html: card.offerName }}></h5>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            
-                            )
-                        })}
+
+                                )
+                            })}
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            ) : (
+                <></>
+            )}
         </>
     )
 }
