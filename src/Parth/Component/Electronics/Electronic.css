@@ -8,6 +8,9 @@
     background-position: center;
     background-size: cover;
 }
+.V_back_spe_off1{
+    background-image: url('../../assets/about.jpg');
+}
 .v_spacialpadd{
     padding-left: 200px;
 }

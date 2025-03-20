@@ -14,6 +14,8 @@ import KidsBanner from '../../../Parth/Component/Kids/KidsBanner';
 import KitchenBanner from '../../../Parth/Component/Kitchen/KitchenBanner';
 import Minisider from '../../../darshan/components/Minisider';
 import Culture from '../../../darshan/components/Culture';
+import Card from '../../../darshan/components/Card';
+import Trending from '../../../darshan/components/Trending';
 
 const Product = () => {
 
@@ -41,6 +43,7 @@ const Product = () => {
     return (
         <>
             <Header />
+
             {product && product.mainCategoryName === 'Women' ? (
                 <Banner />
             ) : product && product.mainCategoryName === 'Men' ? (
@@ -61,7 +64,14 @@ const Product = () => {
 
             <Minisider/>
 
+            <Card/>
+
+            <Trending/>
+
             <Culture  mainCategoryName={product?.mainCategoryName} />
+
+
+
         </>
     )
 }
