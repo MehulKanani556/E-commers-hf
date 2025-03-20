@@ -1,12 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../../Vivek/Component/header/Header';
 import Footer from '../../../Vivek/Component/footer/Footer';
 import Process from '../../../Vivek/Component/common/Process';
 import Subscribe from '../../../Vivek/Component/common/Subscribe';
 import { Row, Col, Accordion } from 'react-bootstrap';
 import '../HelpSupprt/Helpsupport.css'
+import axios from 'axios';
 
 function Help() {
+
+    const BaseUrl = process.env.REACT_APP_BASEURL;
+    const token = localStorage.getItem('token');
+    const [filteredData, setFilteredData] = useState();
+
+    useEffect(()=>{
+        const fetchBrandData = async () => {
+            try{
+               const response = await axios.get(`${BaseUrl}/api/allHelpQuestions`,{
+                 headers: {
+                     Authorization: `Bearer ${token}`,
+                 }
+               })
+
+               setFilteredData(response?.data?.helpQuestion)
+            }catch(error){
+               console.error("Error fetching data:", error);
+            }
+        }
+        fetchBrandData()
+    },[])
+
     return (
         <>
             <Header />
@@ -144,80 +167,16 @@ function Help() {
 
             <section className='py-sm-5'>
                 <div className="d_container">
-                    <Accordion>
-                        <Accordion.Item eventKey="0" className='my-3'>
-                            <Accordion.Header className='V_header'><strong>Can I reactivate my inactive account?</strong></Accordion.Header>
-                            <Accordion.Body className='V_body'>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                culpa qui officia deserunt mollit anim id est laborum.
-                            </Accordion.Body>
-                        </Accordion.Item>
-                        <Accordion.Item eventKey="1" className='my-3'>
-                            <Accordion.Header className='V_header'><strong>Can I use any Debit Card to pay for my order?</strong></Accordion.Header>
-                            <Accordion.Body className='V_body'>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                culpa qui officia deserunt mollit anim id est laborum.
-                            </Accordion.Body>
-                        </Accordion.Item>
-                        <Accordion.Item eventKey="2" className='my-3'>
-                            <Accordion.Header className='V_header'><strong>How can I pay with a saved Credit/Debit Card?</strong></Accordion.Header>
-                            <Accordion.Body className='V_body'>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                culpa qui officia deserunt mollit anim id est laborum.
-                            </Accordion.Body>
-                        </Accordion.Item>
-                        <Accordion.Item eventKey="3" className='my-3'>
-                            <Accordion.Header className='V_header'><strong>What are the modes of refund available after cancellation?</strong></Accordion.Header>
-                            <Accordion.Body className='V_body'>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                culpa qui officia deserunt mollit anim id est laborum.
-                            </Accordion.Body>
-                        </Accordion.Item>
-                        <Accordion.Item eventKey="4" className='my-3'>
-                            <Accordion.Header className='V_header'><strong>How quickly can I get my order delivered?</strong></Accordion.Header>
-                            <Accordion.Body className='V_body'>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                culpa qui officia deserunt mollit anim id est laborum.
-                            </Accordion.Body>
-                        </Accordion.Item>
-                        <Accordion.Item eventKey="5" className='my-3'>
-                            <Accordion.Header className='V_header'><strong>Why can't I track my order even though it has been shipped?</strong></Accordion.Header>
-                            <Accordion.Body className='V_body'>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                culpa qui officia deserunt mollit anim id est laborum.
-                            </Accordion.Body>
-                        </Accordion.Item>
-                    </Accordion>
+                    {filteredData?.map((item, index) => (
+                        <Accordion>
+                            <Accordion.Item eventKey="0" className='my-3'>
+                                <Accordion.Header className='V_header'><strong>{item.helpQuestion}</strong></Accordion.Header>
+                                <Accordion.Body className='V_body'>
+                                    {item.answer}
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
+                    ))}
                 </div>
             </section>
 

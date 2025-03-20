@@ -31,22 +31,35 @@ function ContactUs() {
     });
   };
 
+  // Clear form fields
+  const clearForm = () => {
+    setFormData({
+      name: '',
+      email: '',
+      contactNo: '',
+      subject: '',
+      message: ''
+    });
+  };
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     setSuccess('');
+  
+    clearForm();
+  
     try {
       const response = await axios.post(
         `${BaseUrl}/api/createContctUs`,
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
+  
       if (response.status === 200) {
         setSuccess('Your message has been sent successfully.');
-        setFormData({ name: '', email: '', contactNo: '', subject: '', message: '' });
       }
     } catch (err) {
       setError('Failed to send message. Please try again.');

@@ -1,12 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../../Vivek/Component/header/Header';
 import Footer from '../../../Vivek/Component/footer/Footer';
 import Process from '../../../Vivek/Component/common/Process';
 import Subscribe from '../../../Vivek/Component/common/Subscribe';
 import { Row, Col } from 'react-bootstrap';
 import './AboutUs.css'
+import axios from 'axios';
 
 function ContactUs() {
+
+    const BaseUrl = process.env.REACT_APP_BASEURL;
+    const token = localStorage.getItem('token');
+    const [aboutUsData, setAboutUsData] = useState([]);
+
+    useEffect(() => {
+        const fetchAboutUsData = async () => {
+            try {
+                const response = await axios.get(`${BaseUrl}/api/allAboutUs`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                });
+                setAboutUsData(response?.data?.aboutUs || []);
+            } catch (error) {
+                console.error("Error fetching About Us data:", error);
+            }
+        };
+
+        fetchAboutUsData();
+    }, [BaseUrl, token]);
 
     return (
         <>
@@ -32,29 +54,27 @@ function ContactUs() {
                 </div>
             </section>
 
-
-            <section className='pb-lg-5'>
-                <div className='d_container'>
-                    <div className="row m-0 ">
-                        <div className="col V_shadow p-0">
-                            <div className='d-flex flex-lg-row flex-column-reverse py-2 px-3 p-lg-5 '>
-                                <div className='pe-lg-5 align-self-center '>
-                                    <h3 className='V_head_text  pb-lg-5 pb-3 m-0'>The Quickcart Group</h3>
-                                    <p className='V_lorem'>Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque iaculis habitant congue est blandit amet. Tortor in vulputate nulla vitae quam.Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque.
-                                    </p>
-                                    <p className='V_lorem'>Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque iaculis habitant congue est blandit amet. Tortor in vulputate nulla vitae quam.Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque.
-                                    </p>
-                                </div>
-                                <div className='V_img_div'>
-                                    <img src={require('../../assets/thequickcartgroup.png')} alt="" className='V_img py-3 py-lg-0' />
-                                </div>
+            {aboutUsData.map((item, index) => (
+                <div className="d_container">
+                    <div key={item._id} className={`mv_main_view_terms_conditions ${index !==aboutUsData.length - 1 ? 'mb-4' : ''}`}>
+                        <div className={`row mv_main_quickcart ${index % 2 !== 0 ?'flex-row-reverse flex-wrap-reverse' : 'flex-wrap-reverse'}`}>
+                            <div className="col-md-6 align-content-center">
+                                <h3 className='mv_quickcart_heading mb-1'>{item.title}</h3>
+                                <p className='mv_quickcart_text mb-0'>{item.description}</p>
+                            </div>
+                            <div className="col-md-6 align-content-center">
+                                <img 
+                                    className='V_img w-100' 
+                                    src={`${BaseUrl}/${item.aboutUsImage}`} 
+                                    alt={item.title} 
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            ))}
 
-            <section className='py-5'>
+            {/* <section className='py-5'>
                 <div className='d_container'>
                     <div className="row m-0 ">
                         <div className="col V_shadow p-0">
@@ -73,10 +93,10 @@ function ContactUs() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
 
-            <section className=''>
+            <section className='mt-5'>
                 <div className='row m-0'>
                     <div className="col p-0">
                         <div >

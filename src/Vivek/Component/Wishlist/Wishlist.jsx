@@ -5,8 +5,13 @@ import './wishlist.css';
 import '../common.css';
 import { Col, Row } from 'react-bootstrap';
 import { FaHeart, FaStar } from 'react-icons/fa6';
+import axios from 'axios';
 
 const Wishlist = () => {
+
+    const BaseUrl = process.env.REACT_APP_BASEURL;
+    const token = localStorage.getItem('token');
+
     let data = [
         {
             name: "Traditional Chaniya choli",
@@ -48,9 +53,23 @@ const Wishlist = () => {
 
     let [wishlistdata, setwishlistdata] = useState([]);
 
-    useEffect(() => {
-        setwishlistdata(data);
-    }, []);
+    useEffect(()=>{
+        const fetchBrandData = async () => {
+            try{
+                const response = await axios.post(`${BaseUrl}/api/createWishList`,{
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                })
+                setwishlistdata(response?.data?.helpQuestion)
+                console.log("Response>>>>>>>",response.data);
+            }catch(error){
+               console.error("Error fetching data:", error);
+            }
+        }
+        fetchBrandData()
+    },[])
+
 
     return (
         <React.Fragment>

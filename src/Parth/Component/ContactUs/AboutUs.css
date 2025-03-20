@@ -129,7 +129,62 @@ color: #6A6A6A;
 
 
 
+.mv_main_view_terms_conditions{
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 1px 1px 20px 0.5px #0000000F;
+}
+.mv_privacy_policy{
+    background-color: #fff;
+    padding: 20px;
+}
+.mv_privacy_policy_text{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.36px;
+    color: #6A6A6A;
+}
+.mv_terms_of_heading{
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24.2px;
+    color: #2B221E;
+}
 
+
+
+
+@media(max-width:767px){
+    .mv_main_view_tc_heading{
+        display: block !important;
+    }
+    .mv_main_view_tc_subheading{
+       margin-bottom: 10px;
+    }
+}
+@media(max-width:575px){
+    .mv_view_term_and_con{
+        display: block !important;
+    }
+    .mv_term_condi_heading{
+        margin-left: 0px !important;
+    }
+    .mv_view_term_heading{
+        margin-left: 0px !important;
+    }
+    .mv_terms_of_heading {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+    .mv_privacy_policy_text {
+        font-size: 14px;
+    }
+}
+@media(max-width:425px){
+    .mv_main_view_terms_conditions {
+        padding: 20px 10px;
+    }
+}
 
 
 
@@ -149,7 +204,7 @@ color: #6A6A6A;
 
     .V_img {
         width: 100%;
-        height: auto;
+        height: 260px;
     }
 
     .V_head_text {
@@ -227,7 +282,8 @@ color: #6A6A6A;
 
     .V_img {
         width: 100%;
-        height: auto;
+        /* height: auto; */
+        margin-bottom: 10px;
     }
 
     .V_head_text {
@@ -444,6 +500,16 @@ color: #6A6A6A;
     }
 }
 
+@media (max-width:375px){
+    .V_img {    
+        height: 220px;
+    }
+}
+@media (max-width:320px){
+    .V_img {    
+        height: 190px;
+    }
+}
 @media (max-width:550px) {
 /* {*********************** The Quickcart *****************} */ 
     .ds_curve-text {
