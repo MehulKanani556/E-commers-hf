@@ -4,15 +4,16 @@ import Process from '../common/Process';
 import Subscribe from '../common/Subscribe';
 import { FaMinus, FaPlus, FaStar } from 'react-icons/fa';
 import { IoMdHeartEmpty } from 'react-icons/io';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { IoClose, IoSearch } from 'react-icons/io5';
 import ReactSlider from 'react-slider';
 import Header from '../header/Header';
+import axios from 'axios';
 
 
 const Product = () => {
-   
+
     const [showOffcanvas, setShowOffcanvas] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const [isActivecategory, setIsActivecategory] = useState(true);
@@ -25,7 +26,6 @@ const Product = () => {
     const [isActiveSleeve, setIsActiveSleeve] = useState(true);
     const [isActiveMaterial, setIsActiveMaterial] = useState(true);
     const [isActivePattern, setIsActivePattern] = useState(true);
-    const [isActiveOccasion, setIsActiveOccasion] = useState(true);
     const [isActiveStyle, setIsActiveStyle] = useState(true);
     const [priceRange, setPriceRange] = useState([0, 5000]);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -55,471 +55,71 @@ const Product = () => {
         styles: {},
     });
     const [selectedFilters, setSelectedFilters] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [categoryName,setCategoryName] = useState('');
+    const [subCategory,setSubCategory] = useState([]);
 
-    const filterItems = [
-        {
-            id: 1,
-            image: "itemimg1.png",
-            isBestSeller: false,
-            isNewArrial: true,
-            name: "Premium Lehenga choli ",
-            rating: 4.5,
-            description: "Purple lehenga choli in silk",
-            colors: [
-                { id: 1, color: "#B16AAF", isActive: true },
-            ],
-            price: 120,
-            originalPrice: 140
-        },
-        {
-            id: 2,
-            image: "itemimg2.png",
-            isBestSeller: false,
-            isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.7,
-            description: "Blue prinetd chaniya choli with dupatta",
-            colors: [
-                { id: 1, color: "#BF002A", isActive: true },
-                { id: 2, color: "#6BC89B", isActive: false },
-                { id: 3, color: "#C796D8", isActive: false },
-                { id: 4, color: "#6B8AC8", isActive: false }
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-        {
-            id: 3,
-            image: "itemimg3.png",
-            isBestSeller: false,
-            isNewArrial: true,
-            name: "Premium Saree",
-            rating: 4.7,
-            description: "Mustard yellow cotton silk chaniya choli",
-            colors: [
-                { id: 1, color: "#FFB804", isActive: true },
-                { id: 2, color: "#6BC89B", isActive: false },
-                { id: 3, color: "#C796D8", isActive: false },
-                { id: 4, color: "#6B8AC8", isActive: false }
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-        {
-            id: 4,
-            image: "itemimg4.png",
-            isBestSeller: false,
-            isNewArrial: true,
-            name: "Traditional Chaniya choli",
-            rating: 4.7,
-            description: "Black cotton silk chaniya choli for navratri",
-            colors: [
-                { id: 1, color: "#272629", isActive: true },
-                { id: 2, color: "#EC1B1B", isActive: false },
-                { id: 3, color: "#49C0C0", isActive: false },
-                { id: 4, color: "#077E35", isActive: false }
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-        {
-            id: 5,
-            image: "trend5.png",
-            isBestSeller: true,
-            isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.5,
-            description: "Cotton silk multi color chaniya choli",
-            colors: [
-                { id: 1, color: "#FFFFFF", isActive: true },
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-        {
-            id: 6,
-            image: "trend6.png",
-            isBestSeller: false,
-            isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.5,
-            description: "Newest aqua cotton silk chaniya choli",
-            colors: [
-                { id: 1, color: "#006F98", isActive: true },
-                { id: 2, color: "#6BC89B", isActive: false },
-                { id: 3, color: "#C796D8", isActive: false },
-                { id: 4, color: "#6B8AC8", isActive: false }
-            ],
-            price: 120,
-            originalPrice: 140
-        },
-        {
-            id: 7,
-            image: "trend7.png",
-            isBestSeller: true,
-            isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.5,
-            description: "Beautiful black cotton silk chaniya choli",
-            colors: [
-                { id: 1, color: "#333031", isActive: true },
-            ],
-            price: 120,
-            originalPrice: 140
-        },
-        {
-            id: 8,
-            image: "trend8.png",
-            isBestSeller: false,
-            isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.5,
-            description: "Elegant pink cotton silk chaniya choli",
-            colors: [
-                { id: 1, color: "#FF5C75", isActive: true },
-                { id: 2, color: "#6BC89B", isActive: false },
-                { id: 3, color: "#C796D8", isActive: false },
-                { id: 4, color: "#6B8AC8", isActive: false }
-            ],
-            price: 120,
-            originalPrice: 140
-        },
-        {
-            id: 9,
-            image: "itemimg1.png",
-            isBestSeller: false,
-            isNewArrial: true,
-            name: "Premium Lehenga choli",
-            rating: 4.5,
-            description: "Purple lehenga choli in silk",
-            colors: [
-                { id: 1, color: "#B16AAF", isActive: true },
-            ],
-            price: 120,
-            originalPrice: 140
-        },
-        {
-            id: 10,
-            image: "itemimg2.png",
-            isBestSeller: false,
-            isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.7,
-            description: "Blue prinetd chaniya choli with dupatta",
-            colors: [
-                { id: 1, color: "#BF002A", isActive: true },
-                { id: 2, color: "#6BC89B", isActive: false },
-                { id: 3, color: "#C796D8", isActive: false },
-                { id: 4, color: "#6B8AC8", isActive: false }
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-        {
-            id: 11,
-            image: "itemimg3.png",
-            isBestSeller: false,
-            isNewArrial: true,
-            name: "Premium Saree",
-            rating: 4.7,
-            description: "Mustard yellow cotton silk chaniya choli",
-            colors: [
-                { id: 1, color: "#FFB804", isActive: true },
-                { id: 2, color: "#6BC89B", isActive: false },
-                { id: 3, color: "#C796D8", isActive: false },
-                { id: 4, color: "#6B8AC8", isActive: false }
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-        {
-            id: 12,
-            image: "itemimg4.png",
-            isBestSeller: false,
-            isNewArrial: true,
-            name: "Traditional Chaniya choli",
-            rating: 4.7,
-            description: "Black cotton silk chaniya choli for navratri",
-            colors: [
-                { id: 1, color: "#272629", isActive: true },
-                { id: 2, color: "#EC1B1B", isActive: false },
-                { id: 3, color: "#49C0C0", isActive: false },
-                { id: 4, color: "#077E35", isActive: false }
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-        {
-            id: 13,
-            image: "trend5.png",
-            isBestSeller: true,
-            isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.5,
-            description: "Cotton silk multi color chaniya choli",
-            colors: [
-                { id: 1, color: "#FFFFFF", isActive: true },
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-        {
-            id: 14,
-            image: "trend6.png",
-            isBestSeller: false,
-            isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.5,
-            description: "Newest aqua cotton silk chaniya choli",
-            colors: [
-                { id: 1, color: "#006F98", isActive: true },
-                { id: 2, color: "#6BC89B", isActive: false },
-                { id: 3, color: "#C796D8", isActive: false },
-                { id: 4, color: "#6B8AC8", isActive: false }
-            ],
-            price: 120,
-            originalPrice: 140
-        },
-        {
-            id: 15,
-            image: "trend7.png",
-            isBestSeller: true,
-            isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.5,
-            description: "Beautiful black cotton silk chaniya choli",
-            colors: [
-                { id: 1, color: "#333031", isActive: true },
-            ],
-            price: 120,
-            originalPrice: 140
-        },
-        {
-            id: 16,
-            image: "trend8.png",
-            isBestSeller: false,
-            isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.5,
-            description: "Elegant pink cotton silk chaniya choli",
-            colors: [
-                { id: 1, color: "#FF5C75", isActive: true },
-                { id: 2, color: "#6BC89B", isActive: false },
-                { id: 3, color: "#C796D8", isActive: false },
-                { id: 4, color: "#6B8AC8", isActive: false }
-            ],
-            price: 120,
-            originalPrice: 140
-        },
-        {
-            id: 17,
-            image: "itemimg1.png",
-            isBestSeller: false,
-            isNewArrial: true,
-            name: "Premium Lehenga choli",
-            rating: 4.5,
-            description: "Purple lehenga choli in silk",
-            colors: [
-                { id: 1, color: "#B16AAF", isActive: true },
-            ],
-            price: 120,
-            originalPrice: 140
-        },
-        {
-            id: 18,
-            image: "itemimg2.png",
-            isBestSeller: false,
-            isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.7,
-            description: "Blue prinetd chaniya choli with dupatta",
-            colors: [
-                { id: 1, color: "#BF002A", isActive: true },
-                { id: 2, color: "#6BC89B", isActive: false },
-                { id: 3, color: "#C796D8", isActive: false },
-                { id: 4, color: "#6B8AC8", isActive: false }
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-        {
-            id: 19,
-            image: "itemimg3.png",
-            isBestSeller: false,
-            isNewArrial: true,
-            name: "Premium Saree",
-            rating: 4.7,
-            description: "Mustard yellow cotton silk chaniya choli",
-            colors: [
-                { id: 1, color: "#FFB804", isActive: true },
-                { id: 2, color: "#6BC89B", isActive: false },
-                { id: 3, color: "#C796D8", isActive: false },
-                { id: 4, color: "#6B8AC8", isActive: false }
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-        {
-            id: 20,
-            image: "itemimg4.png",
-            isBestSeller: false,
-            isNewArrial: true,
-            name: "Traditional Chaniya choli",
-            rating: 4.7,
-            description: "Black cotton silk chaniya choli for navratri",
-            colors: [
-                { id: 1, color: "#272629", isActive: true },
-                { id: 2, color: "#EC1B1B", isActive: false },
-                { id: 3, color: "#49C0C0", isActive: false },
-                { id: 4, color: "#077E35", isActive: false }
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-        {
-            id: 21,
-            image: "trend5.png",
-            isBestSeller: true,
-            isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.5,
-            description: "Cotton silk multi color chaniya choli",
-            colors: [
-                { id: 1, color: "#FFFFFF", isActive: true },
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-        {
-            id: 22,
-            image: "trend6.png",
-            isBestSeller: false,
-            isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.5,
-            description: "Newest aqua cotton silk chaniya choli",
-            colors: [
-                { id: 1, color: "#006F98", isActive: true },
-                { id: 2, color: "#6BC89B", isActive: false },
-                { id: 3, color: "#C796D8", isActive: false },
-                { id: 4, color: "#6B8AC8", isActive: false }
-            ],
-            price: 120,
-            originalPrice: 140
-        },
-        {
-            id: 23,
-            image: "trend7.png",
-            isBestSeller: true,
-            isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.5,
-            description: "Beautiful black cotton silk chaniya choli",
-            colors: [
-                { id: 1, color: "#333031", isActive: true },
-            ],
-            price: 120,
-            originalPrice: 140
-        },
-        {
-            id: 24,
-            image: "trend8.png",
-            isBestSeller: false,
-            isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.5,
-            description: "Elegant pink cotton silk chaniya choli",
-            colors: [
-                { id: 1, color: "#FF5C75", isActive: true },
-                { id: 2, color: "#6BC89B", isActive: false },
-                { id: 3, color: "#C796D8", isActive: false },
-                { id: 4, color: "#6B8AC8", isActive: false }
-            ],
-            price: 120,
-            originalPrice: 140
-        },
-        {
-            id: 25,
-            image: "itemimg2.png",
-            isBestSeller: false,
-            isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.7,
-            description: "Blue prinetd chaniya choli with dupatta",
-            colors: [
-                { id: 1, color: "#BF002A", isActive: true },
-                { id: 2, color: "#6BC89B", isActive: false },
-                { id: 3, color: "#C796D8", isActive: false },
-                { id: 4, color: "#6B8AC8", isActive: false }
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-        {
-            id: 26,
-            image: "itemimg3.png",
-            isBestSeller: false,
-            isNewArrial: true,
-            name: "Premium Saree",
-            rating: 4.7,
-            description: "Mustard yellow cotton silk chaniya choli",
-            colors: [
-                { id: 1, color: "#FFB804", isActive: true },
-                { id: 2, color: "#6BC89B", isActive: false },
-                { id: 3, color: "#C796D8", isActive: false },
-                { id: 4, color: "#6B8AC8", isActive: false }
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-        {
-            id: 27,
-            image: "itemimg4.png",
-            isBestSeller: false,
-            isNewArrial: true,
-            name: "Traditional Chaniya choli",
-            rating: 4.7,
-            description: "Black cotton silk chaniya choli for navratri",
-            colors: [
-                { id: 1, color: "#272629", isActive: true },
-                { id: 2, color: "#EC1B1B", isActive: false },
-                { id: 3, color: "#49C0C0", isActive: false },
-                { id: 4, color: "#077E35", isActive: false }
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-        {
-            id: 28,
-            image: "trend5.png",
-            isBestSeller: true,
-            isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.5,
-            description: "Cotton silk multi color chaniya choli",
-            colors: [
-                { id: 1, color: "#FFFFFF", isActive: true },
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-    ];
+    const location = useLocation();
+    const { id } = useParams();
 
-    const categories = [
-        { id: 1, label: "Short Kurta" },
-        { id: 2, label: "Long Kurta" },
-        { id: 3, label: "Kurta set" },
-        { id: 4, label: "Casual Saree" },
-        { id: 5, label: "Designer Saree" },
-        { id: 6, label: "Chaniya Choli" },
-        { id: 7, label: "Salwar Suit" },
-        { id: 8, label: "Co-ord set" },
-        { id: 9, label: "Gown" },
-        { id: 10, label: "Palazzo Set" },
-        { id: 11, label: "Tunics & Tops" },
-        { id: 12, label: "Dupattas" },
-        { id: 13, label: "Leggings, Salwar & Chudidars" },
-    ];
+
+    const BaseUrl = process.env.REACT_APP_BASEURL;
+    const token = localStorage.getItem('token');
+
+    const mainCategoryId = location.state.mainCategoryId;
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${BaseUrl}/api/getProductByMainCategory/${mainCategoryId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                const filteredProducts = response.data.products.filter(product =>
+                    product.mainCategoryId === mainCategoryId &&
+                    product.categoryId === id
+                );
+
+                // Set the filtered products to state
+                setFilteredProducts(filteredProducts); 
+           } catch (error) {
+                console.error('Data fetching failed:', error);
+            }
+        }
+        fetchData();
+    }, [mainCategoryId,BaseUrl,token]);
+
+  useEffect(() => {
+    const fetchCategory = async() => {
+        try {
+            const response = await axios.get(`${BaseUrl}/api/getCategory/${id}`, {
+                headers: {Authorization: `Bearer ${token}`}
+            });
+            // console.log("response",response.data.category.categoryName);
+            setCategoryName(response.data.category.categoryName);
+        } catch (error) {
+            console.error('Data Fetching Error:',error);
+        }
+    }
+    fetchCategory();
+  },[id,BaseUrl,token]);
+
+  useEffect(() => {
+    const fetchSubCategory = async() => {
+        try {
+            const response = await axios.get(`${BaseUrl}/api/getCategoryBySubCategory/${id}`, {
+                headers: { Authorization: `Bearer ${token}`}
+            });
+            // console.log("resposne>>>>>>>>",response.data.subCategory);
+            setSubCategory(response.data.subCategory)
+        } catch (error) {
+            console.error('Data Fetching Error:',error);
+        }
+    }
+    fetchSubCategory();
+  },[id, BaseUrl, token]);
 
 
     const discount = [
@@ -588,18 +188,15 @@ const Product = () => {
         { id: 5, patternname: "Floral" },
     ]
 
-    const occasion = [
-        { id: 1, occasionname: "Casual" },
-        { id: 2, occasionname: "Wedding" },
-        { id: 3, occasionname: "Party" },
-        { id: 4, occasionname: "Festive" },
-    ]
-
     const style = [
         { id: 1, stylename: "Daily Wear" },
         { id: 2, stylename: "Bollywood" },
         { id: 3, stylename: "Banarasi" },
         { id: 4, stylename: "Kanjivaram" },
+        { id: 5, stylename: "Casual" },
+        { id: 6, stylename: "Wedding" },
+        { id: 7, stylename: "Party" },
+        { id: 8, stylename: "Festive" },
     ]
 
 
@@ -661,22 +258,6 @@ const Product = () => {
         setSelectedFilters([]);
     };
 
-
-    // const handleCheckboxChange = (type, id) => {
-    //     debugger
-    //     setCheckedFilters(prevState => ({
-    //         ...prevState,
-    //         [type]: {
-    //             // Set all checkboxes in the section to false, then set the selected one to true
-    //             ...Object.keys(prevState[type]).reduce((acc, key) => {
-    //                 acc[key] = false;
-    //                 return acc;
-    //             }, {}),
-    //             [id]: true
-    //         }
-    //     }));
-    // };       
-
     // Price Range
 
     const handleSliderChange = (newValue) => {
@@ -734,9 +315,6 @@ const Product = () => {
 
     // Pattern
     const displayedpattern = showMore.pattern ? pattern : pattern.slice(0, initialDisplayCount);
-
-    // Occasion
-    const displayedoccasion = showMore.occasion ? occasion : occasion.slice(0, initialDisplayCount);
 
     // style
     const filteredstyle = style.filter(style =>
@@ -830,22 +408,6 @@ const Product = () => {
                                         </div>
                                     </div>
                                     <div className="d_category">
-                                        {/* <div className="d_filterlist d-flex flex-wrap">
-                                            <div className="d_close">30% & more <IoClose className="d_closeicon" /></div>
-                                            <div className="d_close">M <IoClose className="d_closeicon" /></div>
-                                            <div className="d_close">BIBA <IoClose className="d_closeicon" /></div>
-                                            <div className="d_close">
-                                                <div className="d-flex align-items-center">
-                                                    <div className="d_circle"></div>
-                                                    Orange <IoClose className="d_closeicon" />
-                                                </div>
-                                            </div>
-                                            <div className="d_close">2 <FaStar className=" d_staricon" /> & above<IoClose className="d_closeicon" /></div>
-                                            <div className="d_close">Cotton Silk <IoClose className="d_closeicon" /></div>
-                                            <div className="d_close">Polka Print <IoClose className="d_closeicon" /></div>
-                                            <div className="d_close">Party <IoClose className="d_closeicon" /></div>
-                                            <div className="d_close">Daily Wear <IoClose className="d_closeicon" /></div>
-                                        </div> */}
                                         <div className="d_filterlist d-flex flex-wrap">
                                             {selectedFilters.map((filter, index) => (
                                                 <div key={index} className="d_close">
@@ -892,11 +454,11 @@ const Product = () => {
                                                     {isActivecategory &&
                                                         <>
                                                             <div className='mt-3'>
-                                                                {categories.map((category, index) => (
+                                                                {subCategory.map((category, index) => (
                                                                     <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('categories', category.id, category.label)} checked={!!checkedFilters.categories[category.id]} id={`category-${category.id}`} />
-                                                                        <label htmlFor={`category-${category.id}`} className="d_checkmark"></label>
-                                                                        <p className="mb-0">{category.label}</p>
+                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('categories', category._id, category.label)} checked={!!checkedFilters.categories[category._id]} id={`category-${category._id}`} />
+                                                                        <label htmlFor={`category-${category._id}`} className="d_checkmark"></label>
+                                                                        <p className="mb-0">{category.subCategoryName}</p>
                                                                     </div>
                                                                 ))}
                                                             </div>
@@ -1169,34 +731,6 @@ const Product = () => {
                                         <div className="d_categorylist">
                                             <div className="d_acc">
                                                 <div className="d_accitem">
-                                                    <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveOccasion(!isActiveOccasion)}>
-                                                        <div className='d_title'>Occasion</div>
-                                                        <div className='d_icon'>{isActiveOccasion ? <FaMinus /> : <FaPlus />}</div>
-                                                    </div>
-                                                    {isActiveOccasion &&
-                                                        <>
-                                                            <div className='mt-3'>
-                                                                {displayedoccasion.map((occasion, index) => (
-                                                                    <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('occasions', occasion.id, occasion.occasionname)} checked={!!checkedFilters.occasions[occasion.id]} id={`occasion-${occasion.id}`} />
-                                                                        <label htmlFor={`occasion-${occasion.id}`} className="d_checkmark"></label>
-                                                                        <p className="mb-0">{occasion.occasionname}<span>(10)</span></p>
-                                                                    </div>
-                                                                ))}
-                                                                {occasion.length > initialDisplayCount && (
-                                                                    <Link to="#" onClick={(e) => handleShowMore(e, 'occasion')} className='text-decoration-none'>
-                                                                        {showMore.occasion ? 'Show Less' : `Show More (${occasion.length - initialDisplayCount})`}
-                                                                    </Link>
-                                                                )}
-                                                            </div>
-                                                        </>
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="d_categorylist">
-                                            <div className="d_acc">
-                                                <div className="d_accitem">
                                                     <div className="d_acctitle mb-0 d-flex justify-content-between" onClick={() => setIsActiveStyle(!isActiveStyle)}>
                                                         <div className='d_title'>Style</div>
                                                         <div className='d_icon'>{isActiveStyle ? <FaMinus /> : <FaPlus />}</div>
@@ -1247,22 +781,6 @@ const Product = () => {
                                             </div>
                                         </div>
                                         <div className="d_category">
-                                            {/* <div className="d_filterlist d-flex flex-wrap">
-                                            <div className="d_close">30% & more <IoClose className="d_closeicon" /></div>
-                                            <div className="d_close">M <IoClose className="d_closeicon" /></div>
-                                            <div className="d_close">BIBA <IoClose className="d_closeicon" /></div>
-                                            <div className="d_close">
-                                                <div className="d-flex align-items-center">
-                                                    <div className="d_circle"></div>
-                                                    Orange <IoClose className="d_closeicon" />
-                                                </div>
-                                            </div>
-                                            <div className="d_close">2 <FaStar className=" d_staricon" /> & above<IoClose className="d_closeicon" /></div>
-                                            <div className="d_close">Cotton Silk <IoClose className="d_closeicon" /></div>
-                                            <div className="d_close">Polka Print <IoClose className="d_closeicon" /></div>
-                                            <div className="d_close">Party <IoClose className="d_closeicon" /></div>
-                                            <div className="d_close">Daily Wear <IoClose className="d_closeicon" /></div>
-                                        </div> */}
                                             <div className="d_filterlist d-flex flex-wrap">
                                                 {selectedFilters.map((filter, index) => (
                                                     <div key={index} className="d_close">
@@ -1309,7 +827,7 @@ const Product = () => {
                                                         {isActivecategory &&
                                                             <>
                                                                 <div className='mt-3'>
-                                                                    {categories.map((category, index) => (
+                                                                    {subCategory.map((category, index) => (
                                                                         <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
                                                                             <input type="checkbox" onChange={() => handleCheckboxChange('categories', category.id, category.label)} checked={!!checkedFilters.categories[category.id]} id={`category-${category.id}`} />
                                                                             <label htmlFor={`category-${category.id}`} className="d_checkmark"></label>
@@ -1586,34 +1104,6 @@ const Product = () => {
                                             <div className="d_categorylist">
                                                 <div className="d_acc">
                                                     <div className="d_accitem">
-                                                        <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveOccasion(!isActiveOccasion)}>
-                                                            <div className='d_title'>Occasion</div>
-                                                            <div className='d_icon'>{isActiveOccasion ? <FaMinus /> : <FaPlus />}</div>
-                                                        </div>
-                                                        {isActiveOccasion &&
-                                                            <>
-                                                                <div className='mt-3'>
-                                                                    {displayedoccasion.map((occasion, index) => (
-                                                                        <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                            <input type="checkbox" onChange={() => handleCheckboxChange('occasions', occasion.id, occasion.occasionname)} checked={!!checkedFilters.occasions[occasion.id]} id={`occasion-${occasion.id}`} />
-                                                                            <label htmlFor={`occasion-${occasion.id}`} className="d_checkmark"></label>
-                                                                            <p className="mb-0">{occasion.occasionname}<span>(10)</span></p>
-                                                                        </div>
-                                                                    ))}
-                                                                    {occasion.length > initialDisplayCount && (
-                                                                        <Link to="#" onClick={(e) => handleShowMore(e, 'occasion')} className='text-decoration-none'>
-                                                                            {showMore.occasion ? 'Show Less' : `Show More (${occasion.length - initialDisplayCount})`}
-                                                                        </Link>
-                                                                    )}
-                                                                </div>
-                                                            </>
-                                                        }
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="d_categorylist">
-                                                <div className="d_acc">
-                                                    <div className="d_accitem">
                                                         <div className="d_acctitle mb-0 d-flex justify-content-between" onClick={() => setIsActiveStyle(!isActiveStyle)}>
                                                             <div className='d_title'>Style</div>
                                                             <div className='d_icon'>{isActiveStyle ? <FaMinus /> : <FaPlus />}</div>
@@ -1652,7 +1142,7 @@ const Product = () => {
                                 <div className="d_right">
                                     <div className="d_heading">
                                         <div className="d-flex justify-content-between align-items-center">
-                                            <h2 className='mb-0'>Indian Wear</h2>
+                                            <h2 className='mb-0'>{categoryName}</h2>
                                             <div className="d_dropdown">
                                                 <button className="d_dropbtn" onClick={toggleDropdown}>Sort by<MdKeyboardArrowDown className='ms-2' /></button>
                                                 {isDropdownOpen && (
@@ -1669,17 +1159,17 @@ const Product = () => {
                                     </div>
                                     <div className="d_trend mt-3">
                                         <div className="row gy-4">
-                                            {filterItems.map((item, index) => {
+                                            {filteredProducts.map((item) => {
                                                 return (
                                                     <div key={item.id} className="col-12 col-sm-6 col-lg-6 col-xl-3">
                                                         <Link to='/womendetails'>
                                                             <div className="d_box">
                                                                 <div className="d_img">
-                                                                    <img src={require(`../../../darshan/d_img/${item.image}`)} alt="" />
-                                                                    {item.isBestSeller &&
+                                                                    <img src={`${BaseUrl}/${item.productVariantData[0].images[0]}`} alt="" />
+                                                                    {/* {item.isBestSeller &&
                                                                         (<div className="d_seller">Best Seller</div>)}
                                                                     {item.isNewArrial &&
-                                                                        (<div className="d_arrival">New Arrival</div>)}
+                                                                        (<div className="d_arrival">New Arrival</div>)} */}
                                                                     <div className="d_trendicon d-flex justify-content-center align-items-center d_cur">
                                                                         <IoMdHeartEmpty className='d_icon ' />
                                                                     </div>
@@ -1687,24 +1177,30 @@ const Product = () => {
                                                                 <div className="d_content">
                                                                     <div className='d-flex flex-column h-100'>
                                                                         <div className="d-flex align-items-center justify-content-between">
-                                                                            <div className="d_name">{item.name}</div>
+                                                                            <div className="d_name">{item.productName}</div>
                                                                             <div className='d-flex align-items-center'>
                                                                                 <FaStar className='d_staricon me-1' />
-                                                                                <div className="d_review">{item.rating}</div>
+                                                                                <div className="d_review">{item.rating || 0}</div>
                                                                             </div>
                                                                         </div>
-                                                                        <div className="d_desc">{item.description}</div>
+                                                                        <div className="d_desc">{item.productVariantData[0].description}</div>
                                                                         <div className="d-flex align-items-center justify-content-between mt-auto">
                                                                             <div className="d-flex align-items-center">
-                                                                                {item.colors.map((colorobj, i) => {
+                                                                                {item.productVariantData[0].colorName.split(',').map((color, i) => {
                                                                                     return (
-                                                                                        <div key={colorobj.id} className={`d_color ${colorobj.isActive ? 'active' : ""}`} style={{ backgroundColor: colorobj.color }}></div>
+                                                                                        <div
+                                                                                            key={i}
+                                                                                            className="d_color"
+                                                                                            style={{ backgroundColor: color }}
+                                                                                        ></div>
                                                                                     )
                                                                                 })}
                                                                             </div>
                                                                             <div className="d-flex align-items-end">
-                                                                                <div className="d_price">${item.price}</div>
-                                                                                <div className="d_disprice ms-1 text-decoration-line-through">${item.originalPrice}</div>
+                                                                                <div className="d_price">
+                                                                                    ${parseInt(item.productVariantData[0].originalPrice) - parseInt(item.productVariantData[0].discountPrice)}
+                                                                                </div>
+                                                                                <div className="d_disprice ms-1 text-decoration-line-through">${item.productVariantData[0].originalPrice}</div>
                                                                             </div>
                                                                         </div>
                                                                     </div>

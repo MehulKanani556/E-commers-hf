@@ -17,6 +17,10 @@ import Culture from '../../../darshan/components/Culture';
 import Card from '../../../darshan/components/Card';
 import Trending from '../../../darshan/components/Trending';
 import Post from '../../../darshan/components/Post';
+import Popularbrands from '../../../darshan/components/Popularbrands';
+import Subscribe from '../common/Subscribe';
+import Process from '../common/Process';
+import Footer from '../footer/Footer';
 
 const Category = () => {
 
@@ -43,8 +47,10 @@ const Category = () => {
 
     return (
         <>
+            {/* Header section start */}
             <Header />
 
+            {/* Banner section Start */}
             {product && product.mainCategoryName === 'Women' ? (
                 <Banner />
             ) : product && product.mainCategoryName === 'Men' ? (
@@ -63,15 +69,54 @@ const Category = () => {
                 <KitchenBanner />
             ) : null}
 
-            <Minisider/>
+            {/* Banner section End */}
 
-            <Card/>
+            {/* MinisSider section Start */}
+            <Minisider />
 
-            <Trending/>
+            {/* MinisSider section End */}
 
-            <Culture  mainCategoryName={product?.mainCategoryName} />
+            {/* Card section Start */}
 
-            <Post/>
+            <Card />
+
+            {/* Card section End */}
+
+            {/* Trendign section start */}
+
+            <Trending />
+
+            {/* Trendign section end */}
+
+            {/* Culture section start */}
+
+            <Culture mainCategoryName={product?.mainCategoryName} />
+
+            {/* Culture section end */}
+
+            {/* Post section Start */}
+
+            <Post />
+
+            {/* Post section End */}
+
+            {/* Popular Brands Section Start */}
+
+            <Popularbrands />
+
+            {/* Popular Brands Section End */}
+
+            {/* Subscribe Section Start */}
+            <Subscribe />
+
+            {/* Subscribe Section End */}
+
+            {/* Progress section Start */}
+            <Process />
+            {/* Progress section End */}
+
+            {/* Footer section */}
+            <Footer />
 
         </>
     )

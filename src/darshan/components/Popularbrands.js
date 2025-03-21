@@ -87,7 +87,7 @@ const Popularbrands = () => {
                         <Col className='p-0'>
                             <div>
                                 <div className="parent">
-                                    {popularbarnd.map((item,index) => (
+                                    {popularbarnd.map((item) => (
                                         <div className={`div${cnt++} VK_grid_parent`}>
                                             <img src={`${BaseUrl}/${item?.brandImage}`} className='w-100 h-100 object_center' alt="" />
                                             <div className='VK_grid_child'>

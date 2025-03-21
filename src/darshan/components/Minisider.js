@@ -62,7 +62,7 @@ const Minisider = () => {
                                 <div key={index} className="d-flex justify-content-center">
                                     <div className="d_mini">
                                         <div className="d_bgimg">
-                                            <Link to={`/product/${item._id}`}>
+                                            <Link to={`/product/${item._id}`} state={{mainCategoryId: item.mainCategoryId}}>
                                                 <div className="d_img">
                                                     {item.categoryImage && (
                                                         <img
