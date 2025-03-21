@@ -8,77 +8,92 @@ import { FaHeart, FaStar } from 'react-icons/fa6';
 import axios from 'axios';
 
 const Wishlist = () => {
-
     const BaseUrl = process.env.REACT_APP_BASEURL;
     const token = localStorage.getItem('token');
 
-    let data = [
-        {
-            name: "Traditional Chaniya choli",
-            description: "Cotton silk multi color chaniya choli",
-            price: 120,
-            old_price: 140,
-            rating: 4.5,
-            image: "wishlist1.png",
-            color: ["#FFFFFF"]
-        },
-        {
-            name: "Traditional Chaniya choli",
-            description: "Cotton silk multi color chaniya choli",
-            price: 120,
-            old_price: 140,
-            rating: 4.5,
-            image: "wishlist2.png",
-            color: ["#006F98", "#6BC89B", "#C796D8", "#6B8AC8"]
-        },
-        {
-            name: "Traditional Chaniya choli",
-            description: "Cotton silk multi color chaniya choli",
-            price: 120,
-            old_price: 140,
-            rating: 4.5,
-            image: "wishlist3.png",
-            color: ["#333031"]
-        },
-        {
-            name: "Traditional Chaniya choli",
-            description: "Cotton silk multi color chaniya choli",
-            price: 120,
-            old_price: 140,
-            rating: 4.5,
-            image: "wishlist4.png",
-            color: ["#FF5C75", "#6BC89B", "#C796D8", "#6B8AC8"]
-        }
-    ];
+    const [wishlistdata, setWishlistdata] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    let [wishlistdata, setwishlistdata] = useState([]);
-
-    useEffect(()=>{
-        const fetchBrandData = async () => {
-            try{
-                const response = await axios.post(`${BaseUrl}/api/createWishList`,{
+    useEffect(() => {
+        const fetchWishlistData = async () => {
+            setIsLoading(true);
+            try {
+                const response = await axios.get(`${BaseUrl}/api/allwishList`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     }
-                })
-                setwishlistdata(response?.data?.helpQuestion)
-                console.log("Response>>>>>>>",response.data);
-            }catch(error){
-               console.error("Error fetching data:", error);
-            }
-        }
-        fetchBrandData()
-    },[])
+                });
+                console.log("Response data:", response.data);
 
+                // Transform the data to match your component's structure
+                const transformedData = response.data.wishlist.map(item => {
+                    // Extract product variant info
+                    const variantData = item.productVariantData?.[0] || {};
+
+                    // Extract colors from the colorName string if it exists
+                    const colors = variantData.colorName ?
+                        variantData.colorName.split(',') :
+                        ["#FFFFFF"];
+
+                    // Get the first image URL if available
+                    const imageUrl = variantData.images && variantData.images.length > 0 ?
+                        variantData.images[0].replace('public\\', '/') :
+                        null;
+
+                    return {
+                        id: item._id,
+                        name: item.productData?.[0]?.productName || "Product Name",
+                        description: variantData.shortDescription || "Product Description",
+                        price: variantData.discountPrice || 0,
+                        old_price: variantData.originalPrice || 0,
+                        rating: 4.5, // Default rating since it's not in your data
+                        image: imageUrl,
+                        color: colors,
+                        stockStatus: item.productData?.[0]?.stockStatus || "Out of Stock"
+                    };
+                });
+
+                setWishlistdata(transformedData);
+                setIsLoading(false);
+            } catch (error) {
+                console.error("Error fetching wishlist data:", error);
+                setIsLoading(false);
+            }
+        };
+
+        fetchWishlistData();
+    }, [BaseUrl, token]);
+
+    const handleRemoveFromWishlist = async (wishlistId) => {
+        try {
+            await axios.delete(`${BaseUrl}/api/deleteWishList/${wishlistId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            // Update the state after successful removal
+            setWishlistdata(prevData => prevData.filter(item => item.id !== wishlistId));
+
+        } catch (error) {
+            console.error("Error removing item from wishlist:", error);
+        }
+    };
 
     return (
         <React.Fragment>
             <Header />
 
-            {wishlistdata.length === 0 ? (
+            {isLoading ? (
+                <div className="d-flex justify-content-center align-items-center" style={{ height: "300px" }}>
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            ) : wishlistdata.length === 0 ? (
                 <div className='VK_empty_wishlist d-flex justify-content-center align-items-center'>
                     <div className='text-center'>
-                        <img src={require('../../assets/empty wishlist.png')} alt="" />
+                        <img src={require('../../assets/empty wishlist.png')} alt="Empty Wishlist" />
                         <p className='mb-2 fw-600'>Your wishlist is empty!</p>
                         <p className='font_14'>Explore more and shortlist some items.</p>
                         <button className='VK_theme_btn'>Continue Shopping</button>
@@ -98,14 +113,19 @@ const Wishlist = () => {
                                     <div className="VK_wishlist_boxshadow">
                                         <div className='VK_wishlist_parent'>
                                             <div className='VK_wishlist_img'>
+
                                                 <img
-                                                    src={require(`../../assets/${item.image}`)}
+                                                    src={`${BaseUrl}/${item.image}`}
                                                     className='w-100 h-100 object_cover object_top'
                                                     alt={item.name}
                                                 />
+
                                             </div>
                                             <div className='VK_wishlist_bt'>
-                                                <button className='VK_wishlist_btn'>
+                                                <button
+                                                    className='VK_wishlist_btn'
+                                                    onClick={() => handleRemoveFromWishlist(item.id)}
+                                                >
                                                     <FaHeart className='text-danger vk_IN' />
                                                 </button>
                                             </div>
@@ -121,11 +141,11 @@ const Wishlist = () => {
                                             <p className='mb-2 font_14 fw-500'>{item.description}</p>
                                             <div className='d-flex justify-content-between align-items-center'>
                                                 <div className='d-flex align-items-center gap-2'>
-                                                    {item.color.map((el, ind) => (
+                                                    {item.color.map((color, ind) => (
                                                         <span
                                                             key={ind}
                                                             className='VK_wishlist_color_span d-inline-block'
-                                                            style={{ backgroundColor: el }}
+                                                            style={{ backgroundColor: color }}
                                                         ></span>
                                                     ))}
                                                 </div>
@@ -135,6 +155,11 @@ const Wishlist = () => {
                                                         <strike>${item.old_price}</strike>
                                                     </p>
                                                 </div>
+                                            </div>
+                                            <div className='mt-2'>
+                                                <span className={`badge ${item.stockStatus === 'In Stock' ? 'bg-success' : 'bg-danger'}`}>
+                                                    {item.stockStatus}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
