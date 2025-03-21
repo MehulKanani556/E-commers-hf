@@ -332,7 +332,7 @@ const Header = () => {
                                     {mainCategories.map((mainCategory) => (
                                         <li className='VK_sub_menu' key={mainCategory._id}
                                             onMouseEnter={() => handleMainCategoryHover(mainCategory.mainCategoryName)}>
-                                            <Link to={`/product/${mainCategory._id}`} className='text-decoration-none d_headertext'>
+                                            <Link to={`/category/${mainCategory._id}`} className='text-decoration-none d_headertext'>
                                                 {mainCategory.mainCategoryName}
                                             </Link>
                                             <div className='VK_mega_menu'>
