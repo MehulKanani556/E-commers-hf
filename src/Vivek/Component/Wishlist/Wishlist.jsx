@@ -14,57 +14,66 @@ const Wishlist = () => {
     const [wishlistdata, setWishlistdata] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    const fetchWishlistData = async () => {
+        setIsLoading(true);
+        try {
+            const response = await axios.get(`${BaseUrl}/api/getMyWishList`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+            console.log("Response data:", response.data);
+
+            // Transform the data to match your component's structure
+            const transformedData = response.data.wishlist.map(item => {
+                // Extract product variant info
+                const variantData = item.productVariantData?.[0] || {};
+
+                // Extract colors from the colorName string if it exists
+                const colors = variantData.colorName ?
+                    variantData.colorName.split(',') :
+                    ["#FFFFFF"];
+
+                // Get the first image URL if available
+                const imageUrl = variantData.images && variantData.images.length > 0 ?
+                    variantData.images[0].replace('public\\', '/') :
+                    null;
+
+                return {
+                    id: item._id,
+                    productId: item.productId || item._id,
+                    name: item.productData?.[0]?.productName || "Product Name",
+                    description: variantData.shortDescription || "Product Description",
+                    price: variantData.discountPrice || 0,
+                    old_price: variantData.originalPrice || 0,
+                    rating: 4.5, // Default rating since it's not in your data
+                    image: imageUrl,
+                    color: colors,
+                    stockStatus: item.productData?.[0]?.stockStatus || "Out of Stock"
+                };
+            });
+
+            setWishlistdata(transformedData);
+            
+            // Update the wishlist IDs in localStorage
+            const wishlistIds = transformedData.map(item => item.productId);
+            localStorage.setItem('wishlist', JSON.stringify(wishlistIds));
+            
+            // Notify other components about wishlist update
+            window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+            
+            setIsLoading(false);
+        } catch (error) {
+            console.error("Error fetching wishlist data:", error);
+            setIsLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchWishlistData = async () => {
-            setIsLoading(true);
-            try {
-                const response = await axios.get(`${BaseUrl}/api/allwishList`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    }
-                });
-                console.log("Response data:", response.data);
-
-                // Transform the data to match your component's structure
-                const transformedData = response.data.wishlist.map(item => {
-                    // Extract product variant info
-                    const variantData = item.productVariantData?.[0] || {};
-
-                    // Extract colors from the colorName string if it exists
-                    const colors = variantData.colorName ?
-                        variantData.colorName.split(',') :
-                        ["#FFFFFF"];
-
-                    // Get the first image URL if available
-                    const imageUrl = variantData.images && variantData.images.length > 0 ?
-                        variantData.images[0].replace('public\\', '/') :
-                        null;
-
-                    return {
-                        id: item._id,
-                        name: item.productData?.[0]?.productName || "Product Name",
-                        description: variantData.shortDescription || "Product Description",
-                        price: variantData.discountPrice || 0,
-                        old_price: variantData.originalPrice || 0,
-                        rating: 4.5, // Default rating since it's not in your data
-                        image: imageUrl,
-                        color: colors,
-                        stockStatus: item.productData?.[0]?.stockStatus || "Out of Stock"
-                    };
-                });
-
-                setWishlistdata(transformedData);
-                setIsLoading(false);
-            } catch (error) {
-                console.error("Error fetching wishlist data:", error);
-                setIsLoading(false);
-            }
-        };
-
         fetchWishlistData();
     }, [BaseUrl, token]);
 
-    const handleRemoveFromWishlist = async (wishlistId) => {
+    const handleRemoveFromWishlist = async (wishlistId, productId) => {
         try {
             await axios.delete(`${BaseUrl}/api/deleteWishList/${wishlistId}`, {
                 headers: {
@@ -72,8 +81,16 @@ const Wishlist = () => {
                 }
             });
 
-            // Update the state after successful removal
-            setWishlistdata(prevData => prevData.filter(item => item.id !== wishlistId));
+            // First update the state
+            const updatedWishlist = wishlistdata.filter(item => item.id !== wishlistId);
+            setWishlistdata(updatedWishlist);
+            
+            // Then update localStorage with the new wishlist IDs
+            const wishlistIds = updatedWishlist.map(item => item.productId);
+            localStorage.setItem('wishlist', JSON.stringify(wishlistIds));
+            
+            // Notify other components about wishlist update using a custom event
+            window.dispatchEvent(new CustomEvent('wishlistUpdated'));
 
         } catch (error) {
             console.error("Error removing item from wishlist:", error);
@@ -113,18 +130,16 @@ const Wishlist = () => {
                                     <div className="VK_wishlist_boxshadow">
                                         <div className='VK_wishlist_parent'>
                                             <div className='VK_wishlist_img'>
-
                                                 <img
                                                     src={`${BaseUrl}/${item.image}`}
                                                     className='w-100 h-100 object_cover object_top'
                                                     alt={item.name}
                                                 />
-
                                             </div>
                                             <div className='VK_wishlist_bt'>
                                                 <button
                                                     className='VK_wishlist_btn'
-                                                    onClick={() => handleRemoveFromWishlist(item.id)}
+                                                    onClick={() => handleRemoveFromWishlist(item.id, item.productId)}
                                                 >
                                                     <FaHeart className='text-danger vk_IN' />
                                                 </button>

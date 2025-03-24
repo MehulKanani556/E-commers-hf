@@ -13,26 +13,62 @@ const Trending = () => {
   const [isSelectedwishlist, setIsSelectedWishlist] = useState([]);
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    const fetchWishlist = async () => {
-      try {
-        const response = await axios.get(`${BaseUrl}/api/allwishList`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+  // Function to fetch wishlist data from server
+  // const fetchWishlist = async () => {
+  //   try {
+  //     const response = await axios.get(`${BaseUrl}/api/allwishList`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
 
-        const wishlistIds = response.data.wishlist.map(item => item.productId || item._id);
-        setIsSelectedWishlist(wishlistIds);
-        localStorage.setItem('wishlist', JSON.stringify(wishlistIds));
-      } catch (error) {
-        console.error("Error fetching wishlist:", error);
-      }
+  //     const wishlistIds = response.data.wishlist.map(item => item.productId || item._id);
+  //     setIsSelectedWishlist(wishlistIds);
+  //     localStorage.setItem('wishlist', JSON.stringify(wishlistIds));
+  //   } catch (error) {
+  //     console.error("Error fetching wishlist:", error);
+  //   }
+  // };
+
+  // Function to sync wishlist with localStorage
+  const syncWishlistWithLocalStorage = () => {
+    const storedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    if (JSON.stringify(storedWishlist) !== JSON.stringify(isSelectedwishlist)) {
+      setIsSelectedWishlist(storedWishlist);
+    }
+  };
+
+  // Initial fetch of wishlist data
+  // useEffect(() => {
+  //   fetchWishlist();
+  // }, [BaseUrl, token]);
+
+  // Listen for custom event from Wishlist component
+  useEffect(() => {
+    const handleWishlistUpdate = () => {
+      syncWishlistWithLocalStorage();
     };
 
-    fetchWishlist();
-  }, [BaseUrl, token]);
+    // Add event listeners
+    window.addEventListener('wishlistUpdated', handleWishlistUpdate);
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'wishlist') {
+        handleWishlistUpdate();
+      }
+    });
 
+    // Set up interval to check for changes
+    const intervalId = setInterval(syncWishlistWithLocalStorage, 1000);
+
+    // Clean up
+    return () => {
+      window.removeEventListener('wishlistUpdated', handleWishlistUpdate);
+      window.removeEventListener('storage', handleWishlistUpdate);
+      clearInterval(intervalId);
+    };
+  }, [isSelectedwishlist]);
+
+  // Fetch trending products data
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -59,6 +95,10 @@ const Trending = () => {
       }
 
       localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+      
+      // Dispatch custom event to notify other components
+      window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+      
       return updatedWishlist;
     });
 
@@ -89,9 +129,10 @@ const Trending = () => {
                 {data.map((item) => {
                   const variantData = item.productVariantData[0];
                   const productDetails = item.productDetails;
+                  const itemId = item.productId || item._id;
 
                   return (
-                    <div key={item.productId || item._id} className="col-12 col-sm-6 col-lg-4 col-xl-3 px-2">
+                    <div key={itemId} className="col-12 col-sm-6 col-lg-4 col-xl-3 px-2">
                       <Link to='/womendetails'>
                         <div className="d_box mx-2">
                           <div className="d_img">
@@ -106,7 +147,7 @@ const Trending = () => {
                                 handleClickwishlist(item);
                               }}
                             >
-                              {isSelectedwishlist.includes(item.productId || item._id) ?
+                              {isSelectedwishlist.includes(itemId) ?
                                 <IoMdHeart className='d_icon' style={{ color: 'red' }} /> :
                                 <IoMdHeartEmpty className='d_icon' style={{ color: '#6a6a6a' }} />}
                             </div>
