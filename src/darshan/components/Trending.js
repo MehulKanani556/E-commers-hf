@@ -1,55 +1,88 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { FaStar } from "react-icons/fa";
-
-import './../css/trending.css'
+import './../css/trending.css';
 import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const Trending = () => {
-
   const { id } = useParams();
-
   const BaseUrl = process.env.REACT_APP_BASEURL;
   const token = localStorage.getItem('token');
 
   const [isSelectedwishlist, setIsSelectedWishlist] = useState([]);
   const [data, setData] = useState([]);
 
-  const handleClickwishlist = (item) => {
-    setIsSelectedWishlist(prev => {
-      if (prev.includes(item.id)) {
-        return prev.filter(itemId => itemId !== item.id);
-      } else {
-        return [...prev, item.id];
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      try {
+        const response = await axios.get(`${BaseUrl}/api/allwishList`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const wishlistIds = response.data.wishlist.map(item => item.productId || item._id);
+        setIsSelectedWishlist(wishlistIds);
+        localStorage.setItem('wishlist', JSON.stringify(wishlistIds));
+      } catch (error) {
+        console.error("Error fetching wishlist:", error);
       }
-    });
-  };
+    };
+
+    fetchWishlist();
+  }, [BaseUrl, token]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${BaseUrl}/api/tredingProducts/${id}`, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
-
-        // console.log("resposnse", response.data.trendingProducts);
         setData(response.data.trendingProducts);
       } catch (error) {
         console.error('Data fetching failed:', error);
       }
-    }
+    };
     fetchData();
   }, [id, BaseUrl, token]);
 
+  const handleClickwishlist = async (item) => {
+    const itemId = item.productId || item._id;
+
+    setIsSelectedWishlist(prev => {
+      let updatedWishlist;
+      if (prev.includes(itemId)) {
+        updatedWishlist = prev.filter(id => id !== itemId);
+      } else {
+        updatedWishlist = [...prev, itemId];
+      }
+
+      localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+      return updatedWishlist;
+    });
+
+    try {
+      await axios.post(`${BaseUrl}/api/createWishList`, {
+        productId: itemId,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.error("Error updating wishlist:", error);
+    }
+  };
+
   return (
     <>
-      {data.length > 0 ? (
+      {data.length > 0 && (
         <section className='d_p-80 d_trend'>
           <div className="d_container">
             <div className="d_margin">
               <div className="d_head d-flex justify-content-between align-items-center">
-                <h4 className='mb-sm-0 mb-1'>trending Collection for you</h4>
+                <h4 className='mb-sm-0 mb-1'>Trending Collection for you</h4>
                 <p className='mb-0'><Link to="/womenstore" className='text-decoration-none'>View More</Link></p>
               </div>
               <div className="row gy-xl-4 gy-4">
@@ -66,7 +99,13 @@ const Trending = () => {
                             {productDetails?.stockStatus === "In Stock" && (
                               <div className="d_seller">Best Seller</div>
                             )}
-                            <div className="d_trendicon d-flex justify-content-center align-items-center d_cur" onClick={() => handleClickwishlist(item)}>
+                            <div 
+                              className="d_trendicon d-flex justify-content-center align-items-center d_cur" 
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleClickwishlist(item);
+                              }}
+                            >
                               {isSelectedwishlist.includes(item.productId || item._id) ?
                                 <IoMdHeart className='d_icon' style={{ color: 'red' }} /> :
                                 <IoMdHeartEmpty className='d_icon' style={{ color: '#6a6a6a' }} />}
@@ -94,7 +133,6 @@ const Trending = () => {
                                       ? ` ${variantData.originalPrice - variantData.discountPrice}`
                                       : "0"}
                                   </div>
-
                                   <div className="d_disprice ms-1 text-decoration-line-through">${variantData?.originalPrice}</div>
                                 </div>
                               </div>
@@ -109,11 +147,9 @@ const Trending = () => {
             </div>
           </div>
         </section>
-      ) : (
-        <></>)}
-
+      )}
     </>
   )
 }
 
-export default Trending
+export default Trending;
