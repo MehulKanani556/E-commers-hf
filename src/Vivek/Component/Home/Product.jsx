@@ -3,14 +3,13 @@ import Footer from '../footer/Footer';
 import Process from '../common/Process';
 import Subscribe from '../common/Subscribe';
 import { FaMinus, FaPlus, FaStar } from 'react-icons/fa';
-import { IoMdHeartEmpty } from 'react-icons/io';
+import { IoMdHeartEmpty,IoMdHeart } from 'react-icons/io';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { IoClose, IoSearch } from 'react-icons/io5';
 import ReactSlider from 'react-slider';
 import Header from '../header/Header';
 import axios from 'axios';
-
 
 const Product = () => {
 
@@ -56,8 +55,16 @@ const Product = () => {
     });
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
-    const [categoryName,setCategoryName] = useState('');
-    const [subCategory,setSubCategory] = useState([]);
+    const [categoryName, setCategoryName] = useState('');
+    const [subCategory, setSubCategory] = useState([]);
+    const [brands, setBrands] = useState([]);
+    const [size, setSize] = useState([]);
+    const [color, setColor] = useState([]);
+    const [materials, setMaterials] = useState([]);
+    const [styles, setStyles] = useState([]);
+    const [sleeves, setSleeves] = useState([]);
+    const [patterns, setPatterns] = useState([]);
+    const [isSelectedwishlist, setIsSelectedWishlist] = useState([]);
 
     const location = useLocation();
     const { id } = useParams();
@@ -68,6 +75,109 @@ const Product = () => {
 
     const mainCategoryId = location.state.mainCategoryId;
 
+
+       // Function to fetch wishlist data from server
+       const fetchWishlist = async () => {
+        try {
+        const response = await axios.get(`${BaseUrl}/api/getMyWishList`, {
+            headers: {
+            Authorization: `Bearer ${token}`,
+            },
+        });
+
+        const wishlistIds = response.data.wishlist.map(item => item.productId || item._id);
+        setIsSelectedWishlist(wishlistIds);
+        localStorage.setItem('wishlist', JSON.stringify(wishlistIds));
+        } catch (error) {
+        console.error("Error fetching wishlist:", error);
+        }
+    };
+
+    // Function to sync wishlist with localStorage
+    const syncWishlistWithLocalStorage = () => {
+        const storedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+        if (JSON.stringify(storedWishlist) !== JSON.stringify(isSelectedwishlist)) {
+        setIsSelectedWishlist(storedWishlist);
+        }
+    };
+
+    // Initial fetch of wishlist data
+    useEffect(() => {
+        fetchWishlist();
+    }, []);
+
+    // Listen for custom event from Wishlist component
+    useEffect(() => {
+        const handleWishlistUpdate = () => {
+        syncWishlistWithLocalStorage();
+        };
+
+        // Add event listeners
+        window.addEventListener('wishlistUpdated', handleWishlistUpdate);
+        window.addEventListener('storage', (e) => {
+        if (e.key === 'wishlist') {
+            handleWishlistUpdate();
+        }
+        });
+
+        // Set up interval to check for changes
+        const intervalId = setInterval(syncWishlistWithLocalStorage, 1000);
+
+        // Clean up
+        return () => {
+        window.removeEventListener('wishlistUpdated', handleWishlistUpdate);
+        window.removeEventListener('storage', handleWishlistUpdate);
+        clearInterval(intervalId);
+        };
+    }, [isSelectedwishlist]);
+
+    // Fetch products data
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}/api/products`, {
+            headers: { Authorization: `Bearer ${token}` },
+            });
+            setFilteredProducts(response.data.products || []);
+        } catch (error) {
+            console.error('Data fetching failed:', error);
+        }
+        };
+        fetchData();
+    }, []);
+
+    const handleClickwishlist = async (item, e) => {
+        e.preventDefault();
+        const itemId = item.productId || item._id || item.id;
+
+        setIsSelectedWishlist(prev => {
+        let updatedWishlist;
+        if (prev.includes(itemId)) {
+            updatedWishlist = prev.filter(id => id !== itemId);
+        } else {
+            updatedWishlist = [...prev, itemId];
+        }
+
+        localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+        
+        // Dispatch custom event to notify other components
+        window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+        
+        return updatedWishlist;
+        });
+
+        try {
+        await axios.post(`${BaseUrl}/api/createWishList`, {
+            productId: itemId,
+        }, {
+            headers: {
+            Authorization: `Bearer ${token}`,
+            },
+        });
+        } catch (error) {
+        console.error("Error updating wishlist:", error);
+        }
+    };
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -81,45 +191,191 @@ const Product = () => {
                     product.mainCategoryId === mainCategoryId &&
                     product.categoryId === id
                 );
+                console.log("filter products", filteredProducts);
 
                 // Set the filtered products to state
-                setFilteredProducts(filteredProducts); 
-           } catch (error) {
+                setFilteredProducts(filteredProducts);
+                // Find max price from all product variants
+                let maxPrice = 0;
+                filteredProducts.forEach(product => {
+                    if (product.productVariantData && product.productVariantData.length > 0) {
+                        const originalPrice = parseFloat(product.productVariantData[0].originalPrice);
+                        if (originalPrice > maxPrice) {
+                            maxPrice = originalPrice;
+                        }
+                    }
+                });
+
+                // Set the max price (rounded up to nearest 100 or 1000 for better UI)
+                const roundedMaxPrice = Math.ceil(maxPrice / 1000) * 1000;
+                setPriceRange([0, roundedMaxPrice]);
+
+                // Extract specifications from products
+                const extractedBrands = {};
+                const extractedMaterials = {};
+                const extractedStyles = {};
+                const extractedSleeves = {};
+                const extractedPatterns = {};
+                const extractedSizes = {};
+                const extractedColors = {};
+                const extractedOccasions = {};
+
+                filteredProducts.forEach(product => {
+                    if (product.productVariantData && product.productVariantData.length > 0) {
+                        console.log("product.productvarint", product.productVariantData[0].size);
+
+                        // Fixed code
+                        if (product.productVariantData[0].size) {
+                            if (!extractedSizes[product.productVariantData[0].size]) {
+                                extractedSizes[product.productVariantData[0].size] = 1;
+                            } else {
+                                extractedSizes[product.productVariantData[0].size]++;
+                            }
+                        }
+                        // Extract colors
+                        if (product.productVariantData[0].colorName) {
+                            if (!extractedColors[product.productVariantData[0].colorName]) {
+                                extractedColors[product.productVariantData[0].colorName] = 1;
+                            } else {
+                                extractedColors[product.productVariantData[0].colorName]++;
+                            }
+                        }
+                        const specs = product.productVariantData[0].specifications;
+                        if (specs) {
+                            // Extract brand
+                            if (specs.Brand) {
+                                if (!extractedBrands[specs.Brand]) {
+                                    extractedBrands[specs.Brand] = 1;
+                                } else {
+                                    extractedBrands[specs.Brand]++;
+                                }
+                            }
+
+                            // Extract Material
+                            if (specs.Material) {
+                                if (!extractedMaterials[specs.Material]) {
+                                    extractedMaterials[specs.Material] = 1;
+                                } else {
+                                    extractedMaterials[specs.Material]++;
+                                }
+                            }
+
+                            // Extract Style
+                            if (specs.Style) {
+                                if (!extractedStyles[specs.Style]) {
+                                    extractedStyles[specs.Style] = 1;
+                                } else {
+                                    extractedStyles[specs.Style]++;
+                                }
+                            }
+
+                            // Extract Sleeve Length
+                            if (specs["Sleeve Length"]) {
+                                if (!extractedSleeves[specs["Sleeve Length"]]) {
+                                    extractedSleeves[specs["Sleeve Length"]] = 1;
+                                } else {
+                                    extractedSleeves[specs["Sleeve Length"]]++;
+                                }
+                            }
+
+                            // Extract Pattern
+                            if (specs.Pattern) {
+                                if (!extractedPatterns[specs.Pattern]) {
+                                    extractedPatterns[specs.Pattern] = 1;
+                                } else {
+                                    extractedPatterns[specs.Pattern]++;
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Convert to array format for filter components
+                const brandArray = Object.entries(extractedBrands).map(([brandname, count], index) => ({
+                    id: index + 1,
+                    brandname,
+                    count
+                }));
+
+                const materialArray = Object.entries(extractedMaterials).map(([materialname, count], index) => ({
+                    id: index + 1,
+                    materialname,
+                    count
+                }));
+
+                const sleeveArray = Object.entries(extractedSleeves).map(([sleevename, count], index) => ({
+                    id: index + 1,
+                    sleevename,
+                    count
+                }));
+
+                const patternArray = Object.entries(extractedPatterns).map(([patternname, count], index) => ({
+                    id: index + 1,
+                    patternname,
+                    count
+                }));
+                const sizeArray = Object.entries(extractedSizes).map(([sizename, count], index) => ({
+                    id: index + 1,
+                    sizename,
+                    count
+                }));
+
+                const colorArray = Object.entries(extractedColors).map(([colorname, count], index) => ({
+                    id: index + 1,
+                    colorname,
+                    count
+                }));
+
+                const styleArray = Object.entries(extractedStyles).map(([stylename, count], index) => ({
+                    id: index + 1,
+                    stylename,
+                    count
+                }));
+
+                // Set the state for each filter
+                setSize(sizeArray);
+                setColor(colorArray);
+                setBrands(brandArray);
+                setMaterials(materialArray);
+                setStyles(styleArray);
+                setSleeves(sleeveArray);
+                setPatterns(patternArray);
+            } catch (error) {
                 console.error('Data fetching failed:', error);
             }
-        }
+        };
         fetchData();
-    }, [mainCategoryId,BaseUrl,token]);
+    }, [mainCategoryId, BaseUrl, token, id]);
 
-  useEffect(() => {
-    const fetchCategory = async() => {
-        try {
-            const response = await axios.get(`${BaseUrl}/api/getCategory/${id}`, {
-                headers: {Authorization: `Bearer ${token}`}
-            });
-            // console.log("response",response.data.category.categoryName);
-            setCategoryName(response.data.category.categoryName);
-        } catch (error) {
-            console.error('Data Fetching Error:',error);
-        }
-    }
-    fetchCategory();
-  },[id,BaseUrl,token]);
+    useEffect(() => {
+        const fetchCategory = async () => {
+            try {
+                const response = await axios.get(`${BaseUrl}/api/getCategory/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
 
-  useEffect(() => {
-    const fetchSubCategory = async() => {
-        try {
-            const response = await axios.get(`${BaseUrl}/api/getCategoryBySubCategory/${id}`, {
-                headers: { Authorization: `Bearer ${token}`}
-            });
-            // console.log("resposne>>>>>>>>",response.data.subCategory);
-            setSubCategory(response.data.subCategory)
-        } catch (error) {
-            console.error('Data Fetching Error:',error);
+                setCategoryName(response.data.category.categoryName);
+            } catch (error) {
+                console.error('Data Fetching Error:', error);
+            }
         }
-    }
-    fetchSubCategory();
-  },[id, BaseUrl, token]);
+        fetchCategory();
+    }, [id, BaseUrl, token]);
+
+    useEffect(() => {
+        const fetchSubCategory = async () => {
+            try {
+                const response = await axios.get(`${BaseUrl}/api/getCategoryBySubCategory/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                // console.log("resposne>>>>>>>>",response.data.subCategory);
+                setSubCategory(response.data.subCategory)
+            } catch (error) {
+                console.error('Data Fetching Error:', error);
+            }
+        }
+        fetchSubCategory();
+    }, [id, BaseUrl, token]);
 
 
     const discount = [
@@ -130,75 +386,11 @@ const Product = () => {
         { id: 5, no: "50" },
     ];
 
-    const size = [
-        { id: 1, sizename: "XS" },
-        { id: 2, sizename: "S" },
-        { id: 3, sizename: "M" },
-        { id: 4, sizename: "L" },
-        { id: 5, sizename: "XL" },
-        { id: 6, sizename: "XXL" },
-        { id: 7, sizename: "X" },
-    ]
-
-    const brands = [
-        { id: 1, brandname: "BIBA" },
-        { id: 2, brandname: "BUTA & BUTI" },
-        { id: 3, brandname: "Mitera" },
-        { id: 4, brandname: "KALKI" },
-        { id: 5, brandname: "RADHARANI" },
-    ]
-
-    const color = [
-        { id: 1, colorname: "Black" },
-        { id: 2, colorname: "white" },
-        { id: 3, colorname: "Orange" },
-        { id: 4, colorname: "Blue" },
-        { id: 5, colorname: "Green" },
-        { id: 6, colorname: "Pink" },
-        { id: 7, colorname: "Yellow" },
-    ]
-
     const rating = [
         { id: 1, rating: 4 },
         { id: 2, rating: 3 },
         { id: 3, rating: 2 },
     ]
-
-    const sleeve = [
-        { id: 1, sleevename: "Full Sleeve" },
-        { id: 2, sleevename: "Half Sleeve" },
-        { id: 3, sleevename: "Short Sleeve" },
-        { id: 4, sleevename: "Sleeveless" },
-        { id: 5, sleevename: "3/4 Sleeve" },
-    ]
-
-    const material = [
-        { id: 1, materialname: "Georgette" },
-        { id: 2, materialname: "Jacquard" },
-        { id: 3, materialname: "Cotton Silk" },
-        { id: 4, materialname: "Pure Silk" },
-        { id: 5, materialname: "Silk Blend" },
-    ]
-
-    const pattern = [
-        { id: 1, patternname: "Woven" },
-        { id: 2, patternname: "Printed" },
-        { id: 3, patternname: "Polka Print" },
-        { id: 4, patternname: "Striped" },
-        { id: 5, patternname: "Floral" },
-    ]
-
-    const style = [
-        { id: 1, stylename: "Daily Wear" },
-        { id: 2, stylename: "Bollywood" },
-        { id: 3, stylename: "Banarasi" },
-        { id: 4, stylename: "Kanjivaram" },
-        { id: 5, stylename: "Casual" },
-        { id: 6, stylename: "Wedding" },
-        { id: 7, stylename: "Party" },
-        { id: 8, stylename: "Festive" },
-    ]
-
 
     // handle checkbox
     const handleCheckboxChange = (type, id, label) => {
@@ -295,7 +487,6 @@ const Product = () => {
 
     };
 
-
     // Brands 
     const filteredBrands = brands.filter(brand =>
         brand.brandname.toLowerCase().includes(searchbrand.toLowerCase())
@@ -305,19 +496,19 @@ const Product = () => {
     const displayedcolor = showMore.color ? color : color.slice(0, initialDisplayCount);
 
     // Sleeve
-    const displayedsleeve = showMore.sleeve ? sleeve : sleeve.slice(0, initialDisplayCount);
+    const displayedsleeve = showMore.sleeve ? sleeves : sleeves.slice(0, initialDisplayCount);
 
     // Material
-    const filteredmaterial = material.filter(material =>
+    const filteredmaterial = materials.filter(material =>
         material.materialname.toLowerCase().includes(searchmaterial.toLowerCase())
     );
     const displayedmaterial = showMore.material ? filteredmaterial : filteredmaterial.slice(0, initialDisplayCount);
 
     // Pattern
-    const displayedpattern = showMore.pattern ? pattern : pattern.slice(0, initialDisplayCount);
+    const displayedpattern = showMore.pattern ? patterns : patterns.slice(0, initialDisplayCount);
 
     // style
-    const filteredstyle = style.filter(style =>
+    const filteredstyle = styles.filter(style =>
         style.stylename.toLowerCase().includes(searchstyle.toLowerCase())
     );
     const displayedstyle = showMore.style ? filteredstyle : filteredstyle.slice(0, initialDisplayCount);
@@ -507,7 +698,7 @@ const Product = () => {
                                                                         thumbClassName="d_thumb"
                                                                         trackClassName="d_track"
                                                                         min={0}
-                                                                        max={5000}
+                                                                        max={priceRange[1]}
                                                                         value={priceRange}
                                                                         onChange={handleSliderChange}
                                                                         minDistance={50}
@@ -517,12 +708,13 @@ const Product = () => {
                                                                             <div {...props} className={`d_track ${state.index === 1 ? 'd_track-active' : ''}`}></div>
                                                                         )}
                                                                     />
-                                                                    <div className="d_price-label d_price-min" style={{ left: `${(priceRange[0] / 5000) * 100}%` }}>
+                                                                    <div className="d_price-label d_price-min" style={{ left: `${(priceRange[0] / priceRange[1]) * 100}%` }}>
                                                                         ${priceRange[0]}
                                                                     </div>
-                                                                    <div className="d_price-label d_price-max" style={{ left: `${(priceRange[1] / 5000) * 100}%` }}>
+                                                                    <div className="d_price-label d_price-max" style={{ left: `${(priceRange[1] / priceRange[1]) * 100}%` }}>
                                                                         ${priceRange[1]}
                                                                     </div>
+
                                                                 </div>
                                                             </div>
                                                         </>
@@ -575,7 +767,7 @@ const Product = () => {
                                                                 <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
                                                                     <input type="checkbox" onChange={() => handleCheckboxChange('brands', brand.id, brand.brandname)} checked={!!checkedFilters.brands[brand.id]} id={`brand-${brand.id}`} />
                                                                     <label htmlFor={`brand-${brand.id}`} className="d_checkmark"></label>
-                                                                    <p className="mb-0">{brand.brandname}<span>(10)</span></p>
+                                                                    <p className="mb-0">{brand.brandname}<span>({brand.count})</span></p>
                                                                 </div>
                                                             ))}
                                                             {filteredBrands.length > initialDisplayCount && (
@@ -642,123 +834,160 @@ const Product = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="d_categorylist">
-                                            <div className="d_acc">
-                                                <div className="d_accitem">
-                                                    <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveSleeve(!isActiveSleeve)}>
-                                                        <div className='d_title'>Sleeve Length</div>
-                                                        <div className='d_icon'>{isActiveSleeve ? <FaMinus /> : <FaPlus />}</div>
-                                                    </div>
-                                                    {isActiveSleeve &&
-                                                        <>
-                                                            <div className='mt-3'>
-                                                                {displayedsleeve.map((sleeve, index) => (
-                                                                    <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('sleeves', sleeve.id, sleeve.sleevename)} checked={!!checkedFilters.sleeves[sleeve.id]} id={`sleeve-${sleeve.id}`} />
-                                                                        <label htmlFor={`sleeve-${sleeve.id}`} className="d_checkmark"></label>
-                                                                        <p className="mb-0">{sleeve.sleevename}<span>(10)</span></p>
-                                                                    </div>
-                                                                ))}
-                                                                {sleeve.length > initialDisplayCount && (
-                                                                    <Link to="" onClick={(e) => handleShowMore(e, 'sleeve')} className='text-decoration-none'>
-                                                                        {showMore.sleeve ? 'Show Less' : `Show More (${sleeve.length - initialDisplayCount})`}
-                                                                    </Link>
-                                                                )}
-                                                            </div>
-                                                        </>
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="d_categorylist">
-                                            <div className="d_acc">
-                                                <div className="d_accitem">
-                                                    <div className="d_acctitle mb-0 d-flex justify-content-between" onClick={() => setIsActiveMaterial(!isActiveMaterial)}>
-                                                        <div className='d_title'>Material</div>
-                                                        <div className='d_icon'>{isActiveMaterial ? <FaMinus /> : <FaPlus />}</div>
-                                                    </div>
-                                                    {isActiveMaterial &&
-                                                        <>
-                                                            <div className="d_search">
-                                                                <IoSearch className='d_searchicon' />
-                                                                <input type="text" name="material" value={searchmaterial} onChange={handleSearchChange} className="form-control " placeholder="Search" />
-                                                            </div>
-                                                            {displayedmaterial.map((material, index) => (
-                                                                <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                    <input type="checkbox" onChange={() => handleCheckboxChange('materials', material.id, material.materialname)} checked={!!checkedFilters.materials[material.id]} id={`material-${material.id}`} />
-                                                                    <label htmlFor={`material-${material.id}`} className="d_checkmark"></label>
-                                                                    <p className="mb-0">{material.materialname}<span>(10)</span></p>
+                                        {sleeves.length > 0 && (
+                                            <div className="d_categorylist">
+                                                <div className="d_acc">
+                                                    <div className="d_accitem">
+                                                        <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveSleeve(!isActiveSleeve)}>
+                                                            <div className='d_title'>Sleeve Length</div>
+                                                            <div className='d_icon'>{isActiveSleeve ? <FaMinus /> : <FaPlus />}</div>
+                                                        </div>
+                                                        {isActiveSleeve && (
+                                                            <>
+                                                                <div className='mt-3'>
+                                                                    {sleeves.slice(0, showMore.sleeve ? sleeves.length : initialDisplayCount)
+                                                                        .map((sleeve, index) => (
+                                                                            <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                                <input
+                                                                                    type="checkbox"
+                                                                                    onChange={() => handleCheckboxChange('sleeves', sleeve.id, sleeve.sleevename)}
+                                                                                    checked={!!checkedFilters.sleeves[sleeve.id]}
+                                                                                    id={`sleeve-${sleeve.id}`}
+                                                                                />
+                                                                                <label htmlFor={`sleeve-${sleeve.id}`} className="d_checkmark"></label>
+                                                                                <p className="mb-0">{sleeve.sleevename}<span>({sleeve.count})</span></p>
+                                                                            </div>
+                                                                        ))}
+                                                                    {sleeves.length > initialDisplayCount && (
+                                                                        <Link to="" onClick={(e) => handleShowMore(e, 'sleeve')} className='text-decoration-none'>
+                                                                            {showMore.sleeve ? 'Show Less' : `Show More (${sleeves.length - initialDisplayCount})`}
+                                                                        </Link>
+                                                                    )}
                                                                 </div>
-                                                            ))}
-                                                            {filteredmaterial.length > initialDisplayCount && (
-                                                                <Link to="" onClick={(e) => handleShowMore(e, 'material')} className='text-decoration-none'>
-                                                                    {showMore.material ? 'Show Less' : `Show More (${filteredmaterial.length - initialDisplayCount})`}
-                                                                </Link>
-                                                            )}
-                                                        </>
-                                                    }
+                                                            </>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="d_categorylist">
-                                            <div className="d_acc">
-                                                <div className="d_accitem">
-                                                    <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActivePattern(!isActivePattern)}>
-                                                        <div className='d_title'>Pattern</div>
-                                                        <div className='d_icon'>{isActivePattern ? <FaMinus /> : <FaPlus />}</div>
-                                                    </div>
-                                                    {isActivePattern &&
-                                                        <>
-                                                            <div className='mt-3'>
-                                                                {displayedpattern.map((pattern, index) => (
-                                                                    <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('patterns', pattern.id, pattern.patternname)} checked={!!checkedFilters.patterns[pattern.id]} id={`pattern-${pattern.id}`} />
-                                                                        <label htmlFor={`pattern-${pattern.id}`} className="d_checkmark"></label>
-                                                                        <p className="mb-0">{pattern.patternname}<span>(10)</span></p>
-                                                                    </div>
-                                                                ))}
-                                                                {pattern.length > initialDisplayCount && (
-                                                                    <Link to="" onClick={(e) => handleShowMore(e, 'pattern')} className='text-decoration-none'>
-                                                                        {showMore.pattern ? 'Show Less' : `Show More (${pattern.length - initialDisplayCount})`}
+                                        )}
+                                        {materials.length > 0 && (
+                                            <div className="d_categorylist">
+                                                <div className="d_acc">
+                                                    <div className="d_accitem">
+                                                        <div className="d_acctitle mb-0 d-flex justify-content-between" onClick={() => setIsActiveMaterial(!isActiveMaterial)}>
+                                                            <div className='d_title'>Material</div>
+                                                            <div className='d_icon'>{isActiveMaterial ? <FaMinus /> : <FaPlus />}</div>
+                                                        </div>
+                                                        {isActiveMaterial && (
+                                                            <>
+                                                                <div className="d_search">
+                                                                    <IoSearch className='d_searchicon' />
+                                                                    <input type="text" name="material" value={searchmaterial} onChange={handleSearchChange} className="form-control" placeholder="Search" />
+                                                                </div>
+                                                                {/* Filter materials based on search input */}
+                                                                {materials
+                                                                    .filter(material => material.materialname.toLowerCase().includes(searchmaterial.toLowerCase()))
+                                                                    .slice(0, showMore.material ? materials.length : initialDisplayCount)
+                                                                    .map((material, index) => (
+                                                                        <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                            <input
+                                                                                type="checkbox"
+                                                                                onChange={() => handleCheckboxChange('materials', material.id, material.materialname)}
+                                                                                checked={!!checkedFilters.materials[material.id]}
+                                                                                id={`material-${material.id}`}
+                                                                            />
+                                                                            <label htmlFor={`material-${material.id}`} className="d_checkmark"></label>
+                                                                            <p className="mb-0">{material.materialname}<span>({material.count})</span></p>
+                                                                        </div>
+                                                                    ))}
+                                                                {materials.length > initialDisplayCount && (
+                                                                    <Link to="" onClick={(e) => handleShowMore(e, 'material')} className='text-decoration-none'>
+                                                                        {showMore.material ? 'Show Less' : `Show More (${materials.length - initialDisplayCount})`}
                                                                     </Link>
                                                                 )}
-                                                            </div>
-                                                        </>
-                                                    }
+                                                            </>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="d_categorylist">
-                                            <div className="d_acc">
-                                                <div className="d_accitem">
-                                                    <div className="d_acctitle mb-0 d-flex justify-content-between" onClick={() => setIsActiveStyle(!isActiveStyle)}>
-                                                        <div className='d_title'>Style</div>
-                                                        <div className='d_icon'>{isActiveStyle ? <FaMinus /> : <FaPlus />}</div>
+                                        )}
+                                        {patterns.length > 0 && (
+                                            <div className="d_categorylist">
+                                                <div className="d_acc">
+                                                    <div className="d_accitem">
+                                                        <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActivePattern(!isActivePattern)}>
+                                                            <div className='d_title'>Pattern</div>
+                                                            <div className='d_icon'>{isActivePattern ? <FaMinus /> : <FaPlus />}</div>
+                                                        </div>
+                                                        {isActivePattern && (
+                                                            <>
+                                                                <div className='mt-3'>
+                                                                    {patterns.slice(0, showMore.pattern ? patterns.length : initialDisplayCount)
+                                                                        .map((pattern, index) => (
+                                                                            <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                                <input
+                                                                                    type="checkbox"
+                                                                                    onChange={() => handleCheckboxChange('patterns', pattern.id, pattern.patternname)}
+                                                                                    checked={!!checkedFilters.patterns[pattern.id]}
+                                                                                    id={`pattern-${pattern.id}`}
+                                                                                />
+                                                                                <label htmlFor={`pattern-${pattern.id}`} className="d_checkmark"></label>
+                                                                                <p className="mb-0">{pattern.patternname}<span>({pattern.count})</span></p>
+                                                                            </div>
+                                                                        ))}
+                                                                    {patterns.length > initialDisplayCount && (
+                                                                        <Link to="" onClick={(e) => handleShowMore(e, 'pattern')} className='text-decoration-none'>
+                                                                            {showMore.pattern ? 'Show Less' : `Show More (${patterns.length - initialDisplayCount})`}
+                                                                        </Link>
+                                                                    )}
+                                                                </div>
+                                                            </>
+                                                        )}
                                                     </div>
-                                                    {isActiveStyle &&
-                                                        <>
-                                                            <div className="d_search">
-                                                                <IoSearch className='d_searchicon' />
-                                                                <input type="text" name="style" value={searchstyle} onChange={handleSearchChange} className="form-control " placeholder="Search" />
+                                                </div>
+                                            </div>
+                                        )}
+                                        {styles.length > 0 && (
+                                            <div className="d_categorylist">
+                                                <div className="d_acc">
+                                                    <div className="d_accitem">
+                                                        <div className="d_acctitle mb-0 d-flex justify-content-between" onClick={() => setIsActiveStyle(!isActiveStyle)}>
+                                                            <div className='d_title'>Style</div>
+                                                            <div className='d_icon'>{isActiveStyle ? <FaMinus /> : <FaPlus />}</div>
+                                                        </div>
+                                                        {isActiveStyle && (
+                                                            <>
+                                                                <div className="d_search">
+                                                                    <IoSearch className='d_searchicon' />
+                                                                    <input type="text" name="style" value={searchstyle} onChange={handleSearchChange} className="form-control" placeholder="Search" />
+                                                                </div>
+                                                                {styles
+                                                                    .filter(style => style.stylename.toLowerCase().includes(searchstyle.toLowerCase()))
+                                                                    .slice(0, showMore.style ? styles.length : initialDisplayCount)
+                                                                    .map((style, index) => (
+                                                                        <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                            <input
+                                                                                type="checkbox"
+                                                                                onChange={() => handleCheckboxChange('styles', style.id, style.stylename)}
+                                                                                checked={!!checkedFilters.styles[style.id]}
+                                                                                id={`style-${style.id}`}
+                                                                            />
+                                                                            <label htmlFor={`style-${style.id}`} className="d_checkmark"></label>
+                                                                            <p className="mb-0">{style.stylename}<span>({style.count})</span></p>
+                                                                        </div>
+                                                                    ))}
+                                                                {styles.length > initialDisplayCount && (
+                                                                    <Link to="" onClick={(e) => handleShowMore(e, 'style')} className='text-decoration-none'>
+                                                                        {showMore.style ? 'Show Less' : `Show More (${styles.length - initialDisplayCount})`}
+                                                                    </Link>
+                                                                )}
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
 
-                                                            </div>
-                                                            {displayedstyle.map((style, index) => (
-                                                                <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                    <input type="checkbox" onChange={() => handleCheckboxChange('styles', style.id, style.stylename)} checked={!!checkedFilters.styles[style.id]} id={`style-${style.id}`} />
-                                                                    <label htmlFor={`style-${style.id}`} className="d_checkmark"></label>
-                                                                    <p className="mb-0">{style.stylename}<span>(10)</span></p>
-                                                                </div>
-                                                            ))}
-                                                            {filteredstyle.length > initialDisplayCount && (
-                                                                <Link to="" onClick={(e) => handleShowMore(e, 'style')} className='text-decoration-none'>
-                                                                    {showMore.style ? 'Show Less' : `Show More (${filteredstyle.length - initialDisplayCount})`}
-                                                                </Link>
-                                                            )}
-                                                        </>
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -948,7 +1177,7 @@ const Product = () => {
                                                                     <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
                                                                         <input type="checkbox" onChange={() => handleCheckboxChange('brands', brand.id, brand.brandname)} checked={!!checkedFilters.brands[brand.id]} id={`brand-${brand.id}`} />
                                                                         <label htmlFor={`brand-${brand.id}`} className="d_checkmark"></label>
-                                                                        <p className="mb-0">{brand.brandname}<span>(10)</span></p>
+                                                                        <p className="mb-0">{brand.brandname}<span>({brand.count})</span></p>
                                                                     </div>
                                                                 ))}
                                                                 {filteredBrands.length > initialDisplayCount && (
@@ -1015,123 +1244,159 @@ const Product = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="d_categorylist">
-                                                <div className="d_acc">
-                                                    <div className="d_accitem">
-                                                        <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveSleeve(!isActiveSleeve)}>
-                                                            <div className='d_title'>Sleeve Length</div>
-                                                            <div className='d_icon'>{isActiveSleeve ? <FaMinus /> : <FaPlus />}</div>
+                                            {sleeves.length > 0 && (
+                                                <div className="d_categorylist">
+                                                    <div className="d_acc">
+                                                        <div className="d_accitem">
+                                                            <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActiveSleeve(!isActiveSleeve)}>
+                                                                <div className='d_title'>Sleeve Length</div>
+                                                                <div className='d_icon'>{isActiveSleeve ? <FaMinus /> : <FaPlus />}</div>
+                                                            </div>
+                                                            {isActiveSleeve && (
+                                                                <>
+                                                                    <div className='mt-3'>
+                                                                        {sleeves.slice(0, showMore.sleeve ? sleeves.length : initialDisplayCount)
+                                                                            .map((sleeve, index) => (
+                                                                                <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                                    <input
+                                                                                        type="checkbox"
+                                                                                        onChange={() => handleCheckboxChange('sleeves', sleeve.id, sleeve.sleevename)}
+                                                                                        checked={!!checkedFilters.sleeves[sleeve.id]}
+                                                                                        id={`sleeve-${sleeve.id}`}
+                                                                                    />
+                                                                                    <label htmlFor={`sleeve-${sleeve.id}`} className="d_checkmark"></label>
+                                                                                    <p className="mb-0">{sleeve.sleevename}<span>({sleeve.count})</span></p>
+                                                                                </div>
+                                                                            ))}
+                                                                        {sleeves.length > initialDisplayCount && (
+                                                                            <Link to="" onClick={(e) => handleShowMore(e, 'sleeve')} className='text-decoration-none'>
+                                                                                {showMore.sleeve ? 'Show Less' : `Show More (${sleeves.length - initialDisplayCount})`}
+                                                                            </Link>
+                                                                        )}
+                                                                    </div>
+                                                                </>
+                                                            )}
                                                         </div>
-                                                        {isActiveSleeve &&
-                                                            <>
-                                                                <div className='mt-3'>
-                                                                    {displayedsleeve.map((sleeve, index) => (
-                                                                        <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                            <input type="checkbox" onChange={() => handleCheckboxChange('sleeves', sleeve.id, sleeve.sleevename)} checked={!!checkedFilters.sleeves[sleeve.id]} id={`sleeve-${sleeve.id}`} />
-                                                                            <label htmlFor={`sleeve-${sleeve.id}`} className="d_checkmark"></label>
-                                                                            <p className="mb-0">{sleeve.sleevename}<span>(10)</span></p>
-                                                                        </div>
-                                                                    ))}
-                                                                    {sleeve.length > initialDisplayCount && (
-                                                                        <Link to="" onClick={(e) => handleShowMore(e, 'sleeve')} className='text-decoration-none'>
-                                                                            {showMore.sleeve ? 'Show Less' : `Show More (${sleeve.length - initialDisplayCount})`}
+                                                    </div>
+                                                </div>
+                                            )}
+                                            {materials.length > 0 && (
+                                                <div className="d_categorylist">
+                                                    <div className="d_acc">
+                                                        <div className="d_accitem">
+                                                            <div className="d_acctitle mb-0 d-flex justify-content-between" onClick={() => setIsActiveMaterial(!isActiveMaterial)}>
+                                                                <div className='d_title'>Material</div>
+                                                                <div className='d_icon'>{isActiveMaterial ? <FaMinus /> : <FaPlus />}</div>
+                                                            </div>
+                                                            {isActiveMaterial && (
+                                                                <>
+                                                                    <div className="d_search">
+                                                                        <IoSearch className='d_searchicon' />
+                                                                        <input type="text" name="material" value={searchmaterial} onChange={handleSearchChange} className="form-control" placeholder="Search" />
+                                                                    </div>
+                                                                    {/* Filter materials based on search input */}
+                                                                    {materials
+                                                                        .filter(material => material.materialname.toLowerCase().includes(searchmaterial.toLowerCase()))
+                                                                        .slice(0, showMore.material ? materials.length : initialDisplayCount)
+                                                                        .map((material, index) => (
+                                                                            <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                                <input
+                                                                                    type="checkbox"
+                                                                                    onChange={() => handleCheckboxChange('materials', material.id, material.materialname)}
+                                                                                    checked={!!checkedFilters.materials[material.id]}
+                                                                                    id={`material-${material.id}`}
+                                                                                />
+                                                                                <label htmlFor={`material-${material.id}`} className="d_checkmark"></label>
+                                                                                <p className="mb-0">{material.materialname}<span>({material.count})</span></p>
+                                                                            </div>
+                                                                        ))}
+                                                                    {materials.length > initialDisplayCount && (
+                                                                        <Link to="" onClick={(e) => handleShowMore(e, 'material')} className='text-decoration-none'>
+                                                                            {showMore.material ? 'Show Less' : `Show More (${materials.length - initialDisplayCount})`}
                                                                         </Link>
                                                                     )}
-                                                                </div>
-                                                            </>
-                                                        }
+                                                                </>
+                                                            )}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div className="d_categorylist">
-                                                <div className="d_acc">
-                                                    <div className="d_accitem">
-                                                        <div className="d_acctitle mb-0 d-flex justify-content-between" onClick={() => setIsActiveMaterial(!isActiveMaterial)}>
-                                                            <div className='d_title'>Material</div>
-                                                            <div className='d_icon'>{isActiveMaterial ? <FaMinus /> : <FaPlus />}</div>
-                                                        </div>
-                                                        {isActiveMaterial &&
-                                                            <>
-                                                                <div className="d_search">
-                                                                    <IoSearch className='d_searchicon' />
-                                                                    <input type="text" name="material" value={searchmaterial} onChange={handleSearchChange} className="form-control " placeholder="Search" />
-                                                                </div>
-                                                                {displayedmaterial.map((material, index) => (
-                                                                    <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('materials', material.id, material.materialname)} checked={!!checkedFilters.materials[material.id]} id={`material-${material.id}`} />
-                                                                        <label htmlFor={`material-${material.id}`} className="d_checkmark"></label>
-                                                                        <p className="mb-0">{material.materialname}<span>(10)</span></p>
+                                            )}
+                                            {patterns.length > 0 && (
+                                                <div className="d_categorylist">
+                                                    <div className="d_acc">
+                                                        <div className="d_accitem">
+                                                            <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActivePattern(!isActivePattern)}>
+                                                                <div className='d_title'>Pattern</div>
+                                                                <div className='d_icon'>{isActivePattern ? <FaMinus /> : <FaPlus />}</div>
+                                                            </div>
+                                                            {isActivePattern && (
+                                                                <>
+                                                                    <div className='mt-3'>
+                                                                        {patterns.slice(0, showMore.pattern ? patterns.length : initialDisplayCount)
+                                                                            .map((pattern, index) => (
+                                                                                <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                                    <input
+                                                                                        type="checkbox"
+                                                                                        onChange={() => handleCheckboxChange('patterns', pattern.id, pattern.patternname)}
+                                                                                        checked={!!checkedFilters.patterns[pattern.id]}
+                                                                                        id={`pattern-${pattern.id}`}
+                                                                                    />
+                                                                                    <label htmlFor={`pattern-${pattern.id}`} className="d_checkmark"></label>
+                                                                                    <p className="mb-0">{pattern.patternname}<span>({pattern.count})</span></p>
+                                                                                </div>
+                                                                            ))}
+                                                                        {patterns.length > initialDisplayCount && (
+                                                                            <Link to="" onClick={(e) => handleShowMore(e, 'pattern')} className='text-decoration-none'>
+                                                                                {showMore.pattern ? 'Show Less' : `Show More (${patterns.length - initialDisplayCount})`}
+                                                                            </Link>
+                                                                        )}
                                                                     </div>
-                                                                ))}
-                                                                {filteredmaterial.length > initialDisplayCount && (
-                                                                    <Link to="" onClick={(e) => handleShowMore(e, 'material')} className='text-decoration-none'>
-                                                                        {showMore.material ? 'Show Less' : `Show More (${filteredmaterial.length - initialDisplayCount})`}
-                                                                    </Link>
-                                                                )}
-                                                            </>
-                                                        }
+                                                                </>
+                                                            )}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div className="d_categorylist">
-                                                <div className="d_acc">
-                                                    <div className="d_accitem">
-                                                        <div className="d_acctitle d-flex justify-content-between" onClick={() => setIsActivePattern(!isActivePattern)}>
-                                                            <div className='d_title'>Pattern</div>
-                                                            <div className='d_icon'>{isActivePattern ? <FaMinus /> : <FaPlus />}</div>
-                                                        </div>
-                                                        {isActivePattern &&
-                                                            <>
-                                                                <div className='mt-3'>
-                                                                    {displayedpattern.map((pattern, index) => (
-                                                                        <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                            <input type="checkbox" onChange={() => handleCheckboxChange('patterns', pattern.id, pattern.patternname)} checked={!!checkedFilters.patterns[pattern.id]} id={`pattern-${pattern.id}`} />
-                                                                            <label htmlFor={`pattern-${pattern.id}`} className="d_checkmark"></label>
-                                                                            <p className="mb-0">{pattern.patternname}<span>(10)</span></p>
-                                                                        </div>
-                                                                    ))}
-                                                                    {pattern.length > initialDisplayCount && (
-                                                                        <Link to="" onClick={(e) => handleShowMore(e, 'pattern')} className='text-decoration-none'>
-                                                                            {showMore.pattern ? 'Show Less' : `Show More (${pattern.length - initialDisplayCount})`}
+                                            )}
+                                            {styles.length > 0 && (
+                                                <div className="d_categorylist">
+                                                    <div className="d_acc">
+                                                        <div className="d_accitem">
+                                                            <div className="d_acctitle mb-0 d-flex justify-content-between" onClick={() => setIsActiveStyle(!isActiveStyle)}>
+                                                                <div className='d_title'>Style</div>
+                                                                <div className='d_icon'>{isActiveStyle ? <FaMinus /> : <FaPlus />}</div>
+                                                            </div>
+                                                            {isActiveStyle && (
+                                                                <>
+                                                                    <div className="d_search">
+                                                                        <IoSearch className='d_searchicon' />
+                                                                        <input type="text" name="style" value={searchstyle} onChange={handleSearchChange} className="form-control" placeholder="Search" />
+                                                                    </div>
+                                                                    {styles
+                                                                        .filter(style => style.stylename.toLowerCase().includes(searchstyle.toLowerCase()))
+                                                                        .slice(0, showMore.style ? styles.length : initialDisplayCount)
+                                                                        .map((style, index) => (
+                                                                            <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
+                                                                                <input
+                                                                                    type="checkbox"
+                                                                                    onChange={() => handleCheckboxChange('styles', style.id, style.stylename)}
+                                                                                    checked={!!checkedFilters.styles[style.id]}
+                                                                                    id={`style-${style.id}`}
+                                                                                />
+                                                                                <label htmlFor={`style-${style.id}`} className="d_checkmark"></label>
+                                                                                <p className="mb-0">{style.stylename}<span>({style.count})</span></p>
+                                                                            </div>
+                                                                        ))}
+                                                                    {styles.length > initialDisplayCount && (
+                                                                        <Link to="" onClick={(e) => handleShowMore(e, 'style')} className='text-decoration-none'>
+                                                                            {showMore.style ? 'Show Less' : `Show More (${styles.length - initialDisplayCount})`}
                                                                         </Link>
                                                                     )}
-                                                                </div>
-                                                            </>
-                                                        }
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="d_categorylist">
-                                                <div className="d_acc">
-                                                    <div className="d_accitem">
-                                                        <div className="d_acctitle mb-0 d-flex justify-content-between" onClick={() => setIsActiveStyle(!isActiveStyle)}>
-                                                            <div className='d_title'>Style</div>
-                                                            <div className='d_icon'>{isActiveStyle ? <FaMinus /> : <FaPlus />}</div>
+                                                                </>
+                                                            )}
                                                         </div>
-                                                        {isActiveStyle &&
-                                                            <>
-                                                                <div className="d_search">
-                                                                    <IoSearch className='d_searchicon' />
-                                                                    <input type="text" name="style" value={searchstyle} onChange={handleSearchChange} className="form-control " placeholder="Search" />
-
-                                                                </div>
-                                                                {displayedstyle.map((style, index) => (
-                                                                    <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('styles', style.id, style.stylename)} checked={!!checkedFilters.styles[style.id]} id={`style-${style.id}`} />
-                                                                        <label htmlFor={`style-${style.id}`} className="d_checkmark"></label>
-                                                                        <p className="mb-0">{style.stylename}<span>(10)</span></p>
-                                                                    </div>
-                                                                ))}
-                                                                {filteredstyle.length > initialDisplayCount && (
-                                                                    <Link to="" onClick={(e) => handleShowMore(e, 'style')} className='text-decoration-none'>
-                                                                        {showMore.style ? 'Show Less' : `Show More (${filteredstyle.length - initialDisplayCount})`}
-                                                                    </Link>
-                                                                )}
-                                                            </>
-                                                        }
                                                     </div>
                                                 </div>
-                                            </div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -1159,55 +1424,63 @@ const Product = () => {
                                     </div>
                                     <div className="d_trend mt-3">
                                         <div className="row gy-4">
-                                            {filteredProducts.map((item) => {
+                                        {filteredProducts.map((item) => {
+                                                const itemId = item.productId || item._id || item.id;
                                                 return (
-                                                    <div key={item.id} className="col-12 col-sm-6 col-lg-6 col-xl-3">
-                                                        <Link to='/womendetails'>
-                                                            <div className="d_box">
-                                                                <div className="d_img">
-                                                                    <img src={`${BaseUrl}/${item.productVariantData[0].images[0]}`} alt="" />
-                                                                    {/* {item.isBestSeller &&
-                                                                        (<div className="d_seller">Best Seller</div>)}
-                                                                    {item.isNewArrial &&
-                                                                        (<div className="d_arrival">New Arrival</div>)} */}
-                                                                    <div className="d_trendicon d-flex justify-content-center align-items-center d_cur">
-                                                                        <IoMdHeartEmpty className='d_icon ' />
-                                                                    </div>
-                                                                </div>
-                                                                <div className="d_content">
-                                                                    <div className='d-flex flex-column h-100'>
-                                                                        <div className="d-flex align-items-center justify-content-between">
-                                                                            <div className="d_name">{item.productName}</div>
-                                                                            <div className='d-flex align-items-center'>
-                                                                                <FaStar className='d_staricon me-1' />
-                                                                                <div className="d_review">{item.rating || 0}</div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div className="d_desc">{item.productVariantData[0].description}</div>
-                                                                        <div className="d-flex align-items-center justify-content-between mt-auto">
-                                                                            <div className="d-flex align-items-center">
-                                                                                {item.productVariantData[0].colorName.split(',').map((color, i) => {
-                                                                                    return (
-                                                                                        <div
-                                                                                            key={i}
-                                                                                            className="d_color"
-                                                                                            style={{ backgroundColor: color }}
-                                                                                        ></div>
-                                                                                    )
-                                                                                })}
-                                                                            </div>
-                                                                            <div className="d-flex align-items-end">
-                                                                                <div className="d_price">
-                                                                                    ${parseInt(item.productVariantData[0].originalPrice) - parseInt(item.productVariantData[0].discountPrice)}
-                                                                                </div>
-                                                                                <div className="d_disprice ms-1 text-decoration-line-through">${item.productVariantData[0].originalPrice}</div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                <div key={itemId} className="col-12 col-sm-6 col-lg-6 col-xl-3">
+                                                    <Link to='/womendetails'>
+                                                    <div className="d_box">
+                                                        <div className="d_img">
+                                                        <img src={`${BaseUrl}/${item.productVariantData[0].images[0]}`} alt="" />
+                                                        {item.productDetails?.stockStatus === "In Stock" && (
+                                                            <div className="d_seller">Best Seller</div>
+                                                        )}
+                                                        {item.isNewArrial && (
+                                                            <div className="d_arrival">New Arrival</div>
+                                                        )}
+                                                        <div 
+                                                            className="d_trendicon d-flex justify-content-center align-items-center d_cur" 
+                                                            onClick={(e) => handleClickwishlist(item, e)}
+                                                        >
+                                                            {isSelectedwishlist.includes(itemId) ?
+                                                            <IoMdHeart className='d_icon' style={{ color: 'red' }} /> :
+                                                            <IoMdHeartEmpty className='d_icon' style={{ color: '#6a6a6a' }} />}
+                                                        </div>
+                                                        </div>
+                                                        <div className="d_content">
+                                                        <div className='d-flex flex-column h-100'>
+                                                            <div className="d-flex align-items-center justify-content-between">
+                                                            <div className="d_name">{item.productName || item.productDetails?.productName}</div>
+                                                            <div className='d-flex align-items-center'>
+                                                                <FaStar className='d_staricon me-1' />
+                                                                <div className="d_review">{item.rating || 0}</div>
                                                             </div>
-                                                        </Link>
+                                                            </div>
+                                                            <div className="d_desc">{item.productVariantData[0].description || item.productVariantData[0].shortDescription}</div>
+                                                            <div className="d-flex align-items-center justify-content-between mt-auto">
+                                                            <div className="d-flex align-items-center">
+                                                                {(item.productVariantData[0].colorName || '').split(',').map((color, i) => (
+                                                                <div
+                                                                    key={i}
+                                                                    className={`d_color ${i === 0 ? 'active' : ""}`}
+                                                                    style={{ backgroundColor: color }}
+                                                                ></div>
+                                                                ))}
+                                                            </div>
+                                                            <div className="d-flex align-items-end">
+                                                                <div className="d_price">
+                                                                ${item.productVariantData[0].originalPrice && item.productVariantData[0].discountPrice
+                                                                    ? parseInt(item.productVariantData[0].originalPrice) - parseInt(item.productVariantData[0].discountPrice)
+                                                                    : "0"}
+                                                                </div>
+                                                                <div className="d_disprice ms-1 text-decoration-line-through">${item.productVariantData[0].originalPrice}</div>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
                                                     </div>
+                                                    </Link>
+                                                </div>
                                                 )
                                             })}
                                         </div>
