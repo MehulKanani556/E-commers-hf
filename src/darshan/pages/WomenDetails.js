@@ -19,7 +19,7 @@ import Like from '../components/Like';
 import Recentlyviewed from '../components/Recentlyviewed';
 import Customerlike from '../components/Customerlike';
 import { Modal, Table } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { ReactImageTurntable } from 'react-image-turntable';
 import OwlCarousel from 'react-owl-carousel';
 import Header from '../../Vivek/Component/header/Header';
@@ -29,6 +29,9 @@ import Footer from '../../Vivek/Component/footer/Footer';
 import ReactImageMagnify from 'react-image-magnify';
 
 const WomenDetails = () => {
+    const { productId } = useParams(); // Get product ID from URL
+    const [productDetails, setProductDetails] = useState(null); // State to hold product details
+    const token = "your_token_here"; // Replace with your actual token or retrieve it from a secure location
 
     const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -64,6 +67,26 @@ const WomenDetails = () => {
         { type: 'video', src: detailVideo, thumbnail: detailVideo },
         { type: 'image', src: detailImg3, thumbnail: detailImg3 }
     ];
+
+    useEffect(() => {
+        const fetchProductDetails = async () => {
+            try {
+                const response = await fetch(`http://localhost:5000/api/getProduct/${productId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Include the token in the headers
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                setProductDetails(data); // Set product details in state
+            } catch (error) {
+                console.error('Error fetching product details:', error);
+            }
+        };
+
+        fetchProductDetails(); // Call the function to fetch product details
+    }, [productId, token]); // Dependency array includes productId and token
 
     useEffect(() => {
         if (mainContent.type === 'image') {
@@ -133,7 +156,7 @@ const WomenDetails = () => {
     useEffect(() => {
         const handleResize = () => {
             const canvas = canvasRef.current;
-            const viewer = viewerRef.current;   
+            const viewer = viewerRef.current;
 
             if (viewer && canvas) {
                 // Set canvas width to match viewer's width
@@ -210,11 +233,7 @@ const WomenDetails = () => {
         }
     };
 
-    
-
-    
-
-    return (
+ return (
         <>
 
             {/* Header section  */}
@@ -289,7 +308,7 @@ const WomenDetails = () => {
                                                             alt="360 View"
                                                             onClick={() => {
                                                                 toggle360View();
-                                                                setCurrentFrame(1); 
+                                                                setCurrentFrame(1);
                                                             }}
                                                             style={{ cursor: 'pointer' }}
                                                         />
@@ -416,18 +435,7 @@ const WomenDetails = () => {
                                                     </div>
                                                 ))}
                                             </div>
-                                            {/* <div className="d-flex">
-                                                {[128, 256, 512].map((size) => (
-                                                    <div
-                                                        key={size}
-                                                        className={`d_sizebox d_gbsize d-flex justify-content-center align-items-center d_cur ${selectedgbsize === size ? 'active' : ''} ${size === 512 ? 'd_disable' : ''}`}
-                                                        onClick={() => size !== 512 && setSelectedGBSize(size)}
-                                                    >
-                                                        {size === 512 && <div className="d_diagonal-line"></div>}
-                                                        <p className="mb-0">{size} GB</p>
-                                                    </div>
-                                                ))}
-                                            </div> */}
+
                                         </div>
                                         <div className="col-6 col-sm-6 col-lg-12 col-xl-6 d_psdeliver">
                                             <div className="d_qun">Quantity :</div>
@@ -464,13 +472,7 @@ const WomenDetails = () => {
                                         </div>
                                     </div>
                                 </div>
-                                {/* <div className="d_delbtn">
-                                    <div className="d-flex">
-                                        <div className="d_cta  d-flex justify-content-center align-items-center">
-                                            <Link to="" className='text-decoration-none d_notifybtn text-center d-block'>Notify me</Link>
-                                        </div>
-                                    </div>
-                                </div> */}
+
                                 <div className="d_feau">
                                     <div className="d-flex flex-wrap">
                                         <div className="d-flex align-items-center d_feabg">
@@ -552,47 +554,7 @@ const WomenDetails = () => {
                                         <div className="d_conhead d_add">Akshya Nagar 1st Block 1st Cross, Rammurthy nagar, Bangalore-560016</div>
                                     </div>
                                 </div>
-                                {/* <div className="prodel">
-                                    <div className="d_head">Product Details</div>
-                                    <div className="row">
-                                        <div className="col-6">
-                                            <div className="d_con">
-                                                <p className='mb-0'>Model Name</p>
-                                                <div className="d_conhead">iPhone 13 (256GB) - Midnight</div>
-                                            </div>
-                                            <div className="d_con">
-                                                <p className='mb-0'>Operating System</p>
-                                                <div className="d_conhead">iOS 14</div>
-                                            </div>
-                                            <div className="d_con">
-                                                <p className='mb-0'>Memory Storage Capacity</p>
-                                                <div className="d_conhead">256 GB</div>
-                                            </div>
-                                            <div className="d_con">
-                                                <p className='mb-0'>Camera and Video</p>
-                                                <div className="d_conhead d_add">Dual 12MP cameras with Portrait mode, Depth Control, Portrait Lighting, Smart HDR</div>
-                                            </div>
-                                        </div>
-                                        <div className="col-6">
-                                            <div className="d_con">
-                                                <p className='mb-0'>Colour</p>
-                                                <div className="d_conhead">Dark Blue</div>
-                                            </div>
-                                            <div className="d_con">
-                                                <p className='mb-0'>Screen Size</p>
-                                                <div className="d_conhead">6.1 Inches</div>
-                                            </div>
-                                            <div className="d_con">
-                                                <p className='mb-0'>Browse Type</p>
-                                                <div className="d_conhead">Smart Phones</div>
-                                            </div>
-                                            <div className="d_con">
-                                                <p className='mb-0'>Front Camera</p>
-                                                <div className="d_conhead d_add">12MP TrueDepth front camera with Portrait mode, Depth Control, Portrait Lighting</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
+
                             </Accordion.Body>
                         </Accordion.Item>
                         <Accordion.Item eventKey="1">
@@ -1386,71 +1348,7 @@ const WomenDetails = () => {
             </Modal>
 
             {/* Offer Modal section end */}
-
-            {/* Images modal section Start */}
-
-            {/* <Modal className="d_imagemodal"
-                show={imagemodalShow}
-                onHide={() => setimageModalShow(false)}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-            >
-                <Modal.Body>
-                    <div className="d_closeicon d-flex justify-content-end d_cur me-3" onClick={() => setimageModalShow(false)}>
-                        <IoClose className='icon' />
-                    </div>
-                    <OwlCarousel className='owl-theme'   {...carouselSettings}>
-                        {mediaItems.map((item, index) => (
-                            <div className="d_item" key={item.id}>
-                                {item.type === 'image' ? (
-                                    <>
-                                        <img src={item.src} alt={`media-${index}`} className="img-fluid" />
-                                        <img
-                                            className='d_360view'
-                                            src={icon360}
-                                            alt="360 View"
-                                            onClick={() => {
-                                                toggle360View()
-                                                setCurrentFrame(1)
-                                            }}
-
-                                            style={{ cursor: 'pointer' }}
-                                        />
-                                    </>
-                                ) : (
-                                    <video ref={slidervideoRef} controls>
-                                        <source src={item.src} type="video/mp4" />
-                                    </video>
-                                )}
-                            </div>
-                        ))}
-                    </OwlCarousel>
-                    <div className="d_thumbnails w-100 d-flex justify-content-center mt-3 ">
-                        <div className='d_overflowx'>
-                        <div className='d-flex  flex-nowrap'>
-                            {mediaItems.map((item, index) => (
-                                <div className="d_img" key={item.id} onClick={() => handleThumbnailClick(index)} style={{ cursor: 'pointer' }}>
-                                    {item.type === 'image' ? (
-                                        <img src={item.src} alt={`thumb-${index}`} className="img-fluid small-img" />
-                                    ) : (
-                                        <video className="small-img">
-                                            <source src={item.src} type="video/mp4" />
-                                        </video>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-                     </div>
-                    </div>
-                </Modal.Body>
-            </Modal> */}
-
-            {/* Images modal section end */}
-
-
-
-
+        
         </>
     );
 };
