@@ -3,7 +3,7 @@ import Footer from '../footer/Footer';
 import Process from '../common/Process';
 import Subscribe from '../common/Subscribe';
 import { FaMinus, FaPlus, FaStar } from 'react-icons/fa';
-import { IoMdHeartEmpty,IoMdHeart } from 'react-icons/io';
+import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { IoClose, IoSearch } from 'react-icons/io5';
@@ -26,7 +26,7 @@ const Product = () => {
     const [isActiveMaterial, setIsActiveMaterial] = useState(true);
     const [isActivePattern, setIsActivePattern] = useState(true);
     const [isActiveStyle, setIsActiveStyle] = useState(true);
-    const [priceRange, setPriceRange] = useState([0, 5000]);
+    const [priceRange, setPriceRange] = useState([0, 1000]);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [showMore, setShowMore] = useState({
         size: false,
@@ -76,20 +76,20 @@ const Product = () => {
     const mainCategoryId = location.state.mainCategoryId;
 
 
-       // Function to fetch wishlist data from server
-       const fetchWishlist = async () => {
+    // Function to fetch wishlist data from server
+    const fetchWishlist = async () => {
         try {
-        const response = await axios.get(`${BaseUrl}/api/getMyWishList`, {
-            headers: {
-            Authorization: `Bearer ${token}`,
-            },
-        });
+            const response = await axios.get(`${BaseUrl}/api/getMyWishList`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
 
-        const wishlistIds = response.data.wishlist.map(item => item.productId || item._id);
-        setIsSelectedWishlist(wishlistIds);
-        localStorage.setItem('wishlist', JSON.stringify(wishlistIds));
+            const wishlistIds = response.data.wishlist.map(item => item.productId || item._id);
+            setIsSelectedWishlist(wishlistIds);
+            localStorage.setItem('wishlist', JSON.stringify(wishlistIds));
         } catch (error) {
-        console.error("Error fetching wishlist:", error);
+            console.error("Error fetching wishlist:", error);
         }
     };
 
@@ -97,7 +97,7 @@ const Product = () => {
     const syncWishlistWithLocalStorage = () => {
         const storedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
         if (JSON.stringify(storedWishlist) !== JSON.stringify(isSelectedwishlist)) {
-        setIsSelectedWishlist(storedWishlist);
+            setIsSelectedWishlist(storedWishlist);
         }
     };
 
@@ -109,15 +109,15 @@ const Product = () => {
     // Listen for custom event from Wishlist component
     useEffect(() => {
         const handleWishlistUpdate = () => {
-        syncWishlistWithLocalStorage();
+            syncWishlistWithLocalStorage();
         };
 
         // Add event listeners
         window.addEventListener('wishlistUpdated', handleWishlistUpdate);
         window.addEventListener('storage', (e) => {
-        if (e.key === 'wishlist') {
-            handleWishlistUpdate();
-        }
+            if (e.key === 'wishlist') {
+                handleWishlistUpdate();
+            }
         });
 
         // Set up interval to check for changes
@@ -125,57 +125,43 @@ const Product = () => {
 
         // Clean up
         return () => {
-        window.removeEventListener('wishlistUpdated', handleWishlistUpdate);
-        window.removeEventListener('storage', handleWishlistUpdate);
-        clearInterval(intervalId);
+            window.removeEventListener('wishlistUpdated', handleWishlistUpdate);
+            window.removeEventListener('storage', handleWishlistUpdate);
+            clearInterval(intervalId);
         };
     }, [isSelectedwishlist]);
 
-    // Fetch products data
-    useEffect(() => {
-        const fetchData = async () => {
-        try {
-            const response = await axios.get(`${BaseUrl}/api/products`, {
-            headers: { Authorization: `Bearer ${token}` },
-            });
-            setFilteredProducts(response.data.products || []);
-        } catch (error) {
-            console.error('Data fetching failed:', error);
-        }
-        };
-        fetchData();
-    }, []);
 
     const handleClickwishlist = async (item, e) => {
         e.preventDefault();
         const itemId = item.productId || item._id || item.id;
 
         setIsSelectedWishlist(prev => {
-        let updatedWishlist;
-        if (prev.includes(itemId)) {
-            updatedWishlist = prev.filter(id => id !== itemId);
-        } else {
-            updatedWishlist = [...prev, itemId];
-        }
+            let updatedWishlist;
+            if (prev.includes(itemId)) {
+                updatedWishlist = prev.filter(id => id !== itemId);
+            } else {
+                updatedWishlist = [...prev, itemId];
+            }
 
-        localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
-        
-        // Dispatch custom event to notify other components
-        window.dispatchEvent(new CustomEvent('wishlistUpdated'));
-        
-        return updatedWishlist;
+            localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+
+            // Dispatch custom event to notify other components
+            window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+
+            return updatedWishlist;
         });
 
         try {
-        await axios.post(`${BaseUrl}/api/createWishList`, {
-            productId: itemId,
-        }, {
-            headers: {
-            Authorization: `Bearer ${token}`,
-            },
-        });
+            await axios.post(`${BaseUrl}/api/createWishList`, {
+                productId: itemId,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
         } catch (error) {
-        console.error("Error updating wishlist:", error);
+            console.error("Error updating wishlist:", error);
         }
     };
     useEffect(() => {
@@ -218,28 +204,36 @@ const Product = () => {
                 const extractedPatterns = {};
                 const extractedSizes = {};
                 const extractedColors = {};
-                const extractedOccasions = {};
 
                 filteredProducts.forEach(product => {
                     if (product.productVariantData && product.productVariantData.length > 0) {
-                        console.log("product.productvarint", product.productVariantData[0].size);
 
-                        // Fixed code
+                        // For Size conversion
                         if (product.productVariantData[0].size) {
-                            if (!extractedSizes[product.productVariantData[0].size]) {
-                                extractedSizes[product.productVariantData[0].size] = 1;
-                            } else {
-                                extractedSizes[product.productVariantData[0].size]++;
-                            }
+                            // Split the size string into an array
+                            const sizeArray = product.productVariantData[0].size.split(',').map(size => size.trim());
+
+                            sizeArray.forEach(size => {
+                                if (!extractedSizes[size]) {
+                                    extractedSizes[size] = 1;
+                                } else {
+                                    extractedSizes[size]++;
+                                }
+                            });
                         }
-                        // Extract colors
+                        // For Color conversion
                         if (product.productVariantData[0].colorName) {
-                            if (!extractedColors[product.productVariantData[0].colorName]) {
-                                extractedColors[product.productVariantData[0].colorName] = 1;
-                            } else {
-                                extractedColors[product.productVariantData[0].colorName]++;
-                            }
+                            const colorArray = product.productVariantData[0].colorName.split(',').map(color => color.trim());
+
+                            colorArray.forEach(color => {
+                                if (!extractedColors[color]) {
+                                    extractedColors[color] = 1;
+                                } else {
+                                    extractedColors[color]++;
+                                }
+                            });
                         }
+
                         const specs = product.productVariantData[0].specifications;
                         if (specs) {
                             // Extract brand
@@ -394,24 +388,30 @@ const Product = () => {
 
     // handle checkbox
     const handleCheckboxChange = (type, id, label) => {
-        // Only proceed with updates if we have all required parameters
-        if (type && id !== undefined) {
-            setCheckedFilters(prev => ({
+        console.log('Checkbox Change:', { type, id, label });
+
+        setCheckedFilters(prev => {
+            const newFilters = {
                 ...prev,
                 [type]: {
                     ...prev[type],
                     [id]: !prev[type]?.[id]
                 }
-            }));
+            };
+            console.log('Updated Checked Filters:', newFilters);
+            return newFilters;
+        });
 
+        setSelectedFilters(prev => {
+            let newSelectedFilters;
             if (!checkedFilters[type]?.[id]) {
-                setSelectedFilters(prev => [...prev, { type, id, label }]);
+                newSelectedFilters = [...prev, { type, id, label }];
             } else {
-                setSelectedFilters(prev =>
-                    prev.filter(filter => !(filter.type === type && filter.id === id))
-                );
+                newSelectedFilters = prev.filter(filter => !(filter.type === type && filter.id === id));
             }
-        }
+            console.log('Updated Selected Filters:', newSelectedFilters);
+            return newSelectedFilters;
+        });
     };
 
     // Remove individual filter
@@ -430,6 +430,121 @@ const Product = () => {
         }
     };
 
+    useEffect(() => {
+        // Filter logic
+        const applyFilters = () => {
+            const hasActiveFilters = Object.values(checkedFilters).some(filterGroup =>
+                Object.values(filterGroup).some(value => value)
+            );
+
+            if (!hasActiveFilters) {
+                return filteredProducts;  // Return all original products
+            }
+            return filteredProducts.filter(product => {
+                const productVariant = product.productVariantData?.[0] || {};
+                const specs = productVariant.specifications || {};
+
+                // Price Range Filter
+                const originalPrice = parseFloat(productVariant.originalPrice || 0);
+                const isPriceInRange = originalPrice >= priceRange[0] && originalPrice <= priceRange[1];
+
+                // Category Filter
+                const isCategoryMatched = Object.keys(checkedFilters.categories).length === 0 ||
+                    Object.keys(checkedFilters.categories).some(catId =>
+                        checkedFilters.categories[catId]
+                    );
+
+                // Discount Filter
+                const discountPercentage = productVariant.discountPercentage || 0;
+                const isDiscountMatched = Object.keys(checkedFilters.discounts).length === 0 ||
+                    Object.keys(checkedFilters.discounts).some(discId => {
+                        const minDiscount = parseInt(discount.find(d => d.id.toString() === discId)?.no || 0);
+                        return discountPercentage >= minDiscount;
+                    });
+
+                // Size Filter
+                const sizeArray = (productVariant.size || '').split(',').map(s => s.trim());
+                const isSizeMatched = Object.keys(checkedFilters.sizes).length === 0 ||
+                    sizeArray.some(productSize =>
+                        Object.keys(checkedFilters.sizes).some(sizeId =>
+                            checkedFilters.sizes[sizeId] &&
+                            productSize.trim() === size.find(s => s.id.toString() === sizeId)?.sizename
+                        )
+                    );
+
+                // Brand Filter
+                const isBrandMatched = Object.keys(checkedFilters.brands).length === 0 ||
+                    Object.keys(checkedFilters.brands).some(brandId =>
+                        checkedFilters.brands[brandId] &&
+                        specs.Brand === brands.find(b => b.id.toString() === brandId)?.brandname
+                    );
+
+                // Color Filter
+                const colorArray = (productVariant.colorName || '').split(',').map(c => c.trim());
+                const isColorMatched = Object.keys(checkedFilters.colors).length === 0 ||
+                    colorArray.some(colorName =>
+                        Object.keys(checkedFilters.colors).some(colorId =>
+                            checkedFilters.colors[colorId] &&
+                            colorName === color.find(c => c.id.toString() === colorId)?.colorname
+                        )
+                    );
+
+                // Rating Filter
+                const productRating = productVariant.averageRating || 0;
+                const isRatingMatched = Object.keys(checkedFilters.ratings).length === 0 ||
+                    Object.keys(checkedFilters.ratings).some(ratingId => {
+                        const minRating = rating.find(r => r.id.toString() === ratingId)?.rating || 0;
+                        return productRating >= minRating;
+                    });
+
+                // Sleeve Length Filter
+                const isSleeveLengthMatched = Object.keys(checkedFilters.sleeves).length === 0 ||
+                    Object.keys(checkedFilters.sleeves).some(sleeveId =>
+                        checkedFilters.sleeves[sleeveId] &&
+                        specs["Sleeve Length"] === sleeves.find(s => s.id.toString() === sleeveId)?.sleevename
+                    );
+
+                // Material Filter
+                const isMaterialMatched = Object.keys(checkedFilters.materials).length === 0 ||
+                    Object.keys(checkedFilters.materials).some(materialId =>
+                        checkedFilters.materials[materialId] &&
+                        specs.Material === materials.find(m => m.id.toString() === materialId)?.materialname
+                    );
+
+                // Pattern Filter
+                const isPatternMatched = Object.keys(checkedFilters.patterns).length === 0 ||
+                    Object.keys(checkedFilters.patterns).some(patternId =>
+                        checkedFilters.patterns[patternId] &&
+                        specs.Pattern === patterns.find(p => p.id.toString() === patternId)?.patternname
+                    );
+
+                // Style Filter
+                const isStyleMatched = Object.keys(checkedFilters.styles).length === 0 ||
+                    Object.keys(checkedFilters.styles).some(styleId =>
+                        checkedFilters.styles[styleId] &&
+                        specs.Style === styles.find(s => s.id.toString() === styleId)?.stylename
+                    );
+
+                // Combine all filter conditions
+                return isPriceInRange &&
+                    isCategoryMatched &&
+                    isDiscountMatched &&
+                    isSizeMatched &&
+                    isBrandMatched &&
+                    isColorMatched &&
+                    isRatingMatched &&
+                    isSleeveLengthMatched &&
+                    isMaterialMatched &&
+                    isPatternMatched &&
+                    isStyleMatched;
+            });
+        };
+
+        // Update filtered products based on selected filters
+        const filteredProductsList = applyFilters();
+        setFilteredProducts(filteredProductsList);
+
+    });
     // Clear all filters
     const handleClearAll = (e) => {
         e.preventDefault();
@@ -447,14 +562,27 @@ const Product = () => {
             patterns: {},
             styles: {},
         });
+
+        // Clear selected filters
         setSelectedFilters([]);
+
+        // Reset price range to initial state
+        const initialMaxPrice = Math.ceil(Math.max(...filteredProducts.map(product =>
+            parseFloat(product.productVariantData?.[0]?.originalPrice || 0)
+        )) / 1000) * 1000;
+
+        setPriceRange([0, initialMaxPrice]);
+
     };
 
     // Price Range
 
     const handleSliderChange = (newValue) => {
-        setPriceRange(newValue);
-    };
+        // Ensure newValue is an array and the max is not 0
+        if (Array.isArray(newValue) && priceRange[1] > 0) {
+            setPriceRange(newValue);
+        }
+    }
 
     // Number of items to display before "Show More" is clicked
     const initialDisplayCount = 5;
@@ -550,6 +678,7 @@ const Product = () => {
             document.removeEventListener('click', handleClickOutside);
         };
     }, [isDropdownOpen]);
+
 
     return (
         <>
@@ -698,7 +827,7 @@ const Product = () => {
                                                                         thumbClassName="d_thumb"
                                                                         trackClassName="d_track"
                                                                         min={0}
-                                                                        max={priceRange[1]}
+                                                                        max={priceRange[1] || 1000}
                                                                         value={priceRange}
                                                                         onChange={handleSliderChange}
                                                                         minDistance={50}
@@ -1424,63 +1553,63 @@ const Product = () => {
                                     </div>
                                     <div className="d_trend mt-3">
                                         <div className="row gy-4">
-                                        {filteredProducts.map((item) => {
+                                            {filteredProducts.map((item) => {
                                                 const itemId = item.productId || item._id || item.id;
                                                 return (
-                                                <div key={itemId} className="col-12 col-sm-6 col-lg-6 col-xl-3">
-                                                    <Link to='/womendetails'>
-                                                    <div className="d_box">
-                                                        <div className="d_img">
-                                                        <img src={`${BaseUrl}/${item.productVariantData[0].images[0]}`} alt="" />
-                                                        {item.productDetails?.stockStatus === "In Stock" && (
-                                                            <div className="d_seller">Best Seller</div>
-                                                        )}
-                                                        {item.isNewArrial && (
-                                                            <div className="d_arrival">New Arrival</div>
-                                                        )}
-                                                        <div 
-                                                            className="d_trendicon d-flex justify-content-center align-items-center d_cur" 
-                                                            onClick={(e) => handleClickwishlist(item, e)}
-                                                        >
-                                                            {isSelectedwishlist.includes(itemId) ?
-                                                            <IoMdHeart className='d_icon' style={{ color: 'red' }} /> :
-                                                            <IoMdHeartEmpty className='d_icon' style={{ color: '#6a6a6a' }} />}
-                                                        </div>
-                                                        </div>
-                                                        <div className="d_content">
-                                                        <div className='d-flex flex-column h-100'>
-                                                            <div className="d-flex align-items-center justify-content-between">
-                                                            <div className="d_name">{item.productName || item.productDetails?.productName}</div>
-                                                            <div className='d-flex align-items-center'>
-                                                                <FaStar className='d_staricon me-1' />
-                                                                <div className="d_review">{item.rating || 0}</div>
-                                                            </div>
-                                                            </div>
-                                                            <div className="d_desc">{item.productVariantData[0].description || item.productVariantData[0].shortDescription}</div>
-                                                            <div className="d-flex align-items-center justify-content-between mt-auto">
-                                                            <div className="d-flex align-items-center">
-                                                                {(item.productVariantData[0].colorName || '').split(',').map((color, i) => (
-                                                                <div
-                                                                    key={i}
-                                                                    className={`d_color ${i === 0 ? 'active' : ""}`}
-                                                                    style={{ backgroundColor: color }}
-                                                                ></div>
-                                                                ))}
-                                                            </div>
-                                                            <div className="d-flex align-items-end">
-                                                                <div className="d_price">
-                                                                ${item.productVariantData[0].originalPrice && item.productVariantData[0].discountPrice
-                                                                    ? parseInt(item.productVariantData[0].originalPrice) - parseInt(item.productVariantData[0].discountPrice)
-                                                                    : "0"}
+                                                    <div key={itemId} className="col-12 col-sm-6 col-lg-6 col-xl-3">
+                                                        <Link to='/womendetails'>
+                                                            <div className="d_box">
+                                                                <div className="d_img">
+                                                                    <img src={`${BaseUrl}/${item.productVariantData[0].images[0]}`} alt="" />
+                                                                    {item.productDetails?.stockStatus === "In Stock" && (
+                                                                        <div className="d_seller">Best Seller</div>
+                                                                    )}
+                                                                    {item.isNewArrial && (
+                                                                        <div className="d_arrival">New Arrival</div>
+                                                                    )}
+                                                                    <div
+                                                                        className="d_trendicon d-flex justify-content-center align-items-center d_cur"
+                                                                        onClick={(e) => handleClickwishlist(item, e)}
+                                                                    >
+                                                                        {isSelectedwishlist.includes(itemId) ?
+                                                                            <IoMdHeart className='d_icon' style={{ color: 'red' }} /> :
+                                                                            <IoMdHeartEmpty className='d_icon' style={{ color: '#6a6a6a' }} />}
+                                                                    </div>
                                                                 </div>
-                                                                <div className="d_disprice ms-1 text-decoration-line-through">${item.productVariantData[0].originalPrice}</div>
+                                                                <div className="d_content">
+                                                                    <div className='d-flex flex-column h-100'>
+                                                                        <div className="d-flex align-items-center justify-content-between">
+                                                                            <div className="d_name">{item.productName || item.productDetails?.productName}</div>
+                                                                            <div className='d-flex align-items-center'>
+                                                                                <FaStar className='d_staricon me-1' />
+                                                                                <div className="d_review">{item.rating || 0}</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="d_desc">{item.productVariantData[0].description || item.productVariantData[0].shortDescription}</div>
+                                                                        <div className="d-flex align-items-center justify-content-between mt-auto">
+                                                                            <div className="d-flex align-items-center">
+                                                                                {(item.productVariantData[0].colorName || '').split(',').map((color, i) => (
+                                                                                    <div
+                                                                                        key={i}
+                                                                                        className={`d_color ${i === 0 ? 'active' : ""}`}
+                                                                                        style={{ backgroundColor: color }}
+                                                                                    ></div>
+                                                                                ))}
+                                                                            </div>
+                                                                            <div className="d-flex align-items-end">
+                                                                                <div className="d_price">
+                                                                                    ${item.productVariantData[0].originalPrice && item.productVariantData[0].discountPrice
+                                                                                        ? parseInt(item.productVariantData[0].originalPrice) - parseInt(item.productVariantData[0].discountPrice)
+                                                                                        : "0"}
+                                                                                </div>
+                                                                                <div className="d_disprice ms-1 text-decoration-line-through">${item.productVariantData[0].originalPrice}</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            </div>
-                                                        </div>
-                                                        </div>
+                                                        </Link>
                                                     </div>
-                                                    </Link>
-                                                </div>
                                                 )
                                             })}
                                         </div>
