@@ -25,6 +25,11 @@ const Header = () => {
     // const [category, setCategory] = useState([]);
     // const [subCategory, setSubCategory] = useState([]);
 
+    const [isSearching, setIsSearching] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('All Categories');
+    const [searchResults, setSearchResults] = useState([]);
+
     let login_chk = () => {
         let login = localStorage.getItem('login')
 
@@ -159,6 +164,56 @@ const Header = () => {
 
         fetchData();
     }, [BaseUrl, token]);
+
+    const performGlobalSearch = async () => {
+        setIsSearching(true);
+        try {
+            const response = await axios.get(`${BaseUrl}/api/globalSearch`, {
+                params: {
+                    query: searchQuery,
+                },
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            // Ensure the response data has the expected structure
+            setSearchResults(response.data);
+            console.log("ooo",response.data)
+        } catch (error) {
+            console.error('Global search error:', error);
+            // Reset search results on error
+            setSearchResults({
+                products: [],
+                categories: [],
+                subCategories: []
+            });
+        }
+        setIsSearching(false);
+    };
+
+    useEffect(() => {
+        const delayDebounceFn = setTimeout(() => {
+            if (searchQuery.length > 0) {
+                performGlobalSearch();
+            } else {
+                setSearchResults([]);
+            }
+        }, 500);
+
+        return () => clearTimeout(delayDebounceFn);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchQuery]);
+
+    const handleSearchResultClick = async(id) => {
+        try {
+            const response = await axios.get(`${BaseUrl}/api/getProduct/${id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+            });
+            console.log(response.data);
+        } catch (error) {
+            console.error('Data fetching failed:', error);
+        }
+    }
+
     return (
         <React.Fragment>
             <Container fluid className='p-0'>
@@ -260,39 +315,33 @@ const Header = () => {
                                         <span>
                                             <img src={require("../../assets/zoom.png")} alt="" />
                                         </span>
-                                        <input type="text" placeholder='Search for products, styles and more'
-                                            className='VK_header_search_bar bg-transparent outline_none border-0 py-2 ps-3' onChange={(e) => { handle_serachSuggestion(e) }} />
+                                        <input type="text" value={searchQuery}
+                                            onChange={(e) => setSearchQuery(e.target.value)} placeholder='Search for products, styles and more'
+                                            className='VK_header_search_bar bg-transparent outline_none border-0 py-2 ps-3' />
                                         <span>
                                             <button className='bg-transparent border-0' onClick={() => { setimagemodel(true) }}>
                                                 <img src={require("../../assets/Frame.png")} alt="" />
                                             </button>
                                         </span>
-                                        <div className='VK_input_suggestion'>
-                                            {
-                                                suggestion != null &&
-                                                <ul className='VK_search_suggestion list-unstyled'>
-                                                    {
-                                                        suggestion.map((item, index) => {
-                                                            return (
-                                                                <li key={index} className='py-2'>
-                                                                    <div className='d-flex align-items-center w-100'>
-                                                                        <div>
-                                                                            <img src={require('../../assets/zoom.png')} height="22px" width="22px" alt="" />
-                                                                        </div>
-                                                                        <div className='ps-3'>
-                                                                            {item}
-                                                                        </div>
-                                                                        <div className='ms-auto'>
-                                                                            <img src={require('../../assets/arrow.png')} height="20px" width="20px" alt="" />
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            )
-                                                        })
-                                                    }
-                                                </ul>
-                                            }
-                                        </div>
+                                        <ul className='VK_input_suggestion list-unstyled'>
+                                            {searchResults.map((product, index) => (
+                                                <li key={`product-${index}`}
+                                                    className='py-2'
+                                                    onClick={() => handleSearchResultClick(product._id)}>
+                                                    <div className='d-flex align-items-center w-100'>
+                                                        <div>
+                                                            <img src={require('../../assets/zoom.png')} height="22px" width="22px" alt="" />
+                                                        </div>
+                                                        <div className='ps-3'>
+                                                            {product.productName}
+                                                        </div>
+                                                        <div className='ms-auto'>
+                                                            <img src={require('../../assets/arrow.png')} height="20px" width="20px" alt="" />
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            ))}
+                                        </ul>
                                     </div>
                                 </div>
                             </Col>
