@@ -1,35 +1,54 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import './home.css';
+import axios from 'axios'
 
 const Jewery = () => {
+
+    const BaseUrl = process.env.REACT_APP_BASEURL;
+    const [popularbarnd, setFilteredData] = useState([]);
+
+    useEffect(() => {
+        const fetchBrandData = async () => {
+            try {
+                const response = await axios.get(`${BaseUrl}/api/getAllOffers`)
+                //   console.log("data" , response?.data);
+                setFilteredData(response?.data?.offers)
+            } catch (error) {
+
+            }
+        }
+
+        fetchBrandData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
         <>
             <section className='pb-5 inter'>
                 <div className='d_container p-0'>
                     <Row className='m-0 VK_jewery_cont'>
-                        <Col lg={6} className='h-100 p-0 px-sm-2'>
-                            <div className='h-100 VK_jewery_col VK_jewery_div'>
-                                <img src={require('../../assets/girl.png')} className='w-100 h-100' alt="" />
-                                <div className='VK_jewery_text_1 text-center'>
-                                    <div>
-                                        <p className='text-white m-0'>
-                                            BEST COLLECTION
-                                        </p>
-                                        <h3 className='VK_jewery_head'>
-                                            JEWELRY
-                                        </h3>
-                                        <h2 className='VK_jewery_sale'>
-                                            Sale
-                                        </h2>
+                        {popularbarnd.map((item) => (
+                            <Col lg={6} className='h-100 p-0 px-sm-2'>
+                                <div className='h-100 VK_jewery_col VK_jewery_div'>
+                                    <img src={`${BaseUrl}/${item?.offerImage}`} className='w-100 h-100' alt="" />
+                                    <div className='VK_jewery_text_1 text-center'>
+                                        <div>
+                                            <p className='text-white m-0'>
+                                                {item.offerType}
+                                            </p>
+                                            <h3 className='VK_jewery_head'>
+                                            {item.offerName}
+                                            </h3>
+                                        </div>
+                                        <button className='VK_white_btn'>
+                                            {item.buttonText}
+                                        </button>
                                     </div>
-                                    <button className='VK_white_btn'>
-                                        Shop Now
-                                    </button>
                                 </div>
-                            </div>
-                        </Col>
-                        <Col lg={6} className='h-100 p-0 px-sm-2'>
+                            </Col>
+                        ))}
+                        {/* <Col lg={6} className='h-100 p-0 px-sm-2'>
                             <div className='d-flex flex-column h-100'>
                                 <div className='h-50 pb-lg-2 py-3 py-lg-0 VK_jewery_col VK_jewery_div VK_jewery_per'>
                                     <img src={require('../../assets/aunty.png')} className='h-100 w-100 object_cover' alt="" />
@@ -64,7 +83,7 @@ const Jewery = () => {
                                     </div>
                                 </div>
                             </div>
-                        </Col>
+                        </Col> */}
                     </Row>
                 </div>
             </section>
