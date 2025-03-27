@@ -3,7 +3,7 @@ import Footer from '../footer/Footer';
 import Process from '../common/Process';
 import Subscribe from '../common/Subscribe';
 import { FaMinus, FaPlus, FaStar } from 'react-icons/fa';
-import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
+import { IoMdHeartEmpty, IoMdHeart, IoMdClose } from 'react-icons/io';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { IoClose, IoSearch } from 'react-icons/io5';
@@ -65,6 +65,7 @@ const Product = () => {
     const [sleeves, setSleeves] = useState([]);
     const [patterns, setPatterns] = useState([]);
     const [isSelectedwishlist, setIsSelectedWishlist] = useState([]);
+    const [sortOption, setSortOption] = useState('default');
 
     const location = useLocation();
     const { id } = useParams();
@@ -164,8 +165,17 @@ const Product = () => {
             console.error("Error updating wishlist:", error);
         }
     };
+
     const fetchData = async () => {
+        if (!mainCategoryId || !id || !token) return;
         try {
+
+            const bestSellerResponse = await axios.get(`${BaseUrl}/api/topProducts`);
+            const BestSellarId = bestSellerResponse.data.data.map(product => product.productId);
+
+            const newArrivalResponse = await axios.get(`${BaseUrl}/api/newArivalProduct`);
+            const NewArrivalId = newArrivalResponse.data.map(product => product._id);
+
             const response = await axios.get(`${BaseUrl}/api/getProductByMainCategory/${mainCategoryId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -177,11 +187,20 @@ const Product = () => {
                 product.categoryId === id
             );
 
-            // Set the filtered products to state
-            setFilteredProducts(filteredProducts);
+            // Enhance filtered products with best seller and new arrival flags
+            const enhancedFilteredProducts = filteredProducts.map(product => {
+                const productId = product.productId || product._id || product.id;
+
+                return {
+                    ...product,
+                    isBestSeller: BestSellarId.includes(productId),
+                    isNewArrival: NewArrivalId.includes(productId)
+                };
+            });
+            setFilteredProducts(enhancedFilteredProducts);
             // Find max price from all product variants
             let maxPrice = 0;
-            filteredProducts.forEach(product => {
+            enhancedFilteredProducts.forEach(product => {
                 if (product.productVariantData && product.productVariantData.length > 0) {
                     const originalPrice = parseFloat(product.productVariantData[0].originalPrice);
                     if (originalPrice > maxPrice) {
@@ -432,7 +451,7 @@ const Product = () => {
             Object.values(filterGroup).some(value => value)
         );
 
-        if (!hasActiveFilters && priceRange[0] === 0 && priceRange[1] === Math.max(...filteredProducts.map(product => 
+        if (!hasActiveFilters && priceRange[0] === 0 && priceRange[1] === Math.max(...filteredProducts.map(product =>
             parseFloat(product.productVariantData?.[0]?.originalPrice || 0)
         ))) {
             return filteredProducts;  // Return all original products if no filters are active
@@ -548,12 +567,48 @@ const Product = () => {
                 isStyleMatched;
         });
     };
+    const applySorting = (products) => {
+        if (sortOption === 'default') return products;
+        switch (sortOption) {
+            case 'price-low-to-high':
+                return [...products].sort((a, b) => {
+                    const priceA = parseFloat(a.productVariantData[0]?.originalPrice || 0);
+                    const priceB = parseFloat(b.productVariantData[0]?.originalPrice || 0);
+                    return priceA - priceB;
+                });
+
+            case 'price-high-to-low':
+                return [...products].sort((a, b) => {
+                    const priceA = parseFloat(a.productVariantData[0]?.originalPrice || 0);
+                    const priceB = parseFloat(b.productVariantData[0]?.originalPrice || 0);
+                    return priceB - priceA;
+                });
+
+            case 'popularity':
+                return [...products].sort((a, b) => {
+                    // Assuming you have a popularity metric, otherwise use best sellers
+                    return (b.isBestSeller ? 1 : 0) - (a.isBestSeller ? 1 : 0);
+                });
+
+            case 'best-sellers':
+                return [...products].filter(product => product.isBestSeller);
+
+            case 'new-arrivals':
+                return [...products].filter(product => product.isNewArrival);
+
+            default:
+                return products;
+        }
+    };
+
     useEffect(() => {
         // Update filtered products based on selected filters
         const filteredProductsList = applyFilters();
-        setFilteredProducts(filteredProductsList);
+        const sortedProductsList = applySorting(filteredProductsList);
+        // setFilteredProducts(filteredProductsList);
+        setFilteredProducts(sortedProductsList);
 
-    }, [ priceRange, filteredProducts, selectedFilters, checkedFilters]);
+    }, [priceRange, selectedFilters, checkedFilters, sortOption]);
 
     // Clear all filters
     const handleClearAll = (e) => {
@@ -582,7 +637,7 @@ const Product = () => {
         const roundedMaxPrice = Math.ceil(maxPrice / 1000) * 1000;
         setPriceRange([0, roundedMaxPrice]);
 
-      fetchData();
+        fetchData();
     };
 
     // Price Range
@@ -1564,18 +1619,38 @@ const Product = () => {
                                     <div className="d_heading">
                                         <div className="d-flex justify-content-between align-items-center">
                                             <h2 className='mb-0'>{categoryName}</h2>
-                                            <div className="d_dropdown">
-                                                <button className="d_dropbtn" onClick={toggleDropdown}>Sort by<MdKeyboardArrowDown className='ms-2' /></button>
-                                                {isDropdownOpen && (
-                                                    <div className="d_dropcon">
-                                                        <p>Price : Low to High</p>
-                                                        <p>Price : High to Low</p>
-                                                        <p>Popularity</p>
-                                                        <p>Best Sellers</p>
-                                                        <p>New Arrivals</p>
-                                                    </div>
-                                                )}
-                                            </div>
+                                            {sortOption !== 'default' ? (
+                                                <button className='d_dropbtn' onClick={() =>{ setSortOption('default'); fetchData();}} ><IoMdClose className='me-2' />Cancel</button>
+                                            ) : (
+                                                <div className="d_dropdown">
+                                                    <button className="d_dropbtn" onClick={toggleDropdown}>Sort by<MdKeyboardArrowDown className='ms-2' /></button>
+                                                    {isDropdownOpen && (
+                                                        <div className="d_dropcon">
+                                                            <p onClick={() => {
+                                                                setSortOption('price-low-to-high');
+                                                                setIsDropdownOpen(false);
+                                                            }}>Price : Low to High</p>
+                                                            <p onClick={() => {
+                                                                setSortOption('price-high-to-low');
+                                                                setIsDropdownOpen(false);
+                                                            }}>Price : High to Low</p>
+                                                            <p onClick={() => {
+                                                                setSortOption('popularity');
+                                                                setIsDropdownOpen(false);
+                                                            }}>Popularity</p>
+                                                            <p onClick={() => {
+                                                                setSortOption('best-sellers');
+                                                                setIsDropdownOpen(false);
+                                                            }}>Best Sellers</p>
+                                                            <p onClick={() => {
+                                                                setSortOption('new-arrivals');
+                                                                setIsDropdownOpen(false);
+                                                            }}>New Arrivals</p>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
+
                                         </div>
                                     </div>
                                     <div className="d_trend mt-3">
@@ -1584,14 +1659,14 @@ const Product = () => {
                                                 const itemId = item.productId || item._id || item.id;
                                                 return (
                                                     <div key={itemId} className="col-12 col-sm-6 col-lg-6 col-xl-3">
-                                                        <Link to={`/womendetails/${item._id}`}>
+                                                        <Link to={`/womendetails/${item._id}`} >
                                                             <div className="d_box">
                                                                 <div className="d_img">
                                                                     <img src={`${BaseUrl}/${item.productVariantData[0].images[0]}`} alt="" />
-                                                                    {item.productDetails?.stockStatus === "In Stock" && (
+                                                                    {item.isBestSeller && (
                                                                         <div className="d_seller">Best Seller</div>
                                                                     )}
-                                                                    {item.isNewArrial && (
+                                                                    {item.isNewArrival && (
                                                                         <div className="d_arrival">New Arrival</div>
                                                                     )}
                                                                     <div

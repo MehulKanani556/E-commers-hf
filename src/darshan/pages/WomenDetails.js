@@ -1,15 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { IoClose, IoLocationSharp, IoShareSocialSharp } from 'react-icons/io5';
-import detailImg1 from './../d_img/detailimg1.png';
-import detailImg2 from './../d_img/detailimg2.png';
-import detailImg3 from './../d_img/detailimg3.png';
 import detailImg4 from './../d_img/detailimg4.png';
-import detailVideo from './../d_img/detailvideo.mp4';
-import playIcon from './../d_img/play1.png';
 import icon360 from './../d_img/360.png';
 import './../css/womendetail.css';
 import { FaStar } from 'react-icons/fa';
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { CiHeart } from 'react-icons/ci';
 import Accordion from 'react-bootstrap/Accordion';
@@ -20,15 +14,20 @@ import Recentlyviewed from '../components/Recentlyviewed';
 import Customerlike from '../components/Customerlike';
 import { Modal, Table } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
-import { ReactImageTurntable } from 'react-image-turntable';
-import OwlCarousel from 'react-owl-carousel';
 import Header from '../../Vivek/Component/header/Header';
 import Subscribe from '../../Vivek/Component/common/Subscribe';
 import Process from '../../Vivek/Component/common/Process';
 import Footer from '../../Vivek/Component/footer/Footer';
 import ReactImageMagnify from 'react-image-magnify';
 import axios from 'axios';
+
+
 const WomenDetails = () => {
+
+    const { productId } = useParams();
+
+    const BaseUrl = process.env.REACT_APP_BASEURL;
+    const token = localStorage.getItem('token');
 
     const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -39,10 +38,8 @@ const WomenDetails = () => {
     });
     const [is360Active, setIs360Active] = useState(false);
     const [isquantityOpen, setIsquantityOpen] = useState(false);
-    const [isImageVisible, setIsImageVisible] = useState(true); // Control image visibility
     const [sizemodalShow, setsizeModalShow] = useState(false);
     const [offermodalShow, setofferModalShow] = useState(false);
-    const [imagemodalShow, setimageModalShow] = useState(false);
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
     const viewerRef = useRef(null);
@@ -52,23 +49,10 @@ const WomenDetails = () => {
     const imageCount = 4; // Number of images (adjust as needed)
     const images = useRef([]);
     const [selectedSize, setSelectedSize] = useState(null);
-    const [selectedgbsize, setSelectedGBSize] = useState(null);
-    const [selectedColor, setSelectedColor] = useState(null);
     const [selectedQuantity, setSelectedQuantity] = useState('Select')
-    const { productId } = useParams();  // Get Product ID from URL
-    const [product, setProduct] = useState(null);
-    const [error, setError] = useState(null);
-    const BaseUrl = process.env.REACT_APP_BASEURL || 'http://localhost:5000';
-    const [loading, setLoading] = useState(true);
+    const [product, setProduct] = useState([]);
 
     const dragThreshold = 30;
-
-    const galleryItems = [
-        { type: 'image', src: detailImg1, thumbnail: detailImg1 },
-        { type: 'image', src: detailImg2, thumbnail: detailImg2 },
-        { type: 'video', src: detailVideo, thumbnail: detailVideo },
-        { type: 'image', src: detailImg3, thumbnail: detailImg3 }
-    ];
     useEffect(() => {
         if (mainContent.type === 'image') {
             const img = new Image();
@@ -78,13 +62,21 @@ const WomenDetails = () => {
             };
         }
     }, [mainContent.src]);
-    const handleThumbnailClick = (item, index) => {
+    const handleThumbnailClick = (item) => {
         setImageLoaded(false); // Reset the image loading state
-        setMainContent({ ...item, index });
+
+        // Create an object with type and src for the main content
+        const mainContentObj = {
+            type: 'image',
+            src: `${BaseUrl}/${item.replace(/\\/g, '/')}`, // Ensure full path is used
+            index: 0 // You can adjust this if needed
+        };
+
+        setMainContent(mainContentObj);
         setIs360Active(false);
 
         // If it's a video, play it
-        if (item.type === 'video' && videoRef.current) {
+        if (mainContent.type === 'video' && videoRef.current) {
             setTimeout(() => {
                 if (videoRef.current) {
                     videoRef.current.play();
@@ -92,7 +84,6 @@ const WomenDetails = () => {
             }, 0);
         }
     };
-
 
     const toggle360View = () => {
         setIs360Active(!is360Active);
@@ -211,65 +202,25 @@ const WomenDetails = () => {
             }
         }
     };
-
-    const token = localStorage.getItem("token");
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}/api/getProduct/${productId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            // console.log("Productresponse", response.data.product);
+            setProduct(response.data.product);
+        } catch (error) {
+            console.error("Error fetching products:", error);
+        }
+    }
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`http://localhost:5000/api/getProduct/${productId}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                console.log("response", response.data.product);
-
-            } catch (error) {
-                console.error("Error fetching products:", error);
-            }
-        }
         fetchData();
     }, [productId, token]);
 
-  
-     useEffect(() => {
-        const fetchProductDetails = async () => {
-            try {
-                setLoading(true);
-                const token = localStorage.getItem('token');
-                
-                const response = await axios.get(`${BaseUrl}/api/getProductVariant/${productId}`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                console.log("response", response.data.productVariant);
 
-                setProduct(response.data.productVariant);
-                
-                // If there are images, set the main content to the first image
-                if (response.data.productVariant?.images?.length > 0) {
-                    setMainContent({
-                        type: 'image',
-                        src: `${BaseUrl}/${response.data.productVariant.images[0]}`,
-                        index: 0
-                    });
-                }
-
-                setError(null);
-            } catch (err) {
-                setError(err.message || 'Failed to fetch product details');
-                console.error('Error fetching product:', err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        if (productId) {
-            fetchProductDetails();
-        }
-    }, [productId, BaseUrl]);
     return (
         <>
             {/* Header section  */}
@@ -277,260 +228,275 @@ const WomenDetails = () => {
             {/* Personal Details section start */}
             <section className='d_p-50 pb-0 d_womendetail'>
                 <div className="d_container">
-                    <div className="row">
-                        <div className="col-sm-12 col-lg-6">
-                            <div className="row flex-row flex-sm-row flex-column-reverse">
-                                {/* Thumbnail Column */}
-                                <div className="col-12 col-sm-3 d-flex justify-content-center">
-                                    <div className="d_subimg">
-                                        {galleryItems.map((item, index) => (
-                                            <div
-                                                key={index}
-                                                className="d_img d_cur"
-                                                onClick={() => handleThumbnailClick(item, index)}
-                                            >
-                                                {item.type === 'image' ? (
-                                                    <img
-                                                        src={item.thumbnail}
-                                                        alt={`Thumbnail ${index + 1}`}
-                                                        className="w-100 h-100"
-                                                    />
-                                                ) : (
-                                                    <div className="v_img">
-                                                        <video>
-                                                            <source src={item.thumbnail} type="video/mp4" />
-                                                        </video>
-                                                        <div className="d_play">
-                                                            <img src={playIcon} alt="Play" />
+                    {product.map((item) => {
+                        const discountAmount = (item.productVariantData[0].originalPrice * item.productVariantData[0].discountPrice) / 100;
+                        const sizesArray = item.productVariantData[0].size.split(',').map(size => parseInt(size.trim()));
+                        return (
+                            <div className="row">
+                                <div className="col-sm-12 col-lg-6">
+                                    <div className="row flex-row flex-sm-row flex-column-reverse">
+                                        {/* Thumbnail Column */}
+                                        <div className="col-12 col-sm-3 d-flex justify-content-center">
+                                            <div className="d_subimg">
+                                                {item.productVariantData[0].images.map((item, index) => (
+
+                                                    <div
+                                                        key={index}
+                                                        className="d_img d_cur"
+
+                                                    >
+                                                        {/* {item.type === 'image' ? ( */}
+                                                        <img
+                                                            src={`${BaseUrl}/${item.replace(/\\/g, '/')}`}
+                                                            alt=""
+                                                            className="w-100 h-100"
+                                                            onClick={() => handleThumbnailClick(item)}
+                                                        />
+                                                        {/* ) : (
+                                                        <div className="v_img">
+                                                            <video>
+                                                                <source src={item.thumbnail} type="video/mp4" />
+                                                            </video>
+                                                            <div className="d_play">
+                                                                <img src={playIcon} alt="Play" />
+                                                            </div>
+                                                        </div>
+                                                    )} */}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* Main Content */}
+                                        <div className="col-12 col-sm-9">
+                                            <div className="d_mainimg">
+                                                {mainContent.type === 'image' && !is360Active && (
+                                                    <div className="d_img ">
+                                                        <div className='d_reactglass'>
+                                                            <ReactImageMagnify
+                                                                {...{
+                                                                    smallImage: {
+                                                                        alt: 'Main content',
+                                                                        isFluidWidth: true,
+                                                                        src: mainContent.src,
+                                                                    },
+                                                                    largeImage: {
+                                                                        src: mainContent.src,
+                                                                        width: 1200,
+                                                                        height: 1800,
+                                                                    },
+                                                                    enlargedImagePosition: "over",
+                                                                    lensStyle: {
+                                                                        backgroundColor: 'rgba(255,255,255,0.3)',
+                                                                    },
+                                                                }}
+                                                            />
+                                                        </div>
+
+                                                        <div className="d_delicon">
+                                                            <div className="d-flex justify-content-between align-items-center">
+                                                                <img
+                                                                    src={icon360}
+                                                                    alt="360 View"
+                                                                    onClick={() => {
+                                                                        toggle360View();
+                                                                        setCurrentFrame(1);
+                                                                    }}
+                                                                    style={{ cursor: 'pointer' }}
+                                                                />
+                                                                <IoShareSocialSharp
+                                                                    className='d_shareicon d_cur'
+                                                                    onClick={handleShare}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                {mainContent.type === 'video' && (
+                                                    <video
+                                                        ref={videoRef}
+                                                        controls>
+                                                        <source src={mainContent.src} type="video/mp4" />
+                                                    </video>
+                                                )}
+                                                {is360Active && (
+                                                    <div>
+                                                        <div id="viewer" ref={viewerRef}>
+                                                            <canvas
+                                                                className='w-100'
+                                                                ref={canvasRef}
+                                                                onMouseDown={(e) => startDragging(e.pageX)}
+                                                                onMouseUp={stopDragging}
+                                                                onMouseMove={(e) => handleDrag(e.pageX)}
+                                                                onClick={handleClick}
+                                                                onTouchStart={(e) => startDragging(e.touches[0].pageX)}
+                                                                onTouchEnd={stopDragging}
+                                                                onTouchMove={(e) => {
+                                                                    e.preventDefault();
+                                                                    handleDrag(e.touches[0].pageX);
+                                                                }}
+                                                            ></canvas>
                                                         </div>
                                                     </div>
                                                 )}
                                             </div>
-                                        ))}
+                                        </div>
                                     </div>
                                 </div>
-
-                                {/* Main Content */}
-                                <div className="col-12 col-sm-9">
-                                    <div className="d_mainimg">
-                                        {mainContent.type === 'image' && !is360Active && (
-                                            <div className="d_img ">
-                                                <div className='d_reactglass'>
-                                                    <ReactImageMagnify
-                                                        {...{
-                                                            smallImage: {
-                                                                alt: 'Main content',
-                                                                isFluidWidth: true,
-                                                                src: mainContent.src,
-                                                            },
-                                                            largeImage: {
-                                                                src: mainContent.src,
-                                                                width: 1200,
-                                                                height: 1800,
-                                                            },
-                                                            enlargedImagePosition: "over",
-                                                            lensStyle: {
-                                                                backgroundColor: 'rgba(255,255,255,0.3)',
-                                                            },
-                                                        }}
-                                                    />
+                                {/* {console.log("item>>>>>>>>>>", item)} */}
+                                <div className="col-sm-12 col-lg-6">
+                                    <div className="d_detail">
+                                        <div className="d-flex align-items-center justify-content-between">
+                                            <div className="d_name">{item.subCategoriesData[0].subCategoryName}</div>
+                                            <div className="d_starbg">
+                                                <div className="d-flex ">
+                                                    <FaStar className=" d_staricon me-1" />
+                                                    <div className="d_review">{item?.ratingData[0]?.rating}</div>
                                                 </div>
-
-                                                <div className="d_delicon">
-                                                    <div className="d-flex justify-content-between align-items-center">
-                                                        <img
-                                                            src={icon360}
-                                                            alt="360 View"
-                                                            onClick={() => {
-                                                                toggle360View();
-                                                                setCurrentFrame(1);
-                                                            }}
-                                                            style={{ cursor: 'pointer' }}
-                                                        />
-                                                        <IoShareSocialSharp
-                                                            className='d_shareicon d_cur'
-                                                            onClick={handleShare}
-                                                        />
+                                            </div>
+                                        </div>
+                                        <div className='d_colordesc'>{item.productName}</div>
+                                        <div className="d_stock">{item.stockStatus}</div>
+                                        {/* <div className="d_outofstock">Out of Stock</div> */}
+                                        <div className="d_desc">{item.productVariantData[0].description}</div>
+                                        <div className="d-flex align-items-end">
+                                            <div className="d_price me-2">${(item.productVariantData[0].originalPrice - discountAmount)}</div>
+                                            <div className="d_originalprice me-2 text-decoration-line-through">${item.productVariantData[0].originalPrice}</div>
+                                            <div className="d_saveprice ">
+                                                (Save ${discountAmount.toFixed(2)})
+                                            </div>
+                                        </div>
+                                        <div className="d_offer">
+                                            <div className="d_acc">
+                                                <div className="d_accitem">
+                                                    <div className="d_acctitle d-flex justify-content-between">
+                                                        <div className='d_title'>Best Offers</div>
+                                                        <div className='d_icon d_cur' onClick={() => setofferModalShow(true)}>View More</div>
+                                                    </div>
+                                                    <div className="d_acccon">
+                                                        <div className="d-flex align-items-center">
+                                                            <img src={require('./../d_img/offer.png')} alt="" className='me-2' />
+                                                            <div className="d-flex justify-content-between w-100 aling-items-center">
+                                                                <div className="d_offertitle">NEW100</div>
+                                                                <div className="d_savepri">Save $100 </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="d_offerdesc ms-4">Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque iaculis habitant congue est blandit amet. </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        )}
-                                        {mainContent.type === 'video' && (
-                                            <video
-                                                ref={videoRef}
-                                                controls>
-                                                <source src={mainContent.src} type="video/mp4" />
-                                            </video>
-                                        )}
-                                        {is360Active && (
-                                            <div>
-                                                <div id="viewer" ref={viewerRef}>
-                                                    <canvas
-                                                        className='w-100'
-                                                        ref={canvasRef}
-                                                        onMouseDown={(e) => startDragging(e.pageX)}
-                                                        onMouseUp={stopDragging}
-                                                        onMouseMove={(e) => handleDrag(e.pageX)}
-                                                        onClick={handleClick}
-                                                        onTouchStart={(e) => startDragging(e.touches[0].pageX)}
-                                                        onTouchEnd={stopDragging}
-                                                        onTouchMove={(e) => {
-                                                            e.preventDefault();
-                                                            handleDrag(e.touches[0].pageX);
-                                                        }}
-                                                    ></canvas>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-sm-12 col-lg-6">
-                            <div className="d_detail">
-                                <div className="d-flex align-items-center justify-content-between">
-                                    <div className="d_name">Traditional Chaniya choli</div>
-                                    <div className="d_starbg">
-                                        <div className="d-flex ">
-                                            <FaStar className=" d_staricon me-1" />
-                                            <div className="d_review">4.5</div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div className='d_colordesc'>Elegant peach cotton silk chaniya choli</div>
-                                <div className="d_stock">In Stock</div>
-                                {/* <div className="d_outofstock">Out of Stock</div> */}
-                                <div className="d_desc">Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque iaculis habitant congue est blandit amet. Tortor in vulputate nulla vitae quam.Lorem ipsum dolor sit amet consectetur. Massa </div>
-                                <div className="d-flex align-items-end">
-                                    <div className="d_price me-2">$120</div>
-                                    <div className="d_originalprice me-2">$140</div>
-                                    <div className="d_saveprice ">(Save $20)</div>
-                                </div>
-                                <div className="d_offer">
-                                    <div className="d_acc">
-                                        <div className="d_accitem">
-                                            <div className="d_acctitle d-flex justify-content-between">
-                                                <div className='d_title'>Best Offers</div>
-                                                <div className='d_icon d_cur' onClick={() => setofferModalShow(true)}>View More</div>
+                                        <div className="d_deliver">
+                                            <div className="d_tit">
+                                                <IoLocationSharp className='me-2 d_loc' />Deliver to
                                             </div>
-                                            <div className="d_acccon">
-                                                <div className="d-flex align-items-center">
-                                                    <img src={require('./../d_img/offer.png')} alt="" className='me-2' />
-                                                    <div className="d-flex justify-content-between w-100 aling-items-center">
-                                                        <div className="d_offertitle">NEW100</div>
-                                                        <div className="d_savepri">Save $100 </div>
+                                            <div className="row">
+                                                <div className="col-12 col-sm-6 col-lg-12 col-xl-6">
+                                                    <div className="d_input d-flex justify-content-between align-items-center">
+                                                        <input type="text" placeholder='Enter delivery Pincode' />
+                                                        <Link to="">Check</Link>
                                                     </div>
                                                 </div>
-                                                <div className="d_offerdesc ms-4">Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque iaculis habitant congue est blandit amet. </div>
+                                                <div className="col-12 col-sm-6 col-lg-12 col-xl-6 d_psdeliver">
+                                                    <div className="d_delivertime">Delivery by 7 Oct, Monday</div>
+                                                    <div className="d_deliverordertoday">if ordered before 5:11PM</div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div className="d_deliver">
-                                    <div className="d_tit">
-                                        <IoLocationSharp className='me-2 d_loc' />Deliver to
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-12 col-sm-6 col-lg-12 col-xl-6">
-                                            <div className="d_input d-flex justify-content-between align-items-center">
-                                                <input type="text" placeholder='Enter delivery Pincode' />
-                                                <Link to="">Check</Link>
+                                        <div className="d_color">
+                                            <div className="d_title">Colors :</div>
+                                            <div className='d-flex align-items-center gap-2'>
+                                                {item.productVariantData[0].colorName &&
+                                                    item.productVariantData[0].colorName.split(',').map((color, index) => (
+                                                        <div
+                                                            key={index}
+                                                            style={{ backgroundColor: color, width: '30px', height: '30px', borderRadius: '50%' }}
+                                                        ></div>
+                                                    ))}
                                             </div>
                                         </div>
-                                        <div className="col-12 col-sm-6 col-lg-12 col-xl-6 d_psdeliver">
-                                            <div className="d_delivertime">Delivery by 7 Oct, Monday</div>
-                                            <div className="d_deliverordertoday">if ordered before 5:11PM</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="d_color">
-                                    <div className="d_title">Colors :</div>
-                                    <div className="d-flex">
-                                        <div className={`d_colorcircle d_cur ${selectedColor === '#E15939' ? 'active' : ''}`} style={{ background: '#E15939' }} onClick={() => setSelectedColor('#E15939')}></div>
-                                        <div className={`d_colorcircle d_cur ${selectedColor === '#1D45A9' ? 'active' : ''}`} style={{ background: '#1D45A9' }} onClick={() => setSelectedColor('#1D45A9')}></div>
-                                        <div className={`d_colorcircle d_cur ${selectedColor === '#172631' ? 'active' : ''}`} style={{ background: '#172631' }} onClick={() => setSelectedColor('#172631')}></div>
-                                    </div>
-                                </div>
-                                <div className="d_size">
-                                    <div className="row">
-                                        <div className="col-12 col-sm-6 col-lg-12 col-xl-6">
-                                            <div className="d-flex justify-content-between">
-                                                <div className="d_title">Size :</div>
-                                                <Link className='text-decoration-underline d_cur' onClick={(e) => { e.preventDefault(); setsizeModalShow(true) }}>Size chart</Link>
-                                            </div>
-                                            <div className="d-flex">
-                                                {[34, 36, 38, 40, 42, 44, 46].map((size) => (
-                                                    <div
-                                                        key={size}
-                                                        className={`d_sizebox d-flex justify-content-center align-items-center d_cur ${selectedSize === size ? 'active' : ''} ${size === 34 ? 'd_disable' : ''}`}
-                                                        onClick={() => size !== 34 && setSelectedSize(size)}
-                                                    >
-                                                        {size === 34 && <div className="d_diagonal-line"></div>}
-                                                        <p className="mb-0">{size}</p>
+                                        <div className="d_size">
+                                            <div className="row">
+                                                <div className="col-12 col-sm-6 col-lg-12 col-xl-6">
+                                                    <div className="d-flex justify-content-between">
+                                                        <div className="d_title">Size :</div>
+                                                        <Link className='text-decoration-underline d_cur' onClick={(e) => { e.preventDefault(); setsizeModalShow(true) }}>Size chart</Link>
                                                     </div>
-                                                ))}
-                                            </div>
-
-                                        </div>
-                                        <div className="col-6 col-sm-6 col-lg-12 col-xl-6 d_psdeliver">
-                                            <div className="d_qun">Quantity :</div>
-                                            <div className="d_dropdownqun">
-                                                <button className="d_dropbtnqun" onClick={togglequantity}>
-                                                    <div className="d-flex justify-content-between align-items-center">
-                                                        {selectedQuantity}
-                                                        <MdKeyboardArrowDown className='ms-2 d_dropicon' />
-                                                    </div>
-                                                </button>
-                                                {isquantityOpen && (
-                                                    <div className="d_dropconqun">
-                                                        {[1, 2, 3, 4, 5].map((quantity) => (
-                                                            <p key={quantity} onClick={() => selectQuantity(quantity)}>
-                                                                {quantity}
-                                                            </p>
+                                                    <div className="d-flex">
+                                                        {sizesArray.map((size) => (
+                                                            <div
+                                                                key={size}
+                                                                className={`d_sizebox d-flex justify-content-center align-items-center d_cur ${selectedSize === size ? 'active' : ''} ${size === sizesArray[0] ? 'd_disable' : ''}`}
+                                                                onClick={() => size !== sizesArray[0] && setSelectedSize(size)}
+                                                            >
+                                                                {size === sizesArray[0] && <div className="d_diagonal-line"></div>}
+                                                                <p className="mb-0">{size}</p>
+                                                            </div>
                                                         ))}
                                                     </div>
-                                                )}
+
+                                                </div>
+                                                <div className="col-6 col-sm-6 col-lg-12 col-xl-6 d_psdeliver">
+                                                    <div className="d_qun">Quantity :</div>
+                                                    <div className="d_dropdownqun">
+                                                        <button className="d_dropbtnqun" onClick={togglequantity}>
+                                                            <div className="d-flex justify-content-between align-items-center">
+                                                                {selectedQuantity}
+                                                                <MdKeyboardArrowDown className='ms-2 d_dropicon' />
+                                                            </div>
+                                                        </button>
+                                                        {isquantityOpen && (
+                                                            <div className="d_dropconqun">
+                                                                {[1, 2, 3, 4, 5].map((quantity) => (
+                                                                    <p key={quantity} onClick={() => selectQuantity(quantity)}>
+                                                                        {quantity}
+                                                                    </p>
+                                                                ))}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div className="d_delbtn">
-                                    <div className="d-flex">
-                                        <div className="d_cta d-flex justify-content-center align-items-center me-3">
-                                            <Link to="" className='d_hearticon'><CiHeart className='' /></Link>
+                                        <div className="d_delbtn">
+                                            <div className="d-flex">
+                                                <div className="d_cta d-flex justify-content-center align-items-center me-3">
+                                                    <Link to="" className='d_hearticon'><CiHeart className='' /></Link>
+                                                </div>
+                                                <div className="d_cta  d-flex justify-content-center align-items-center me-3">
+                                                    <Link to="" className='text-decoration-none d_buy text-center'>Buy Now</Link>
+                                                </div>
+                                                <div className="d_cta  d-flex justify-content-center align-items-center">
+                                                    <Link to="" className='text-decoration-none d_addcartbtn text-center d-block'>Add to cart</Link>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="d_cta  d-flex justify-content-center align-items-center me-3">
-                                            <Link to="" className='text-decoration-none d_buy text-center'>Buy Now</Link>
-                                        </div>
-                                        <div className="d_cta  d-flex justify-content-center align-items-center">
-                                            <Link to="" className='text-decoration-none d_addcartbtn text-center d-block'>Add to cart</Link>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div className="d_feau">
-                                    <div className="d-flex flex-wrap">
-                                        <div className="d-flex align-items-center d_feabg">
-                                            <img src={require('./../d_img/fea1.png')} className='me-1' alt="" />
-                                            <p className='mb-0'>Dispatch in 2 days</p>
+                                        <div className="d_feau">
+                                            <div className="d-flex flex-wrap">
+                                                <div className="d-flex align-items-center d_feabg">
+                                                    <img src={require('./../d_img/fea1.png')} className='me-1' alt="" />
+                                                    <p className='mb-0'>Dispatch in 2 days</p>
+                                                </div>
+                                                <div className="d-flex align-items-center d_feabg">
+                                                    <img src={require('./../d_img/fea2.png')} className='me-1' alt="" />
+                                                    <p className='mb-0'>Easy return</p>
+                                                </div>
+                                                <div className="d-flex align-items-center d_feabg">
+                                                    <img src={require('./../d_img/fea3.png')} className='me-1' alt="" />
+                                                    <p className='mb-0'>Worldwide Shipping</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="d-flex align-items-center d_feabg">
-                                            <img src={require('./../d_img/fea2.png')} className='me-1' alt="" />
-                                            <p className='mb-0'>Easy return</p>
-                                        </div>
-                                        <div className="d-flex align-items-center d_feabg">
-                                            <img src={require('./../d_img/fea3.png')} className='me-1' alt="" />
-                                            <p className='mb-0'>Worldwide Shipping</p>
+                                        <div className="d_text">
+                                            <p className='mb-1'>* Additional 5 - 6 business days is required for delivery.</p>
+                                            <p className='mb-0'>* For Plus Size Extra 5 - 10 business days is required for delivery.</p>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="d_text">
-                                    <p className='mb-1'>* Additional 5 - 6 business days is required for delivery.</p>
-                                    <p className='mb-0'>* For Plus Size Extra 5 - 10 business days is required for delivery.</p>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        )
+                    })}
                 </div>
             </section >
             {/* Personal Details section end */}
