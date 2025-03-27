@@ -164,180 +164,179 @@ const Product = () => {
             console.error("Error updating wishlist:", error);
         }
     };
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}/api/getProductByMainCategory/${mainCategoryId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            const filteredProducts = response.data.products.filter(product =>
+                product.mainCategoryId === mainCategoryId &&
+                product.categoryId === id
+            );
+
+            // Set the filtered products to state
+            setFilteredProducts(filteredProducts);
+            // Find max price from all product variants
+            let maxPrice = 0;
+            filteredProducts.forEach(product => {
+                if (product.productVariantData && product.productVariantData.length > 0) {
+                    const originalPrice = parseFloat(product.productVariantData[0].originalPrice);
+                    if (originalPrice > maxPrice) {
+                        maxPrice = originalPrice;
+                    }
+                }
+            });
+
+            // Set the max price (rounded up to nearest 100 or 1000 for better UI)
+            const roundedMaxPrice = Math.ceil(maxPrice / 1000) * 1000;
+            setPriceRange([0, roundedMaxPrice]);
+
+            // Extract specifications from products
+            const extractedBrands = {};
+            const extractedMaterials = {};
+            const extractedStyles = {};
+            const extractedSleeves = {};
+            const extractedPatterns = {};
+            const extractedSizes = {};
+            const extractedColors = {};
+
+            filteredProducts.forEach(product => {
+                if (product.productVariantData && product.productVariantData.length > 0) {
+
+                    // For Size conversion
+                    if (product.productVariantData[0].size) {
+                        // Split the size string into an array
+                        const sizeArray = product.productVariantData[0].size.split(',').map(size => size.trim());
+
+                        sizeArray.forEach(size => {
+                            if (!extractedSizes[size]) {
+                                extractedSizes[size] = 1;
+                            } else {
+                                extractedSizes[size]++;
+                            }
+                        });
+                    }
+                    // For Color conversion
+                    if (product.productVariantData[0].colorName) {
+                        const colorArray = product.productVariantData[0].colorName.split(',').map(color => color.trim());
+
+                        colorArray.forEach(color => {
+                            if (!extractedColors[color]) {
+                                extractedColors[color] = 1;
+                            } else {
+                                extractedColors[color]++;
+                            }
+                        });
+                    }
+
+                    const specs = product.productVariantData[0].specifications;
+                    if (specs) {
+                        // Extract brand
+                        if (specs.Brand) {
+                            if (!extractedBrands[specs.Brand]) {
+                                extractedBrands[specs.Brand] = 1;
+                            } else {
+                                extractedBrands[specs.Brand]++;
+                            }
+                        }
+
+                        // Extract Material
+                        if (specs.Material) {
+                            if (!extractedMaterials[specs.Material]) {
+                                extractedMaterials[specs.Material] = 1;
+                            } else {
+                                extractedMaterials[specs.Material]++;
+                            }
+                        }
+
+                        // Extract Style
+                        if (specs.Style) {
+                            if (!extractedStyles[specs.Style]) {
+                                extractedStyles[specs.Style] = 1;
+                            } else {
+                                extractedStyles[specs.Style]++;
+                            }
+                        }
+
+                        // Extract Sleeve Length
+                        if (specs["Sleeve Length"]) {
+                            if (!extractedSleeves[specs["Sleeve Length"]]) {
+                                extractedSleeves[specs["Sleeve Length"]] = 1;
+                            } else {
+                                extractedSleeves[specs["Sleeve Length"]]++;
+                            }
+                        }
+
+                        // Extract Pattern
+                        if (specs.Pattern) {
+                            if (!extractedPatterns[specs.Pattern]) {
+                                extractedPatterns[specs.Pattern] = 1;
+                            } else {
+                                extractedPatterns[specs.Pattern]++;
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Convert to array format for filter components
+            const brandArray = Object.entries(extractedBrands).map(([brandname, count], index) => ({
+                id: index + 1,
+                brandname,
+                count
+            }));
+
+            const materialArray = Object.entries(extractedMaterials).map(([materialname, count], index) => ({
+                id: index + 1,
+                materialname,
+                count
+            }));
+
+            const sleeveArray = Object.entries(extractedSleeves).map(([sleevename, count], index) => ({
+                id: index + 1,
+                sleevename,
+                count
+            }));
+
+            const patternArray = Object.entries(extractedPatterns).map(([patternname, count], index) => ({
+                id: index + 1,
+                patternname,
+                count
+            }));
+            const sizeArray = Object.entries(extractedSizes).map(([sizename, count], index) => ({
+                id: index + 1,
+                sizename,
+                count
+            }));
+
+            const colorArray = Object.entries(extractedColors).map(([colorname, count], index) => ({
+                id: index + 1,
+                colorname,
+                count
+            }));
+
+            const styleArray = Object.entries(extractedStyles).map(([stylename, count], index) => ({
+                id: index + 1,
+                stylename,
+                count
+            }));
+
+            // Set the state for each filter
+            setSize(sizeArray);
+            setColor(colorArray);
+            setBrands(brandArray);
+            setMaterials(materialArray);
+            setStyles(styleArray);
+            setSleeves(sleeveArray);
+            setPatterns(patternArray);
+        } catch (error) {
+            console.error('Data fetching failed:', error);
+        }
+    };
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`${BaseUrl}/api/getProductByMainCategory/${mainCategoryId}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-
-                const filteredProducts = response.data.products.filter(product =>
-                    product.mainCategoryId === mainCategoryId &&
-                    product.categoryId === id
-                );
-                console.log("filter products", filteredProducts);
-
-                // Set the filtered products to state
-                setFilteredProducts(filteredProducts);
-                // Find max price from all product variants
-                let maxPrice = 0;
-                filteredProducts.forEach(product => {
-                    if (product.productVariantData && product.productVariantData.length > 0) {
-                        const originalPrice = parseFloat(product.productVariantData[0].originalPrice);
-                        if (originalPrice > maxPrice) {
-                            maxPrice = originalPrice;
-                        }
-                    }
-                });
-
-                // Set the max price (rounded up to nearest 100 or 1000 for better UI)
-                const roundedMaxPrice = Math.ceil(maxPrice / 1000) * 1000;
-                setPriceRange([0, roundedMaxPrice]);
-
-                // Extract specifications from products
-                const extractedBrands = {};
-                const extractedMaterials = {};
-                const extractedStyles = {};
-                const extractedSleeves = {};
-                const extractedPatterns = {};
-                const extractedSizes = {};
-                const extractedColors = {};
-
-                filteredProducts.forEach(product => {
-                    if (product.productVariantData && product.productVariantData.length > 0) {
-
-                        // For Size conversion
-                        if (product.productVariantData[0].size) {
-                            // Split the size string into an array
-                            const sizeArray = product.productVariantData[0].size.split(',').map(size => size.trim());
-
-                            sizeArray.forEach(size => {
-                                if (!extractedSizes[size]) {
-                                    extractedSizes[size] = 1;
-                                } else {
-                                    extractedSizes[size]++;
-                                }
-                            });
-                        }
-                        // For Color conversion
-                        if (product.productVariantData[0].colorName) {
-                            const colorArray = product.productVariantData[0].colorName.split(',').map(color => color.trim());
-
-                            colorArray.forEach(color => {
-                                if (!extractedColors[color]) {
-                                    extractedColors[color] = 1;
-                                } else {
-                                    extractedColors[color]++;
-                                }
-                            });
-                        }
-
-                        const specs = product.productVariantData[0].specifications;
-                        if (specs) {
-                            // Extract brand
-                            if (specs.Brand) {
-                                if (!extractedBrands[specs.Brand]) {
-                                    extractedBrands[specs.Brand] = 1;
-                                } else {
-                                    extractedBrands[specs.Brand]++;
-                                }
-                            }
-
-                            // Extract Material
-                            if (specs.Material) {
-                                if (!extractedMaterials[specs.Material]) {
-                                    extractedMaterials[specs.Material] = 1;
-                                } else {
-                                    extractedMaterials[specs.Material]++;
-                                }
-                            }
-
-                            // Extract Style
-                            if (specs.Style) {
-                                if (!extractedStyles[specs.Style]) {
-                                    extractedStyles[specs.Style] = 1;
-                                } else {
-                                    extractedStyles[specs.Style]++;
-                                }
-                            }
-
-                            // Extract Sleeve Length
-                            if (specs["Sleeve Length"]) {
-                                if (!extractedSleeves[specs["Sleeve Length"]]) {
-                                    extractedSleeves[specs["Sleeve Length"]] = 1;
-                                } else {
-                                    extractedSleeves[specs["Sleeve Length"]]++;
-                                }
-                            }
-
-                            // Extract Pattern
-                            if (specs.Pattern) {
-                                if (!extractedPatterns[specs.Pattern]) {
-                                    extractedPatterns[specs.Pattern] = 1;
-                                } else {
-                                    extractedPatterns[specs.Pattern]++;
-                                }
-                            }
-                        }
-                    }
-                });
-
-                // Convert to array format for filter components
-                const brandArray = Object.entries(extractedBrands).map(([brandname, count], index) => ({
-                    id: index + 1,
-                    brandname,
-                    count
-                }));
-
-                const materialArray = Object.entries(extractedMaterials).map(([materialname, count], index) => ({
-                    id: index + 1,
-                    materialname,
-                    count
-                }));
-
-                const sleeveArray = Object.entries(extractedSleeves).map(([sleevename, count], index) => ({
-                    id: index + 1,
-                    sleevename,
-                    count
-                }));
-
-                const patternArray = Object.entries(extractedPatterns).map(([patternname, count], index) => ({
-                    id: index + 1,
-                    patternname,
-                    count
-                }));
-                const sizeArray = Object.entries(extractedSizes).map(([sizename, count], index) => ({
-                    id: index + 1,
-                    sizename,
-                    count
-                }));
-
-                const colorArray = Object.entries(extractedColors).map(([colorname, count], index) => ({
-                    id: index + 1,
-                    colorname,
-                    count
-                }));
-
-                const styleArray = Object.entries(extractedStyles).map(([stylename, count], index) => ({
-                    id: index + 1,
-                    stylename,
-                    count
-                }));
-
-                // Set the state for each filter
-                setSize(sizeArray);
-                setColor(colorArray);
-                setBrands(brandArray);
-                setMaterials(materialArray);
-                setStyles(styleArray);
-                setSleeves(sleeveArray);
-                setPatterns(patternArray);
-            } catch (error) {
-                console.error('Data fetching failed:', error);
-            }
-        };
         fetchData();
     }, [mainCategoryId, BaseUrl, token, id]);
 
@@ -388,7 +387,6 @@ const Product = () => {
 
     // handle checkbox
     const handleCheckboxChange = (type, id, label) => {
-        console.log('Checkbox Change:', { type, id, label });
 
         setCheckedFilters(prev => {
             const newFilters = {
@@ -398,7 +396,6 @@ const Product = () => {
                     [id]: !prev[type]?.[id]
                 }
             };
-            console.log('Updated Checked Filters:', newFilters);
             return newFilters;
         });
 
@@ -409,7 +406,6 @@ const Product = () => {
             } else {
                 newSelectedFilters = prev.filter(filter => !(filter.type === type && filter.id === id));
             }
-            console.log('Updated Selected Filters:', newSelectedFilters);
             return newSelectedFilters;
         });
     };
@@ -430,121 +426,135 @@ const Product = () => {
         }
     };
 
-    useEffect(() => {
-        // Filter logic
-        const applyFilters = () => {
-            const hasActiveFilters = Object.values(checkedFilters).some(filterGroup =>
-                Object.values(filterGroup).some(value => value)
-            );
+    // Filter logic
+    const applyFilters = () => {
+        const hasActiveFilters = Object.values(checkedFilters).some(filterGroup =>
+            Object.values(filterGroup).some(value => value)
+        );
 
-            if (!hasActiveFilters) {
-                return filteredProducts;  // Return all original products
-            }
-            return filteredProducts.filter(product => {
-                const productVariant = product.productVariantData?.[0] || {};
-                const specs = productVariant.specifications || {};
+        if (!hasActiveFilters && priceRange[0] === 0 && priceRange[1] === Math.max(...filteredProducts.map(product => 
+            parseFloat(product.productVariantData?.[0]?.originalPrice || 0)
+        ))) {
+            return filteredProducts;  // Return all original products if no filters are active
+        }
 
-                // Price Range Filter
-                const originalPrice = parseFloat(productVariant.originalPrice || 0);
-                const isPriceInRange = originalPrice >= priceRange[0] && originalPrice <= priceRange[1];
+        return filteredProducts.filter(product => {
+            const productVariant = product.productVariantData?.[0] || {};
+            const specs = productVariant.specifications || {};
 
-                // Category Filter
-                const isCategoryMatched = Object.keys(checkedFilters.categories).length === 0 ||
-                    Object.keys(checkedFilters.categories).some(catId =>
-                        checkedFilters.categories[catId]
-                    );
+            // Price Range Filter
+            const originalPrice = parseFloat(productVariant.originalPrice || 0);
+            const isPriceInRange = originalPrice >= priceRange[0] && originalPrice <= priceRange[1];
 
-                // Discount Filter
-                const discountPercentage = productVariant.discountPercentage || 0;
-                const isDiscountMatched = Object.keys(checkedFilters.discounts).length === 0 ||
-                    Object.keys(checkedFilters.discounts).some(discId => {
-                        const minDiscount = parseInt(discount.find(d => d.id.toString() === discId)?.no || 0);
+            // Category Filter
+            const isCategoryMatched =
+                Object.keys(checkedFilters.categories).length === 0 ||
+                Object.keys(checkedFilters.categories).some(catId =>
+                    checkedFilters.categories[catId] &&
+                    product.subCategoryId === catId  // Ensure this matches your data structure
+                );
+
+            // Discount Filter
+            const discountPercentage = productVariant.discountPrice || 0;
+
+            const isDiscountMatched = Object.keys(checkedFilters.discounts).length === 0 ||
+                Object.keys(checkedFilters.discounts).some(discId => {
+                    const minDiscount = parseInt(discount.find(d => d.id.toString() === discId)?.no || 0);
+
+                    const originalPrice = parseFloat(productVariant.originalPrice || 0);
+                    const discountedPrice = parseFloat(productVariant.discountPrice || 0);
+
+                    if (originalPrice > 0 && discountedPrice > 0) {
                         return discountPercentage >= minDiscount;
-                    });
+                    }
 
-                // Size Filter
-                const sizeArray = (productVariant.size || '').split(',').map(s => s.trim());
-                const isSizeMatched = Object.keys(checkedFilters.sizes).length === 0 ||
-                    sizeArray.some(productSize =>
-                        Object.keys(checkedFilters.sizes).some(sizeId =>
-                            checkedFilters.sizes[sizeId] &&
-                            productSize.trim() === size.find(s => s.id.toString() === sizeId)?.sizename
-                        )
-                    );
+                    return false;
+                });
 
-                // Brand Filter
-                const isBrandMatched = Object.keys(checkedFilters.brands).length === 0 ||
-                    Object.keys(checkedFilters.brands).some(brandId =>
-                        checkedFilters.brands[brandId] &&
-                        specs.Brand === brands.find(b => b.id.toString() === brandId)?.brandname
-                    );
+            // Size Filter
+            const sizeArray = (productVariant.size || '').split(',').map(s => s.trim());
+            const isSizeMatched = Object.keys(checkedFilters.sizes).length === 0 ||
+                sizeArray.some(productSize =>
+                    Object.keys(checkedFilters.sizes).some(sizeId =>
+                        checkedFilters.sizes[sizeId] &&
+                        productSize.trim() === size.find(s => s.id.toString() === sizeId)?.sizename
+                    )
+                );
 
-                // Color Filter
-                const colorArray = (productVariant.colorName || '').split(',').map(c => c.trim());
-                const isColorMatched = Object.keys(checkedFilters.colors).length === 0 ||
-                    colorArray.some(colorName =>
-                        Object.keys(checkedFilters.colors).some(colorId =>
-                            checkedFilters.colors[colorId] &&
-                            colorName === color.find(c => c.id.toString() === colorId)?.colorname
-                        )
-                    );
+            // Brand Filter
+            const isBrandMatched = Object.keys(checkedFilters.brands).length === 0 ||
+                Object.keys(checkedFilters.brands).some(brandId =>
+                    checkedFilters.brands[brandId] &&
+                    specs.Brand === brands.find(b => b.id.toString() === brandId)?.brandname
+                );
 
-                // Rating Filter
-                const productRating = productVariant.averageRating || 0;
-                const isRatingMatched = Object.keys(checkedFilters.ratings).length === 0 ||
-                    Object.keys(checkedFilters.ratings).some(ratingId => {
-                        const minRating = rating.find(r => r.id.toString() === ratingId)?.rating || 0;
-                        return productRating >= minRating;
-                    });
+            // Color Filter
+            const colorArray = (productVariant.colorName || '').split(',').map(c => c.trim());
+            const isColorMatched = Object.keys(checkedFilters.colors).length === 0 ||
+                colorArray.some(colorName =>
+                    Object.keys(checkedFilters.colors).some(colorId =>
+                        checkedFilters.colors[colorId] &&
+                        colorName === color.find(c => c.id.toString() === colorId)?.colorname
+                    )
+                );
 
-                // Sleeve Length Filter
-                const isSleeveLengthMatched = Object.keys(checkedFilters.sleeves).length === 0 ||
-                    Object.keys(checkedFilters.sleeves).some(sleeveId =>
-                        checkedFilters.sleeves[sleeveId] &&
-                        specs["Sleeve Length"] === sleeves.find(s => s.id.toString() === sleeveId)?.sleevename
-                    );
+            // Rating Filter
+            const productRating = productVariant.averageRating || 0;
+            const isRatingMatched = Object.keys(checkedFilters.ratings).length === 0 ||
+                Object.keys(checkedFilters.ratings).some(ratingId => {
+                    const minRating = rating.find(r => r.id.toString() === ratingId)?.rating || 0;
+                    return productRating >= minRating;
+                });
 
-                // Material Filter
-                const isMaterialMatched = Object.keys(checkedFilters.materials).length === 0 ||
-                    Object.keys(checkedFilters.materials).some(materialId =>
-                        checkedFilters.materials[materialId] &&
-                        specs.Material === materials.find(m => m.id.toString() === materialId)?.materialname
-                    );
+            // Sleeve Length Filter
+            const isSleeveLengthMatched = Object.keys(checkedFilters.sleeves).length === 0 ||
+                Object.keys(checkedFilters.sleeves).some(sleeveId =>
+                    checkedFilters.sleeves[sleeveId] &&
+                    specs["Sleeve Length"] === sleeves.find(s => s.id.toString() === sleeveId)?.sleevename
+                );
 
-                // Pattern Filter
-                const isPatternMatched = Object.keys(checkedFilters.patterns).length === 0 ||
-                    Object.keys(checkedFilters.patterns).some(patternId =>
-                        checkedFilters.patterns[patternId] &&
-                        specs.Pattern === patterns.find(p => p.id.toString() === patternId)?.patternname
-                    );
+            // Material Filter
+            const isMaterialMatched = Object.keys(checkedFilters.materials).length === 0 ||
+                Object.keys(checkedFilters.materials).some(materialId =>
+                    checkedFilters.materials[materialId] &&
+                    specs.Material === materials.find(m => m.id.toString() === materialId)?.materialname
+                );
 
-                // Style Filter
-                const isStyleMatched = Object.keys(checkedFilters.styles).length === 0 ||
-                    Object.keys(checkedFilters.styles).some(styleId =>
-                        checkedFilters.styles[styleId] &&
-                        specs.Style === styles.find(s => s.id.toString() === styleId)?.stylename
-                    );
+            // Pattern Filter
+            const isPatternMatched = Object.keys(checkedFilters.patterns).length === 0 ||
+                Object.keys(checkedFilters.patterns).some(patternId =>
+                    checkedFilters.patterns[patternId] &&
+                    specs.Pattern === patterns.find(p => p.id.toString() === patternId)?.patternname
+                );
 
-                // Combine all filter conditions
-                return isPriceInRange &&
-                    isCategoryMatched &&
-                    isDiscountMatched &&
-                    isSizeMatched &&
-                    isBrandMatched &&
-                    isColorMatched &&
-                    isRatingMatched &&
-                    isSleeveLengthMatched &&
-                    isMaterialMatched &&
-                    isPatternMatched &&
-                    isStyleMatched;
-            });
-        };
+            // Style Filter
+            const isStyleMatched = Object.keys(checkedFilters.styles).length === 0 ||
+                Object.keys(checkedFilters.styles).some(styleId =>
+                    checkedFilters.styles[styleId] &&
+                    specs.Style === styles.find(s => s.id.toString() === styleId)?.stylename
+                );
 
+            // Combine all filter conditions
+            return isPriceInRange &&
+                isCategoryMatched &&
+                isDiscountMatched &&
+                isSizeMatched &&
+                isBrandMatched &&
+                isColorMatched &&
+                isRatingMatched &&
+                isSleeveLengthMatched &&
+                isMaterialMatched &&
+                isPatternMatched &&
+                isStyleMatched;
+        });
+    };
+    useEffect(() => {
         // Update filtered products based on selected filters
         const filteredProductsList = applyFilters();
         setFilteredProducts(filteredProductsList);
 
-    });
+    }, [ priceRange, filteredProducts, selectedFilters, checkedFilters]);
+
     // Clear all filters
     const handleClearAll = (e) => {
         e.preventDefault();
@@ -566,13 +576,13 @@ const Product = () => {
         // Clear selected filters
         setSelectedFilters([]);
 
-        // Reset price range to initial state
-        const initialMaxPrice = Math.ceil(Math.max(...filteredProducts.map(product =>
+        const maxPrice = Math.max(...filteredProducts.map(product =>
             parseFloat(product.productVariantData?.[0]?.originalPrice || 0)
-        )) / 1000) * 1000;
+        ));
+        const roundedMaxPrice = Math.ceil(maxPrice / 1000) * 1000;
+        setPriceRange([0, roundedMaxPrice]);
 
-        setPriceRange([0, initialMaxPrice]);
-
+      fetchData();
     };
 
     // Price Range
@@ -679,6 +689,13 @@ const Product = () => {
         };
     }, [isDropdownOpen]);
 
+    const calculateDiscountPrice = (originalPrice, discountPercentage) => {
+        if (!originalPrice || !discountPercentage) return originalPrice;
+
+        const discountAmount = (originalPrice * discountPercentage) / 100;
+        return originalPrice - discountAmount;
+    };
+
 
     return (
         <>
@@ -774,13 +791,23 @@ const Product = () => {
                                                     {isActivecategory &&
                                                         <>
                                                             <div className='mt-3'>
-                                                                {subCategory.map((category, index) => (
-                                                                    <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                        <input type="checkbox" onChange={() => handleCheckboxChange('categories', category._id, category.label)} checked={!!checkedFilters.categories[category._id]} id={`category-${category._id}`} />
-                                                                        <label htmlFor={`category-${category._id}`} className="d_checkmark"></label>
-                                                                        <p className="mb-0">{category.subCategoryName}</p>
-                                                                    </div>
-                                                                ))}
+                                                                {subCategory.map((category, index) => {
+                                                                    return (
+                                                                        <div
+                                                                            key={index}
+                                                                            className="d_cuscheckbox d_cur d-flex align-items-center"
+                                                                        >
+                                                                            <input
+                                                                                type="checkbox"
+                                                                                onChange={() => handleCheckboxChange('categories', category._id, category.subCategoryName)}
+                                                                                checked={!!checkedFilters.categories[category._id]}
+                                                                                id={`category-${category._id}`}
+                                                                            />
+                                                                            <label htmlFor={`category-${category._id}`} className="d_checkmark"></label>
+                                                                            <p className="mb-0">{category.subCategoryName}</p>
+                                                                        </div>
+                                                                    );
+                                                                })}
                                                             </div>
                                                         </>
                                                     }
@@ -1557,7 +1584,7 @@ const Product = () => {
                                                 const itemId = item.productId || item._id || item.id;
                                                 return (
                                                     <div key={itemId} className="col-12 col-sm-6 col-lg-6 col-xl-3">
-                                                        <Link to='/womendetails'>
+                                                        <Link to={`/womendetails/${item._id}`}>
                                                             <div className="d_box">
                                                                 <div className="d_img">
                                                                     <img src={`${BaseUrl}/${item.productVariantData[0].images[0]}`} alt="" />
@@ -1599,11 +1626,17 @@ const Product = () => {
                                                                             <div className="d-flex align-items-end">
                                                                                 <div className="d_price">
                                                                                     ${item.productVariantData[0].originalPrice && item.productVariantData[0].discountPrice
-                                                                                        ? parseInt(item.productVariantData[0].originalPrice) - parseInt(item.productVariantData[0].discountPrice)
+                                                                                        ? calculateDiscountPrice(
+                                                                                            parseInt(item.productVariantData[0].originalPrice),
+                                                                                            parseInt(item.productVariantData[0].discountPrice)
+                                                                                        )
                                                                                         : "0"}
                                                                                 </div>
-                                                                                <div className="d_disprice ms-1 text-decoration-line-through">${item.productVariantData[0].originalPrice}</div>
+                                                                                <div className="d_disprice ms-1 text-decoration-line-through">
+                                                                                    ${item.productVariantData[0].originalPrice}
+                                                                                </div>
                                                                             </div>
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
