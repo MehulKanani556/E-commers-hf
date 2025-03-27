@@ -1,85 +1,75 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
-import Map from '../Map';
+import axios from 'axios';
 
-const Electronicsessiental = () => {
+const Toptoys = () => {
+    const BaseUrl = process.env.REACT_APP_BASEURL;
+    const token = localStorage.getItem('token');
 
-    let data = [
-        {
-            name: "Smarts Watches",
-            offer: "Up to 20% off",
-            image: "ele1.png"
-        },
-        {
-            name: "Projector",
-            offer: "Starting ₹6999",
-            image: "ele2.png"
-        },
-        {
-            name: "Printer",
-            offer: "Up to 30% off",
-            image: "ele3.png"
-        },
-        {
-            name: "Wireless headphones",
-            offer: "Grab Now",
-            image: "ele4.png"
-        },
-        {
-            name: "Refrigerator",
-            offer: "Up to 50% off",
-            image: "ele5.png"
-        },
-        {
-            name: "Gaming Laptop",
-            offer: "Up to 25% off",
-            image: "ele6.png"
-        },
-    ]
-
-    const [electroins, setelectroins] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
 
     useEffect(() => {
-        setelectroins(data);
-    }, [])
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${BaseUrl}/api/allProductOffer`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                
+                // Shuffle the array randomly
+                const shuffledProducts = response.data.productOffer
+                    .sort(() => 0.5 - Math.random())
+                    .slice(0, 6);
+                
+                setFilteredData(shuffledProducts || []);
+            } catch (error) {
+                console.error('Data Fetching Error:', error);
+                setFilteredData([]);
+            }
+        }
+        fetchData();
+    }, []); // Remove BaseUrl from dependency array to ensure random selection on each refresh
 
     return (
         <React.Fragment>
-            <div className='py-5'>
-                <div className='d_container p-0 inter'>
+            <section className='py-5'>
+                <div className='d_container inter p-0'>
                     <Row className='m-0 mb-4'>
                         <Col className='d-flex justify-content-between align-items-center'>
-                            <h2 className='section_title m-0'>Electronic Accessories</h2>
-                            <p className='m-0 font_14 primary_color fw-500 inter'>
-                                VIEW ALL
-                            </p>
+                            <h2 className='section_title m-0'>
+                                Offer
+                            </h2>
                         </Col>
                     </Row>
                     <Row className='m-0'>
-                        <Map data={electroins}>
-                            {(item) => (
-                                <div className="col-xxl-2 col-lg-3 col-md-4 col-sm-6" key={item.name}>
+                        {filteredData.length > 0 ? (
+                            filteredData.map((item, index) => (
+                                <div 
+                                    key={item.id || index} 
+                                    className="col-xxl-2 col-lg-3 col-md-4 col-sm-6"
+                                >
                                     <div className="product-item">
                                         <div className='electronc_img'>
                                             <img
-                                                src={require(`../../assets/${item.image}`)}
+                                                src={`${BaseUrl}/${item?.offerImage}`}
+                                                alt={item.productData[0]?.productName}
                                                 className='w-100 h-100 object_cover'
-                                                alt={item.name}
                                             />
                                         </div>
                                         <div className='Ele_description mt-2'>
-                                            <h4 className='font_16 pt-1 mb-1'>{item.name}</h4>
-                                            <p className='fw-bold'>{item.offer}</p>
+                                            <h4 className='font_16 mb-0'>{item.productData[0]?.productName}</h4>
+                                            <p className='fw-bold'>Up to {item.discountPrice}% off</p>
                                         </div>
                                     </div>
                                 </div>
-                            )}
-                        </Map>
+                            ))
+                        ) : (
+                            <div>No product offers available</div>
+                        )}
                     </Row>
                 </div>
-            </div>
+            </section>
         </React.Fragment>
     )
 }
 
-export default Electronicsessiental
+export default Toptoys

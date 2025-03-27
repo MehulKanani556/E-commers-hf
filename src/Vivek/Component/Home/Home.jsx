@@ -55,7 +55,7 @@ const Home = () => {
 
 
             {/* Related to items you've viewed */}
-            <Relateditems/>
+            {/* <Relateditems/> */}
 
 
             {/* New Seetter */}
