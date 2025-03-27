@@ -1,8 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import Map from '../Map'
+import axios from 'axios'
+
 
 const Bestsellers = () => {
+
+    const BaseUrl = process.env.REACT_APP_BASEURL;
+    const [topProduct, setTopProduct] = useState([]);
+
+    useEffect(() => {
+        const fetchTopProduct = async () => {
+            try {
+            const response = await axios.get(`${BaseUrl}/api/topProducts`);
+            // console.log("resposne",response.data.data);
+            setTopProduct(response.data.data);
+            } catch (error) {
+            console.error('Data Fetching Error:', error);
+            }
+        }
+        fetchTopProduct()
+    }, [])
 
     let data = [
         {
@@ -65,25 +83,22 @@ const Bestsellers = () => {
                         </Col>
                     </Row>
                     <Row className='m-0'>
-                        <Map data={seller}>
-                            {(item) => (
-                                <div className="col-xxl-3 col-lg-4 col-sm-6 my-3 px-0 px-sm-2" key={item.name}>
-                                    <div className="product-item">
-                                        <div className='best_seller_img'>
-                                            <img
-                                                src={require(`../../assets/${item.image}`)}
-                                                className='w-100 h-100 object_cover'
-                                                alt={item.name}
-                                            />
-                                        </div>
-                                        <div className='Ele_description mt-2'>
-                                            <h4 className='font_16 pt-1 mb-1'>{item.name}</h4>
-                                            <p className='fw-bold font_18 mb-0'>{item.offer}</p>
-                                        </div>
+                        {topProduct.map((item) => (
+                            <div className="col-xxl-3 col-lg-4 col-sm-6 my-3 px-0 px-sm-2" key={item.name}>
+                                <div className="product-item">
+                                    <div className='best_seller_img'>
+                                        <img
+                                            src={`${BaseUrl}/${item.images[0]}`}
+                                            className='w-100 h-100 object_cover'
+                                        />
+                                    </div>
+                                    <div className='Ele_description mt-2'>
+                                        <h4 className='font_16 pt-1 mb-1'>{item.productName}</h4>
+                                        <p className='fw-bold font_18 mb-0'>{item.offer}</p>
                                     </div>
                                 </div>
-                            )}
-                        </Map>
+                            </div>
+                        ))}
                     </Row>
                 </div>
             </div>
