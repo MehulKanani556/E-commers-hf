@@ -27,11 +27,8 @@ import Subscribe from '../../Vivek/Component/common/Subscribe';
 import Process from '../../Vivek/Component/common/Process';
 import Footer from '../../Vivek/Component/footer/Footer';
 import ReactImageMagnify from 'react-image-magnify';
-
+import axios from 'axios';
 const WomenDetails = () => {
-    const { productId } = useParams(); // Get product ID from URL
-    const [productDetails, setProductDetails] = useState(null); // State to hold product details
-    const token = "your_token_here"; // Replace with your actual token or retrieve it from a secure location
 
     const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -58,6 +55,11 @@ const WomenDetails = () => {
     const [selectedgbsize, setSelectedGBSize] = useState(null);
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedQuantity, setSelectedQuantity] = useState('Select')
+    const { productId } = useParams();  // Get Product ID from URL
+    const [product, setProduct] = useState(null);
+    const [error, setError] = useState(null);
+    const BaseUrl = process.env.REACT_APP_BASEURL || 'http://localhost:5000';
+    const [loading, setLoading] = useState(true);
 
     const dragThreshold = 30;
 
@@ -67,27 +69,6 @@ const WomenDetails = () => {
         { type: 'video', src: detailVideo, thumbnail: detailVideo },
         { type: 'image', src: detailImg3, thumbnail: detailImg3 }
     ];
-
-    useEffect(() => {
-        const fetchProductDetails = async () => {
-            try {
-                const response = await fetch(`http://localhost:5000/api/getProduct/${productId}`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`, // Include the token in the headers
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const data = await response.json();
-                setProductDetails(data); // Set product details in state
-            } catch (error) {
-                console.error('Error fetching product details:', error);
-            }
-        };
-
-        fetchProductDetails(); // Call the function to fetch product details
-    }, [productId, token]); // Dependency array includes productId and token
-
     useEffect(() => {
         if (mainContent.type === 'image') {
             const img = new Image();
@@ -97,8 +78,6 @@ const WomenDetails = () => {
             };
         }
     }, [mainContent.src]);
-
-
     const handleThumbnailClick = (item, index) => {
         setImageLoaded(false); // Reset the image loading state
         setMainContent({ ...item, index });
@@ -233,12 +212,68 @@ const WomenDetails = () => {
         }
     };
 
- return (
-        <>
+    const token = localStorage.getItem("token");
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5000/api/getProduct/${productId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                console.log("response", response.data.product);
+
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
+        }
+        fetchData();
+    }, [productId, token]);
+
+  
+     useEffect(() => {
+        const fetchProductDetails = async () => {
+            try {
+                setLoading(true);
+                const token = localStorage.getItem('token');
+                
+                const response = await axios.get(`${BaseUrl}/api/getProductVariant/${productId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                console.log("response", response.data.productVariant);
+
+                setProduct(response.data.productVariant);
+                
+                // If there are images, set the main content to the first image
+                if (response.data.productVariant?.images?.length > 0) {
+                    setMainContent({
+                        type: 'image',
+                        src: `${BaseUrl}/${response.data.productVariant.images[0]}`,
+                        index: 0
+                    });
+                }
+
+                setError(null);
+            } catch (err) {
+                setError(err.message || 'Failed to fetch product details');
+                console.error('Error fetching product:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (productId) {
+            fetchProductDetails();
+        }
+    }, [productId, BaseUrl]);
+    return (
+        <>
             {/* Header section  */}
             <Header />
-
             {/* Personal Details section start */}
             <section className='d_p-50 pb-0 d_womendetail'>
                 <div className="d_container">
@@ -554,7 +589,6 @@ const WomenDetails = () => {
                                         <div className="d_conhead d_add">Akshya Nagar 1st Block 1st Cross, Rammurthy nagar, Bangalore-560016</div>
                                     </div>
                                 </div>
-
                             </Accordion.Body>
                         </Accordion.Item>
                         <Accordion.Item eventKey="1">
@@ -1348,7 +1382,7 @@ const WomenDetails = () => {
             </Modal>
 
             {/* Offer Modal section end */}
-        
+
         </>
     );
 };

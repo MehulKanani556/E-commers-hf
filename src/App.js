@@ -74,7 +74,7 @@ function App() {
           {/* women */}
           <Route path='/women' element={<Womenstore />} />
           <Route path='/womenstore' element={<Womenfilter />} />
-          <Route path='/womendetails' element={<WomenDetails />} />
+          <Route path='/womendetails/:productId' element={<WomenDetails />} />
           <Route path='/electronicdetails' element={<Electronicdetails />} />
 
           <Route path='/category/:id' element={<Category/>} />
