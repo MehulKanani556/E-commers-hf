@@ -35,11 +35,11 @@ const CommSlider = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${BaseUrl}/api/allCategory`, {
+                const response = await axios.get(`${BaseUrl}/api/allMainCategory`, {
                     headers : { Authorization : `Bearer ${token}`}
                 });
-                // console.log("resposnse",response.data.category);
-                setCategory(response.data.category);
+                // console.log("resposnse",response.data.users);
+                setCategory(response.data.users);
                 
             } catch (error) {
                 console.error('Data Fetching Error:', error);
@@ -59,10 +59,10 @@ const CommSlider = () => {
                                         <div className="d_mini">
                                             <div className="d_bgimg">
                                                 <div className="d_img">
-                                                    <img src={`${BaseUrl}/${item.categoryImage}`} className='' alt={item.categoryName} />
+                                                    <img src={`${BaseUrl}/${item.mainCategoryImage}`} className='' alt={item.mainCategoryName} />
                                                 </div>
                                             </div>
-                                            <p className='mb-0 d_category-label'>{item.categoryName}</p>
+                                            <p className='mb-0 d_category-label'>{item.mainCategoryName}</p>
                                         </div>
                                     </div>
                                 ))}
