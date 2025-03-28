@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { IoClose, IoLocationSharp, IoShareSocialSharp } from 'react-icons/io5';
-import detailImg4 from './../d_img/detailimg4.png';
+// import detailImg4 from './../d_img/detailimg4.png';
 import icon360 from './../d_img/360.png';
 import './../css/womendetail.css';
 import { FaStar } from 'react-icons/fa';
@@ -12,7 +12,7 @@ import Bought from '../components/Bought';
 import Like from '../components/Like';
 import Recentlyviewed from '../components/Recentlyviewed';
 import Customerlike from '../components/Customerlike';
-import { Modal, Table } from 'react-bootstrap';
+import { Carousel, Modal, Table } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import Header from '../../Vivek/Component/header/Header';
 import Subscribe from '../../Vivek/Component/common/Subscribe';
@@ -29,51 +29,30 @@ const WomenDetails = () => {
     const BaseUrl = process.env.REACT_APP_BASEURL;
     const token = localStorage.getItem('token');
 
-    const [imageLoaded, setImageLoaded] = useState(false);
-
+    const [product, setProduct] = useState([]);
     const [mainContent, setMainContent] = useState({
         type: 'image',
-        src: detailImg4,
+        src: '',
         index: 0
     });
-    const [is360Active, setIs360Active] = useState(false);
     const [isquantityOpen, setIsquantityOpen] = useState(false);
     const [sizemodalShow, setsizeModalShow] = useState(false);
     const [offermodalShow, setofferModalShow] = useState(false);
     const videoRef = useRef(null);
-    const canvasRef = useRef(null);
-    const viewerRef = useRef(null);
-    const [currentFrame, setCurrentFrame] = useState(0);
-    const [dragging, setDragging] = useState(false);
-    const [lastX, setLastX] = useState(0);
-    const imageCount = 4; // Number of images (adjust as needed)
-    const images = useRef([]);
     const [selectedSize, setSelectedSize] = useState(null);
     const [selectedQuantity, setSelectedQuantity] = useState('Select')
-    const [product, setProduct] = useState([]);
+    const [show, setShow] = useState(false);
 
-    const dragThreshold = 30;
-    useEffect(() => {
-        if (mainContent.type === 'image') {
-            const img = new Image();
-            img.src = mainContent.src;
-            img.onload = () => {
-                setImageLoaded(true);
-            };
-        }
-    }, [mainContent.src]);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     const handleThumbnailClick = (item) => {
-        setImageLoaded(false); // Reset the image loading state
 
-        // Create an object with type and src for the main content
-        const mainContentObj = {
+        setMainContent({
             type: 'image',
-            src: `${BaseUrl}/${item.replace(/\\/g, '/')}`, // Ensure full path is used
-            index: 0 // You can adjust this if needed
-        };
-
-        setMainContent(mainContentObj);
-        setIs360Active(false);
+            src: `${BaseUrl}/${item.replace(/\\/g, '/')}`,
+            index: 0
+        });
 
         // If it's a video, play it
         if (mainContent.type === 'video' && videoRef.current) {
@@ -83,10 +62,6 @@ const WomenDetails = () => {
                 }
             }, 0);
         }
-    };
-
-    const toggle360View = () => {
-        setIs360Active(!is360Active);
     };
 
     const handleShare = () => {
@@ -108,100 +83,6 @@ const WomenDetails = () => {
         setIsquantityOpen(false);
     };
 
-    // Function to load images from the public folder
-    const loadImages = () => {
-        return Array.from({ length: imageCount }, (_, i) => {
-            const img = new Image();
-            img.src = `/360-images/detailimg${i + 1}.png`; // Access images in public/360-images
-            return img;
-        });
-    };
-
-    // Preload all images on component mount
-    useEffect(() => {
-        images.current = loadImages(); // Load images into the ref array
-    }, []);
-
-    // Resize canvas on window resize
-    useEffect(() => {
-        const handleResize = () => {
-            const canvas = canvasRef.current;
-            const viewer = viewerRef.current;
-
-            if (viewer && canvas) {
-                // Set canvas width to match viewer's width
-                canvas.width = viewer.clientWidth;
-
-                // Calculate height based on aspect ratio
-                const aspectRatio = images.current[currentFrame].naturalWidth / images.current[currentFrame].naturalHeight;
-                canvas.height = canvas.width / aspectRatio;
-
-                renderImage();
-            }
-        };
-
-        window.addEventListener('resize', handleResize);
-        handleResize(); // Initial resize
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, [currentFrame]); // Also update when the current frame changes
-
-    // Render the current image on the canvas
-    const renderImage = () => {
-        const canvas = canvasRef.current;
-
-        if (canvas) {
-            const ctx = canvas.getContext('2d');
-
-            // Clear the canvas
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Ensure the image is loaded
-            const img = images.current[currentFrame];
-            if (img?.complete) {
-                // Draw the image with original aspect ratio
-                const aspectRatio = img.naturalWidth / img.naturalHeight;
-                const newHeight = canvas.width / aspectRatio;
-
-                ctx.drawImage(img, 0, 0, canvas.width, newHeight);
-            }
-        }
-    };
-
-    // Handle mouse and touch drag logic
-    const startDragging = (pageX) => {
-        setDragging(true);
-        setLastX(pageX);
-    };
-
-    const stopDragging = () => {
-        setDragging(false);
-    };
-
-    const handleClick = () => {
-        // Ensure rendering is triggered on click as well
-        renderImage();
-    };
-
-    const handleDrag = (pageX) => {
-        if (dragging) {
-            const dx = pageX - lastX;
-
-            // Change image only when the drag exceeds the threshold value
-            if (Math.abs(dx) > dragThreshold) {
-                if (dx > 0) {
-                    setCurrentFrame((prev) => (prev + 1) % imageCount); // Next frame
-                } else if (dx < 0) {
-                    setCurrentFrame((prev) => (prev - 1 + imageCount) % imageCount); // Previous frame
-                }
-
-                // Reset the lastX to avoid continuous frame changes
-                setLastX(pageX);
-            }
-        }
-    };
     const fetchData = async () => {
         try {
             const response = await axios.get(`${BaseUrl}/api/getProduct/${productId}`, {
@@ -211,6 +92,19 @@ const WomenDetails = () => {
             });
             // console.log("Productresponse", response.data.product);
             setProduct(response.data.product);
+
+            if (response.data.product.length > 0 &&
+                response.data.product[0].productVariantData.length > 0 &&
+                response.data.product[0].productVariantData[0].images.length > 0) {
+
+                const firstImage = response.data.product[0].productVariantData[0].images[0];
+                setMainContent({
+                    type: 'image',
+                    src: `${BaseUrl}/${firstImage.replace(/\\/g, '/')}`,
+                    index: 0
+                });
+            }
+
         } catch (error) {
             console.error("Error fetching products:", error);
         }
@@ -226,51 +120,40 @@ const WomenDetails = () => {
             {/* Header section  */}
             <Header />
             {/* Personal Details section start */}
-            <section className='d_p-50 pb-0 d_womendetail'>
-                <div className="d_container">
-                    {product.map((item) => {
-                        const discountAmount = (item.productVariantData[0].originalPrice * item.productVariantData[0].discountPrice) / 100;
-                        const sizesArray = item.productVariantData[0].size.split(',').map(size => parseInt(size.trim()));
-                        return (
-                            <div className="row">
-                                <div className="col-sm-12 col-lg-6">
-                                    <div className="row flex-row flex-sm-row flex-column-reverse">
-                                        {/* Thumbnail Column */}
-                                        <div className="col-12 col-sm-3 d-flex justify-content-center">
-                                            <div className="d_subimg">
-                                                {item.productVariantData[0].images.map((item, index) => (
+            {product.map((item) => {
+                const discountAmount = (item.productVariantData[0].originalPrice * item.productVariantData[0].discountPrice) / 100;
+                const sizesArray = item.productVariantData[0].size.split(',').map(size => parseInt(size.trim()));
+                return (
+                    <>
+                        <section className='d_p-50 pb-0 d_womendetail'>
+                            <div className="d_container">
+                                <div className="row">
+                                    <div className="col-sm-12 col-lg-6">
+                                        <div className="row flex-row flex-sm-row flex-column-reverse">
+                                            {/* Thumbnail Column */}
+                                            <div className="col-12 col-sm-3 d-flex justify-content-center">
+                                                <div className="d_subimg">
+                                                    {item.productVariantData[0].images.map((item, index) => (
 
-                                                    <div
-                                                        key={index}
-                                                        className="d_img d_cur"
+                                                        <div
+                                                            key={index}
+                                                            className="d_img d_cur"
 
-                                                    >
-                                                        {/* {item.type === 'image' ? ( */}
-                                                        <img
-                                                            src={`${BaseUrl}/${item.replace(/\\/g, '/')}`}
-                                                            alt=""
-                                                            className="w-100 h-100"
-                                                            onClick={() => handleThumbnailClick(item)}
-                                                        />
-                                                        {/* ) : (
-                                                        <div className="v_img">
-                                                            <video>
-                                                                <source src={item.thumbnail} type="video/mp4" />
-                                                            </video>
-                                                            <div className="d_play">
-                                                                <img src={playIcon} alt="Play" />
-                                                            </div>
+                                                        >
+                                                            <img
+                                                                src={`${BaseUrl}/${item.replace(/\\/g, '/')}`}
+                                                                alt=""
+                                                                className="w-100 h-100"
+                                                                onClick={() => handleThumbnailClick(item)}
+                                                            />
                                                         </div>
-                                                    )} */}
-                                                    </div>
-                                                ))}
+                                                    ))}
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        {/* Main Content */}
-                                        <div className="col-12 col-sm-9">
-                                            <div className="d_mainimg">
-                                                {mainContent.type === 'image' && !is360Active && (
+                                            {/* Main Content */}
+                                            <div className="col-12 col-sm-9">
+                                                <div className="d_mainimg">
                                                     <div className="d_img ">
                                                         <div className='d_reactglass'>
                                                             <ReactImageMagnify
@@ -298,11 +181,8 @@ const WomenDetails = () => {
                                                                 <img
                                                                     src={icon360}
                                                                     alt="360 View"
-                                                                    onClick={() => {
-                                                                        toggle360View();
-                                                                        setCurrentFrame(1);
-                                                                    }}
                                                                     style={{ cursor: 'pointer' }}
+                                                                    onClick={handleShow}
                                                                 />
                                                                 <IoShareSocialSharp
                                                                     className='d_shareicon d_cur'
@@ -311,194 +191,228 @@ const WomenDetails = () => {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                )}
-                                                {mainContent.type === 'video' && (
-                                                    <video
-                                                        ref={videoRef}
-                                                        controls>
-                                                        <source src={mainContent.src} type="video/mp4" />
-                                                    </video>
-                                                )}
-                                                {is360Active && (
-                                                    <div>
-                                                        <div id="viewer" ref={viewerRef}>
-                                                            <canvas
-                                                                className='w-100'
-                                                                ref={canvasRef}
-                                                                onMouseDown={(e) => startDragging(e.pageX)}
-                                                                onMouseUp={stopDragging}
-                                                                onMouseMove={(e) => handleDrag(e.pageX)}
-                                                                onClick={handleClick}
-                                                                onTouchStart={(e) => startDragging(e.touches[0].pageX)}
-                                                                onTouchEnd={stopDragging}
-                                                                onTouchMove={(e) => {
-                                                                    e.preventDefault();
-                                                                    handleDrag(e.touches[0].pageX);
-                                                                }}
-                                                            ></canvas>
-                                                        </div>
-                                                    </div>
-                                                )}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                {/* {console.log("item>>>>>>>>>>", item)} */}
-                                <div className="col-sm-12 col-lg-6">
-                                    <div className="d_detail">
-                                        <div className="d-flex align-items-center justify-content-between">
-                                            <div className="d_name">{item.subCategoriesData[0].subCategoryName}</div>
-                                            <div className="d_starbg">
-                                                <div className="d-flex ">
-                                                    <FaStar className=" d_staricon me-1" />
-                                                    <div className="d_review">{item?.ratingData[0]?.rating}</div>
+                                    {/* {console.log("item>>>>>>>>>>", item)} */}
+                                    <div className="col-sm-12 col-lg-6">
+                                        <div className="d_detail">
+                                            <div className="d-flex align-items-center justify-content-between">
+                                                <div className="d_name">{item.subCategoriesData[0].subCategoryName}</div>
+                                                <div className="d_starbg">
+                                                    <div className="d-flex ">
+                                                        <FaStar className=" d_staricon me-1" />
+                                                        <div className="d_review">{item?.ratingData[0]?.rating}</div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className='d_colordesc'>{item.productName}</div>
-                                        <div className="d_stock">{item.stockStatus}</div>
-                                        {/* <div className="d_outofstock">Out of Stock</div> */}
-                                        <div className="d_desc">{item.productVariantData[0].description}</div>
-                                        <div className="d-flex align-items-end">
-                                            <div className="d_price me-2">${(item.productVariantData[0].originalPrice - discountAmount)}</div>
-                                            <div className="d_originalprice me-2 text-decoration-line-through">${item.productVariantData[0].originalPrice}</div>
-                                            <div className="d_saveprice ">
-                                                (Save ${discountAmount.toFixed(2)})
+                                            <div className='d_colordesc'>{item.productName}</div>
+                                            <div className="d_stock">{item.stockStatus}</div>
+                                            {/* <div className="d_outofstock">Out of Stock</div> */}
+                                            <div className="d_desc">{item.productVariantData[0].description}</div>
+                                            <div className="d-flex align-items-end">
+                                                <div className="d_price me-2">${(item.productVariantData[0].originalPrice - discountAmount)}</div>
+                                                <div className="d_originalprice me-2 text-decoration-line-through">${item.productVariantData[0].originalPrice}</div>
+                                                <div className="d_saveprice ">
+                                                    (Save ${discountAmount.toFixed(2)})
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="d_offer">
-                                            <div className="d_acc">
-                                                <div className="d_accitem">
-                                                    <div className="d_acctitle d-flex justify-content-between">
-                                                        <div className='d_title'>Best Offers</div>
-                                                        <div className='d_icon d_cur' onClick={() => setofferModalShow(true)}>View More</div>
-                                                    </div>
-                                                    <div className="d_acccon">
-                                                        <div className="d-flex align-items-center">
-                                                            <img src={require('./../d_img/offer.png')} alt="" className='me-2' />
-                                                            <div className="d-flex justify-content-between w-100 aling-items-center">
-                                                                <div className="d_offertitle">NEW100</div>
-                                                                <div className="d_savepri">Save $100 </div>
-                                                            </div>
+                                            <div className="d_offer">
+                                                <div className="d_acc">
+                                                    <div className="d_accitem">
+                                                        <div className="d_acctitle d-flex justify-content-between">
+                                                            <div className='d_title'>Best Offers</div>
+                                                            <div className='d_icon d_cur' onClick={() => setofferModalShow(true)}>View More</div>
                                                         </div>
-                                                        <div className="d_offerdesc ms-4">Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque iaculis habitant congue est blandit amet. </div>
+                                                        <div className="d_acccon">
+                                                            <div className="d-flex align-items-center">
+                                                                <img src={require('./../d_img/offer.png')} alt="" className='me-2' />
+                                                                <div className="d-flex justify-content-between w-100 aling-items-center">
+                                                                    <div className="d_offertitle">NEW100</div>
+                                                                    <div className="d_savepri">Save $100 </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="d_offerdesc ms-4">Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque iaculis habitant congue est blandit amet. </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="d_deliver">
-                                            <div className="d_tit">
-                                                <IoLocationSharp className='me-2 d_loc' />Deliver to
-                                            </div>
-                                            <div className="row">
-                                                <div className="col-12 col-sm-6 col-lg-12 col-xl-6">
-                                                    <div className="d_input d-flex justify-content-between align-items-center">
-                                                        <input type="text" placeholder='Enter delivery Pincode' />
-                                                        <Link to="">Check</Link>
+                                            <div className="d_deliver">
+                                                <div className="d_tit">
+                                                    <IoLocationSharp className='me-2 d_loc' />Deliver to
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col-12 col-sm-6 col-lg-12 col-xl-6">
+                                                        <div className="d_input d-flex justify-content-between align-items-center">
+                                                            <input type="text" placeholder='Enter delivery Pincode' />
+                                                            <Link to="">Check</Link>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-12 col-sm-6 col-lg-12 col-xl-6 d_psdeliver">
+                                                        <div className="d_delivertime">Delivery by 7 Oct, Monday</div>
+                                                        <div className="d_deliverordertoday">if ordered before 5:11PM</div>
                                                     </div>
                                                 </div>
-                                                <div className="col-12 col-sm-6 col-lg-12 col-xl-6 d_psdeliver">
-                                                    <div className="d_delivertime">Delivery by 7 Oct, Monday</div>
-                                                    <div className="d_deliverordertoday">if ordered before 5:11PM</div>
-                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="d_color">
-                                            <div className="d_title">Colors :</div>
-                                            <div className='d-flex align-items-center gap-2'>
-                                                {item.productVariantData[0].colorName &&
-                                                    item.productVariantData[0].colorName.split(',').map((color, index) => (
-                                                        <div
-                                                            key={index}
-                                                            style={{ backgroundColor: color, width: '30px', height: '30px', borderRadius: '50%' }}
-                                                        ></div>
-                                                    ))}
-                                            </div>
-                                        </div>
-                                        <div className="d_size">
-                                            <div className="row">
-                                                <div className="col-12 col-sm-6 col-lg-12 col-xl-6">
-                                                    <div className="d-flex justify-content-between">
-                                                        <div className="d_title">Size :</div>
-                                                        <Link className='text-decoration-underline d_cur' onClick={(e) => { e.preventDefault(); setsizeModalShow(true) }}>Size chart</Link>
-                                                    </div>
-                                                    <div className="d-flex">
-                                                        {sizesArray.map((size) => (
+                                            <div className="d_color">
+                                                <div className="d_title">Colors :</div>
+                                                <div className='d-flex align-items-center gap-2'>
+                                                    {item.productVariantData[0].colorName &&
+                                                        item.productVariantData[0].colorName.split(',').map((color, index) => (
                                                             <div
-                                                                key={size}
-                                                                className={`d_sizebox d-flex justify-content-center align-items-center d_cur ${selectedSize === size ? 'active' : ''} ${size === sizesArray[0] ? 'd_disable' : ''}`}
-                                                                onClick={() => size !== sizesArray[0] && setSelectedSize(size)}
-                                                            >
-                                                                {size === sizesArray[0] && <div className="d_diagonal-line"></div>}
-                                                                <p className="mb-0">{size}</p>
-                                                            </div>
+                                                                key={index}
+                                                                style={{ backgroundColor: color, width: '30px', height: '30px', borderRadius: '50%' }}
+                                                            ></div>
                                                         ))}
-                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="d_size">
+                                                <div className="row">
+                                                    <div className="col-12 col-sm-6 col-lg-12 col-xl-6">
+                                                        <div className="d-flex justify-content-between">
+                                                            <div className="d_title">Size :</div>
+                                                            <Link className='text-decoration-underline d_cur' onClick={(e) => { e.preventDefault(); setsizeModalShow(true) }}>Size chart</Link>
+                                                        </div>
+                                                        <div className="d-flex">
+                                                            {sizesArray.map((size) => (
+                                                                <div
+                                                                    key={size}
+                                                                    className={`d_sizebox d-flex justify-content-center align-items-center d_cur ${selectedSize === size ? 'active' : ''} ${size === sizesArray[0] ? 'd_disable' : ''}`}
+                                                                    onClick={() => size !== sizesArray[0] && setSelectedSize(size)}
+                                                                >
+                                                                    {size === sizesArray[0] && <div className="d_diagonal-line"></div>}
+                                                                    <p className="mb-0">{size}</p>
+                                                                </div>
+                                                            ))}
+                                                        </div>
 
-                                                </div>
-                                                <div className="col-6 col-sm-6 col-lg-12 col-xl-6 d_psdeliver">
-                                                    <div className="d_qun">Quantity :</div>
-                                                    <div className="d_dropdownqun">
-                                                        <button className="d_dropbtnqun" onClick={togglequantity}>
-                                                            <div className="d-flex justify-content-between align-items-center">
-                                                                {selectedQuantity}
-                                                                <MdKeyboardArrowDown className='ms-2 d_dropicon' />
-                                                            </div>
-                                                        </button>
-                                                        {isquantityOpen && (
-                                                            <div className="d_dropconqun">
-                                                                {[1, 2, 3, 4, 5].map((quantity) => (
-                                                                    <p key={quantity} onClick={() => selectQuantity(quantity)}>
-                                                                        {quantity}
-                                                                    </p>
-                                                                ))}
-                                                            </div>
-                                                        )}
+                                                    </div>
+                                                    <div className="col-6 col-sm-6 col-lg-12 col-xl-6 d_psdeliver">
+                                                        <div className="d_qun">Quantity :</div>
+                                                        <div className="d_dropdownqun">
+                                                            <button className="d_dropbtnqun" onClick={togglequantity}>
+                                                                <div className="d-flex justify-content-between align-items-center">
+                                                                    {selectedQuantity}
+                                                                    <MdKeyboardArrowDown className='ms-2 d_dropicon' />
+                                                                </div>
+                                                            </button>
+                                                            {isquantityOpen && (
+                                                                <div className="d_dropconqun">
+                                                                    {[1, 2, 3, 4, 5].map((quantity) => (
+                                                                        <p key={quantity} onClick={() => selectQuantity(quantity)}>
+                                                                            {quantity}
+                                                                        </p>
+                                                                    ))}
+                                                                </div>
+                                                            )}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="d_delbtn">
-                                            <div className="d-flex">
-                                                <div className="d_cta d-flex justify-content-center align-items-center me-3">
-                                                    <Link to="" className='d_hearticon'><CiHeart className='' /></Link>
-                                                </div>
-                                                <div className="d_cta  d-flex justify-content-center align-items-center me-3">
-                                                    <Link to="" className='text-decoration-none d_buy text-center'>Buy Now</Link>
-                                                </div>
-                                                <div className="d_cta  d-flex justify-content-center align-items-center">
-                                                    <Link to="" className='text-decoration-none d_addcartbtn text-center d-block'>Add to cart</Link>
+                                            <div className="d_delbtn">
+                                                <div className="d-flex">
+                                                    <div className="d_cta d-flex justify-content-center align-items-center me-3">
+                                                        <Link to="" className='d_hearticon'><CiHeart className='' /></Link>
+                                                    </div>
+                                                    <div className="d_cta  d-flex justify-content-center align-items-center me-3">
+                                                        <Link to="" className='text-decoration-none d_buy text-center'>Buy Now</Link>
+                                                    </div>
+                                                    <div className="d_cta  d-flex justify-content-center align-items-center">
+                                                        <Link to="" className='text-decoration-none d_addcartbtn text-center d-block'>Add to cart</Link>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div className="d_feau">
-                                            <div className="d-flex flex-wrap">
-                                                <div className="d-flex align-items-center d_feabg">
-                                                    <img src={require('./../d_img/fea1.png')} className='me-1' alt="" />
-                                                    <p className='mb-0'>Dispatch in 2 days</p>
-                                                </div>
-                                                <div className="d-flex align-items-center d_feabg">
-                                                    <img src={require('./../d_img/fea2.png')} className='me-1' alt="" />
-                                                    <p className='mb-0'>Easy return</p>
-                                                </div>
-                                                <div className="d-flex align-items-center d_feabg">
-                                                    <img src={require('./../d_img/fea3.png')} className='me-1' alt="" />
-                                                    <p className='mb-0'>Worldwide Shipping</p>
+                                            <div className="d_feau">
+                                                <div className="d-flex flex-wrap">
+                                                    <div className="d-flex align-items-center d_feabg">
+                                                        <img src={require('./../d_img/fea1.png')} className='me-1' alt="" />
+                                                        <p className='mb-0'>Dispatch in 2 days</p>
+                                                    </div>
+                                                    <div className="d-flex align-items-center d_feabg">
+                                                        <img src={require('./../d_img/fea2.png')} className='me-1' alt="" />
+                                                        <p className='mb-0'>Easy return</p>
+                                                    </div>
+                                                    <div className="d-flex align-items-center d_feabg">
+                                                        <img src={require('./../d_img/fea3.png')} className='me-1' alt="" />
+                                                        <p className='mb-0'>Worldwide Shipping</p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="d_text">
-                                            <p className='mb-1'>* Additional 5 - 6 business days is required for delivery.</p>
-                                            <p className='mb-0'>* For Plus Size Extra 5 - 10 business days is required for delivery.</p>
+                                            <div className="d_text">
+                                                <p className='mb-1'>* Additional 5 - 6 business days is required for delivery.</p>
+                                                <p className='mb-0'>* For Plus Size Extra 5 - 10 business days is required for delivery.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
-                        )
-                    })}
-                </div>
-            </section >
+                        </section >
+                        <Modal show={show} onHide={handleClose} size="lg" centered>
+                            <Modal.Header closeButton className='border-bottom-0'>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <Carousel
+                                    indicators={false}
+                                    interval={null}
+                                    controls={false}
+                                    activeIndex={mainContent.index}
+                                    onSelect={(selectedIndex) => {
+                                        setMainContent({
+                                            type: 'image',
+                                            src: `${BaseUrl}/${item.productVariantData[0].images[selectedIndex].replace(/\\/g, '/')}`,
+                                            index: selectedIndex
+                                        });
+                                    }}
+                                >
+                                    {item.productVariantData[0].images.map((image, index) => (
+                                        <Carousel.Item key={index}>
+                                            <img
+                                                className="d-block w-100"
+                                                src={`${BaseUrl}/${image.replace(/\\/g, '/')}`}
+                                                alt={`Product 360° view ${index + 1}`}
+                                                style={{
+                                                    maxHeight: '500px',
+                                                    objectFit: 'contain'
+                                                }}
+                                            />
+                                        </Carousel.Item>
+                                    ))}
+                                </Carousel>
+
+                                {/* Thumbnail strip */}
+                                <div className="d-flex justify-content-center mt-3">
+                                    {item.productVariantData[0].images.map((image, index) => (
+                                        <img
+                                            key={index}
+                                            src={`${BaseUrl}/${image.replace(/\\/g, '/')}`}
+                                            alt={`Thumbnail ${index + 1}`}
+                                            onClick={() => {
+                                                setMainContent({
+                                                    type: 'image',
+                                                    src: `${BaseUrl}/${image.replace(/\\/g, '/')}`,
+                                                    index: index
+                                                });
+                                            }}
+                                            style={{
+                                                width: '60px',
+                                                height: '60px',
+                                                objectFit: 'cover',
+                                                margin: '0 5px',
+                                                cursor: 'pointer',
+                                                border: index === mainContent.index ? '2px solid #000' : '1px solid #ddd',
+                                                opacity: index === mainContent.index ? 1 : 0.7
+                                            }}
+                                        />
+                                    ))}
+                                </div>
+                            </Modal.Body>
+                        </Modal>
+                    </>
+                )
+            })}
             {/* Personal Details section end */}
 
             {/* Product Information section Start */}
@@ -510,306 +424,300 @@ const WomenDetails = () => {
                             <div className="d_heading">Product Information</div>
                         </div>
                     </div>
-                    <Accordion defaultActiveKey={['0']} alwaysOpen>
-                        <Accordion.Item eventKey="0">
-                            <Accordion.Header>Product Description</Accordion.Header>
-                            <Accordion.Body className="d_prodesc">
-                                <div className="d_desc">The peach cotton silk garba special chaniya choli is a vibrant and graceful ensemble, enhanced with sequins, cutadana, beads, mirror, cowrie shells and gota work. The charming choli features a sleeveless pattern, comes with a dupatta. The print and work may slightly vary from the image.</div>
-                                <div className="d_digitalphoto">
-                                    <p className='mb-0'>Slight colour variation is possible due to digital photography.</p>
-                                </div>
-                                <div className="prodel">
-                                    <div className="d_head">Product Details</div>
+                    {product.map((item) => (
+
+                        <Accordion defaultActiveKey={['0']} alwaysOpen>
+                            {console.log("item$$$$$$$$$$$$", item)}
+                            <Accordion.Item eventKey="0">
+                                <Accordion.Header>Product Description</Accordion.Header>
+                                <Accordion.Body className="d_prodesc">
+                                    <div className="d_desc">{item.productVariantData[0].description}</div>
+                                    <div className="d_digitalphoto">
+                                        <p className='mb-0'>Slight colour variation is possible due to digital photography.</p>
+                                    </div>
+                                    <div className="prodel">
+                                        <div className="d_head">Product Details</div>
+                                        <div className="row">
+                                            <div className="col-6">
+                                                <div className="d_con">
+                                                    <p className='mb-0'>Fabric</p>
+                                                    <div className="d_conhead">{item.productVariantData[0].specifications.fabric || '-'}</div>
+                                                </div>
+                                                <div className="d_con">
+                                                    <p className='mb-0'>Wash Care</p>
+                                                    <div className="d_conhead">{item.productVariantData[0].specifications.washCare || '-'}</div>
+                                                </div>
+                                                <div className="d_con">
+                                                    <p className='mb-0'>Work</p>
+                                                    <div className="d_conhead">{item.productVariantData[0].specifications.work || '-'}</div>
+                                                </div>
+                                            </div>
+                                            <div className="col-6">
+                                                <div className="d_con">
+                                                    <p className='mb-0'>Occasion</p>
+                                                    <div className="d_conhead">{item.productVariantData[0].specifications.occasion || '-'}</div>
+                                                </div>
+                                                <div className="d_con">
+                                                    <p className='mb-0'>Country Origin</p>
+                                                    <div className="d_conhead">{item.productVariantData[0].specifications.countryOrigin || '-'}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="d_con">
+                                            <p className='mb-0'>Manufacturing details</p>
+                                            <div className="d_conhead d_add">{item.productVariantData[0].manufacturingDetails}</div>
+                                        </div>
+                                    </div>
+                                </Accordion.Body>
+                            </Accordion.Item>
+                            <Accordion.Item eventKey="1">
+                                <Accordion.Header>Shipping</Accordion.Header>
+                                <Accordion.Body className="d_proshipping">
+                                    <p>{item.productVariantData[0].shiping}</p>
+                                </Accordion.Body>
+                            </Accordion.Item>
+                            <Accordion.Item eventKey="2">
+                                <Accordion.Header>Return/Exchange policy</Accordion.Header>
+                                <Accordion.Body className="d_proshipping">
+                                    <p>{item.productVariantData[0].returnPolicy}</p>
+                                </Accordion.Body>
+                            </Accordion.Item>
+                            <Accordion.Item eventKey="3">
+                                <Accordion.Header>Rating & Review</Accordion.Header>
+                                <Accordion.Body className="d_review">
                                     <div className="row">
-                                        <div className="col-6">
-                                            <div className="d_con">
-                                                <p className='mb-0'>Fabric</p>
-                                                <div className="d_conhead">Cotton Silk</div>
-                                            </div>
-                                            <div className="d_con">
-                                                <p className='mb-0'>Wash Care</p>
-                                                <div className="d_conhead">Dry Clean Only</div>
-                                            </div>
-                                            <div className="d_con">
-                                                <p className='mb-0'>Work</p>
-                                                <div className="d_conhead">Cutdana, Sequins, Beads, Mirror, Gota, shells</div>
-                                            </div>
-                                        </div>
-                                        <div className="col-6">
-                                            <div className="d_con">
-                                                <p className='mb-0'>Colour</p>
-                                                <div className="d_conhead">Peach</div>
-                                            </div>
-                                            <div className="d_con">
-                                                <p className='mb-0'>Occasion</p>
-                                                <div className="d_conhead">Navratri</div>
-                                            </div>
-                                            <div className="d_con">
-                                                <p className='mb-0'>Country Origin</p>
-                                                <div className="d_conhead">India</div>
+                                        <div className="col-12 col-sm-3 text-center mb-3 mb-sm-0">
+                                            <div className="d_leftbox h-100 d-flex flex-column justify-content-center">
+                                                <div className="d_number">4.5</div>
+                                                <div className="d-flex justify-content-center mb-3">
+                                                    <FaStar className='me-1 d_staricon' />
+                                                    <FaStar className='me-1 d_staricon' />
+                                                    <FaStar className='me-1 d_staricon' />
+                                                    <FaStar className='me-1 d_staricon' />
+                                                    <FaStar className='me-1 d_staricon' />
+                                                </div>
+                                                <p className='mb-0'>Product Rating</p>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="d_con">
-                                        <p className='mb-0'>Manufacturing details</p>
-                                        <div className="d_conhead d_add">Akshya Nagar 1st Block 1st Cross, Rammurthy nagar, Bangalore-560016</div>
-                                    </div>
-                                </div>
-                            </Accordion.Body>
-                        </Accordion.Item>
-                        <Accordion.Item eventKey="1">
-                            <Accordion.Header>Shipping</Accordion.Header>
-                            <Accordion.Body className="d_proshipping">
-                                <p>Once our system has processed the order that you have placed with us, your products are thoroughly inspected to ensure that they are in pristine condition. If they pass the final round of quality checks, we will pack and hand them over to our reliable logistic partner.</p>
-                                <p>Once our system has processed the order that you have placed with us, your products are thoroughly inspected to ensure that they are in pristine condition. If they pass the final round of quality checks, we will pack and hand them over to our reliable logistic partner.</p>
-                                <p>Once our system has processed the order that you have placed with us, your products are thoroughly inspected to ensure that they are in pristine condition. If they pass the final round of quality checks, we will pack and hand them over to our reliable logistic partner.</p>
-                                <p>Once our system has processed the order that you have placed with us, your products are thoroughly inspected to ensure that they are in pristine condition. If they pass the final round of quality checks, we will pack and hand them over to our reliable logistic partner.</p>
-                                <p>Once our system has processed the order that you have placed with us, your products are thoroughly inspected to ensure that they are in pristine condition. If they pass the final round of quality checks, we will pack and hand them over to our reliable logistic partner.</p>
-                            </Accordion.Body>
-                        </Accordion.Item>
-                        <Accordion.Item eventKey="2">
-                            <Accordion.Header>Return/Exchange policy</Accordion.Header>
-                            <Accordion.Body className="d_proshipping">
-                                <p>For any product, you need to raise the request within 7 days of the product being delivered to you. Within these 7 days, you can thoroughly check the product, and if you do not like it, you can file a return or replacement request as you wish.</p>
-                                <p>Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque iaculis habitant congue est blandit amet. Tortor in vulputate nulla vitae quam.Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque.</p>
-                                <p>Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque iaculis habitant congue est blandit amet. Tortor in vulputate nulla vitae quam.Lorem ipsum dolor sit amet consectetur. Massa facilisis scelerisque.</p>
-                            </Accordion.Body>
-                        </Accordion.Item>
-                        <Accordion.Item eventKey="3">
-                            <Accordion.Header>Rating & Review</Accordion.Header>
-                            <Accordion.Body className="d_review">
-                                <div className="row">
-                                    <div className="col-12 col-sm-3 text-center mb-3 mb-sm-0">
-                                        <div className="d_leftbox h-100 d-flex flex-column justify-content-center">
-                                            <div className="d_number">4.5</div>
-                                            <div className="d-flex justify-content-center mb-3">
-                                                <FaStar className='me-1 d_staricon' />
-                                                <FaStar className='me-1 d_staricon' />
-                                                <FaStar className='me-1 d_staricon' />
-                                                <FaStar className='me-1 d_staricon' />
-                                                <FaStar className='me-1 d_staricon' />
-                                            </div>
-                                            <p className='mb-0'>Product Rating</p>
-                                        </div>
-                                    </div>
-                                    <div className="col-12 col-sm-9">
-                                        <div className="d_rightbox">
-                                            <div className="d-flex align-items-center d_rating">
-                                                <div className="progress ">
-                                                    <div className="progress-bar" role="progressbar" style={{ width: "70%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <div className="ms-3">
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                </div>
-                                                <div className="ms-3 d_percetage">70%</div>
-                                            </div>
-                                            <div className="d-flex align-items-center d_rating">
-                                                <div className="progress ">
-                                                    <div className="progress-bar" role="progressbar" style={{ width: "15%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <div className="ms-3">
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_emptystar' />
-                                                </div>
-                                                <div className="ms-3 d_percetage">15%</div>
-                                            </div>
-                                            <div className="d-flex align-items-center d_rating">
-                                                <div className="progress ">
-                                                    <div className="progress-bar" role="progressbar" style={{ width: "10%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <div className="ms-3">
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_emptystar' />
-                                                    <FaStar className='me-1 d_emptystar' />
-                                                </div>
-                                                <div classNamelass="ms-3 d_percetage">10%</div>
-                                            </div>
-                                            <div className="d-flex align-items-center d_rating">
-                                                <div className="progress ">
-                                                    <div className="progress-bar" role="progressbar" style={{ width: "3%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <div className="ms-3">
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_emptystar' />
-                                                    <FaStar className='me-1 d_emptystar' />
-                                                    <FaStar className='me-1 d_emptystar' />
-                                                </div>
-                                                <div className="ms-3 d_percetage">03%</div>
-                                            </div>
-                                            <div className="d-flex align-items-center d_rating">
-                                                <div className="progress ">
-                                                    <div className="progress-bar" role="progressbar" style={{ width: "2%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <div className="ms-3">
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_emptystar' />
-                                                    <FaStar className='me-1 d_emptystar' />
-                                                    <FaStar className='me-1 d_emptystar' />
-                                                    <FaStar className='me-1 d_emptystar' />
-                                                </div>
-                                                <div className="ms-3 d_percetage">02%</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="d_reviewlist">
-                                    <div className="d_head">Reviews</div>
-                                    <div className="d_list">
-                                        <div className="d-flex">
-                                            <div>
-                                                <div className="d_namecircle d-flex justify-content-center align-items-center">
-                                                    <span>A.T</span>
-                                                </div>
-                                            </div>
-                                            <div className="d_desc ms-3">
-                                                <div className="d-flex align-items-center">
-                                                    <div className="d_name me-2">Nicolas cage</div>
-                                                    <div className="d_dayago">3 Days ago</div>
-                                                </div>
-                                                <div className="d-flex mb-lg-3 mb-1">
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                </div>
-                                                <div className="d_title">Great Product</div>
-                                                <div className="d_desc">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</div>
-                                                <div className="d-flex align-items-center">
-                                                    <div className="d_like me-3">
-                                                        <AiFillLike className='d_icon me-1' /> Liked
+                                        <div className="col-12 col-sm-9">
+                                            <div className="d_rightbox">
+                                                <div className="d-flex align-items-center d_rating">
+                                                    <div className="progress ">
+                                                        <div className="progress-bar" role="progressbar" style={{ width: "70%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
-                                                    <div className="d_dislike">
-                                                        <AiOutlineDislike className='d_icon me-1' /> Dislike
+                                                    <div className="ms-3">
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
                                                     </div>
+                                                    <div className="ms-3 d_percetage">70%</div>
+                                                </div>
+                                                <div className="d-flex align-items-center d_rating">
+                                                    <div className="progress ">
+                                                        <div className="progress-bar" role="progressbar" style={{ width: "15%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <div className="ms-3">
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_emptystar' />
+                                                    </div>
+                                                    <div className="ms-3 d_percetage">15%</div>
+                                                </div>
+                                                <div className="d-flex align-items-center d_rating">
+                                                    <div className="progress ">
+                                                        <div className="progress-bar" role="progressbar" style={{ width: "10%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <div className="ms-3">
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_emptystar' />
+                                                        <FaStar className='me-1 d_emptystar' />
+                                                    </div>
+                                                    <div classNamelass="ms-3 d_percetage">10%</div>
+                                                </div>
+                                                <div className="d-flex align-items-center d_rating">
+                                                    <div className="progress ">
+                                                        <div className="progress-bar" role="progressbar" style={{ width: "3%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <div className="ms-3">
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_emptystar' />
+                                                        <FaStar className='me-1 d_emptystar' />
+                                                        <FaStar className='me-1 d_emptystar' />
+                                                    </div>
+                                                    <div className="ms-3 d_percetage">03%</div>
+                                                </div>
+                                                <div className="d-flex align-items-center d_rating">
+                                                    <div className="progress ">
+                                                        <div className="progress-bar" role="progressbar" style={{ width: "2%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <div className="ms-3">
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_emptystar' />
+                                                        <FaStar className='me-1 d_emptystar' />
+                                                        <FaStar className='me-1 d_emptystar' />
+                                                        <FaStar className='me-1 d_emptystar' />
+                                                    </div>
+                                                    <div className="ms-3 d_percetage">02%</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="d_list">
-                                        <div className="d-flex">
-                                            <div>
-                                                <div className="d_namecircle d-flex justify-content-center align-items-center">
-                                                    <span>A.T</span>
-                                                </div>
-                                            </div>
-                                            <div className="d_desc ms-3">
-                                                <div className="d-flex align-items-center">
-                                                    <div className="d_name me-2">Nicolas cage</div>
-                                                    <div className="d_dayago">3 Days ago</div>
-                                                </div>
-                                                <div className="d-flex mb-lg-3 mb-1">
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                </div>
-                                                <div className="d_title">Great Product</div>
-                                                <div className="d_desc">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humourThere are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</div>
-                                                <div className="d-flex align-items-center">
-                                                    <div className="d_like me-3">
-                                                        <AiOutlineLike className='d_icon me-1' /> Liked
+                                    <div className="d_reviewlist">
+                                        <div className="d_head">Reviews</div>
+                                        <div className="d_list">
+                                            <div className="d-flex">
+                                                <div>
+                                                    <div className="d_namecircle d-flex justify-content-center align-items-center">
+                                                        <span>A.T</span>
                                                     </div>
-                                                    <div className="d_dislike">
-                                                        <AiFillDislike className='d_icon me-1' /> Dislike
+                                                </div>
+                                                <div className="d_desc ms-3">
+                                                    <div className="d-flex align-items-center">
+                                                        <div className="d_name me-2">Nicolas cage</div>
+                                                        <div className="d_dayago">3 Days ago</div>
+                                                    </div>
+                                                    <div className="d-flex mb-lg-3 mb-1">
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                    </div>
+                                                    <div className="d_title">Great Product</div>
+                                                    <div className="d_desc">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</div>
+                                                    <div className="d-flex align-items-center">
+                                                        <div className="d_like me-3">
+                                                            <AiFillLike className='d_icon me-1' /> Liked
+                                                        </div>
+                                                        <div className="d_dislike">
+                                                            <AiOutlineDislike className='d_icon me-1' /> Dislike
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="d_list">
-                                        <div className="d-flex">
-                                            <div>
-                                                <div className="d_namecircle d-flex justify-content-center align-items-center">
-                                                    <span>A.T</span>
+                                        <div className="d_list">
+                                            <div className="d-flex">
+                                                <div>
+                                                    <div className="d_namecircle d-flex justify-content-center align-items-center">
+                                                        <span>A.T</span>
+                                                    </div>
+                                                </div>
+                                                <div className="d_desc ms-3">
+                                                    <div className="d-flex align-items-center">
+                                                        <div className="d_name me-2">Nicolas cage</div>
+                                                        <div className="d_dayago">3 Days ago</div>
+                                                    </div>
+                                                    <div className="d-flex mb-lg-3 mb-1">
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                    </div>
+                                                    <div className="d_title">Great Product</div>
+                                                    <div className="d_desc">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humourThere are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</div>
+                                                    <div className="d-flex align-items-center">
+                                                        <div className="d_like me-3">
+                                                            <AiOutlineLike className='d_icon me-1' /> Liked
+                                                        </div>
+                                                        <div className="d_dislike">
+                                                            <AiFillDislike className='d_icon me-1' /> Dislike
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="d_desc ms-3">
-                                                <div className="d-flex align-items-center">
-                                                    <div className="d_name me-2">Nicolas cage</div>
-                                                    <div className="d_dayago">3 Days ago</div>
-                                                </div>
-                                                <div className="d-flex mb-lg-3 mb-1">
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                </div>
-                                                <div className="d_title">Great Product</div>
-                                                <div className="d_desc">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humourThere are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</div>
-                                                <div className="d-flex mb-2">
-                                                    <div className="d_img">
-                                                        <img src={require('./../d_img/detailimg1.png')} alt="" />
-                                                        <img src={require('./../d_img/detailimg1.png')} alt="" />
-                                                        <img src={require('./../d_img/detailimg1.png')} alt="" />
+                                        </div>
+                                        <div className="d_list">
+                                            <div className="d-flex">
+                                                <div>
+                                                    <div className="d_namecircle d-flex justify-content-center align-items-center">
+                                                        <span>A.T</span>
                                                     </div>
                                                 </div>
-                                                <div className="d-flex align-items-center">
-                                                    <div className="d_like me-3">
-                                                        <AiOutlineLike className='d_icon me-1' /> Liked
+                                                <div className="d_desc ms-3">
+                                                    <div className="d-flex align-items-center">
+                                                        <div className="d_name me-2">Nicolas cage</div>
+                                                        <div className="d_dayago">3 Days ago</div>
                                                     </div>
-                                                    <div className="d_dislike">
-                                                        <AiOutlineDislike className='d_icon me-1' /> Dislike
+                                                    <div className="d-flex mb-lg-3 mb-1">
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                    </div>
+                                                    <div className="d_title">Great Product</div>
+                                                    <div className="d_desc">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humourThere are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</div>
+                                                    <div className="d-flex mb-2">
+                                                        <div className="d_img">
+                                                            <img src={require('./../d_img/detailimg1.png')} alt="" />
+                                                            <img src={require('./../d_img/detailimg1.png')} alt="" />
+                                                            <img src={require('./../d_img/detailimg1.png')} alt="" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="d-flex align-items-center">
+                                                        <div className="d_like me-3">
+                                                            <AiOutlineLike className='d_icon me-1' /> Liked
+                                                        </div>
+                                                        <div className="d_dislike">
+                                                            <AiOutlineDislike className='d_icon me-1' /> Dislike
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="d_list">
+                                            <div className="d-flex">
+                                                <div>
+                                                    <div className="d_namecircle d-flex justify-content-center align-items-center">
+                                                        <span>A.T</span>
+                                                    </div>
+                                                </div>
+                                                <div className="d_desc ms-3">
+                                                    <div className="d-flex align-items-center">
+                                                        <div className="d_name me-2">Nicolas cage</div>
+                                                        <div className="d_dayago">3 Days ago</div>
+                                                    </div>
+                                                    <div className="d-flex mb-lg-3 mb-1">
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                        <FaStar className='me-1 d_staricon' />
+                                                    </div>
+                                                    <div className="d_title">Great Product</div>
+                                                    <div className="d_desc">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humourThere are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</div>
+                                                    <div className="d-flex mb-2">
+                                                        <div className="d_img">
+                                                            <img src={require('./../d_img/detailimg1.png')} alt="" />
+                                                            <img src={require('./../d_img/detailimg1.png')} alt="" />
+                                                            <img src={require('./../d_img/detailimg1.png')} alt="" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="d-flex align-items-center">
+                                                        <div className="d_like me-3">
+                                                            <AiOutlineLike className='d_icon me-1' /> Liked
+                                                        </div>
+                                                        <div className="d_dislike">
+                                                            <AiOutlineDislike className='d_icon me-1' /> Dislike
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="d_list">
-                                        <div className="d-flex">
-                                            <div>
-                                                <div className="d_namecircle d-flex justify-content-center align-items-center">
-                                                    <span>A.T</span>
-                                                </div>
-                                            </div>
-                                            <div className="d_desc ms-3">
-                                                <div className="d-flex align-items-center">
-                                                    <div className="d_name me-2">Nicolas cage</div>
-                                                    <div className="d_dayago">3 Days ago</div>
-                                                </div>
-                                                <div className="d-flex mb-lg-3 mb-1">
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                </div>
-                                                <div className="d_title">Great Product</div>
-                                                <div className="d_desc">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humourThere are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</div>
-                                                <div className="d-flex mb-2">
-                                                    <div className="d_img">
-                                                        <img src={require('./../d_img/detailimg1.png')} alt="" />
-                                                        <img src={require('./../d_img/detailimg1.png')} alt="" />
-                                                        <img src={require('./../d_img/detailimg1.png')} alt="" />
-                                                    </div>
-                                                </div>
-                                                <div className="d-flex align-items-center">
-                                                    <div className="d_like me-3">
-                                                        <AiOutlineLike className='d_icon me-1' /> Liked
-                                                    </div>
-                                                    <div className="d_dislike">
-                                                        <AiOutlineDislike className='d_icon me-1' /> Dislike
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Accordion.Body>
-                        </Accordion.Item>
-                    </Accordion>
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
+                    ))}
                 </div>
             </section>
 
