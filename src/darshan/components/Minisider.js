@@ -14,6 +14,8 @@ const Minisider = () => {
     const BaseUrl = process.env.REACT_APP_BASEURL;
     const [category, setCategory] = useState([]);
 
+    const [isLoading, setIsLoading] = useState(true);
+
     const settings = {
         loop: true,
         nav: true,
@@ -38,11 +40,15 @@ const Minisider = () => {
     const fetchMinisilder = async () => {
         if (id) {
             try {
+                setIsLoading(true);
                 const response = await axios.get(`${BaseUrl}/api/getMainCategoryAndCategory/${id}`);
-                // console.log("response", response.data.category);
+                console.log("response", response.data);
                 setCategory(response.data.category);
             } catch (error) {
                 console.error('Data fetching Error:', error);
+            }
+            finally {
+                setIsLoading(false);
             }
         }
     }
@@ -50,7 +56,7 @@ const Minisider = () => {
         fetchMinisilder();
     }, [id]);
 
-
+    if (isLoading) return <div>Loading...</div>;
 
     return (
         <section className='d_p-80 d_minisider'>
