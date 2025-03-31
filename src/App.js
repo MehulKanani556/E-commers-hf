@@ -51,8 +51,6 @@ import UserAddress from './Vivek/Component/User/UserAddress';
 import Category from './Vivek/Component/Home/Category';
 import Product from './Vivek/Component/Home/Product';
 
-// import WomenDetails from './darshan/pages/WomenDetails';
-
 
 function App() {
   return (
@@ -108,7 +106,7 @@ function App() {
 
           <Route path='/returnrefund' element={<TrackReturnRefund />} />
           <Route path='/ratereview' element={<RateReview />} />
-          <Route path='/combine' element={<Combined />} />                                                                                                                                                                                                                                                      
+          <Route path='/combine' element={<Combined />} />                                                                                                                                                                                                                                                                                                                                    
           {/* User */}
           <Route path="/user" element={<User />}>
             <Route path='profile' element={<UserProfile />} />
