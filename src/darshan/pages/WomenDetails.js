@@ -7,8 +7,8 @@ import { FaStar } from 'react-icons/fa';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { CiHeart } from 'react-icons/ci';
 import Accordion from 'react-bootstrap/Accordion';
-import { AiFillDislike, AiFillLike, AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
-import Bought from '../components/Bought';
+import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
+// import Bought from '../components/Bought';
 import Like from '../components/Like';
 import Recentlyviewed from '../components/Recentlyviewed';
 import Customerlike from '../components/Customerlike';
@@ -30,6 +30,9 @@ const WomenDetails = () => {
     const token = localStorage.getItem('token');
 
     const [product, setProduct] = useState([]);
+    const [data, setData] = useState([]);
+    const [bestSellerIds, setBestSellerIds] = useState([]);
+    const [newArrivalIds, setNewArrivalIds] = useState([]);
     const [mainContent, setMainContent] = useState({
         type: 'image',
         src: '',
@@ -42,7 +45,10 @@ const WomenDetails = () => {
     const [selectedSize, setSelectedSize] = useState(null);
     const [selectedQuantity, setSelectedQuantity] = useState('Select')
     const [show, setShow] = useState(false);
-
+    const [galleryView, setGalleryView] = useState({
+        isOpen: false,
+        activeIndex: 0
+    });
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -112,9 +118,62 @@ const WomenDetails = () => {
 
     useEffect(() => {
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productId, token]);
 
 
+    //All product 
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const bestSellerResponse = await axios.get(`${BaseUrl}/api/topProducts`);
+                const BestSellarId = bestSellerResponse.data.data.map(product => product.productId);
+                setBestSellerIds(BestSellarId);
+
+                const newArrivalResponse = await axios.get(`${BaseUrl}/api/newArivalProduct`);
+                const NewArrivalId = newArrivalResponse.data.map(product => product._id);
+                setNewArrivalIds(NewArrivalId);
+
+                const response = await axios.get(`${BaseUrl}/api/allProduct`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                // console.log("response", response.data.product);
+                setData(response.data.product);
+            } catch (error) {
+                console.error('Data Fetching Error:', error);
+            }
+        }
+        fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [BaseUrl, token]);
+
+    const getRandomProducts = (data, count = 5) => {
+        return data.sort(() => 0.5 - Math.random()).slice(0, count);
+    };
+
+    const formetDate = (dateString) => {
+        const createdAt = new Date(dateString);
+        const now = new Date();
+        const diffInSeconds = Math.floor((now - createdAt) / 1000);
+
+        if (diffInSeconds < 60) {
+            return `${diffInSeconds} seconds ago`;
+        }
+
+        const diffInMinutes = Math.floor(diffInSeconds / 60);
+        if (diffInMinutes < 60) {
+            return `${diffInMinutes} minutes ago`;
+        }
+
+        const diffInHours = Math.floor(diffInMinutes / 60);
+        if (diffInHours < 24) {
+            return `${diffInHours} hours ago`;
+        }
+
+        const diffInDays = Math.floor(diffInHours / 24);
+        return `${diffInDays} days ago`;
+    };
     return (
         <>
             {/* Header section  */}
@@ -123,6 +182,7 @@ const WomenDetails = () => {
             {product.map((item) => {
                 const discountAmount = (item.productVariantData[0].originalPrice * item.productVariantData[0].discountPrice) / 100;
                 const sizesArray = item.productVariantData[0].size.split(',').map(size => parseInt(size.trim()));
+                const images = item.productVariantData[0].images || [];
                 return (
                     <>
                         <section className='d_p-50 pb-0 d_womendetail'>
@@ -350,50 +410,56 @@ const WomenDetails = () => {
 
                             </div>
                         </section >
-                        <Modal show={show} onHide={handleClose} size="lg" centered>
+                        <Modal show={show} onHide={handleClose}
+                            size="xl"
+                            centered
+                            className="gallery-modal"
+                        >
                             <Modal.Header closeButton className='border-bottom-0'>
                             </Modal.Header>
                             <Modal.Body>
-                                <Carousel
-                                    indicators={false}
-                                    interval={null}
-                                    controls={false}
-                                    activeIndex={mainContent.index}
-                                    onSelect={(selectedIndex) => {
-                                        setMainContent({
-                                            type: 'image',
-                                            src: `${BaseUrl}/${item.productVariantData[0].images[selectedIndex].replace(/\\/g, '/')}`,
-                                            index: selectedIndex
-                                        });
-                                    }}
-                                >
-                                    {item.productVariantData[0].images.map((image, index) => (
-                                        <Carousel.Item key={index}>
-                                            <img
-                                                className="d-block w-100"
-                                                src={`${BaseUrl}/${image.replace(/\\/g, '/')}`}
-                                                alt={`Product 360° view ${index + 1}`}
-                                                style={{
-                                                    maxHeight: '500px',
-                                                    objectFit: 'contain'
-                                                }}
-                                            />
-                                        </Carousel.Item>
-                                    ))}
-                                </Carousel>
+                                <div className="row">
+                                    <div className="col-md-6 offset-md-3">
+                                        <Carousel
+                                            indicators={false}
+                                            controls={false}
+                                            interval={null}
+                                            activeIndex={galleryView.activeIndex}
+                                            onSelect={(selectedIndex) => {
+                                                setGalleryView({
+                                                    ...galleryView,
+                                                    activeIndex: selectedIndex
+                                                });
+                                            }}
+                                        >
+                                            {images.map((image, index) => (
+                                                <Carousel.Item key={index}>
+                                                    <img
+                                                        className="d-block w-100"
+                                                        src={`${BaseUrl}/${image.replace(/\\/g, '/')}`}
+                                                        alt={`Product view ${index + 1}`}
+                                                        style={{
+                                                            maxHeight: '700px',
+                                                            objectFit: 'contain'
+                                                        }}
+                                                    />
+                                                </Carousel.Item>
+                                            ))}
+                                        </Carousel>
+                                    </div>
+                                </div>
 
                                 {/* Thumbnail strip */}
-                                <div className="d-flex justify-content-center mt-3">
-                                    {item.productVariantData[0].images.map((image, index) => (
+                                <div className="d-flex justify-content-center mt-3 flex-wrap">
+                                    {images.map((image, index) => (
                                         <img
                                             key={index}
                                             src={`${BaseUrl}/${image.replace(/\\/g, '/')}`}
                                             alt={`Thumbnail ${index + 1}`}
                                             onClick={() => {
-                                                setMainContent({
-                                                    type: 'image',
-                                                    src: `${BaseUrl}/${image.replace(/\\/g, '/')}`,
-                                                    index: index
+                                                setGalleryView({
+                                                    ...galleryView,
+                                                    activeIndex: index
                                                 });
                                             }}
                                             style={{
@@ -402,8 +468,8 @@ const WomenDetails = () => {
                                                 objectFit: 'cover',
                                                 margin: '0 5px',
                                                 cursor: 'pointer',
-                                                border: index === mainContent.index ? '2px solid #000' : '1px solid #ddd',
-                                                opacity: index === mainContent.index ? 1 : 0.7
+                                                border: index === galleryView.activeIndex ? '2px solid #000' : '1px solid #ddd',
+                                                opacity: index === galleryView.activeIndex ? 1 : 0.7
                                             }}
                                         />
                                     ))}
@@ -427,7 +493,6 @@ const WomenDetails = () => {
                     {product.map((item) => (
 
                         <Accordion defaultActiveKey={['0']} alwaysOpen>
-                            {console.log("item$$$$$$$$$$$$", item)}
                             <Accordion.Item eventKey="0">
                                 <Accordion.Header>Product Description</Accordion.Header>
                                 <Accordion.Body className="d_prodesc">
@@ -488,231 +553,97 @@ const WomenDetails = () => {
                                     <div className="row">
                                         <div className="col-12 col-sm-3 text-center mb-3 mb-sm-0">
                                             <div className="d_leftbox h-100 d-flex flex-column justify-content-center">
-                                                <div className="d_number">4.5</div>
+                                                <div className="d_number">
+                                                    {item.ratingData.length > 0 ? item.ratingData[0].rating : "0.0"}
+                                                </div>
                                                 <div className="d-flex justify-content-center mb-3">
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
-                                                    <FaStar className='me-1 d_staricon' />
+                                                    {Array.from({ length: 5 }).map((_, index) => (
+                                                        <FaStar
+                                                            key={index}
+                                                            className={`me-1 ${index < Math.floor(item.ratingData.length > 0 ? item.ratingData[0].rating : 0) ? 'd_staricon' : 'd_emptystar'}`}
+                                                        />
+                                                    ))}
                                                 </div>
                                                 <p className='mb-0'>Product Rating</p>
                                             </div>
                                         </div>
                                         <div className="col-12 col-sm-9">
                                             <div className="d_rightbox">
-                                                <div className="d-flex align-items-center d_rating">
-                                                    <div className="progress ">
-                                                        <div className="progress-bar" role="progressbar" style={{ width: "70%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                    <div className="ms-3">
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                    </div>
-                                                    <div className="ms-3 d_percetage">70%</div>
-                                                </div>
-                                                <div className="d-flex align-items-center d_rating">
-                                                    <div className="progress ">
-                                                        <div className="progress-bar" role="progressbar" style={{ width: "15%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                    <div className="ms-3">
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_emptystar' />
-                                                    </div>
-                                                    <div className="ms-3 d_percetage">15%</div>
-                                                </div>
-                                                <div className="d-flex align-items-center d_rating">
-                                                    <div className="progress ">
-                                                        <div className="progress-bar" role="progressbar" style={{ width: "10%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                    <div className="ms-3">
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_emptystar' />
-                                                        <FaStar className='me-1 d_emptystar' />
-                                                    </div>
-                                                    <div classNamelass="ms-3 d_percetage">10%</div>
-                                                </div>
-                                                <div className="d-flex align-items-center d_rating">
-                                                    <div className="progress ">
-                                                        <div className="progress-bar" role="progressbar" style={{ width: "3%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                    <div className="ms-3">
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_emptystar' />
-                                                        <FaStar className='me-1 d_emptystar' />
-                                                        <FaStar className='me-1 d_emptystar' />
-                                                    </div>
-                                                    <div className="ms-3 d_percetage">03%</div>
-                                                </div>
-                                                <div className="d-flex align-items-center d_rating">
-                                                    <div className="progress ">
-                                                        <div className="progress-bar" role="progressbar" style={{ width: "2%" }} aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                    <div className="ms-3">
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_emptystar' />
-                                                        <FaStar className='me-1 d_emptystar' />
-                                                        <FaStar className='me-1 d_emptystar' />
-                                                        <FaStar className='me-1 d_emptystar' />
-                                                    </div>
-                                                    <div className="ms-3 d_percetage">02%</div>
-                                                </div>
+                                                {item.ratingData.map((rate) => {
+                                                    const rating = parseFloat(rate.rating) || 0;
+                                                    const percentage = (rating / 5) * 100;
+                                                    return (
+                                                        <div className="d-flex align-items-center d_rating" key={rate._id}>
+                                                            <div className="progress">
+                                                                <div
+                                                                    className="progress-bar"
+                                                                    role="progressbar"
+                                                                    style={{ width: `${percentage}%` }}
+                                                                    aria-valuenow={percentage}
+                                                                    aria-valuemin="0"
+                                                                    aria-valuemax="100">
+                                                                </div>
+                                                            </div>
+                                                            <div className="ms-3">
+                                                                {Array.from({ length: 5 }).map((_, index) => (
+                                                                    <FaStar
+                                                                        key={index}
+                                                                        className={`me-1 ${index < Math.floor(rating) ? 'd_staricon' : 'd_emptystar'}`}
+                                                                    />
+                                                                ))}
+                                                            </div>
+                                                            <div className="ms-3 d_percetage">{percentage.toFixed(0)}%</div>
+                                                        </div>
+                                                    );
+                                                })}
                                             </div>
                                         </div>
                                     </div>
                                     <div className="d_reviewlist">
                                         <div className="d_head">Reviews</div>
-                                        <div className="d_list">
-                                            <div className="d-flex">
-                                                <div>
-                                                    <div className="d_namecircle d-flex justify-content-center align-items-center">
-                                                        <span>A.T</span>
-                                                    </div>
-                                                </div>
-                                                <div className="d_desc ms-3">
-                                                    <div className="d-flex align-items-center">
-                                                        <div className="d_name me-2">Nicolas cage</div>
-                                                        <div className="d_dayago">3 Days ago</div>
-                                                    </div>
-                                                    <div className="d-flex mb-lg-3 mb-1">
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                    </div>
-                                                    <div className="d_title">Great Product</div>
-                                                    <div className="d_desc">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</div>
-                                                    <div className="d-flex align-items-center">
-                                                        <div className="d_like me-3">
-                                                            <AiFillLike className='d_icon me-1' /> Liked
+                                        {item.ratingData.map((rate) => {
+                                            const rating = parseFloat(rate.rating) || 0;
+                                            return (
+                                                <div className="d_list">
+                                                    <div className="d-flex">
+                                                        <div>
+                                                            <div className="d_namecircle d-flex justify-content-center align-items-center">
+                                                                <span>A.T</span>
+                                                            </div>
                                                         </div>
-                                                        <div className="d_dislike">
-                                                            <AiOutlineDislike className='d_icon me-1' /> Dislike
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="d_list">
-                                            <div className="d-flex">
-                                                <div>
-                                                    <div className="d_namecircle d-flex justify-content-center align-items-center">
-                                                        <span>A.T</span>
-                                                    </div>
-                                                </div>
-                                                <div className="d_desc ms-3">
-                                                    <div className="d-flex align-items-center">
-                                                        <div className="d_name me-2">Nicolas cage</div>
-                                                        <div className="d_dayago">3 Days ago</div>
-                                                    </div>
-                                                    <div className="d-flex mb-lg-3 mb-1">
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                    </div>
-                                                    <div className="d_title">Great Product</div>
-                                                    <div className="d_desc">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humourThere are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</div>
-                                                    <div className="d-flex align-items-center">
-                                                        <div className="d_like me-3">
-                                                            <AiOutlineLike className='d_icon me-1' /> Liked
-                                                        </div>
-                                                        <div className="d_dislike">
-                                                            <AiFillDislike className='d_icon me-1' /> Dislike
+                                                        <div className="d_desc ms-3">
+                                                            <div className="d-flex align-items-center">
+                                                                <div className="d_name me-2">Nicolas cage</div>
+                                                                <div className="d_dayago">{formetDate(rate.createdAt)}</div>
+                                                            </div>
+                                                            <div className="d-flex mb-lg-3 mb-1">
+                                                                {Array.from({ length: 5 }).map((_, index) => (
+                                                                    <FaStar style={{ fontSize: '16px' }}
+                                                                        key={index}
+                                                                        className={`me-1 ${index < Math.floor(rating) ? 'd_staricon' : 'd_emptystar'}`}
+                                                                    />
+                                                                ))}
+                                                            </div>
+                                                            {/* <div className="d_title">Great Product</div> */}
+                                                            <div className="d_desc">{rate.review}</div>
+                                                            <div className="d-flex mb-2">
+                                                                <div className="d_img">
+                                                                    <img src={`${BaseUrl}/${rate.productImages}`} alt='' />
+                                                                </div>
+                                                            </div>
+                                                            <div className="d-flex align-items-center">
+                                                                <div className="d_like me-3">
+                                                                    <AiOutlineLike className='d_icon me-1' /> Liked
+                                                                </div>
+                                                                <div className="d_dislike">
+                                                                    <AiOutlineDislike className='d_icon me-1' /> Dislike
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div className="d_list">
-                                            <div className="d-flex">
-                                                <div>
-                                                    <div className="d_namecircle d-flex justify-content-center align-items-center">
-                                                        <span>A.T</span>
-                                                    </div>
-                                                </div>
-                                                <div className="d_desc ms-3">
-                                                    <div className="d-flex align-items-center">
-                                                        <div className="d_name me-2">Nicolas cage</div>
-                                                        <div className="d_dayago">3 Days ago</div>
-                                                    </div>
-                                                    <div className="d-flex mb-lg-3 mb-1">
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                    </div>
-                                                    <div className="d_title">Great Product</div>
-                                                    <div className="d_desc">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humourThere are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</div>
-                                                    <div className="d-flex mb-2">
-                                                        <div className="d_img">
-                                                            <img src={require('./../d_img/detailimg1.png')} alt="" />
-                                                            <img src={require('./../d_img/detailimg1.png')} alt="" />
-                                                            <img src={require('./../d_img/detailimg1.png')} alt="" />
-                                                        </div>
-                                                    </div>
-                                                    <div className="d-flex align-items-center">
-                                                        <div className="d_like me-3">
-                                                            <AiOutlineLike className='d_icon me-1' /> Liked
-                                                        </div>
-                                                        <div className="d_dislike">
-                                                            <AiOutlineDislike className='d_icon me-1' /> Dislike
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="d_list">
-                                            <div className="d-flex">
-                                                <div>
-                                                    <div className="d_namecircle d-flex justify-content-center align-items-center">
-                                                        <span>A.T</span>
-                                                    </div>
-                                                </div>
-                                                <div className="d_desc ms-3">
-                                                    <div className="d-flex align-items-center">
-                                                        <div className="d_name me-2">Nicolas cage</div>
-                                                        <div className="d_dayago">3 Days ago</div>
-                                                    </div>
-                                                    <div className="d-flex mb-lg-3 mb-1">
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                        <FaStar className='me-1 d_staricon' />
-                                                    </div>
-                                                    <div className="d_title">Great Product</div>
-                                                    <div className="d_desc">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humourThere are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</div>
-                                                    <div className="d-flex mb-2">
-                                                        <div className="d_img">
-                                                            <img src={require('./../d_img/detailimg1.png')} alt="" />
-                                                            <img src={require('./../d_img/detailimg1.png')} alt="" />
-                                                            <img src={require('./../d_img/detailimg1.png')} alt="" />
-                                                        </div>
-                                                    </div>
-                                                    <div className="d-flex align-items-center">
-                                                        <div className="d_like me-3">
-                                                            <AiOutlineLike className='d_icon me-1' /> Liked
-                                                        </div>
-                                                        <div className="d_dislike">
-                                                            <AiOutlineDislike className='d_icon me-1' /> Dislike
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            )
+                                        })}
                                     </div>
                                 </Accordion.Body>
                             </Accordion.Item>
@@ -725,25 +656,25 @@ const WomenDetails = () => {
 
             {/* Frequently bought together section start */}
 
-            <Bought />
+            {/* <Bought /> */}
 
             {/* Frequently bought together section end */}
 
             {/* You may also like this section start */}
 
-            <Like />
+            <Like data={getRandomProducts(data)} bestSellerIds={bestSellerIds} newArrivalIds={newArrivalIds} />
 
             {/* You may also like this section end */}
 
             {/* Recently Viewed items section start */}
 
-            <Recentlyviewed />
+            <Recentlyviewed data={getRandomProducts(data)} bestSellerIds={bestSellerIds} newArrivalIds={newArrivalIds} />
 
             {/* Recently Viewed items section end */}
 
             {/* Customer also like this section start */}
 
-            <Customerlike />
+            <Customerlike data={getRandomProducts(data)} bestSellerIds={bestSellerIds} newArrivalIds={newArrivalIds} />
 
             {/* Customer also like this section end */}
 
@@ -757,387 +688,390 @@ const WomenDetails = () => {
             <Footer />
 
             {/* Size chart Women section start */}
+            {console.log("product@@@@@@@@@@@@@@", product)}
 
-            <Modal className="d_sizemodal"
-                show={sizemodalShow}
-                onHide={() => setsizeModalShow(false)}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-            >
-                <Modal.Body>
-                    <div className="d_closeicon d-flex justify-content-end d_cur" onClick={() => setsizeModalShow(false)}>
-                        <IoClose className='icon' />
-                    </div>
-                    <div className="row align-items-center">
-                        <div className="col-12 col-sm-6">
-                            <div className="d_img">
-                                <img src={require('./../d_img/womensize.png')} alt="" />
+            {product[0]?.mainCategoriesData?.[0]?.mainCategoryName === "Women" ? (
+                <Modal className="d_sizemodal"
+                    show={sizemodalShow}
+                    onHide={() => setsizeModalShow(false)}
+                    size="lg"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                >
+                    <Modal.Body>
+                        <div className="d_closeicon d-flex justify-content-end d_cur" onClick={() => setsizeModalShow(false)}>
+                            <IoClose className='icon' />
+                        </div>
+                        <div className="row align-items-center">
+                            <div className="col-12 col-sm-6">
+                                <div className="d_img">
+                                    <img src={require('./../d_img/womensize.png')} alt="" />
+                                </div>
+                            </div>
+                            <div className="col-12 col-sm-6">
+                                <div className="d_text">
+                                    <h4>Size Chart for Women </h4>
+                                    <p className='mb-0'>This size chart shows product measurements taken when products are laid flat.</p>
+                                    <p className='mb-0'>Actual product measurements may vary by up to 1".</p>
+                                </div>
                             </div>
                         </div>
-                        <div className="col-12 col-sm-6">
-                            <div className="d_text">
-                                <h4>Size Chart for Women </h4>
-                                <p className='mb-0'>This size chart shows product measurements taken when products are laid flat.</p>
-                                <p className='mb-0'>Actual product measurements may vary by up to 1".</p>
+                        <div className="d_inch">
+                            <div className="table-responsive">
+                                <Table bordered className="text-center mb-0 align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div className='d_inchbg'>Inch</div>
+                                            </th>
+                                            <th>S</th>
+                                            <th>M</th>
+                                            <th>L</th>
+                                            <th>XL</th>
+                                            <th>2XL</th>
+                                            <th>3XL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>A Length</th>
+                                            <td>25.2</td>
+                                            <td>26</td>
+                                            <td>26.6</td>
+                                            <td>27.2</td>
+                                            <td>27.6</td>
+                                            <td>28</td>
+                                        </tr>
+                                        <tr>
+                                            <th>B Bust</th>
+                                            <td>34.6</td>
+                                            <td>36.6</td>
+                                            <td>38.6</td>
+                                            <td>40.6</td>
+                                            <td>42.5</td>
+                                            <td>44.5</td>
+                                        </tr>
+                                        <tr>
+                                            <th>C Shoulder</th>
+                                            <td>14.9</td>
+                                            <td>15.4</td>
+                                            <td>15.8</td>
+                                            <td>16.3</td>
+                                            <td>17.2</td>
+                                            <td>17.7</td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
                             </div>
                         </div>
-                    </div>
-                    <div className="d_inch">
-                        <div className="table-responsive">
-                            <Table bordered className="text-center mb-0 align-middle">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <div className='d_inchbg'>Inch</div>
-                                        </th>
-                                        <th>S</th>
-                                        <th>M</th>
-                                        <th>L</th>
-                                        <th>XL</th>
-                                        <th>2XL</th>
-                                        <th>3XL</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th>A Length</th>
-                                        <td>25.2</td>
-                                        <td>26</td>
-                                        <td>26.6</td>
-                                        <td>27.2</td>
-                                        <td>27.6</td>
-                                        <td>28</td>
-                                    </tr>
-                                    <tr>
-                                        <th>B Bust</th>
-                                        <td>34.6</td>
-                                        <td>36.6</td>
-                                        <td>38.6</td>
-                                        <td>40.6</td>
-                                        <td>42.5</td>
-                                        <td>44.5</td>
-                                    </tr>
-                                    <tr>
-                                        <th>C Shoulder</th>
-                                        <td>14.9</td>
-                                        <td>15.4</td>
-                                        <td>15.8</td>
-                                        <td>16.3</td>
-                                        <td>17.2</td>
-                                        <td>17.7</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
+                        <div className="d_inch">
+                            <div className="table-responsive">
+                                <Table bordered className="text-center mb-0 align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div className='d_inchbg'>Centimetre</div>
+                                            </th>
+                                            <th>S</th>
+                                            <th>M</th>
+                                            <th>L</th>
+                                            <th>XL</th>
+                                            <th>2XL</th>
+                                            <th>3XL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>A Length</th>
+                                            <td>64</td>
+                                            <td>66</td>
+                                            <td>67.5</td>
+                                            <td>69</td>
+                                            <td>70</td>
+                                            <td>71</td>
+                                        </tr>
+                                        <tr>
+                                            <th>B Bust</th>
+                                            <td>88</td>
+                                            <td>93</td>
+                                            <td>98</td>
+                                            <td>103</td>
+                                            <td>108</td>
+                                            <td>113</td>
+                                        </tr>
+                                        <tr>
+                                            <th>C Shoulder</th>
+                                            <td>37.8</td>
+                                            <td>39</td>
+                                            <td>40.2</td>
+                                            <td>41.4</td>
+                                            <td>42.6</td>
+                                            <td>43.8</td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            </div>
                         </div>
-                    </div>
-                    <div className="d_inch">
-                        <div className="table-responsive">
-                            <Table bordered className="text-center mb-0 align-middle">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <div className='d_inchbg'>Centimetre</div>
-                                        </th>
-                                        <th>S</th>
-                                        <th>M</th>
-                                        <th>L</th>
-                                        <th>XL</th>
-                                        <th>2XL</th>
-                                        <th>3XL</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th>A Length</th>
-                                        <td>64</td>
-                                        <td>66</td>
-                                        <td>67.5</td>
-                                        <td>69</td>
-                                        <td>70</td>
-                                        <td>71</td>
-                                    </tr>
-                                    <tr>
-                                        <th>B Bust</th>
-                                        <td>88</td>
-                                        <td>93</td>
-                                        <td>98</td>
-                                        <td>103</td>
-                                        <td>108</td>
-                                        <td>113</td>
-                                    </tr>
-                                    <tr>
-                                        <th>C Shoulder</th>
-                                        <td>37.8</td>
-                                        <td>39</td>
-                                        <td>40.2</td>
-                                        <td>41.4</td>
-                                        <td>42.6</td>
-                                        <td>43.8</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        </div>
-                    </div>
-                </Modal.Body>
-            </Modal>
+                    </Modal.Body>
+                </Modal>
+            ) : (<></>)}
 
             {/* Size chart women section End */}
 
             {/* Size chart Men section start */}
-
-            <Modal className="d_sizemodal d-none"
-                show={sizemodalShow}
-                onHide={() => setsizeModalShow(false)}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-            >
-                <Modal.Body>
-                    <div className="d_closeicon d-flex justify-content-end d_cur" onClick={() => setsizeModalShow(false)}>
-                        <IoClose className='icon' />
-                    </div>
-                    <div className="row align-items-center">
-                        <div className="col-12 col-sm-6">
-                            <div className="d_img">
-                                <img src={require('./../d_img/womensize.png')} alt="" />
+            {product[0]?.mainCategoriesData?.[0]?.mainCategoryName === "Men" ? (
+                <Modal className="d_sizemodal d-none"
+                    show={sizemodalShow}
+                    onHide={() => setsizeModalShow(false)}
+                    size="lg"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                >
+                    <Modal.Body>
+                        <div className="d_closeicon d-flex justify-content-end d_cur" onClick={() => setsizeModalShow(false)}>
+                            <IoClose className='icon' />
+                        </div>
+                        <div className="row align-items-center">
+                            <div className="col-12 col-sm-6">
+                                <div className="d_img">
+                                    <img src={require('./../d_img/womensize.png')} alt="" />
+                                </div>
+                            </div>
+                            <div className="col-12 col-sm-6">
+                                <div className="d_text">
+                                    <h4>Size Chart for Men </h4>
+                                    <p className='mb-0'>This size chart shows product measurements taken when products are laid flat.</p>
+                                    <p className='mb-0'>Actual product measurements may vary by up to 1".</p>
+                                </div>
                             </div>
                         </div>
-                        <div className="col-12 col-sm-6">
-                            <div className="d_text">
-                                <h4>Size Chart for Men </h4>
-                                <p className='mb-0'>This size chart shows product measurements taken when products are laid flat.</p>
-                                <p className='mb-0'>Actual product measurements may vary by up to 1".</p>
+                        <div className="d_inch">
+                            <div className="table-responsive">
+                                <Table bordered className="text-center mb-0 align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div className='d_inchbg'>Inch</div>
+                                            </th>
+                                            <th>S</th>
+                                            <th>M</th>
+                                            <th>L</th>
+                                            <th>XL</th>
+                                            <th>2XL</th>
+                                            <th>3XL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>A Length</th>
+                                            <td>28</td>
+                                            <td>29.1</td>
+                                            <td>29.9</td>
+                                            <td>31.1</td>
+                                            <td>31.9</td>
+                                            <td>33.1</td>
+                                        </tr>
+                                        <tr>
+                                            <th>B Bust</th>
+                                            <td>36.2</td>
+                                            <td>40.2</td>
+                                            <td>44.1</td>
+                                            <td>48</td>
+                                            <td>52</td>
+                                            <td>55.9</td>
+                                        </tr>
+                                        <tr>
+                                            <th>C Shoulder</th>
+                                            <td>15.7</td>
+                                            <td>16.9</td>
+                                            <td>18.1</td>
+                                            <td>19.3</td>
+                                            <td>20.5</td>
+                                            <td>21.7</td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
                             </div>
                         </div>
-                    </div>
-                    <div className="d_inch">
-                        <div className="table-responsive">
-                            <Table bordered className="text-center mb-0 align-middle">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <div className='d_inchbg'>Inch</div>
-                                        </th>
-                                        <th>S</th>
-                                        <th>M</th>
-                                        <th>L</th>
-                                        <th>XL</th>
-                                        <th>2XL</th>
-                                        <th>3XL</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th>A Length</th>
-                                        <td>28</td>
-                                        <td>29.1</td>
-                                        <td>29.9</td>
-                                        <td>31.1</td>
-                                        <td>31.9</td>
-                                        <td>33.1</td>
-                                    </tr>
-                                    <tr>
-                                        <th>B Bust</th>
-                                        <td>36.2</td>
-                                        <td>40.2</td>
-                                        <td>44.1</td>
-                                        <td>48</td>
-                                        <td>52</td>
-                                        <td>55.9</td>
-                                    </tr>
-                                    <tr>
-                                        <th>C Shoulder</th>
-                                        <td>15.7</td>
-                                        <td>16.9</td>
-                                        <td>18.1</td>
-                                        <td>19.3</td>
-                                        <td>20.5</td>
-                                        <td>21.7</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
+                        <div className="d_inch">
+                            <div className="table-responsive">
+                                <Table bordered className="text-center mb-0 align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div className='d_inchbg'>Centimetre</div>
+                                            </th>
+                                            <th>S</th>
+                                            <th>M</th>
+                                            <th>L</th>
+                                            <th>XL</th>
+                                            <th>2XL</th>
+                                            <th>3XL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>A Length</th>
+                                            <td>71</td>
+                                            <td>74</td>
+                                            <td>76</td>
+                                            <td>79</td>
+                                            <td>80</td>
+                                            <td>84</td>
+                                        </tr>
+                                        <tr>
+                                            <th>B Bust</th>
+                                            <td>82</td>
+                                            <td>92</td>
+                                            <td>102</td>
+                                            <td>112</td>
+                                            <td>122</td>
+                                            <td>132</td>
+                                        </tr>
+                                        <tr>
+                                            <th>C Shoulder</th>
+                                            <td>37</td>
+                                            <td>40</td>
+                                            <td>43</td>
+                                            <td>46</td>
+                                            <td>49</td>
+                                            <td>52</td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            </div>
                         </div>
-                    </div>
-                    <div className="d_inch">
-                        <div className="table-responsive">
-                            <Table bordered className="text-center mb-0 align-middle">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <div className='d_inchbg'>Centimetre</div>
-                                        </th>
-                                        <th>S</th>
-                                        <th>M</th>
-                                        <th>L</th>
-                                        <th>XL</th>
-                                        <th>2XL</th>
-                                        <th>3XL</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th>A Length</th>
-                                        <td>71</td>
-                                        <td>74</td>
-                                        <td>76</td>
-                                        <td>79</td>
-                                        <td>80</td>
-                                        <td>84</td>
-                                    </tr>
-                                    <tr>
-                                        <th>B Bust</th>
-                                        <td>82</td>
-                                        <td>92</td>
-                                        <td>102</td>
-                                        <td>112</td>
-                                        <td>122</td>
-                                        <td>132</td>
-                                    </tr>
-                                    <tr>
-                                        <th>C Shoulder</th>
-                                        <td>37</td>
-                                        <td>40</td>
-                                        <td>43</td>
-                                        <td>46</td>
-                                        <td>49</td>
-                                        <td>52</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        </div>
-                    </div>
-                </Modal.Body>
-            </Modal>
-
+                    </Modal.Body>
+                </Modal>
+            ) : (<></>)}
             {/* Size chart Men section End */}
 
             {/* Size chart kids section start */}
-
-            <Modal className="d_sizemodal d-none"
-                show={sizemodalShow}
-                onHide={() => setsizeModalShow(false)}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-            >
-                <Modal.Body>
-                    <div className="d_closeicon d-flex justify-content-end d_cur" onClick={() => setsizeModalShow(false)}>
-                        <IoClose className='icon' />
-                    </div>
-                    <div className="row align-items-center">
-                        <div className="col-12 col-sm-6">
-                            <div className="d_img">
-                                <img src={require('./../d_img/womensize.png')} alt="" />
+            {product[0]?.mainCategoriesData?.[0]?.mainCategoryName === "Baby & Kids" ? (
+                <Modal className="d_sizemodal d-none"
+                    show={sizemodalShow}
+                    onHide={() => setsizeModalShow(false)}
+                    size="lg"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                >
+                    <Modal.Body>
+                        <div className="d_closeicon d-flex justify-content-end d_cur" onClick={() => setsizeModalShow(false)}>
+                            <IoClose className='icon' />
+                        </div>
+                        <div className="row align-items-center">
+                            <div className="col-12 col-sm-6">
+                                <div className="d_img">
+                                    <img src={require('./../d_img/womensize.png')} alt="" />
+                                </div>
+                            </div>
+                            <div className="col-12 col-sm-6">
+                                <div className="d_text">
+                                    <h4>Size Chart for Kid </h4>
+                                    <p className='mb-0'>This size chart shows product measurements taken when products are laid flat.</p>
+                                    <p className='mb-0'>Actual product measurements may vary by up to 1".</p>
+                                </div>
                             </div>
                         </div>
-                        <div className="col-12 col-sm-6">
-                            <div className="d_text">
-                                <h4>Size Chart for Kid </h4>
-                                <p className='mb-0'>This size chart shows product measurements taken when products are laid flat.</p>
-                                <p className='mb-0'>Actual product measurements may vary by up to 1".</p>
+                        <div className="d_inch">
+                            <div className="table-responsive">
+                                <Table bordered className="text-center mb-0 align-middle">
+                                    <thead>
+                                        <tr className='d_yr'>
+                                            <td></td>
+                                            <td>5-6 yr</td>
+                                            <td>7-8 yr</td>
+                                            <td>9-10 yr</td>
+                                            <td>11-12 yr</td>
+                                            <td>13-14 yr</td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <div className='d_inchbg'>Inch</div>
+                                            </th>
+                                            <th>XS</th>
+                                            <th>S</th>
+                                            <th>M</th>
+                                            <th>L</th>
+                                            <th>XL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>A Length</th>
+                                            <td>18.1</td>
+                                            <td>20.1</td>
+                                            <td>22</td>
+                                            <td>24</td>
+                                            <td>26</td>
+                                        </tr>
+                                        <tr>
+                                            <th>B Bust</th>
+                                            <td>23.6</td>
+                                            <td>27.6</td>
+                                            <td>31.5</td>
+                                            <td>35.4</td>
+                                            <td>40.2</td>
+                                        </tr>
+                                        <tr>
+                                            <th>C Shoulder</th>
+                                            <td>10.2</td>
+                                            <td>11.8</td>
+                                            <td>13.4</td>
+                                            <td>15.0</td>
+                                            <td>16.5</td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
                             </div>
                         </div>
-                    </div>
-                    <div className="d_inch">
-                        <div className="table-responsive">
-                            <Table bordered className="text-center mb-0 align-middle">
-                                <thead>
-                                    <tr className='d_yr'>
-                                        <td></td>
-                                        <td>5-6 yr</td>
-                                        <td>7-8 yr</td>
-                                        <td>9-10 yr</td>
-                                        <td>11-12 yr</td>
-                                        <td>13-14 yr</td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <div className='d_inchbg'>Inch</div>
-                                        </th>
-                                        <th>XS</th>
-                                        <th>S</th>
-                                        <th>M</th>
-                                        <th>L</th>
-                                        <th>XL</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th>A Length</th>
-                                        <td>18.1</td>
-                                        <td>20.1</td>
-                                        <td>22</td>
-                                        <td>24</td>
-                                        <td>26</td>
-                                    </tr>
-                                    <tr>
-                                        <th>B Bust</th>
-                                        <td>23.6</td>
-                                        <td>27.6</td>
-                                        <td>31.5</td>
-                                        <td>35.4</td>
-                                        <td>40.2</td>
-                                    </tr>
-                                    <tr>
-                                        <th>C Shoulder</th>
-                                        <td>10.2</td>
-                                        <td>11.8</td>
-                                        <td>13.4</td>
-                                        <td>15.0</td>
-                                        <td>16.5</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
+                        <div className="d_inch">
+                            <div className="table-responsive">
+                                <Table bordered className="text-center mb-0 align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div className='d_inchbg'>Centimetre</div>
+                                            </th>
+                                            <th>XS</th>
+                                            <th>S</th>
+                                            <th>M</th>
+                                            <th>L</th>
+                                            <th>XL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>A Length</th>
+                                            <td>46</td>
+                                            <td>51</td>
+                                            <td>56</td>
+                                            <td>61</td>
+                                            <td>66</td>
+                                        </tr>
+                                        <tr>
+                                            <th>B Bust</th>
+                                            <td>60</td>
+                                            <td>70</td>
+                                            <td>80</td>
+                                            <td>90</td>
+                                            <td>102</td>
+                                        </tr>
+                                        <tr>
+                                            <th>C Shoulder</th>
+                                            <td>26</td>
+                                            <td>30</td>
+                                            <td>34</td>
+                                            <td>38</td>
+                                            <td>42</td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            </div>
                         </div>
-                    </div>
-                    <div className="d_inch">
-                        <div className="table-responsive">
-                            <Table bordered className="text-center mb-0 align-middle">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <div className='d_inchbg'>Centimetre</div>
-                                        </th>
-                                        <th>XS</th>
-                                        <th>S</th>
-                                        <th>M</th>
-                                        <th>L</th>
-                                        <th>XL</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th>A Length</th>
-                                        <td>46</td>
-                                        <td>51</td>
-                                        <td>56</td>
-                                        <td>61</td>
-                                        <td>66</td>
-                                    </tr>
-                                    <tr>
-                                        <th>B Bust</th>
-                                        <td>60</td>
-                                        <td>70</td>
-                                        <td>80</td>
-                                        <td>90</td>
-                                        <td>102</td>
-                                    </tr>
-                                    <tr>
-                                        <th>C Shoulder</th>
-                                        <td>26</td>
-                                        <td>30</td>
-                                        <td>34</td>
-                                        <td>38</td>
-                                        <td>42</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        </div>
-                    </div>
-                </Modal.Body>
-            </Modal>
-
+                    </Modal.Body>
+                </Modal>
+            ) : (<></>)}
             {/* Size chart Men section End */}
 
             {/* Offer Modal section start */}

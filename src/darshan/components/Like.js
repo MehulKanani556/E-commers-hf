@@ -1,5 +1,3 @@
-import React from 'react'
-
 import Slider from "react-slick";
 import { FaStar } from 'react-icons/fa';
 import { IoMdHeartEmpty } from 'react-icons/io';
@@ -8,108 +6,41 @@ import './../css/Bought.css'
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { Link } from 'react-router-dom';
 
-const Like = () => {
-
-    const filterItems = [
-        {
-            id: 1,
-            image: "itemimg1.png",
-            isBestSeller: false,
-            isNewArrial: true,
-            name: "Premium Lehenga choli",
-            rating: 4.5,
-            description: "Purple lehenga choli in silk",
-            colors: [
-                { id: 1, color: "#B16AAF", isActive: true },
-            ],
-            price: 120,
-            originalPrice: 140
-        },
-        {
-            id: 2,
-            image: "itemimg2.png",
-            isBestSeller: false,
-            isNewArrial: false,
-            name: "Traditional Chaniya choli",
-            rating: 4.7,
-            description: "Blue prinetd chaniya choli with dupatta",
-            colors: [
-                { id: 1, color: "#BF002A", isActive: true },
-                { id: 2, color: "#6BC89B", isActive: false },
-                { id: 3, color: "#C796D8", isActive: false },
-                { id: 4, color: "#6B8AC8", isActive: false }
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-        {
-            id: 3,
-            image: "itemimg3.png",
-            isBestSeller: false,
-            isNewArrial: true,
-            name: "Premium Saree",
-            rating: 4.7,
-            description: "Mustard yellow cotton silk chaniya choli",
-            colors: [
-                { id: 1, color: "#FFB804", isActive: true },
-                { id: 2, color: "#6BC89B", isActive: false },
-                { id: 3, color: "#C796D8", isActive: false },
-                { id: 4, color: "#6B8AC8", isActive: false }
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-        {
-            id: 4,
-            image: "itemimg4.png",
-            isBestSeller: false,
-            isNewArrial: true,
-            name: "Traditional Chaniya choli",
-            rating: 4.7,
-            description: "Black cotton silk chaniya choli for navratri",
-            colors: [
-                { id: 1, color: "#272629", isActive: true },
-                { id: 2, color: "#EC1B1B", isActive: false },
-                { id: 3, color: "#49C0C0", isActive: false },
-                { id: 4, color: "#077E35", isActive: false }
-            ],
-            price: 250,
-            originalPrice: 300
-        },
-    ];
+const Like = ({ data, bestSellerIds, newArrivalIds }) => {
+    const BaseUrl = process.env.REACT_APP_BASEURL;
 
     const settings = {
         dots: false,
-        arrows:true,
+        arrows: true,
         infinite: true,
         speed: 500,
         slidesToShow: 4,
         slidesToScroll: 1,
         responsive: [
             {
-              breakpoint: 1199,
-              settings: {
-                slidesToShow: 3,
-                slidesToScroll: 1,
-              }
+                breakpoint: 1199,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                }
             },
             {
-              breakpoint: 991,
-              settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1,
-              }
+                breakpoint: 991,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                }
             },
             {
-              breakpoint: 480,
-              settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                arrows:false,
-                dots: true,
-              }
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: false,
+                    dots: true,
+                }
             }
-          ]
+        ]
     };
 
     const CustomPrevArrow = (props) => {
@@ -120,7 +51,7 @@ const Like = () => {
             </div>
         );
     };
-    
+
     const CustomNextArrow = (props) => {
         const { className, onClick } = props;
         return (
@@ -139,47 +70,45 @@ const Like = () => {
                         <h4 className='mb-0'>You may also like this</h4>
                     </div>
                     <Slider {...settings} prevArrow={<CustomPrevArrow />} nextArrow={<CustomNextArrow />}>
-                        {filterItems.map((item, index) => {
+                        {data.map((item) => {
+                            const discountAmount = (item.productVariantData[0].originalPrice * item.productVariantData[0].discountPrice) / 100;
                             return (
-                                <div key={item.id} className="slider-item">
-                                    <Link to='/womendetails'>
-                                    <div className="d_box">
-                                        <div className="d_img">
-                                            <img src={require(`./../d_img/${item.image}`)} alt="" />
-                                            {item.isBestSeller &&
-                                                (<div className="d_seller">Best Seller</div>)}
-                                            {item.isNewArrial &&
-                                                (<div className="d_arrival">New Arrival</div>)}
-                                            <div className="d_trendicon d-flex justify-content-center align-items-center d_cur">
-                                                <IoMdHeartEmpty className='d_icon ' />
-                                            </div>
-                                        </div>
-                                        <div className="d_content">
-                                            <div className='d-flex flex-column h-100'>
-                                                <div className="d-flex align-items-center justify-content-between">
-                                                    <div className="d_name">{item.name}</div>
-                                                    <div className='d-flex align-items-center'>
-                                                        <FaStar className='d_staricon me-1' />
-                                                        <div className="d_review">{item.rating}</div>
-                                                    </div>
+                                <div key={item._id} className="slider-item">
+                                     <Link to={`/womendetails/${item._id}`}>
+                                        <div className="d_box">
+                                            <div className="d_img">
+                                                <img src={`${BaseUrl}/${item.productVariantData[0].images[0]}`} alt="" />
+                                                {bestSellerIds.includes(item._id) && (<div className="d_seller">Best Seller</div>)}
+                                                {newArrivalIds.includes(item._id) && (<div className="d_arrival">New Arrival</div>)}
+                                                <div className="d_trendicon d-flex justify-content-center align-items-center d_cur">
+                                                    <IoMdHeartEmpty className='d_icon ' />
                                                 </div>
-                                                <div className="d_desc">{item.description}</div>
-                                                <div className="d-flex align-items-center justify-content-between mt-auto">
-                                                    <div className="d-flex align-items-center">
-                                                        {item.colors.map((colorobj, i) => {
-                                                            return (
-                                                                <div key={colorobj.id} className={`d_color ${colorobj.isActive ? 'active' : ""}`} style={{ backgroundColor: colorobj.color }}></div>
-                                                            )
-                                                        })}
+                                            </div>
+                                            <div className="d_content">
+                                                <div className='d-flex flex-column h-100'>
+                                                    <div className="d-flex align-items-center justify-content-between">
+                                                        <div className="d_name">{item.categoriesData[0].categoryName}</div>
+                                                        <div className='d-flex align-items-center'>
+                                                            <FaStar className='d_staricon me-1' />
+                                                            <div className="d_review">{parseFloat(item.ratingData[0]?.rating) || 0}</div>
+                                                        </div>
                                                     </div>
-                                                    <div className="d-flex align-items-end">
-                                                        <div className="d_price">${item.price}</div>
-                                                        <div className="d_disprice ms-1 text-decoration-line-through">${item.originalPrice}</div>
+                                                    <div className="d_desc">{item.productName}</div>
+                                                    <div className="d-flex align-items-center justify-content-between mt-auto">
+                                                        <div className="d-flex align-items-center">
+                                                            {item.productVariantData[0].colorName.split(',').map((color, i) => (
+                                                                <div key={i} className="d_color" style={{ backgroundColor: color }}></div>
+                                                            ))}
+                                                        </div>
+
+                                                        <div className="d-flex align-items-end">
+                                                            <div className="d_price">${(item.productVariantData[0].originalPrice - discountAmount)}</div>
+                                                            <div className="d_disprice ms-1 text-decoration-line-through">${item.productVariantData[0].originalPrice}</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
                                     </Link>
                                 </div>
                             )
@@ -192,4 +121,4 @@ const Like = () => {
     )
 }
 
-export default Like
+export default Like;
