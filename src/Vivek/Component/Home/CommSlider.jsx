@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import OwlCarousel from 'react-owl-carousel';
 import '../../../darshan/css/minisider.css';
 import axios from 'axios';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
 
 const CommSlider = () => {
 
@@ -9,6 +11,7 @@ const CommSlider = () => {
     const token = localStorage.getItem('token');
 
     const [category,setCategory] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     const settings = {
         loop: true,
@@ -35,6 +38,7 @@ const CommSlider = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setIsLoading(true);
                 const response = await axios.get(`${BaseUrl}/api/allMainCategory`, {
                     headers : { Authorization : `Bearer ${token}`}
                 });
@@ -44,16 +48,22 @@ const CommSlider = () => {
             } catch (error) {
                 console.error('Data Fetching Error:', error);
             }
+            finally {
+                setIsLoading(false);
+            }
         }
         fetchData();
     },[BaseUrl, token]);
+
+    if (isLoading) return <div>Loading...</div>;
+    
     return (
         <>
             <section className='d_p-80 d_minisider'>
                 <div className="d_container p-0">
                     <div className="row m-0 justify-content-center">
                         <div className="col-10 p-0">
-                            <OwlCarousel className='owl-theme d_minisider' items={6} {...settings}>
+                            <OwlCarousel className='owl-theme d_minisider' {...settings}>
                                 {category.map((item) => (
                                     <div key={item._id} className="d-flex justify-content-center">
                                         <div className="d_mini">
