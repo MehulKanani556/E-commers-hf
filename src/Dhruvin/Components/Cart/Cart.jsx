@@ -9,14 +9,20 @@ import { FaCheckCircle } from "react-icons/fa";
 import { MdRefresh } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Cart = () => {
+
+  const BaseUrl = process.env.REACT_APP_BASEURL;
+  const token = localStorage.getItem('token');
 
   const navigate = useNavigate();
 
   const [showModal, setShowModal] = useState(false);
-  const [address, setAddress] = useState(false)
+  const [address, setAddress] = useState(false);
+  const [cartData, setCartData] = useState([]);
+  const [couponData, setCouponData] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
     contact: '',
@@ -34,7 +40,8 @@ const Cart = () => {
   const selectRef = useRef(null);
   const [activeButton, setActiveButton] = useState('Pay on Delivery');
   const [upipayId, setUpipayId] = useState('');
-
+  const [couponInput, setCouponInput] = useState('');
+  const [selectedCouponId, setSelectedCouponId] = useState(null);
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
@@ -151,7 +158,7 @@ const Cart = () => {
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
-    setIsOpen(false); 
+    setIsOpen(false);
   };
 
   const handlePayment = (paymentType) => {
@@ -176,652 +183,669 @@ const Cart = () => {
   };
 
   const handleNavAndTabs = (id) => {
-     if(id === 1){
-        // document.getElementById("ds_with-line").classList.remove("ds_solid-border")
-        // document.getElementById("ds_with-line").classList.add("ds_dashed-border")
-        document.getElementById("ds_cupon").classList.remove("d-none")
-        document.getElementById("ds_women-card").classList.remove("d-none")
-     }
-     else if (id === 2){
-        // document.getElementById("ds_with-line").classList.add("ds_solid-border")
-        document.getElementById("ds_cupon").classList.remove("d-none")
-        document.getElementById("ds_women-card").classList.add("d-none")
-        document.getElementById("ds_product").classList.remove("d-none")
-        document.getElementById("ds_express-card").classList.add("d-none")
-        document.getElementById("ds_Nav-Tabs").classList.add("d-none")
-     }
-     else if (id === 3){
-        document.getElementById("ds_cupon").classList.add("d-none")
-        document.getElementById("ds_women-card").classList.add("d-none")
-        document.getElementById("ds_product").classList.add("d-none")
-        document.getElementById("ds_express-card").classList.remove("d-none")
-        document.getElementById("ds_Nav-Tabs").classList.remove("d-none")
+    if (id === 1) {
+      // document.getElementById("ds_with-line").classList.remove("ds_solid-border")
+      // document.getElementById("ds_with-line").classList.add("ds_dashed-border")
+      document.getElementById("ds_cupon").classList.remove("d-none")
+      document.getElementById("ds_women-card").classList.remove("d-none")
+    }
+    else if (id === 2) {
+      // document.getElementById("ds_with-line").classList.add("ds_solid-border")
+      document.getElementById("ds_cupon").classList.remove("d-none")
+      document.getElementById("ds_women-card").classList.add("d-none")
+      document.getElementById("ds_product").classList.remove("d-none")
+      document.getElementById("ds_express-card").classList.add("d-none")
+      document.getElementById("ds_Nav-Tabs").classList.add("d-none")
+    }
+    else if (id === 3) {
+      document.getElementById("ds_cupon").classList.add("d-none")
+      document.getElementById("ds_women-card").classList.add("d-none")
+      document.getElementById("ds_product").classList.add("d-none")
+      document.getElementById("ds_express-card").classList.remove("d-none")
+      document.getElementById("ds_Nav-Tabs").classList.remove("d-none")
 
-     }
+    }
 
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // fetch Cart Data
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${BaseUrl}/api/allMyCarts`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      // console.log("response", response.data.carts);
+      setCartData(response.data.carts)
+    } catch (error) {
+      console.error('Data Fetching Error:', error);
+    }
+  }
+
+  const handleIncreaseQuantity = async (itemId) => {
+    setCartData(prevCartData => {
+      return prevCartData.map(item => {
+        if (item._id === itemId) {
+          return {
+            ...item,
+            quantity: item.quantity + 1
+          };
+        }
+        return item;
+      });
+    });
+
+    await axios.put(`${BaseUrl}/api/updateCart/${itemId}`,
+      { quantity: cartData.find(item => item._id === itemId).quantity + 1 },
+      { headers: { Authorization: `Bearer ${token}` } });
+    // console.log("response", response.data);
+  };
+
+  // Function to handle decreasing quantity
+  const handleDecreaseQuantity = async (itemId) => {
+    setCartData(prevCartData => {
+      return prevCartData.map(item => {
+        if (item._id === itemId && item.quantity > 1) {
+          return {
+            ...item,
+            quantity: item.quantity - 1
+          };
+        }
+        return item;
+      });
+    });
+
+    await axios.put(`${BaseUrl}/api/updateCart/${itemId}`,
+      { quantity: cartData.find(item => item._id === itemId).quantity - 1 },
+      { headers: { Authorization: `Bearer ${token}` } });
+    // console.log("response", response.data);
+
+  };
+
+  // Function to handle removing item (when quantity is 1 and minus is clicked)
+  const handleRemoveItem = async (itemId) => {
+    const response = await axios.delete(`${BaseUrl}/api/deleteCart/${itemId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    // console.log("Response", response.data);
+    if (response.data.status === 200) {
+      setCartData(prevCartData => {
+        return prevCartData.filter(item => item._id !== itemId);
+      });
+    }
+  };
+
+  const fetchCoupenData = async () => {
+    try {
+      const response = await axios.get(`${BaseUrl}/api/allSpecialOffer`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      // console.log("response", response.data.specialOffers);
+      setCouponData(response.data.specialOffers);
+    } catch (error) {
+      console.error('Data Fetching Error:', error);
+    }
+  }
+
+  useEffect(() => {
+    fetchCoupenData();
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleCouponSelect = (couponCode,id) => {
+    setCouponInput(couponCode);
+    setSelectedCouponId(id);
+  };
+
+  const handleApply = (e) => {
+    e.preventDefault();
+    if(selectedCouponId){
+      console.log("selectedId",selectedCouponId);
+      
+    }
   }
 
   return (
     <div>
       <Header />
 
-      {/* **************** Empty Card **************/}
-      <section className="mt-5 mb-5 d-none">
-        <div className="d_container">
-          <div className="row">
-            <div className="col-xl-12 text-center">
-              <div>
-                <img className="ds_cart-img" src={require("../Img/cart.png")} alt="" />
-                <h4 className="ds_card-title">Your cart is empty!</h4>
-                <p className="ds_card-text">
-                  There is nothing in your bag. add some item.
-                </p>
-                <button className=" ds_cart-btn mt-3">
-                  Continue Shopping
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* **************** Cart Without Address ************* */}
-      <section className="mb-5 mt-4 d-non" id="ds_cartsec">
-        <div>
-          <div className="d_container">
-            <div className="d-flex justify-content-between align-items-center">
-              <h2 className="h2">Cart</h2>
-              <button className=" ds_with-btn">+Add From Wishlist</button>
-            </div>
+      {cartData.length > 0 ? (
+        <section className="mb-5 mt-4 d-non" id="ds_cartsec">
+          <div>
+            <div className="d_container">
+              <div className="d-flex justify-content-between align-items-center">
+                <h2 className="h2">Cart</h2>
+                <Link to={'/wishlist'}>
+                  <button className=" ds_with-btn">+Add From Wishlist</button>
+                </Link>
+              </div>
 
-            <div className="row mt-4" >
-              <div className="col-xl-8 col-lg-8 col-md-12">
-                <div>
-                  <div className="position-relative" style={{ zIndex: "2" }}>
-                    <div className="ds_with-line ds_dashed-border" id="ds_with-line"></div>
-                    <div className="ds_with-line2 ds_solid-border " id="ds_with-line2"></div>
-                    <div className=" row justify-content-between w-100 m-0">
-                      <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 p-0">
-                        <div className="ds_with-circle text-center ds_cursor" style={{ lineHeight: "35px" }} onClick={()=> handleNavAndTabs(1)}>
-                          <img src={require("../Img/cart-icon.png")} alt="" />
-                        </div>
-                        <p className="ds_with-text mt-1 ms-1">Cart</p>
-                      </div>
-                      <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 p-0 ">
-                        <div className="text-center mx-auto">
-                          <div className="ds_with-circle d-inline-block m-auto ds_cursor" style={{ lineHeight: "35px" }} onClick={()=> handleNavAndTabs(2)}>
-                            <img src={require("../Img/order.png")} alt="" />
+              <div className="row mt-4" >
+                <div className="col-xl-8 col-lg-8 col-md-12">
+                  <div>
+                    <div className="position-relative" style={{ zIndex: "2" }}>
+                      <div className="ds_with-line ds_dashed-border" id="ds_with-line"></div>
+                      <div className="ds_with-line2 ds_solid-border " id="ds_with-line2"></div>
+                      <div className=" row justify-content-between w-100 m-0">
+                        <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 p-0">
+                          <div className="ds_with-circle text-center ds_cursor" style={{ lineHeight: "35px" }} onClick={() => handleNavAndTabs(1)}>
+                            <img src={require("../Img/cart-icon.png")} alt="" />
                           </div>
-                          <p className="ds_with-text mt-1">Order Summary</p>
+                          <p className="ds_with-text mt-1 ms-1">Cart</p>
                         </div>
-                      </div>
-                      <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 p-0 ">
-                        <div className="d-flex justify-content-end flex-column align-items-end">
-                          <div className="ds_with-circle me-sm-3 ds_cursor" style={{ lineHeight: "35px" }} onClick={()=> handleNavAndTabs(3)}>
-                            <img src={require("../Img/order.png")} alt="" />
+                        <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 p-0 ">
+                          <div className="text-center mx-auto">
+                            <div className="ds_with-circle d-inline-block m-auto ds_cursor" style={{ lineHeight: "35px" }} onClick={() => handleNavAndTabs(2)}>
+                              <img src={require("../Img/order.png")} alt="" />
+                            </div>
+                            <p className="ds_with-text mt-1">Order Summary</p>
                           </div>
-                          <p className="ds_with-text mt-1">Payment</p>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* ------------ Address And Product ----------- */}
-                  <div className="d-non" id="ds_product">
-                    <div className="mt-3" id="ds_address">
-                      <div className="ds_with-shadow">
-                        <div className="d-flex justify-content-between align-items-center">
-                          {address ? <div>
-                            <p className="ds_add-smart mb-0">Deliver to: <span className="fw-bold ms-2">Hello</span> <span className="ds_user-data">Home</span> </p>
-                            <p className="ds_add-smart mb-0">Ehrenkranz 13 Washington Square S, New York,Washington Square, NY 10012, USA</p>
+                        <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 p-0 ">
+                          <div className="d-flex justify-content-end flex-column align-items-end">
+                            <div className="ds_with-circle me-sm-3 ds_cursor" style={{ lineHeight: "35px" }} onClick={() => handleNavAndTabs(3)}>
+                              <img src={require("../Img/order.png")} alt="" />
+                            </div>
+                            <p className="ds_with-text mt-1">Payment</p>
                           </div>
-                            : <p className="mb-0 fw-600 ds_add-address">
-                              No saved Addresses
-                            </p>}
-                          {address ? <button className="ds_with-add" data-bs-toggle="modal" data-bs-target="#ds_modal">Change Address</button> : <button className=" ds_with-add" onClick={handleOpenModal}>+Add Address</button>}
                         </div>
                       </div>
                     </div>
 
-                    <div className="ds_add-auto">
-                      <div className="hello">
-                        <div className="row mt-5">
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                            <div className="form-check">
-                              <input className="form-check-input ds_cursor" type="checkbox" value="" id="flexCheckDefault" />
-                              <label className="form-check-label" htmlFor="flexCheckDefault">
-                                Select All
-                              </label>
+                    {/* ------------ Address And Product ----------- */}
+                    <div className="d-non" id="ds_product">
+                      <div className="mt-3" id="ds_address">
+                        <div className="ds_with-shadow">
+                          <div className="d-flex justify-content-between align-items-center">
+                            {address ? <div>
+                              <p className="ds_add-smart mb-0">Deliver to: <span className="fw-bold ms-2">Hello</span> <span className="ds_user-data">Home</span> </p>
+                              <p className="ds_add-smart mb-0">Ehrenkranz 13 Washington Square S, New York,Washington Square, NY 10012, USA</p>
                             </div>
-                          </div>
-                          <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
-                            <div>
-                              <p className="fw-bold" style={{ color: "#6A6A6A" }}>
-                                Product
-                              </p>
-                            </div>
-                          </div>
-                          <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
-                            <div>
-                              <p className="fw-bold" style={{ color: "#6A6A6A" }}>
-                                Price
-                              </p>
-                            </div>
-                          </div>
-                          <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
-                            <div>
-                              <p className="fw-bold ms-xl-3 ms-4 " style={{ color: "#6A6A6A" }}>
-                                Qty
-                              </p>
-                            </div>
-                          </div>
-                          <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
-                            <div>
-                              <p className="fw-bold" style={{ color: "#6A6A6A" }}>
-                                Total
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="ds_with-border"></div>
-                        <div className="">
-                          <div className="row mt-4">
-                            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
-                              <div className="d-flex align-items-center">
-                                <div>
-                                  <input className="form-check-input ds_cursor" type="checkbox" value="" id="flexCheckDefault" />
-                                </div>
-                                <div className="ms-4">
-                                  <img src={require("../Img/img.png")} className="ds_add-img" alt="" />
-                                </div>
-                              </div>
-                            </div>
-                            <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 ">
-                              <div className="ds_add-body">
-                                <p className="fw-bold mb-0">
-                                  Full pair stretched
-                                </p>
-                                <p className="ds_mini-text mb-0">
-                                  Lorem ipsum dolor sit amet consectetur. Ac
-                                  iaculis viverra purus malesuada quam dolor.
-                                </p>
-                                <p className="ds_add-type mb-0">Light Brown</p>
-                                <p className="ds_add-type">XL</p>
-                              </div>
-                            </div>
-                            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
-                              <div>
-                                <p className="fw-600">$120</p>
-                              </div>
-                            </div>
-                            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
-                              <div>
-                                <div className="ds_add-count">
-                                  <div className="d-flex align-items-center justify-content-between">
-                                    <i className="fa-solid fa-minus mx-1 ds_cursor"></i>
-                                    <div className="mx-1">2</div>
-                                    <i className="fa-solid fa-plus mx-1 ds_cursor"></i>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
-                              <div>
-                                <p className="fw-600">$240</p>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="row mt-4">
-                            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
-                              <div className="d-flex align-items-center">
-                                <div>
-                                  <input className="form-check-input ds_cursor" type="checkbox" value="" id="flexCheckDefault" />
-                                </div>
-                                <div className="ms-4">
-                                  <img src={require("../Img/img1.png")} className="ds_add-img" alt="" />
-                                </div>
-                              </div>
-                            </div>
-                            <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 ">
-                              <div className="ds_add-body">
-                                <p className="fw-bold mb-0">
-                                  Samsung S24 Ultra
-                                </p>
-                                <p className="ds_mini-text mb-0">
-                                  Lorem ipsum dolor sit amet consectetur. Ac
-                                  iaculis viverra purus malesuada quam dolor.
-                                </p>
-                              </div>
-                            </div>
-                            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
-                              <div>
-                                <p className="fw-600">$220</p>
-                              </div>
-                            </div>
-                            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
-                              <div>
-                                <div className="ds_add-count">
-                                  <div className="d-flex align-items-center justify-content-between">
-                                    <i className="fa-solid fa-trash-can ds_cursor"></i>
-                                    <div>1</div>
-                                    <i className="fa-solid fa-plus ds_cursor"></i>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
-                              <div>
-                                <p className="fw-600">$220</p>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="row mt-4">
-                            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
-                              <div className="d-flex align-items-center">
-                                <div>
-                                  <input className="form-check-input ds_cursor" type="checkbox" value="" id="flexCheckDefault" />
-                                </div>
-                                <div className="ms-4">
-                                  <img src={require("../Img/img2.png")} className="ds_add-img" alt="" />
-                                </div>
-                              </div>
-                            </div>
-                            <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 ">
-                              <div className="ds_add-body">
-                                <p className="fw-bold mb-0">
-                                  Rule zip jacket
-                                </p>
-                                <p className="ds_mini-text mb-0">
-                                  Lorem ipsum dolor sit amet consectetur. Ac
-                                  iaculis viverra purus malesuada quam dolor.
-                                </p>
-                                <p className="ds_add-type mb-0">Light Brown</p>
-                                <p className="ds_add-type">XL</p>
-                              </div>
-                            </div>
-                            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
-                              <div>
-                                <p className="fw-600">$120</p>
-                              </div>
-                            </div>
-                            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
-                              <div>
-                                <div className="ds_add-count">
-                                  <div className="d-flex align-items-center justify-content-between">
-                                    <i className="fa-solid fa-trash-can ds_cursor"></i>
-                                    <div>1</div>
-                                    <i className="fa-solid fa-plus ds_cursor"></i>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
-                              <div>
-                                <p className="fw-600">$240</p>
-                              </div>
-                            </div>
+                              : <p className="mb-0 fw-600 ds_add-address">
+                                No saved Addresses
+                              </p>}
+                            {address ? <button className="ds_with-add" data-bs-toggle="modal" data-bs-target="#ds_modal">Change Address</button> : <button className=" ds_with-add" onClick={handleOpenModal}>+Add Address</button>}
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
 
-                  {/* ************** Payment With COD ************ */}
-                  <div className="mt-2 mb-4 d-none" id="ds_express-card">
-                    <div className="row justify-content-center align-items-center">
-                      <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 mt-2">
-                        <div className="ds_cod-box">
-                          <div className="d-flex justify-content-between align-items-center px-3">
-                            <h6 className="ds_cod-title">Express delivery</h6>
-                            <h6 className="ds_cod-title fw-bold" style={{ color: 'black' }}>$35</h6>
+                      <div className="ds_add-auto">
+                        <div className="hello">
+                          <div className="row mt-5">
+                            <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                              <div className="form-check">
+                                <input className="form-check-input ds_cursor" type="checkbox" value="" id="flexCheckDefault" />
+                                <label className="form-check-label" htmlFor="flexCheckDefault">
+                                  Select All
+                                </label>
+                              </div>
+                            </div>
+                            <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                              <div>
+                                <p className="fw-bold" style={{ color: "#6A6A6A" }}>
+                                  Product
+                                </p>
+                              </div>
+                            </div>
+                            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
+                              <div>
+                                <p className="fw-bold" style={{ color: "#6A6A6A" }}>
+                                  Price
+                                </p>
+                              </div>
+                            </div>
+                            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
+                              <div>
+                                <p className="fw-bold ms-xl-3 ms-4 " style={{ color: "#6A6A6A" }}>
+                                  Qty
+                                </p>
+                              </div>
+                            </div>
+                            <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
+                              <div>
+                                <p className="fw-bold" style={{ color: "#6A6A6A" }}>
+                                  Total
+                                </p>
+                              </div>
+                            </div>
                           </div>
                           <div className="ds_with-border"></div>
-                          <div className="px-3 mt-2">
-                            <p className="ds_cod-mini mb-0">Same day delivery</p>
-                            <p className="ds_cod-mini mb-0">Lorem ipsum dolor sit amet consectetur. </p>
-                            <p className="ds_cod-mini mb-0">Lorem ipsum dolor sit amet consectetur. </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 mt-2">
-                        <div className="ds_cod-box">
-                          <div className="d-flex justify-content-between align-items-center px-3">
-                            <h6 className="ds_cod-title">Standard delivery</h6>
-                            <h6 className="ds_cod-title fw-bold" style={{ color: 'black' }}>$35</h6>
-                          </div>
-                          <div className="ds_with-border"></div>
-                          <div className="px-3 mt-2">
-                            <p className="ds_cod-mini mb-0">Delivered in 1-2 days</p>
-                            <p className="ds_cod-mini mb-0">Lorem ipsum dolor sit amet consectetur.</p>
-                            <p className="ds_cod-mini mb-0">Lorem ipsum dolor sit amet consectetur.</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 mt-2">
-                        <div className="ds_cod-box">
-                          <div className="d-flex justify-content-between align-items-center px-3">
-                            <h6 className="ds_cod-title">Free delivery</h6>
-                            <h6 className="ds_cod-title fw-bold" style={{ color: '#03CF18' }}>FREE</h6>
-                          </div>
-                          <div className="ds_with-border"></div>
-                          <div className="px-3 mt-2">
-                            <p className="ds_cod-mini mb-0">Delivered in 5-10 days</p>
-                            <p className="ds_cod-mini mb-0">Lorem ipsum dolor sit amet consectetur. </p>
-                            <p className="ds_cod-mini mb-0">Lorem ipsum dolor sit amet consectetur. </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <section className="d-none" id="ds_Nav-Tabs">
-                    <div className="ds_cod-main mt-5 ds_cod-bg">
-                      <div className="row p-0 m-0" style={{ borderBottom: '1px solid black' }}>
-                        {['Pay on Delivery', 'Credit / Debit Card', 'UPI ID', 'Net Banking'].map((paymentType, index) => (
-                          <div key={index} className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6 text-center p-0">
-                            <button className={` h-100 ${activeButton === paymentType ? 'ds_cod-on-btn' : 'ds_cod-on-btn-txt'}`} style={{ padding: '13px 0px' }} onClick={() => handlePayment(paymentType)}>
-                              {paymentType}
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Pay On Delivery Section */}
-                      {activeButton === 'Pay on Delivery' && (
-                        <section className="ds_pay-box mt-5">
-                          <div className="row justify-content-center mx-xl-0 mx-2">
-                            <div className="col-xl-8">
-                              <div className="row">
-                                <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 mt-3"></div>
-                                <div className="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12 mt-3">
-                                  <p className="ds_pay-text mb-0">Enter the captcha to confirm order.</p>
-                                </div>
-                              </div>
-                              <div className="row justify-content-center align-items-center">
-                                <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 mt-3">
-                                  <img src={require("../Img/captha.png")} alt="" className="ds_cod-cap" />
-                                </div>
-                                <div className="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12 mt-3">
-                                  <input type="text" className="ds_cod-input" placeholder="Enter the captcha" />
-                                </div>
-                                <div className="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12 mt-3">
-                                  <MdRefresh className="ds_cod-refresh" />
-                                </div>
-                              </div>
-                              <div className="row mt-5">
-                                <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12"></div>
-                                <div className="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12">
-                                  <button className=" ds_cod-pay" onClick={() => handlePaymentsuccess()}>Pay $220</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </section>
-                      )}
-
-                      {/* Credit / Debit Card Section */}
-                      {activeButton === 'Credit / Debit Card' && (
-                        <section className="ds_pay-box mt-5">
-                          <div className="row justify-content-center mx-xl-0 mx-2">
-                            <div className="col-xl-10">
-                              <div className="row justify-content-center">
-                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
-                                  <input type="text" className="ds_cod-input" placeholder="Enter card holder name" />
-                                </div>
-                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
-                                  <input type="text" className="ds_cod-input" placeholder="Enter card number" />
-                                </div>
-                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
-                                  <input type="text" className="ds_cod-input" placeholder="MM/YYYY" />
-                                </div>
-                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
-                                  <input type="text" className="ds_cod-input" placeholder="Enter CVV" />
-                                </div>
-                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-5">
-                                  <button className=" ds_cod-pay" onClick={() => handlePaymentsuccess()}>Pay $220</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </section>
-                      )}
-
-                      {/* UPI ID Section */}
-                      {activeButton === 'UPI ID' && (
-                        <section className="ds_pay-box mt-5 pt-4">
                           <div className="">
+                            {cartData.map((item) => {
+                              const discountprice = item.productVariantData[0].originalPrice - (item.productVariantData[0].originalPrice * item.productVariantData[0].discountPrice / 100);      
+                              return (
+                                <div className="row mt-4">
+                                  <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
+                                    <div className="d-flex align-items-center">
+                                      <div>
+                                        <input className="form-check-input ds_cursor" type="checkbox" value="" id="flexCheckDefault" />
+                                      </div>
+                                      <div className="ms-4">
+                                        <img src={`${BaseUrl}/${item.productVariantData[0].images[0]}`} className="ds_add-img" alt="" />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 ">
+                                    <div className="ds_add-body">
+                                      <p className="fw-bold mb-0">{item.productData[0].productName}</p>
+                                      <p className="ds_mini-text mb-0">{item.productVariantData[0].description}</p>
+                                      {/* <p className="ds_add-type mb-0">Light Brown</p>
+                                      <p className="ds_add-type">XL</p> */}
+                                    </div>
+                                  </div>
+                                  <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
+                                    <div>
+                                      <p className="fw-600">${discountprice}</p>
+                                    </div>
+                                  </div>
+                                  <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
+                                    <div>
+                                      <div className="ds_add-count">
+                                        <div className="d-flex align-items-center justify-content-between">
+                                          {item.quantity === 1 ? (
+                                            <i
+                                              className="fa-solid fa-trash-can ds_cursor"
+                                              onClick={() => handleRemoveItem(item._id)}
+                                            ></i>
+                                          ) : (
+                                            <i
+                                              className="fa-solid fa-minus mx-1 ds_cursor"
+                                              onClick={() => handleDecreaseQuantity(item._id)}
+                                            ></i>
+                                          )}
+                                          <div className="mx-1">{item.quantity}</div>
+                                          <i
+                                            className="fa-solid fa-plus mx-1 ds_cursor"
+                                            onClick={() => handleIncreaseQuantity(item._id)}
+                                          ></i>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
+                                    <div>
+                                      <p className="fw-600">${item.quantity * discountprice}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              )
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* ************** Payment With COD ************ */}
+                    <div className="mt-2 mb-4 d-none" id="ds_express-card">
+                      <div className="row justify-content-center align-items-center">
+                        <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 mt-2">
+                          <div className="ds_cod-box">
+                            <div className="d-flex justify-content-between align-items-center px-3">
+                              <h6 className="ds_cod-title">Express delivery</h6>
+                              <h6 className="ds_cod-title fw-bold" style={{ color: 'black' }}>$35</h6>
+                            </div>
+                            <div className="ds_with-border"></div>
+                            <div className="px-3 mt-2">
+                              <p className="ds_cod-mini mb-0">Same day delivery</p>
+                              <p className="ds_cod-mini mb-0">Lorem ipsum dolor sit amet consectetur. </p>
+                              <p className="ds_cod-mini mb-0">Lorem ipsum dolor sit amet consectetur. </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 mt-2">
+                          <div className="ds_cod-box">
+                            <div className="d-flex justify-content-between align-items-center px-3">
+                              <h6 className="ds_cod-title">Standard delivery</h6>
+                              <h6 className="ds_cod-title fw-bold" style={{ color: 'black' }}>$35</h6>
+                            </div>
+                            <div className="ds_with-border"></div>
+                            <div className="px-3 mt-2">
+                              <p className="ds_cod-mini mb-0">Delivered in 1-2 days</p>
+                              <p className="ds_cod-mini mb-0">Lorem ipsum dolor sit amet consectetur.</p>
+                              <p className="ds_cod-mini mb-0">Lorem ipsum dolor sit amet consectetur.</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 mt-2">
+                          <div className="ds_cod-box">
+                            <div className="d-flex justify-content-between align-items-center px-3">
+                              <h6 className="ds_cod-title">Free delivery</h6>
+                              <h6 className="ds_cod-title fw-bold" style={{ color: '#03CF18' }}>FREE</h6>
+                            </div>
+                            <div className="ds_with-border"></div>
+                            <div className="px-3 mt-2">
+                              <p className="ds_cod-mini mb-0">Delivered in 5-10 days</p>
+                              <p className="ds_cod-mini mb-0">Lorem ipsum dolor sit amet consectetur. </p>
+                              <p className="ds_cod-mini mb-0">Lorem ipsum dolor sit amet consectetur. </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <section className="d-none" id="ds_Nav-Tabs">
+                      <div className="ds_cod-main mt-5 ds_cod-bg">
+                        <div className="row p-0 m-0" style={{ borderBottom: '1px solid black' }}>
+                          {['Pay on Delivery', 'Credit / Debit Card', 'UPI ID', 'Net Banking'].map((paymentType, index) => (
+                            <div key={index} className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6 text-center p-0">
+                              <button className={` h-100 ${activeButton === paymentType ? 'ds_cod-on-btn' : 'ds_cod-on-btn-txt'}`} style={{ padding: '13px 0px' }} onClick={() => handlePayment(paymentType)}>
+                                {paymentType}
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Pay On Delivery Section */}
+                        {activeButton === 'Pay on Delivery' && (
+                          <section className="ds_pay-box mt-5">
+                            <div className="row justify-content-center mx-xl-0 mx-2">
+                              <div className="col-xl-8">
+                                <div className="row">
+                                  <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 mt-3"></div>
+                                  <div className="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12 mt-3">
+                                    <p className="ds_pay-text mb-0">Enter the captcha to confirm order.</p>
+                                  </div>
+                                </div>
+                                <div className="row justify-content-center align-items-center">
+                                  <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 mt-3">
+                                    <img src={require("../Img/captha.png")} alt="" className="ds_cod-cap" />
+                                  </div>
+                                  <div className="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12 mt-3">
+                                    <input type="text" className="ds_cod-input" placeholder="Enter the captcha" />
+                                  </div>
+                                  <div className="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12 mt-3">
+                                    <MdRefresh className="ds_cod-refresh" />
+                                  </div>
+                                </div>
+                                <div className="row mt-5">
+                                  <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12"></div>
+                                  <div className="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12">
+                                    <button className=" ds_cod-pay" onClick={() => handlePaymentsuccess()}>Pay $220</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </section>
+                        )}
+
+                        {/* Credit / Debit Card Section */}
+                        {activeButton === 'Credit / Debit Card' && (
+                          <section className="ds_pay-box mt-5">
                             <div className="row justify-content-center mx-xl-0 mx-2">
                               <div className="col-xl-10">
-                                <div className="position-relative ds_upi-arrow d-flex">
-                                  <input type="text" value={upipayId} onChange={(e) => setUpipayId(e.target.value)} className="ds_upi-input" placeholder="Enter UPI ID" />
-                                  <select onChange={(e) => handleDropdownSelect(e.target.value)} className="form-select ds_upi-select">
-                                    <option value="@okicici">@okicici</option>
-                                    <option value="@oksbi">@oksbi</option>
-                                    <option value="@okhdfc">@okhdfc</option>
-                                    <option value="@okaxis">@okaxis</option>
-                                  </select>
+                                <div className="row justify-content-center">
+                                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                                    <input type="text" className="ds_cod-input" placeholder="Enter card holder name" />
+                                  </div>
+                                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                                    <input type="text" className="ds_cod-input" placeholder="Enter card number" />
+                                  </div>
+                                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                                    <input type="text" className="ds_cod-input" placeholder="MM/YYYY" />
+                                  </div>
+                                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                                    <input type="text" className="ds_cod-input" placeholder="Enter CVV" />
+                                  </div>
+                                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-5">
+                                    <button className=" ds_cod-pay" onClick={() => handlePaymentsuccess()}>Pay $220</button>
+                                  </div>
                                 </div>
                               </div>
-                              <div className="col-xl-5 mt-5">
-                                <button className=" ds_cod-pay" onClick={() => handlePaymentsuccess()}>Pay $220</button>
-                              </div>
                             </div>
-                          </div>
-                        </section>
-                      )}
+                          </section>
+                        )}
 
-                      {/* Net Banking Section */}
-                      {activeButton === 'Net Banking' && (
-                        <section className="ds_pay-box mt-5 pt-4">
-                          <div className="mx-xl-0 mx-2">
-                            <div className="row justify-content-center align-items-center">
-                              <div className="col-xl-10">
-                                <div className="position-relative">
-                                  <input type="text" className="ds_net-input" placeholder="Search your bank" />
-                                  <IoSearch className="ds_net-icon" />
-                                </div>
-                                <div className="d-flex flex-wrap justify-content-between align-items-center mt-5">
-                                  <div className="text-center">
-                                    <img src={require('../Img/city.png')} alt="" className="ds_net-img" />
-                                    <p className="ds_net-text">Citi <br /> Bank</p>
-                                  </div>
-                                  <div className="text-center">
-                                    <img src={require('../Img/well.png')} alt="" className="ds_net-img" />
-                                    <p className="ds_net-text">Wells Fargo <br /> Bank</p>
-                                  </div>
-                                  <div className="text-center">
-                                    <img src={require('../Img/capital.png')} alt="" className="ds_net-img" />
-                                    <p className="ds_net-text">Capital One <br /> Bank</p>
-                                  </div>
-                                  <div className="text-center">
-                                    <img src={require('../Img/td.png')} alt="" className="ds_net-img" />
-                                    <p className="ds_net-text">TD <br /> Bank</p>
-                                  </div>
-                                  <div className="text-center">
-                                    <img src={require('../Img/city.png')} alt="" className="ds_net-img" />
-                                    <p className="ds_net-text">Citi <br /> Bank</p>
-                                  </div>
-                                  <div className="text-center">
-                                    <img src={require('../Img/capital.png')} alt="" className="ds_net-img" />
-                                    <p className="ds_net-text">Capital One <br /> Bank</p>
-                                  </div>
-                                  <div className="text-center">
-                                    <img src={require('../Img/td.png')} alt="" className="ds_net-img" />
-                                    <p className="ds_net-text">TD <br /> Bank</p>
-                                  </div>
-                                  <div className="text-center">
-                                    <img src={require('../Img/city.png')} alt="" className="ds_net-img" />
-                                    <p className="ds_net-text">Citi <br /> Bank</p>
-                                  </div>
-                                  <div className="text-center">
-                                    <img src={require('../Img/well.png')} alt="" className="ds_net-img" />
-                                    <p className="ds_net-text">Wells Fargo <br /> Bank</p>
+                        {/* UPI ID Section */}
+                        {activeButton === 'UPI ID' && (
+                          <section className="ds_pay-box mt-5 pt-4">
+                            <div className="">
+                              <div className="row justify-content-center mx-xl-0 mx-2">
+                                <div className="col-xl-10">
+                                  <div className="position-relative ds_upi-arrow d-flex">
+                                    <input type="text" value={upipayId} onChange={(e) => setUpipayId(e.target.value)} className="ds_upi-input" placeholder="Enter UPI ID" />
+                                    <select onChange={(e) => handleDropdownSelect(e.target.value)} className="form-select ds_upi-select">
+                                      <option value="@okicici">@okicici</option>
+                                      <option value="@oksbi">@oksbi</option>
+                                      <option value="@okhdfc">@okhdfc</option>
+                                      <option value="@okaxis">@okaxis</option>
+                                    </select>
                                   </div>
                                 </div>
-                              </div>
-                              <div className="col-xl-5 mt-5">
-                                <button className="ds_cod-pay" onClick={() => handlePaymentsuccess()}>Pay $220</button>
+                                <div className="col-xl-5 mt-5">
+                                  <button className=" ds_cod-pay" onClick={() => handlePaymentsuccess()}>Pay $220</button>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </section>
-                      )}
-                    </div>
-                  </section>
+                          </section>
+                        )}
+
+                        {/* Net Banking Section */}
+                        {activeButton === 'Net Banking' && (
+                          <section className="ds_pay-box mt-5 pt-4">
+                            <div className="mx-xl-0 mx-2">
+                              <div className="row justify-content-center align-items-center">
+                                <div className="col-xl-10">
+                                  <div className="position-relative">
+                                    <input type="text" className="ds_net-input" placeholder="Search your bank" />
+                                    <IoSearch className="ds_net-icon" />
+                                  </div>
+                                  <div className="d-flex flex-wrap justify-content-between align-items-center mt-5">
+                                    <div className="text-center">
+                                      <img src={require('../Img/city.png')} alt="" className="ds_net-img" />
+                                      <p className="ds_net-text">Citi <br /> Bank</p>
+                                    </div>
+                                    <div className="text-center">
+                                      <img src={require('../Img/well.png')} alt="" className="ds_net-img" />
+                                      <p className="ds_net-text">Wells Fargo <br /> Bank</p>
+                                    </div>
+                                    <div className="text-center">
+                                      <img src={require('../Img/capital.png')} alt="" className="ds_net-img" />
+                                      <p className="ds_net-text">Capital One <br /> Bank</p>
+                                    </div>
+                                    <div className="text-center">
+                                      <img src={require('../Img/td.png')} alt="" className="ds_net-img" />
+                                      <p className="ds_net-text">TD <br /> Bank</p>
+                                    </div>
+                                    <div className="text-center">
+                                      <img src={require('../Img/city.png')} alt="" className="ds_net-img" />
+                                      <p className="ds_net-text">Citi <br /> Bank</p>
+                                    </div>
+                                    <div className="text-center">
+                                      <img src={require('../Img/capital.png')} alt="" className="ds_net-img" />
+                                      <p className="ds_net-text">Capital One <br /> Bank</p>
+                                    </div>
+                                    <div className="text-center">
+                                      <img src={require('../Img/td.png')} alt="" className="ds_net-img" />
+                                      <p className="ds_net-text">TD <br /> Bank</p>
+                                    </div>
+                                    <div className="text-center">
+                                      <img src={require('../Img/city.png')} alt="" className="ds_net-img" />
+                                      <p className="ds_net-text">Citi <br /> Bank</p>
+                                    </div>
+                                    <div className="text-center">
+                                      <img src={require('../Img/well.png')} alt="" className="ds_net-img" />
+                                      <p className="ds_net-text">Wells Fargo <br /> Bank</p>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="col-xl-5 mt-5">
+                                  <button className="ds_cod-pay" onClick={() => handlePaymentsuccess()}>Pay $220</button>
+                                </div>
+                              </div>
+                            </div>
+                          </section>
+                        )}
+                      </div>
+                    </section>
+                  </div>
                 </div>
-              </div>
 
-              <div className="col-xl-4 col-lg-4 col-md-12">
-                <div>
-                  <div className="ds_with-cupon" id="ds_cupon">
-                    <div>
-                      <h6 className="ps-3 mb-3 fw-600 ds_add-cupan-txt">
-                        Apply Coupon
-                      </h6>
-                      <div className="ds_with-border"></div>
+                <div className="col-xl-4 col-lg-4 col-md-12">
+                  <div>
+                    <div className="ds_with-cupon" id="ds_cupon">
+                      <div>
+                        <h6 className="ps-3 mb-3 fw-600 ds_add-cupan-txt">
+                          Apply Coupon
+                        </h6>
+                        <div className="ds_with-border"></div>
+                      </div>
+                      <div>
+                        <div className="px-3 mt-3">
+                          <form action="" className="position-relative">
+                            <img className="ds_add-cupan" src={require("../Img/cupon.png")} alt="" />
+                            <input type="text" className="form-control ds_add-input" id="exampleInputEmail1" placeholder="Enter coupon code" aria-describedby="emailHelp" value={couponInput} onChange={(e) => setCouponInput(e.target.value)} />
+                            <button className=" ds_add-apply" onClick={handleApply}>Apply</button>
+                          </form>
+                        </div>
+                      </div>
+                      <div className="px-3 mt-3 fw-500">
+                        <p className="ds_add-special">Special offers</p>
+                        {couponData.map((item) => {
+                          return (
+                            <div className="form-check d-flex align-items-center mt-3" key={item._id}>
+                              <input className="form-check-input ds_cursor" type="radio" name="flexRadioDefault" 
+                                onClick={() => handleCouponSelect(item.code,item._id)} />
+                              <div className="ms-2">
+                                <label className="form-check-label fw-bold ds_add-label">
+                                  {item.title}
+                                </label>
+                                <p className="text-muted ds_add-offer-txt mb-0" style={{ lineHeight: "18px" }}>
+                                  {item.description}
+                                </p>
+                                <label className="form-check-label ds_add-save" >
+                                  Save ${item.offerDiscount}
+                                </label>
+                              </div>
+                            </div>
+                          )
+                        })}
+                      </div>
                     </div>
-                    <div>
+
+                    <div className="ds_add-order mt-4">
+                      <div>
+                        <h6 className="h6 ms-3 fw-600 mb-3 ds_add-cupan-txt">
+                          Order Details
+                        </h6>
+                        <div className="ds_with-border"></div>
+                      </div>
                       <div className="px-3 mt-3">
-                        <form action="" className="position-relative">
-                          <img className="ds_add-cupan" src={require("../Img/cupon.png")} alt="" />
-                          <input type="text" className="form-control ds_add-input" id="exampleInputEmail1" placeholder="Enter coupon code" aria-describedby="emailHelp" />
-                          <button className=" ds_add-apply">Apply</button>
-                        </form>
-                      </div>
-                    </div>
-                    <div className="px-3 mt-3 fw-500">
-                      <p className="ds_add-special">Special offers</p>
-                      <div className="form-check d-flex align-items-center">
-                        <input className="form-check-input ds_cursor" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                        <div className="ms-2">
-                          <label className="form-check-label fw-bold ds_add-label" htmlFor="flexRadioDefault1">NEW100</label>
-                          <p className="text-muted ds_add-offer-txt mb-0" style={{ lineHeight: "18px" }}>
-                            Get Flat $100 Off on cart value of 500 & Above
-                          </p>
-                          <label className="form-check-label ds_add-save" htmlFor="flexRadioDefault1">Save $100</label>
+                        <div className="d-flex justify-content-between">
+                          <p className="ds_add-detail">Sub Total</p>
+                          <p className="fw-600 ds_add-price">$240</p>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                          <p className="ds_add-detail">Discount</p>
+                          <p className="fw-600 ds_add-color">-$40</p>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                          <p className="ds_add-detail">Tax</p>
+                          <p className="fw-600 ds_add-price">$40</p>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                          <p className="ds_add-detail">Delivery Charge</p>
+                          <p className="fw-600 ds_add-color ">FREE</p>
                         </div>
                       </div>
-                      <div className="form-check d-flex align-items-center mt-3">
-                        <input className="form-check-input ds_cursor" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                        <div className="ms-2">
-                          <label className="form-check-label fw-bold ds_add-label" htmlFor="flexRadioDefault1">
-                            NEW100
-                          </label>
-                          <p className="text-muted ds_add-offer-txt mb-0" style={{ lineHeight: "18px" }}>
-                            Lorem ipsum dolor sit amet consectetur. Massa
-                            facilisis scelerisque iaculis habitant congue est
-                            blandit amet.{" "}
-                          </p>
-                          <label className="form-check-label ds_add-save" htmlFor="flexRadioDefault1">
-                            Save $100
-                          </label>
+                      <div className="ds_with-border mt-2"></div>
+                      <div className="px-3 mt-3">
+                        <div className="d-flex justify-content-between">
+                          <h5 className="h5 mb-0 ds_add-total">Total Amount</h5>
+                          <h5 className="h5 mb-0 ds_add-total">$240</h5>
                         </div>
+                        <button className=" ds_add-proccess mt-5" id="ds_proceed_btn" onClick={handleCheckOut}>
+                          Proceed to checkout
+                        </button>
                       </div>
-                    </div>
-                  </div>
-
-                  <div className="ds_add-order mt-4">
-                    <div>
-                      <h6 className="h6 ms-3 fw-600 mb-3 ds_add-cupan-txt">
-                        Order Details
-                      </h6>
-                      <div className="ds_with-border"></div>
-                    </div>
-                    <div className="px-3 mt-3">
-                      <div className="d-flex justify-content-between">
-                        <p className="ds_add-detail">Sub Total</p>
-                        <p className="fw-600 ds_add-price">$240</p>
-                      </div>
-                      <div className="d-flex justify-content-between">
-                        <p className="ds_add-detail">Discount</p>
-                        <p className="fw-600 ds_add-color">-$40</p>
-                      </div>
-                      <div className="d-flex justify-content-between">
-                        <p className="ds_add-detail">Tax</p>
-                        <p className="fw-600 ds_add-price">$40</p>
-                      </div>
-                      <div className="d-flex justify-content-between">
-                        <p className="ds_add-detail">Delivery Charge</p>
-                        <p className="fw-600 ds_add-color ">FREE</p>
-                      </div>
-                    </div>
-                    <div className="ds_with-border mt-2"></div>
-                    <div className="px-3 mt-3">
-                      <div className="d-flex justify-content-between">
-                        <h5 className="h5 mb-0 ds_add-total">Total Amount</h5>
-                        <h5 className="h5 mb-0 ds_add-total">$240</h5>
-                      </div>
-                      <button className=" ds_add-proccess mt-5" id="ds_proceed_btn" onClick={handleCheckOut}>
-                        Proceed to checkout
-                      </button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* ---------- Women Card --------- */}
-          <div className="mt-5" id="ds_women-card">
-            <div className="d_container">
-              <div>
-                <h5 className="">You may also like</h5>
-                <div className="d_right">
-                  <div className="d_trend mt-3">
-                    <div className="row gy-4">
-                      {filterItems.map((item, index) => {
-                        return (
-                          <div key={item.id} className="col-12 col-sm-6 col-lg-6 col-xl-3">
-                            <div className="d_box">
-                              <div className="d_img">
-                                <img src={require(`../Img/${item.image}`)} alt="" />
-                                {item.isBestSeller &&
-                                  (<div className="d_seller">Best Seller</div>)}
-                                {item.isNewArrial &&
-                                  (<div className="d_arrival">New Arrival</div>)}
-                                <div className="d_trendicon d-flex justify-content-center align-items-center">
-                                  <IoMdHeartEmpty className='d_icon ' />
-                                </div>
-                              </div>
-                              <div className="d_content">
-                                <div className='d-flex flex-column h-100'>
-                                  <div className="d-flex align-items-center justify-content-between">
-                                    <div className="d_name">{item.name}</div>
-                                    <div className='d-flex align-items-center'>
-                                      <FaStar className='d_staricon me-1' />
-                                      <div className="d_review">{item.rating}</div>
-                                    </div>
+            {/* ---------- Women Card --------- */}
+            <div className="mt-5" id="ds_women-card">
+              <div className="d_container">
+                <div>
+                  <h5 className="">You may also like</h5>
+                  <div className="d_right">
+                    <div className="d_trend mt-3">
+                      <div className="row gy-4">
+                        {filterItems.map((item, index) => {
+                          return (
+                            <div key={item.id} className="col-12 col-sm-6 col-lg-6 col-xl-3">
+                              <div className="d_box">
+                                <div className="d_img">
+                                  <img src={require(`../Img/${item.image}`)} alt="" />
+                                  {item.isBestSeller &&
+                                    (<div className="d_seller">Best Seller</div>)}
+                                  {item.isNewArrial &&
+                                    (<div className="d_arrival">New Arrival</div>)}
+                                  <div className="d_trendicon d-flex justify-content-center align-items-center">
+                                    <IoMdHeartEmpty className='d_icon ' />
                                   </div>
-                                  <div className="d_desc">{item.description}</div>
-                                  <div className="d-flex align-items-center justify-content-between mt-auto">
-                                    <div className="d-flex align-items-center">
-                                      {item.colors.map((colorobj, i) => {
-                                        return (
-                                          <div key={colorobj.id} className={`d_color ${colorobj.isActive ? 'active' : ""}`} style={{ backgroundColor: colorobj.color }}></div>
-                                        )
-                                      })}
+                                </div>
+                                <div className="d_content">
+                                  <div className='d-flex flex-column h-100'>
+                                    <div className="d-flex align-items-center justify-content-between">
+                                      <div className="d_name">{item.name}</div>
+                                      <div className='d-flex align-items-center'>
+                                        <FaStar className='d_staricon me-1' />
+                                        <div className="d_review">{item.rating}</div>
+                                      </div>
                                     </div>
-                                    <div className="d-flex align-items-end">
-                                      <div className="d_price">${item.price}</div>
-                                      <div className="d_disprice ms-1 text-decoration-line-through">${item.originalPrice}</div>
+                                    <div className="d_desc">{item.description}</div>
+                                    <div className="d-flex align-items-center justify-content-between mt-auto">
+                                      <div className="d-flex align-items-center">
+                                        {item.colors.map((colorobj, i) => {
+                                          return (
+                                            <div key={colorobj.id} className={`d_color ${colorobj.isActive ? 'active' : ""}`} style={{ backgroundColor: colorobj.color }}></div>
+                                          )
+                                        })}
+                                      </div>
+                                      <div className="d-flex align-items-end">
+                                        <div className="d_price">${item.price}</div>
+                                        <div className="d_disprice ms-1 text-decoration-line-through">${item.originalPrice}</div>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        )
-                      })}
+                          )
+                        })}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : (
+        <section className="mt-5 mb-5 ">
+          <div className="d_container">
+            <div className="row">
+              <div className="col-xl-12 text-center">
+                <div>
+                  <img className="ds_cart-img" src={require("../Img/cart.png")} alt="" />
+                  <h4 className="ds_card-title">Your cart is empty!</h4>
+                  <p className="ds_card-text">
+                    There is nothing in your bag. add some item.
+                  </p>
+                  <button className=" ds_cart-btn mt-3">
+                    Continue Shopping
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
 
       {/* ************** Address Modal Popup ******************* */}
       <Modal show={showModal} onHide={handleCloseModal} aria-labelledby="contained-modal-title-vcenter" centered className="ds_my-modal  VK_add_address_model_">
@@ -950,7 +974,7 @@ const Cart = () => {
             <div className="row">
               <div className="col-xl-8 col-lg-8">
                 <div>
-                  <iframe className="ds_con-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7439.261324736735!2d72.87650904796955!3d21.2068260871905!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04f76476e9ea7%3A0x361d912920aa035b!2sSilver%20Chowk%2C%20Punagam%20Parmukhpark%20Society%2C%20Yoginagar%20Society%2C%20Surat%2C%20Gujarat%20395010!5e0!3m2!1sen!2sin!4v1730193943220!5m2!1sen!2sin"  loading="lazy" ></iframe>
+                  <iframe className="ds_con-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7439.261324736735!2d72.87650904796955!3d21.2068260871905!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04f76476e9ea7%3A0x361d912920aa035b!2sSilver%20Chowk%2C%20Punagam%20Parmukhpark%20Society%2C%20Yoginagar%20Society%2C%20Surat%2C%20Gujarat%20395010!5e0!3m2!1sen!2sin!4v1730193943220!5m2!1sen!2sin" loading="lazy" ></iframe>
                 </div>
                 <div className="ds_con-box mt-4">
                   <div>
