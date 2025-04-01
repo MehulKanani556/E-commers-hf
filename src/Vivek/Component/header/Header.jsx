@@ -326,19 +326,21 @@ const Header = () => {
                                         <ul className='VK_input_suggestion list-unstyled'>
                                             {searchResults.map((product, index) => (
                                                 <li key={`product-${index}`}
-                                                    className='py-2'
-                                                    onClick={() => handleSearchResultClick(product._id)}>
+                                                className='py-2'>
+                                                    <Link to={`/womendetails/${product._id}`}
+                                                    >
                                                     <div className='d-flex align-items-center w-100'>
                                                         <div>
                                                             <img src={require('../../assets/zoom.png')} height="22px" width="22px" alt="" />
                                                         </div>
-                                                        <div className='ps-3'>
+                                                        <div className='ps-3 mv_search_text'>
                                                             {product.productName}
                                                         </div>
                                                         <div className='ms-auto'>
                                                             <img src={require('../../assets/arrow.png')} height="20px" width="20px" alt="" />
                                                         </div>
                                                     </div>
+                                                </Link>
                                                 </li>
                                             ))}
                                         </ul>
