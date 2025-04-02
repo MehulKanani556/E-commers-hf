@@ -1,11 +1,12 @@
-.ds_space{
+.ds_space {
     white-space: nowrap;
 }
-.ds_cursor{
+
+.ds_cursor {
     cursor: pointer;
 }
 
-:not(.btn-check)+.btn:active{
+:not(.btn-check)+.btn:active {
     color: white !important;
     background-color: #2B221E !important;
     border-color: inherit !important;
@@ -14,30 +15,32 @@
 
 
 /* {**************** Empty Card *************} */
-.ds_cart-btn{
+.ds_cart-btn {
     padding: 10px 30px;
-    background-color:#2B221E !important;
+    background-color: #2B221E !important;
     color: white !important;
     border-radius: 4px;
     border: none;
 }
-.ds_cart-img{
+
+.ds_cart-img {
     width: 50%;
 }
 
 /* {**************** Cart Without Address *************} */
-.ds_with-btn{
-   padding: 5px 10px;
-   border: 1px solid #2B221E;
-   font-weight: 600;
-   font-size: 14px;
+.ds_with-btn {
+    padding: 5px 10px;
+    border: 1px solid #2B221E;
+    font-weight: 600;
+    font-size: 14px;
 }
-.ds_with-btn:hover{
-   border: 1px solid #2B221E;
+
+.ds_with-btn:hover {
+    border: 1px solid #2B221E;
 }
 
 /* {**************** Cart Without Address *************} */
-.ds_with-circle{
+.ds_with-circle {
     width: 40px;
     height: 40px;
     background: #2B221E;
@@ -46,7 +49,8 @@
     align-items: center;
     justify-content: center;
 }
-.ds_with-line{
+
+.ds_with-line {
     position: absolute;
     width: 50%;
     border: 0.65px dashed #9e9d9d;
@@ -54,13 +58,16 @@
     left: 0px;
     z-index: -1;
 }
-.ds_dashed-border{
+
+.ds_dashed-border {
     border: 0.65px dashed #6A6A6A;
 }
-.ds_solid-border{
+
+.ds_solid-border {
     border: 0.65px solid #6A6A6A;
 }
-.ds_with-line2{
+
+.ds_with-line2 {
     position: absolute;
     width: 47%;
     border: 0.65px dashed #6A6A6A;
@@ -68,45 +75,54 @@
     left: 50%;
     z-index: -1;
 }
-.ds_with-shadow{
+
+.ds_with-shadow {
     box-shadow: 0px 4px 14px 0px #8F8F8F40;
     padding: 20px;
 }
-.ds_with-add{
+
+.ds_with-add {
     padding: 5px 10px;
-   border: 1px solid #2B221E;
-   font-weight: 600;
-   font-size: 14px;
-   background-color: white;
-   border-radius:5px;
+    border: 1px solid #2B221E;
+    font-weight: 600;
+    font-size: 14px;
+    background-color: white;
+    border-radius: 5px;
 }
-.ds_with-add:hover{
-   border: 1px solid #2B221E;
+
+.ds_with-add:hover {
+    border: 1px solid #2B221E;
 }
-.ds_with-cupon{
-  box-shadow: 0px 4px 14px 0px #8F8F8F40;
-  padding: 20px 0px;
+
+.ds_with-cupon {
+    box-shadow: 0px 4px 14px 0px #8F8F8F40;
+    padding: 20px 0px;
 }
-.ds_with-border{
+
+.ds_with-border {
     border: 0.5px solid #c9c7c7
 }
-.ds_add-cupan{
+
+.ds_add-cupan {
     position: absolute;
     top: 12px;
     left: 15px;
 
 }
-.ds_add-input{
+
+.ds_add-input {
     background: #EDEDED;
     padding: 0px 30px;
     border: none;
     border-radius: 5px;
 }
-.ds_add-input:focus{
+
+.ds_add-input:focus {
     background: #EDEDED;
     border: none;
 }
-.ds_add-apply{
+
+.ds_add-apply {
     position: absolute;
     top: 1px;
     right: 0;
@@ -117,27 +133,34 @@
     outline: none;
     box-shadow: none !important;
 }
-.ds_add-apply:hover{
+
+.ds_add-apply:hover {
     border-left: 1px solid #b6b2b2;
 }
-.ds_add-offer-txt{
+
+.ds_add-offer-txt {
     color: #727272;
     font-size: 15px;
 }
-.ds_add-save{
+
+.ds_add-save {
     font-size: 15px;
 }
-.ds_add-order{
-  box-shadow: 0px 4px 14px 0px #8F8F8F40;
-  padding: 20px 0px;
+
+.ds_add-order {
+    box-shadow: 0px 4px 14px 0px #8F8F8F40;
+    padding: 20px 0px;
 }
-.ds_add-detail{
+
+.ds_add-detail {
     color: #6A6A6A;
 }
-.ds_add-color{
+
+.ds_add-color {
     color: #03CF18;
 }
-.ds_add-proccess{
+
+.ds_add-proccess {
     padding: 10px 0px;
     background: #2B221E;
     color: white;
@@ -145,35 +168,39 @@
     border: none;
     border-radius: 4px;
 }
-.ds_add-proccess:hover{
+
+.ds_add-proccess:hover {
     background: #2B221E;
-    color: white;  
+    color: white;
 }
-.ds_add-img{
+
+.ds_add-img {
     width: 115px;
     height: 145px;
     object-fit: cover;
 }
-.ds_mini-text{
+
+.ds_mini-text {
     font-size: 12px;
     line-height: 16px;
     white-space: pre-wrap;
 }
 
-.ds_add-type{
+.ds_add-type {
     color: #6A6A6A;
     font-size: 13px;
 }
+
 .ds_add-count {
     box-shadow: 0px 4px 4px 0px #8F8F8F40;
     padding: 6px;
     width: 70%;
     border-radius: 2px;
-} 
+}
 
 
 /* ************* Cart With Address Popup **************  */
-.ds_user-data{
+.ds_user-data {
     display: inline-block;
     width: 60px;
     height: 24px;
@@ -184,83 +211,100 @@
 
 
 /* {************** Change Address Popup *******************} */
-.ds_modal-dialog{
+.s_modal .modal-dialog {
     --bs-modal-width: 750px !important;
     width: 750px !important;
 }
-.ds_change-box{
+
+.ds_change-box {
     width: 60px;
     height: 24px;
     background: #EDEDED;
     font-size: 14px;
 }
-.ds_change-inner{
+
+.ds_change-inner {
     border: 1px solid black;
     padding: 5px 0px;
 }
-.ds_change-line{
+
+.ds_change-line {
     border-bottom: 0.1px solid rgb(189, 186, 186);
 }
-.ds_change-name{
+
+.ds_change-name {
     font-size: 13px;
 }
-.ds_change-add{
+
+.ds_change-add {
     font-size: 11px;
 }
-.ds_new-btn{
+
+.ds_new-btn {
     background: #EDEDED;
-    width: 100%; 
+    width: 100%;
     padding: 10px 0px;
     color: #6A6A6A;
     border: none;
 }
-.ds_new-btn:hover{
+
+.ds_new-btn:hover {
     color: #6A6A6A;
     background: #EDEDED;
 }
 
 /* {************** Payment With COD ************} */
-.ds_cod-box{
+.ds_cod-box {
     box-shadow: 0px 4px 14px 0px #8F8F8F40;
     padding: 10px 0px;
 }
-.ds_cod-title{
+
+.ds_cod-title {
     color: #6A6A6A;
 }
-.ds_cod-mini{
+
+.ds_cod-mini {
     font-size: 14px;
 }
-.ds_cod-main{
+
+.ds_cod-main {
     box-shadow: 0px 4px 14px 0px #8F8F8F40;
 }
-.ds_cod-on-btn{
+
+.ds_cod-on-btn {
     background: #2B221E;
     padding: 13px 0px;
     width: 100%;
     color: white;
-    border-radius:0% !important;
+    border-radius: 0% !important;
     font-size: 14px;
     border: none;
 }
-.ds_cod-on-btn-txt{
+
+.ds_cod-on-btn-txt {
     font-size: 14px;
     background-color: transparent;
     border: none;
 }
-.ds_cod-on-btn:hover{
+
+.ds_cod-on-btn:hover {
     background: #2B221E;
     color: white;
 }
-.ds_cod-on-btn:focus{
+
+.ds_cod-on-btn:focus {
     box-shadow: none !important;
 }
-.ds_pay-box{
+
+.ds_pay-box {
     height: 400px;
 }
-.ds_cod-bg{
+
+.ds_cod-bg {
     box-shadow: 0px 4px 14px 0px #8F8F8F40;
 }
-.ds_cod-input{
+
+.ds_cod-input {
     padding: 10px 20px;
     background: #EDEDED;
     border: none;
@@ -268,18 +312,22 @@
     width: 100%;
     font-size: 14px;
 }
-.ds_cod-text{
+
+.ds_cod-text {
     margin-right: 105px;
     color: #6A6A6A;
     font-size: 13px;
 }
-.ds_cod-cap{
+
+.ds_cod-cap {
     width: 100%;
 }
-.ds_cod-refresh{
+
+.ds_cod-refresh {
     font-size: 25px;
 }
-.ds_cod-pay{
+
+.ds_cod-pay {
     border: none;
     border-radius: 4px;
     width: 100%;
@@ -287,16 +335,18 @@
     background: #2B221E;
     color: white;
 }
-.ds_cod-pay:hover{
+
+.ds_cod-pay:hover {
     background: #2B221E;
-    color: white; 
+    color: white;
 }
-.ds_cod-pay:focus{
+
+.ds_cod-pay:focus {
     box-shadow: none;
 }
 
 /* {*************** UPI ID **************} */
-.ds_upi-input{
+.ds_upi-input {
     padding: 10px 20px;
     background: #EDEDED;
     border: none;
@@ -304,24 +354,26 @@
     width: 100%;
     font-size: 14px;
 }
-.ds_upi-select{
+
+.ds_upi-select {
     position: absolute;
     right: 0;
     padding: 4px 50px 10px 20px;
     width: 17% !important;
     top: 0;
-    border-radius: 0%  !important;
+    border-radius: 0% !important;
     background: #EDEDED;
     border-left: 0.5px solid #6A6A6A !important;
 }
-.ds_upi-select:focus{
+
+.ds_upi-select:focus {
     border-left: 0.5px solid #6A6A6A !important;
     box-shadow: none !important;
     border-color: initial;
 }
 
 /* {/* *************** Net Banking ************** }    */
-.ds_net-input{
+.ds_net-input {
     width: 100%;
     padding: 10px 50px;
     background: #EDEDED;
@@ -329,53 +381,64 @@
     outline: none;
     font-size: 14px;
 }
-.ds_net-icon{
+
+.ds_net-icon {
     position: absolute;
     top: 11px;
     left: 18px;
     font-size: 20px;
 }
-.ds_net-icon svg{
-   font-size: 20px;
+
+.ds_net-icon svg {
+    font-size: 20px;
 }
-.ds_net-img{
+
+.ds_net-img {
     height: 50px;
     width: 50px;
 }
-.ds_net-text{
+
+.ds_net-text {
     font-weight: 600;
     line-height: 20px;
     margin-top: 10px;
 }
 
- /* {/* {************** Order Conformation *******************}} */
-.ds_con-text{
+/* {/* {************** Order Conformation *******************}} */
+.ds_con-text {
     color: #37861F;
     font-weight: 600;
 }
-.ds_con-map{
-   width: 100%;
-   height: 400px;
+
+.ds_con-map {
+    width: 100%;
+    height: 400px;
 }
-.ds_con-box{
+
+.ds_con-box {
     box-shadow: 0px 4px 14px 0px #8F8F8F40;
     padding: 10px 0px;
 }
-.ds_con-line{
+
+.ds_con-line {
     border: 0.1px solid #6A6A6A
 }
-.ds_con-bill-txt{
+
+.ds_con-bill-txt {
     font-size: 14px;
     width: 50%;
 }
-.ds_con-bill-deta{
+
+.ds_con-bill-deta {
     font-size: 14px;
 }
-.ds_con-font{
+
+.ds_con-font {
     font-size: 13px;
     line-height: 18px;
 }
-.ds_con-btn{
+
+.ds_con-btn {
     padding: 10px 30px;
     background-color: #2B221E;
     color: white;
@@ -383,470 +446,567 @@
     border: none;
     border-radius: 4px;
 }
-.ds_con-buy{
+
+.ds_con-buy {
     border: 1px solid #000000;
     padding: 20px 0px;
 }
-.ds_con-price{
+
+.ds_con-price {
     font-size: 14px;
 }
-.ds_con-total{
+
+.ds_con-total {
     font-size: 22px;
     color: #6A6A6A;
     font-weight: 400 !important;
 }
-.ds_con-total-price{
+
+.ds_con-total-price {
     font-size: 22px;
 }
-.ds_con-dash{
+
+.ds_con-dash {
     border: 0.5px dashed #6A6A6A
 }
 
- /* {/* {************** Invoice *******************}} */
-.ds_in-bg{
+/* {/* {************** Invoice *******************}} */
+.ds_in-bg {
     background: #F5F4F1;
     padding: 20px;
 }
-.ds_in-text{
+
+.ds_in-text {
     color: #727272;
-}   
-.ds_in-border{
+}
+
+.ds_in-border {
     border-right: 0.5px solid #6A6A6A;
     padding-right: 10px;
 
-} 
-.ds_in-sold{
+}
+
+.ds_in-sold {
     color: #727272;
 }
-.ds_in-line{
+
+.ds_in-line {
     background-color: #6A6A6A;
     height: 1px;
     margin: 0px 5px;
 }
-.ds_in-basic{
+
+.ds_in-basic {
     border-bottom: 0.1px solid #6A6A6A
 }
-.ds_in-title{
+
+.ds_in-title {
     font-weight: 500;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-  }
-  th, td {
+}
+
+th,
+td {
     padding: 8px 12px;
     text-align: left;
-  }
-  th {
+}
+
+th {
     font-weight: bold;
     color: #555;
     border-bottom: 1px solid #ddd;
-  }
-  .ds_table-title {
+}
+
+.ds_table-title {
     font-weight: 500;
-  }
-  .ds_table-desc {
+}
+
+.ds_table-desc {
     font-size: 14px;
     color: #777;
-  }
-  .ds_table-price {
+}
+
+.ds_table-price {
     font-weight: bold;
     color: #333;
-  }
-  .payment-method {
+}
+
+.payment-method {
     margin-top: 20px;
-  }
-  .payment-method h4 {
+}
+
+.payment-method h4 {
     font-size: 16px;
     margin-bottom: 10px;
-  }
-  .payment-method p {
+}
+
+.payment-method p {
     margin: 0;
     color: #555;
-  }
-  .summary {
+}
+
+.summary {
     margin-top: 20px;
     width: 100%;
-  }
-  .summary td {
+}
+
+.summary td {
     padding: 8px 12px;
     text-align: right;
-  }
-  .summary td:first-child {
+}
+
+.summary td:first-child {
     text-align: left;
-  }
-  .summary tr td:last-child {
+}
+
+.summary tr td:last-child {
     font-weight: bold;
-  }
-  .ds_in-method{
+}
+
+.ds_in-method {
     color: #6A6A6A;
-  }
-  .ds_in-sub{
+}
+
+.ds_in-sub {
     font-size: 14px;
     color: #727272;
-  }
-  .d_invoicefooter{
+}
+
+.d_invoicefooter {
     background-color: #2B221E;
     padding: 20px 0;
     text-align: center;
-  }
-  .d_invoicefooter p{
+}
+
+.d_invoicefooter p {
     font-size: 14px;
     color: #fff;
     font-weight: 400;
     max-width: 550px;
     margin: auto;
-  }
-  
+}
+
 @media (max-width:1921px) {
-    .ds_add-body{
+    .ds_add-body {
         padding: 0px 91px 0px 0px;
-    }   
-}  
+    }
+}
 
 @media (max-width:1600px) {
-    .ds_add-img{
+    .ds_add-img {
         width: 85px;
         height: 145px;
         object-fit: cover;
-    } 
-}  
+    }
+}
 
 @media (max-width:1441px) {
-    .ds_add-img{
+    .ds_add-img {
         width: 85px;
         height: 145px;
         object-fit: cover;
     }
-    .ds_add-count{
+
+    .ds_add-count {
         width: 70%;
     }
-    .ds_add-body{
+
+    .ds_add-body {
         padding: 0px 20px;
     }
 
-/* ***************** UPI Id **************** */
-.ds_upi-select{
-    padding: 4px 10px 10px 11px;
-}
+    /* ***************** UPI Id **************** */
+    .ds_upi-select {
+        padding: 4px 10px 10px 11px;
+    }
 }
 
 @media (max-width:1200px) {
-    .ds_add-auto{
+    .ds_add-auto {
         display: flex;
         overflow-x: auto;
         white-space: nowrap;
         margin-bottom: 20px;
     }
-    .ds_add-img{
+
+    .ds_add-img {
         width: 115px;
         height: 145px;
         object-fit: cover;
     }
-    .ds_add-body{
+
+    .ds_add-body {
         padding: 0px 16px;
     }
-    .hello{
+
+    .hello {
         min-width: 1000px;
     }
 }
 
 @media (max-width:768px) {
-/* {************** Change Address Popup *******************} */
- .ds_modal-dialog {
-     --bs-modal-width: 550px !important;
-     width: 550px !important;
- }
 
- /* {/* {************** Invoice *******************}} */
- .ds_in-border{
-    border: none;
- }
- .ds_table-main{
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* Enables smooth scrolling on iOS */
-  }
-  table {
-    min-width: 600px; /* Set a minimum width if necessary to force scrolling */
-  }
+    /* {************** Change Address Popup *******************} */
+    .s_modal .modal-dialog {
+        --bs-modal-width: 550px !important;
+        width: 550px !important;
+    }
+
+    /* {/* {************** Invoice *******************}} */
+    .ds_in-border {
+        border: none;
+    }
+
+    .ds_table-main {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        /* Enables smooth scrolling on iOS */
+    }
+
+    table {
+        min-width: 600px;
+        /* Set a minimum width if necessary to force scrolling */
+    }
 
 }
 
 
 @media (max-width:550px) {
-/* {**************** Empty Card *************} */
-    .ds_cart-img{
+
+    /* {**************** Empty Card *************} */
+    .ds_cart-img {
         width: 100%;
-    }    
-    .ds_card-title{
-       font-size: 18px;
     }
-    .ds_card-text{
+
+    .ds_card-title {
+        font-size: 18px;
+    }
+
+    .ds_card-text {
         font-size: 13px;
     }
-    .ds_cart-btn{
+
+    .ds_cart-btn {
         padding: 10px 20px;
     }
-/* {**************** Cart Without Address *************} */
-.ds_with-line2{
-    width: 45%;
-}
-.ds_with-text{
-    font-size: 13px;
-}
-.ds_with-add{
-    padding: 5px 5px;
-    font-size: 13px;
-}
-.ds_add-address{
-    font-size: 13px;
-}
-.ds_add-cupan-txt{
-    font-size: 15px;
-}
-.ds_add-special{
-    font-size: 14px;
-}
-.ds_add-label{
-    font-size: 13px;
-}
-.ds_add-offer-txt{
-    font-size: 12px;
-}
-.ds_add-save{
-    font-size: 13px;
-}
-.ds_add-detail{
-    font-size: 13px;
-}
-.ds_add-price{
-    font-size: 13px;
-}
-.ds_add-color{
-    font-size: 13px;
-}
-.ds_add-total{
-    font-size: 15px;
-}
-.ds_add-proccess{
-    font-size: 14px;
-}
-/* {************** Address Modal Popup *******************} */
-.ds_my-modal .modal-dialog{
-    --bs-modal-width: 410px !important;
-    width: 410px !important;
-}
-.ds_add-smart{
-    font-size: 13px;
-    line-height: 18px;
-}
 
-/* {************** Change Address Popup *******************} */
-.ds_modal-dialog {
-    --bs-modal-width: 410px !important;
-    width: 410px !important;
-}
-/* {************** Payment With COD ************} */
-.ds_cod-title{
-    font-size: 14px;
-}
-.ds_cod-mini {
-    font-size: 13px;
-}
-.ds_cod-on-btn{
-    font-size: 13px;
-}
-.ds_cod-input{
-    font-size: 13px;
-}
-.ds_cod-pay{
-    font-size: 14px;
-}
-.ds_pay-text{
-    font-size: 14px;
-}
+    /* {**************** Cart Without Address *************} */
+    .ds_with-line2 {
+        width: 45%;
+    }
 
-/* ************** UPI Id **************** */
-.ds_upi-select{
-    padding: 4px 0px 10px 5px;
-    width: 20% !important
-}
+    .ds_with-text {
+        font-size: 13px;
+    }
 
-/* {/* *************** Net Banking ************** }    */
-.ds_net-img{
-    height: 30px;
-    width: 30px;
-}
-.ds_net-text{
-    font-size: 12px;
-    line-height: 16px;
-}
- /* {/* {************** Order Conformation *******************}} */
-.ds_con-title{
-    font-size: 18px;
-}
-.ds_con-text{
-    font-size: 14px;
-}
-.ds_con-map {
-    width: 100%;
-    height: 250px;
-}
-.ds_con-trade{
-    font-size: 14px;
-}
-.ds_con-trade-text{
-    font-size: 13px;
-}
-.ds_cod-on-btn-txt{
-    font-size: 13px;
-}
-.ds_qantity{
-    font-size: 13px;
-}
-.ds_con-total{
-    font-size: 16px;
-}
-.ds_con-total-price{
-    font-size: 16px;
-}
-.ds_con-amount{
-    font-size: 18px;
-}
+    .ds_with-add {
+        padding: 5px 5px;
+        font-size: 13px;
+    }
 
- /* {/* {************** Invoice *******************}} */
- .ds_in-name{
-    font-size: 16px
-  }
-  .ds_in-email{
-    font-size: 15px;
-  }
-  .ds_in-text{
-    font-size: 14px;
-  }
-  .ds_in-sold{
-    font-size: 14px;
-  }
-  .ds_in-add{
-    font-size: 13px;
-  }
-  .ds_table-th{
-    font-size: 15px;
-  }
-  .ds_table-title{
-    font-size: 14px;
-  }
-  .ds_table-desc{
-    font-size: 13px;
-    line-height: 18px;
-  }
-  .ds_table-quantity{
-     font-size: 14px;
-  }
-  .ds_table-price{
-    font-size: 14px;
-  }
-  .ds_in-method{
-    font-size: 14px;
-  }
-  .ds_in-name{
-    font-size: 14px;
-  }
-  .ds_in-sub{
-    font-size: 13px;
-  }
-  .ds_in-total{
-    font-size: 15px;
-  }
-  .ds_in-thank{
-    font-size: 13px;
-  }
-  .d_invoicefooter p{
-    max-width: 350px;
-    font-size: 12px;
-  }
+    .ds_add-address {
+        font-size: 13px;
+    }
+
+    .ds_add-cupan-txt {
+        font-size: 15px;
+    }
+
+    .ds_add-special {
+        font-size: 14px;
+    }
+
+    .ds_add-label {
+        font-size: 13px;
+    }
+
+    .ds_add-offer-txt {
+        font-size: 12px;
+    }
+
+    .ds_add-save {
+        font-size: 13px;
+    }
+
+    .ds_add-detail {
+        font-size: 13px;
+    }
+
+    .ds_add-price {
+        font-size: 13px;
+    }
+
+    .ds_add-color {
+        font-size: 13px;
+    }
+
+    .ds_add-total {
+        font-size: 15px;
+    }
+
+    .ds_add-proccess {
+        font-size: 14px;
+    }
+
+    /* {************** Address Modal Popup *******************} */
+    .ds_my-modal .modal-dialog {
+        --bs-modal-width: 410px !important;
+        width: 410px !important;
+    }
+
+    .ds_add-smart {
+        font-size: 13px;
+        line-height: 18px;
+    }
+
+    /* {************** Change Address Popup *******************} */
+    .s_modal .modal-dialog {
+        --bs-modal-width: 410px !important;
+        width: 410px !important;
+    }
+
+    /* {************** Payment With COD ************} */
+    .ds_cod-title {
+        font-size: 14px;
+    }
+
+    .ds_cod-mini {
+        font-size: 13px;
+    }
+
+    .ds_cod-on-btn {
+        font-size: 13px;
+    }
+
+    .ds_cod-input {
+        font-size: 13px;
+    }
+
+    .ds_cod-pay {
+        font-size: 14px;
+    }
+
+    .ds_pay-text {
+        font-size: 14px;
+    }
+
+    /* ************** UPI Id **************** */
+    .ds_upi-select {
+        padding: 4px 0px 10px 5px;
+        width: 20% !important
+    }
+
+    /* {/* *************** Net Banking ************** }    */
+    .ds_net-img {
+        height: 30px;
+        width: 30px;
+    }
+
+    .ds_net-text {
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    /* {/* {************** Order Conformation *******************}} */
+    .ds_con-title {
+        font-size: 18px;
+    }
+
+    .ds_con-text {
+        font-size: 14px;
+    }
+
+    .ds_con-map {
+        width: 100%;
+        height: 250px;
+    }
+
+    .ds_con-trade {
+        font-size: 14px;
+    }
+
+    .ds_con-trade-text {
+        font-size: 13px;
+    }
+
+    .ds_cod-on-btn-txt {
+        font-size: 13px;
+    }
+
+    .ds_qantity {
+        font-size: 13px;
+    }
+
+    .ds_con-total {
+        font-size: 16px;
+    }
+
+    .ds_con-total-price {
+        font-size: 16px;
+    }
+
+    .ds_con-amount {
+        font-size: 18px;
+    }
+
+    /* {/* {************** Invoice *******************}} */
+    .ds_in-name {
+        font-size: 16px
+    }
+
+    .ds_in-email {
+        font-size: 15px;
+    }
+
+    .ds_in-text {
+        font-size: 14px;
+    }
+
+    .ds_in-sold {
+        font-size: 14px;
+    }
+
+    .ds_in-add {
+        font-size: 13px;
+    }
+
+    .ds_table-th {
+        font-size: 15px;
+    }
+
+    .ds_table-title {
+        font-size: 14px;
+    }
+
+    .ds_table-desc {
+        font-size: 13px;
+        line-height: 18px;
+    }
+
+    .ds_table-quantity {
+        font-size: 14px;
+    }
+
+    .ds_table-price {
+        font-size: 14px;
+    }
+
+    .ds_in-method {
+        font-size: 14px;
+    }
+
+    .ds_in-name {
+        font-size: 14px;
+    }
+
+    .ds_in-sub {
+        font-size: 13px;
+    }
+
+    .ds_in-total {
+        font-size: 15px;
+    }
+
+    .ds_in-thank {
+        font-size: 13px;
+    }
+
+    .d_invoicefooter p {
+        max-width: 350px;
+        font-size: 12px;
+    }
 }
 
 @media (max-width:426px) {
-/* {************** Address Modal Popup *******************} */
-.ds_my-modal .modal-dialog{
-    --bs-modal-width: 325px !important;
-    width: 325px !important;
-}
-/* {************** Change Address Popup *******************} */
-.ds_modal-dialog {
-    --bs-modal-width: 350px !important;
-    width: 350px !important;
-}    
-/* ************** UPI Id **************** */
-.ds_upi-select{
-    padding: 4px 0px 10px 5px;
-    width: 25% !important
-}
+
+    /* {************** Address Modal Popup *******************} */
+    .ds_my-modal .modal-dialog {
+        --bs-modal-width: 325px !important;
+        width: 325px !important;
+    }
+
+    /* {************** Change Address Popup *******************} */
+    .s_modal .modal-dialog {
+        --bs-modal-width: 350px !important;
+        width: 350px !important;
+    }
+
+    /* ************** UPI Id **************** */
+    .ds_upi-select {
+        padding: 4px 0px 10px 5px;
+        width: 25% !important
+    }
 }
 
 @media (max-width:376px) {
- /* {/* {************** Invoice *******************}} */
- .ds_in-flex-manage{
-    width: 100%;
- }    
+
+    /* {/* {************** Invoice *******************}} */
+    .ds_in-flex-manage {
+        width: 100%;
+    }
 }
 
 @media (max-width:350px) {
+
     /* {************** Address Modal Popup *******************} */
-     .ds_my-modal .modal-dialog{
-         --bs-modal-width: 290px !important;
-         width: 290px !important;
-     }
+    .ds_my-modal .modal-dialog {
+        --bs-modal-width: 290px !important;
+        width: 290px !important;
+    }
+
     /* {************** Change Address Popup *******************} */
-    .ds_modal-dialog {
+    .s_modal .modal-dialog {
         --bs-modal-width: 300px !important;
         width: 300px !important;
     }
-    
+
     /* ************** UPI Id **************** */
-.ds_upi-select{
-    padding: 4x 0px 10px 5px;
-    width: 30% !important
+    .ds_upi-select {
+        padding: 4x 0px 10px 5px;
+        width: 30% !important
+    }
 }
-} 
 
 
 .custom-select-wrapper {
     position: relative;
     display: inline-block;
     width: 100%;
-  }
-  
-  .custom-select {
+}
+
+.custom-select {
     position: relative;
     display: inline-block;
     width: 100%;
     background: #fff;
     border-radius: 50px;
     border: 1px solid #ccc;
-    cursor: pointer; /* Ensure the cursor is a pointer for the whole dropdown */
-  }
-  
-  .custom-select-trigger {
+    cursor: pointer;
+    /* Ensure the cursor is a pointer for the whole dropdown */
+}
+
+.custom-select-trigger {
     padding: 10px;
     font-size: 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-radius: 20px;
-  }
-  
-  .custom-select-trigger i {
+}
+
+.custom-select-trigger i {
     margin-left: 10px;
-  }
-  
-  .ds_one-trigger {
+}
+
+.ds_one-trigger {
     margin-left: 22px;
-  }
-  
-  .custom-options {
+}
+
+.custom-options {
     position: absolute;
     top: 100%;
     left: 0;
@@ -856,24 +1016,26 @@ table {
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     display: none;
     z-index: 2000;
-    cursor: pointer; /* Ensure the cursor is a pointer over options */
-  }
-  
-  .custom-option {
+    cursor: pointer;
+    /* Ensure the cursor is a pointer over options */
+}
+
+.custom-option {
     padding: 10px;
     font-size: 16px;
-    cursor: pointer; /* Ensure the cursor is a pointer over options */
+    cursor: pointer;
+    /* Ensure the cursor is a pointer over options */
     border-radius: 20px;
-  }
-  
-  .custom-option:hover {
+}
+
+.custom-option:hover {
     background-color: #f0f0f0;
-  }
-  
-  .custom-select.open .custom-options {
+}
+
+.custom-select.open .custom-options {
     display: block;
-  }
-  
+}
+
 
 
 /* document.addEventListener("DOMContentLoaded", function () {

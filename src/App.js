@@ -50,6 +50,7 @@ import UserDeactive from './Vivek/Component/User/UserDeactive';
 import UserAddress from './Vivek/Component/User/UserAddress';
 import Category from './Vivek/Component/Home/Category';
 import Product from './Vivek/Component/Home/Product';
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 
 function App() {

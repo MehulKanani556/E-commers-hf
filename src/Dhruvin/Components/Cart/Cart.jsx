@@ -11,6 +11,8 @@ import { IoSearch } from "react-icons/io5";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { State, City } from 'country-state-city';
+
 
 const Cart = () => {
 
@@ -20,34 +22,48 @@ const Cart = () => {
   const navigate = useNavigate();
 
   const [showModal, setShowModal] = useState(false);
-  const [address, setAddress] = useState(false);
+  const [address, setAddress] = useState([]);
   const [cartData, setCartData] = useState([]);
   const [couponData, setCouponData] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
-    contact: '',
-    building: '',
+    contactNo: '',
+    address: '',
     landmark: '',
     pincode: '',
     city: '',
     state: '',
-    addressType: 'home'
+    addressType: 'Home'
   });
-  const [showToggle, setShowToggle] = useState(false)
   const [count, setCount] = useState(0)
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("Class");
-  const selectRef = useRef(null);
   const [activeButton, setActiveButton] = useState('Pay on Delivery');
   const [upipayId, setUpipayId] = useState('');
   const [couponInput, setCouponInput] = useState('');
   const [selectedCouponId, setSelectedCouponId] = useState(null);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [selectedAddressId, setSelectedAddressId] = useState(address.length > 0 ? address[0]?._id : null);
+  const [showAddressModal, setShowAddressModal] = useState(false);
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
-  const handleShowModal = () => setShowToggle(true)
-  const handleHideModal = () => setShowToggle(false)
+  const countryCode = 'IN';
+
+  useEffect(() => {
+    const statesList = State.getStatesOfCountry(countryCode);
+    setStates(statesList);
+  }, []);
+
+  // Load cities when state changes
+  useEffect(() => {
+    if (formData.state) {
+      const citiesList = City.getCitiesOfState(countryCode, formData.state);
+      setCities(citiesList);
+    } else {
+      setCities([]);
+    }
+  }, [formData.state]);
 
   const filterItems = [
     {
@@ -120,20 +136,39 @@ const Cart = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
+    setFormData({
+      ...formData,
       [name]: value
-    }));
+    });
+
+    // If state changes, reset city selection
+    if (name === 'state') {
+      setFormData({
+        ...formData,
+        state: value,
+        city: ''
+      });
+    }
   };
 
-  const handleFormSubmit = (e) => {
-    setAddress(true)
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    localStorage.setItem('addressData', JSON.stringify(formData));
-    handleCloseModal();
+
+    try {
+      const response = await axios.post(`${BaseUrl}/api/createAddress`, formData, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      // console.log("resposne", response.data);
+      if (response.data.status === 201) {
+        handleCloseModal();
+      }
+    } catch (error) {
+      console.error('Data fetching Error:', error);
+    }
+
   };
 
-  const handleCheckOut = () => {
+  const handleCheckOut = async () => {
     setCount(count + 1)
     if (count === 0) {
       document.getElementById("ds_with-line").style.border = "0.65px solid #2A221E"
@@ -150,17 +185,24 @@ const Cart = () => {
       document.getElementById("ds_proceed_btn").classList.add("d-none")
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    try {
+      const orderItems = cartData.map(item => ({
+        productId: item.productData[0]._id,
+        productVariantId: item.productVariantData[0]._id,
+        quantity: item.quantity
+      }));
+      
+      const response = await axios.post(`${BaseUrl}/api/createOrder`, {
+        addressId:selectedAddressId,
+        items:orderItems,
+        coupenId:selectedCouponId
+      }, {headers: { Authorization: `Bearer ${token}` }});
+      console.log("response",response.data);
+      
+    } catch (error) {
+      console.error('Data Fetching Error:', error);
+    }
   }
-
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    setIsOpen(false);
-  };
-
   const handlePayment = (paymentType) => {
     setActiveButton(paymentType);
     console.log(paymentType);
@@ -287,25 +329,50 @@ const Cart = () => {
       console.error('Data Fetching Error:', error);
     }
   }
+  const fetchAddressData = async () => {
+    try {
+      const response = await axios.get(`${BaseUrl}/api/getAllMyAddress`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      // console.log("resposne", response.data.address);
+      setAddress(response.data.address);
+
+      if (response.data.address && response.data.address.length > 0) {
+        setSelectedAddressId(response.data.address[0]._id);
+      }
+    } catch (error) {
+      console.error('Data Fetching Error:', error);
+    }
+  }
 
   useEffect(() => {
     fetchCoupenData();
     fetchData();
+    fetchAddressData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleCouponSelect = (couponCode,id) => {
+  const handleCouponSelect = (couponCode, id) => {
     setCouponInput(couponCode);
     setSelectedCouponId(id);
   };
 
-  const handleApply = (e) => {
-    e.preventDefault();
-    if(selectedCouponId){
-      console.log("selectedId",selectedCouponId);
-      
-    }
-  }
+  const handleAddressSelection = (addressId) => {
+    setSelectedAddressId(addressId);
+    setShowAddressModal(false);
+  };
+
+  const getSelectedAddress = () => {
+    return address.find(addr => addr._id === selectedAddressId) || (address.length > 0 ? address[0] : null);
+  };
+
+  const calculateSubtotal = () => {
+    return cartData.reduce((total, item) => {
+      const discountPrice = item.productVariantData[0].originalPrice - 
+        (item.productVariantData[0].originalPrice * item.productVariantData[0].discountPrice / 100);
+      return total + (item.quantity * discountPrice);
+    }, 0).toFixed(2);
+  };
 
   return (
     <div>
@@ -360,14 +427,27 @@ const Cart = () => {
                       <div className="mt-3" id="ds_address">
                         <div className="ds_with-shadow">
                           <div className="d-flex justify-content-between align-items-center">
-                            {address ? <div>
-                              <p className="ds_add-smart mb-0">Deliver to: <span className="fw-bold ms-2">Hello</span> <span className="ds_user-data">Home</span> </p>
-                              <p className="ds_add-smart mb-0">Ehrenkranz 13 Washington Square S, New York,Washington Square, NY 10012, USA</p>
-                            </div>
-                              : <p className="mb-0 fw-600 ds_add-address">
-                                No saved Addresses
-                              </p>}
-                            {address ? <button className="ds_with-add" data-bs-toggle="modal" data-bs-target="#ds_modal">Change Address</button> : <button className=" ds_with-add" onClick={handleOpenModal}>+Add Address</button>}
+                            {address.length > 0 ? (
+                              <div>
+                                <p className="ds_add-smart mb-0">
+                                  Deliver to: <span className="fw-bold ms-2">{getSelectedAddress()?.name}</span>{" "}
+                                  <span className="ds_user-data">{getSelectedAddress()?.addressType}</span>
+                                </p>
+                                <p className="ds_add-smart mb-0">
+                                  {`${getSelectedAddress()?.address},${getSelectedAddress()?.landmark}, ${getSelectedAddress()?.city}, ${getSelectedAddress()?.state}, ${getSelectedAddress()?.pincode}`}</p>
+                              </div>
+                            ) : (
+                              <p className="mb-0 fw-600 ds_add-address">No saved Addresses</p>
+                            )}
+                            {address.length > 0 ? (
+                              <button className="ds_with-add" onClick={() => setShowAddressModal(true)}>
+                                Change Address
+                              </button>
+                            ) : (
+                              <button className="ds_with-add" onClick={() => handleOpenModal()}>
+                                +Add Address
+                              </button>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -415,7 +495,7 @@ const Cart = () => {
                           <div className="ds_with-border"></div>
                           <div className="">
                             {cartData.map((item) => {
-                              const discountprice = item.productVariantData[0].originalPrice - (item.productVariantData[0].originalPrice * item.productVariantData[0].discountPrice / 100);      
+                              const discountprice = item.productVariantData[0].originalPrice - (item.productVariantData[0].originalPrice * item.productVariantData[0].discountPrice / 100);
                               return (
                                 <div className="row mt-4">
                                   <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
@@ -696,8 +776,8 @@ const Cart = () => {
                         <div className="px-3 mt-3">
                           <form action="" className="position-relative">
                             <img className="ds_add-cupan" src={require("../Img/cupon.png")} alt="" />
-                            <input type="text" className="form-control ds_add-input" id="exampleInputEmail1" placeholder="Enter coupon code" aria-describedby="emailHelp" value={couponInput} onChange={(e) => setCouponInput(e.target.value)} />
-                            <button className=" ds_add-apply" onClick={handleApply}>Apply</button>
+                            <input type="text" className="form-control ds_add-input" placeholder="Enter coupon code"  value={couponInput} onChange={(e) => setCouponInput(e.target.value)} />
+                            <button className=" ds_add-apply">Apply</button>
                           </form>
                         </div>
                       </div>
@@ -706,8 +786,8 @@ const Cart = () => {
                         {couponData.map((item) => {
                           return (
                             <div className="form-check d-flex align-items-center mt-3" key={item._id}>
-                              <input className="form-check-input ds_cursor" type="radio" name="flexRadioDefault" 
-                                onClick={() => handleCouponSelect(item.code,item._id)} />
+                              <input className="form-check-input ds_cursor" type="radio" name="flexRadioDefault"
+                                onClick={() => handleCouponSelect(item.code, item._id)} />
                               <div className="ms-2">
                                 <label className="form-check-label fw-bold ds_add-label">
                                   {item.title}
@@ -735,12 +815,12 @@ const Cart = () => {
                       <div className="px-3 mt-3">
                         <div className="d-flex justify-content-between">
                           <p className="ds_add-detail">Sub Total</p>
-                          <p className="fw-600 ds_add-price">$240</p>
+                          <p className="fw-600 ds_add-price">${calculateSubtotal()}</p>
                         </div>
-                        <div className="d-flex justify-content-between">
+                        {/* <div className="d-flex justify-content-between">
                           <p className="ds_add-detail">Discount</p>
                           <p className="fw-600 ds_add-color">-$40</p>
-                        </div>
+                        </div> */}
                         <div className="d-flex justify-content-between">
                           <p className="ds_add-detail">Tax</p>
                           <p className="fw-600 ds_add-price">$40</p>
@@ -774,7 +854,7 @@ const Cart = () => {
                   <div className="d_right">
                     <div className="d_trend mt-3">
                       <div className="row gy-4">
-                        {filterItems.map((item, index) => {
+                        {filterItems.map((item) => {
                           return (
                             <div key={item.id} className="col-12 col-sm-6 col-lg-6 col-xl-3">
                               <div className="d_box">
@@ -863,11 +943,11 @@ const Cart = () => {
               </div>
               <div className="VK_name my-3">
                 <span className="VK_input_label pb-1">Contact no.</span>
-                <input type="text" name="contact" value={formData.contact} onChange={handleInputChange} className="VK_from_input w-100 py-2 px-3" placeholder="Enter Contact No." />
+                <input type="text" name="contactNo" value={formData.contactNo} onChange={handleInputChange} className="VK_from_input w-100 py-2 px-3" placeholder="Enter Contact No." />
               </div>
               <div className="VK_name my-3">
                 <span className="VK_input_label pb-1">Building No. / Building Name / Street Name</span>
-                <input type="text" name="building" value={formData.building} onChange={handleInputChange} className="VK_from_input w-100 py-2 px-3" placeholder="Enter Building No. / Building Name / Street Name" />
+                <input type="text" name="address" value={formData.address} onChange={handleInputChange} className="VK_from_input w-100 py-2 px-3" placeholder="Enter Building No. / Building Name / Street Name" />
               </div>
               <div className="VK_name my-3">
                 <span className="VK_input_label pb-1">Landmark</span>
@@ -879,21 +959,32 @@ const Cart = () => {
                   <input type="text" name="pincode" value={formData.pincode} onChange={handleInputChange} className="VK_from_input w-100 py-2 px-3" placeholder="Enter Pincode" />
                 </div>
                 <div className="w-100">
-                  <span className="VK_input_label pb-1">City</span>
-                  <select name="city" value={formData.city} onChange={handleInputChange} className="VK_from_input w-100 py-2 px-3">
-                    <option value="">Select</option>
-                    <option value="City1">City1</option>
-                    <option value="City2">City2</option>
-                    {/* Add more options as needed */}
+                  <span className="VK_input_label pb-1">State</span>
+                  <select
+                    name="state"
+                    value={formData.state}
+                    onChange={handleInputChange}
+                    className="VK_from_input w-100 py-2 px-3"
+                  >
+                    <option value="">Select State</option>
+                    {states.map(state => (
+                      <option key={state.isoCode} value={state.isoCode}>{state.name}</option>
+                    ))}
                   </select>
                 </div>
                 <div className="w-100">
-                  <span className="VK_input_label pb-1">State</span>
-                  <select name="state" value={formData.state} onChange={handleInputChange} className="VK_from_input w-100 py-2 px-3">
-                    <option value="">Select</option>
-                    <option value="State1">State1</option>
-                    <option value="State2">State2</option>
-                    {/* Add more options as needed */}
+                  <span className="VK_input_label pb-1">City</span>
+                  <select
+                    name="city"
+                    value={formData.city}
+                    onChange={handleInputChange}
+                    className="VK_from_input w-100 py-2 px-3"
+                    disabled={!formData.state}
+                  >
+                    <option value="">Select City</option>
+                    {cities.map(city => (
+                      <option key={city.name} value={city.name}>{city.name}</option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -902,9 +993,9 @@ const Cart = () => {
                   <span className="text-black fw-bold">Address Type</span>
                 </div>
                 <div className="d-flex VK_edit_radio align-items-center gap-sm-5 gap-2 w-100">
-                  <Form.Check type="radio" id="home-radio" label="Home" name="addressType" value="home" checked={formData.addressType === 'home'} onChange={handleInputChange} />
-                  <Form.Check type="radio" id="work-radio" label="Work" name="addressType" value="work" checked={formData.addressType === 'work'} onChange={handleInputChange} />
-                  <Form.Check type="radio" id="other-radio" label="Other" name="addressType" value="other" checked={formData.addressType === 'other'} onChange={handleInputChange} />
+                  <Form.Check type="radio" id="home-radio" label="Home" name="addressType" value="Home" checked={formData.addressType === 'Home'} onChange={handleInputChange} />
+                  <Form.Check type="radio" id="work-radio" label="Work" name="addressType" value="Work" checked={formData.addressType === 'Work'} onChange={handleInputChange} />
+                  <Form.Check type="radio" id="other-radio" label="Other" name="addressType" value="Other" checked={formData.addressType === 'Other'} onChange={handleInputChange} />
                 </div>
               </div>
               <div className="mt-4 text-center">
@@ -916,52 +1007,36 @@ const Cart = () => {
       </Modal>
 
       {/* /* {************** Change Address Popup *******************} */}
-      <div className="modal fade " id="ds_modal" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div className="modal-dialog modal-dialog-centered ds_modal-dialog" >
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">Address</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div className="modal-body">
-              <div className="row">
-                <div className="col-xl-6 col-lg-6 col-md-6 mt-md-2 mt-3 ">
-                  <div className="ds_change-inner">
-                    <div className="d-flex justify-content-between align-items-center px-2 mb-2">
-                      <div className="ds_change-box text-center">Home</div>
-                      <FaCheckCircle />
-                    </div>
-                    <div className="ds_change-line"></div>
-                    <div className="px-2">
-                      <p className="ds_change-name mb-1 fw-600 mt-2">Jhon Wick</p>
-                      <p className="ds_change-name  fw-600">+1 56565 56565</p>
-                      <p className="ds_change-add">Ehrenkranz 13 Washington Square S, New York,Washington Square, NY 10012, USA</p>
-                    </div>
+      <Modal show={showAddressModal} onHide={() => setShowAddressModal(false)} centered  className="s_modal">
+        <Modal.Header closeButton>
+          <Modal.Title>Address</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="row">
+            {address.map((item) => (
+              <div className="col-xl-6 col-lg-6 col-md-6 mt-md-2 mt-3"
+                key={item._id}
+                onClick={() => handleAddressSelection(item._id)}
+              >
+                <div className="ds_change-inner">
+                  <div className="d-flex justify-content-between align-items-center px-2 mb-2">
+                    <div className="ds_change-box text-center">{item.addressType}</div>
+                    {selectedAddressId === item._id && <FaCheckCircle />}
+                  </div>
+                  <div className="ds_change-line"></div>
+                  <div className="px-2">
+                    <p className="ds_change-name mb-1 fw-600 mt-2">{item.name}</p>
+                    <p className="ds_change-name fw-600">+1 {item.contactNo}</p>
+                    <p className="ds_change-add">
+                      {`${item.address}, ${item.landmark}, ${item.city}, ${item.state}, ${item.pincode}`}
+                    </p>
                   </div>
                 </div>
-
-                <div className="col-xl-6 col-lg-6 col-md-6 mt-md-2 mt-3 ">
-                  <div className="ds_change-inner">
-                    <div className="d-flex justify-content-between align-items-center px-2 mb-2">
-                      <div className="ds_change-box text-center">Work</div>
-                    </div>
-                    <div className="ds_change-line"></div>
-                    <div className="px-2 mt-2">
-                      <p className="ds_change-name mb-1 fw-600">Jhon Wick</p>
-                      <p className="ds_change-name  fw-600">+1 56565 56565</p>
-                      <p className="ds_change-add">Ehrenkranz 13 Washington Square S, New York,Washington Square, NY 10012, USA</p>
-                    </div>
-                  </div>
-                </div>
-
               </div>
-              <div className="mt-4 pt-2">
-                <button className=" ds_new-btn">+ Add new address</button>
-              </div>
-            </div>
+            ))}
           </div>
-        </div>
-      </div>
+        </Modal.Body>
+      </Modal>
 
       {/* /* {************** Order Conformation *******************} */}
       <section className="d-none" id="ds_order_conformation">
