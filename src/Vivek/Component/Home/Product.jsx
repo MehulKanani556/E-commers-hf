@@ -136,31 +136,62 @@ const Product = () => {
     const handleClickwishlist = async (item, e) => {
         e.preventDefault();
         const itemId = item.productId || item._id || item.id;
-
-        setIsSelectedWishlist(prev => {
-            let updatedWishlist;
-            if (prev.includes(itemId)) {
-                updatedWishlist = prev.filter(id => id !== itemId);
-            } else {
-                updatedWishlist = [...prev, itemId];
-            }
-
-            localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
-
-            // Dispatch custom event to notify other components
-            window.dispatchEvent(new CustomEvent('wishlistUpdated'));
-
-            return updatedWishlist;
-        });
-
+        
         try {
-            await axios.post(`${BaseUrl}/api/createWishList`, {
-                productId: itemId,
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+            if (isSelectedwishlist.includes(itemId)) {
+                // Find the actual wishlist item ID for deletion
+                // First try to get it from the API
+                const response = await axios.get(`${BaseUrl}/api/getMyWishList`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                });
+                
+                // Find the wishlist entry that matches this product ID
+                const wishlistEntry = response.data.wishlist.find(
+                    entry => (entry.productId || entry._id) === itemId
+                );
+                
+                if (wishlistEntry) {
+                    // Remove from wishlist on the server
+                    await axios.delete(`${BaseUrl}/api/deleteWishList/${wishlistEntry._id}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        }
+                    });
+                }
+                
+                // Update local state
+                setIsSelectedWishlist(prev => {
+                    const updatedWishlist = prev.filter(id => id !== itemId);
+                    localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+                    
+                    // Notify other components
+                    window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+                    
+                    return updatedWishlist;
+                });
+            } else {
+                // Add to wishlist on the server
+                await axios.post(`${BaseUrl}/api/createWishList`, {
+                    productId: itemId,
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                });
+                
+                // Update local state
+                setIsSelectedWishlist(prev => {
+                    const updatedWishlist = [...prev, itemId];
+                    localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+                    
+                    // Notify other components
+                    window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+                    
+                    return updatedWishlist;
+                });
+            }
         } catch (error) {
             console.error("Error updating wishlist:", error);
         }

@@ -14,21 +14,21 @@ const Trending = () => {
   const [data, setData] = useState([]);
 
   // Function to fetch wishlist data from server
-  // const fetchWishlist = async () => {
-  //   try {
-  //     const response = await axios.get(`${BaseUrl}/api/allwishList`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
+  const fetchWishlist = async () => {
+    try {
+      const response = await axios.get(`${BaseUrl}/api/getMyWishList`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-  //     const wishlistIds = response.data.wishlist.map(item => item.productId || item._id);
-  //     setIsSelectedWishlist(wishlistIds);
-  //     localStorage.setItem('wishlist', JSON.stringify(wishlistIds));
-  //   } catch (error) {
-  //     console.error("Error fetching wishlist:", error);
-  //   }
-  // };
+      const wishlistIds = response.data.wishlist.map(item => item.productId || item._id);
+      setIsSelectedWishlist(wishlistIds);
+      localStorage.setItem('wishlist', JSON.stringify(wishlistIds));
+    } catch (error) {
+      console.error("Error fetching wishlist:", error);
+    }
+  };
 
   // Function to sync wishlist with localStorage
   const syncWishlistWithLocalStorage = () => {
@@ -39,9 +39,9 @@ const Trending = () => {
   };
 
   // Initial fetch of wishlist data
-  // useEffect(() => {
-  //   fetchWishlist();
-  // }, [BaseUrl, token]);
+  useEffect(() => {
+    fetchWishlist();
+  }, [BaseUrl, token]);
 
   // Listen for custom event from Wishlist component
   useEffect(() => {
@@ -83,33 +83,64 @@ const Trending = () => {
     fetchData();
   }, [id, BaseUrl, token]);
 
-  const handleClickwishlist = async (item) => {
+  const handleClickwishlist = async (item, e) => {
+    e.preventDefault();
     const itemId = item.productId || item._id;
-
-    setIsSelectedWishlist(prev => {
-      let updatedWishlist;
-      if (prev.includes(itemId)) {
-        updatedWishlist = prev.filter(id => id !== itemId);
-      } else {
-        updatedWishlist = [...prev, itemId];
-      }
-
-      localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
-      
-      // Dispatch custom event to notify other components
-      window.dispatchEvent(new CustomEvent('wishlistUpdated'));
-      
-      return updatedWishlist;
-    });
-
+    
     try {
-      await axios.post(`${BaseUrl}/api/createWishList`, {
-        productId: itemId,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      if (isSelectedwishlist.includes(itemId)) {
+        // Find the actual wishlist item ID for deletion
+        const response = await axios.get(`${BaseUrl}/api/getMyWishList`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
+        
+        // Find the wishlist entry that matches this product ID
+        const wishlistEntry = response.data.wishlist.find(
+          entry => (entry.productId || entry._id) === itemId
+        );
+        
+        if (wishlistEntry) {
+          // Remove from wishlist on the server
+          await axios.delete(`${BaseUrl}/api/deleteWishList/${wishlistEntry._id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          });
+        }
+        
+        // Update local state
+        setIsSelectedWishlist(prev => {
+          const updatedWishlist = prev.filter(id => id !== itemId);
+          localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+          
+          // Notify other components
+          window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+          
+          return updatedWishlist;
+        });
+      } else {
+        // Add to wishlist on the server
+        await axios.post(`${BaseUrl}/api/createWishList`, {
+          productId: itemId,
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
+        
+        // Update local state
+        setIsSelectedWishlist(prev => {
+          const updatedWishlist = [...prev, itemId];
+          localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+          
+          // Notify other components
+          window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+          
+          return updatedWishlist;
+        });
+      }
     } catch (error) {
       console.error("Error updating wishlist:", error);
     }
@@ -142,10 +173,7 @@ const Trending = () => {
                             )}
                             <div 
                               className="d_trendicon d-flex justify-content-center align-items-center d_cur" 
-                              onClick={(e) => {
-                                e.preventDefault();
-                                handleClickwishlist(item);
-                              }}
+                              onClick={(e) => handleClickwishlist(item, e)}
                             >
                               {isSelectedwishlist.includes(itemId) ?
                                 <IoMdHeart className='d_icon' style={{ color: 'red' }} /> :
@@ -171,8 +199,8 @@ const Trending = () => {
                                 <div className="d-flex align-items-end">
                                   <div className="d_price">
                                     {variantData?.originalPrice && variantData?.discountPrice
-                                      ? ` ${variantData.originalPrice - variantData.discountPrice}`
-                                      : "0"}
+                                      ? `$${variantData.discountPrice}`
+                                      : "$0"}
                                   </div>
                                   <div className="d_disprice ms-1 text-decoration-line-through">${variantData?.originalPrice}</div>
                                 </div>

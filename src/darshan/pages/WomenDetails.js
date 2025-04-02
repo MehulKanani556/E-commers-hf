@@ -13,18 +13,20 @@ import Like from '../components/Like';
 import Recentlyviewed from '../components/Recentlyviewed';
 import Customerlike from '../components/Customerlike';
 import { Carousel, Modal, Table } from 'react-bootstrap';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Header from '../../Vivek/Component/header/Header';
 import Subscribe from '../../Vivek/Component/common/Subscribe';
 import Process from '../../Vivek/Component/common/Process';
 import Footer from '../../Vivek/Component/footer/Footer';
 import ReactImageMagnify from 'react-image-magnify';
 import axios from 'axios';
+import { IoMdHeartEmpty, IoMdHeart, IoMdClose } from 'react-icons/io';
 
 
 const WomenDetails = () => {
 
     const { productId } = useParams();
+    const navigate = useNavigate();
 
     const BaseUrl = process.env.REACT_APP_BASEURL;
     const token = localStorage.getItem('token');
@@ -51,6 +53,128 @@ const WomenDetails = () => {
     });
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [isSelectedwishlist, setIsSelectedWishlist] = useState([]);
+
+    // Function to fetch wishlist data from server
+    const fetchWishlist = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}/api/getMyWishList`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            const wishlistIds = response.data.wishlist.map(item => item.productId || item._id);
+            setIsSelectedWishlist(wishlistIds);
+            localStorage.setItem('wishlist', JSON.stringify(wishlistIds));
+        } catch (error) {
+            console.error("Error fetching wishlist:", error);
+        }
+    };
+
+    // Function to sync wishlist with localStorage
+    const syncWishlistWithLocalStorage = () => {
+        const storedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+        if (JSON.stringify(storedWishlist) !== JSON.stringify(isSelectedwishlist)) {
+            setIsSelectedWishlist(storedWishlist);
+        }
+    };
+
+    // Initial fetch of wishlist data
+    useEffect(() => {
+        fetchWishlist();
+    }, []);
+
+    // Listen for custom event from Wishlist component
+    useEffect(() => {
+        const handleWishlistUpdate = () => {
+            syncWishlistWithLocalStorage();
+        };
+
+        // Add event listeners
+        window.addEventListener('wishlistUpdated', handleWishlistUpdate);
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'wishlist') {
+                handleWishlistUpdate();
+            }
+        });
+
+        // Set up interval to check for changes
+        const intervalId = setInterval(syncWishlistWithLocalStorage, 1000);
+
+        // Clean up
+        return () => {
+            window.removeEventListener('wishlistUpdated', handleWishlistUpdate);
+            window.removeEventListener('storage', handleWishlistUpdate);
+            clearInterval(intervalId);
+        };
+    }, [isSelectedwishlist]);
+
+
+    const handleClickwishlist = async (item, e) => {
+        e.preventDefault();
+        const itemId = item.productId || item._id || item.id;
+        
+        try {
+            if (isSelectedwishlist.includes(itemId)) {
+                // Find the actual wishlist item ID for deletion
+                // First try to get it from the API
+                const response = await axios.get(`${BaseUrl}/api/getMyWishList`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                });
+                
+                // Find the wishlist entry that matches this product ID
+                const wishlistEntry = response.data.wishlist.find(
+                    entry => (entry.productId || entry._id) === itemId
+                );
+                
+                if (wishlistEntry) {
+                    // Remove from wishlist on the server
+                    await axios.delete(`${BaseUrl}/api/deleteWishList/${wishlistEntry._id}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        }
+                    });
+                }
+                
+                // Update local state
+                setIsSelectedWishlist(prev => {
+                    const updatedWishlist = prev.filter(id => id !== itemId);
+                    localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+                    
+                    // Notify other components
+                    window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+                    
+                    return updatedWishlist;
+                });
+            } else {
+                // Add to wishlist on the server
+                await axios.post(`${BaseUrl}/api/createWishList`, {
+                    productId: itemId,
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                });
+                
+                // Update local state
+                setIsSelectedWishlist(prev => {
+                    const updatedWishlist = [...prev, itemId];
+                    localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+                    
+                    // Notify other components
+                    window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+                    
+                    return updatedWishlist;
+                });
+            }
+        } catch (error) {
+            console.error("Error updating wishlist:", error);
+        }
+    };
 
     const handleThumbnailClick = (item) => {
 
@@ -174,6 +298,28 @@ const WomenDetails = () => {
         const diffInDays = Math.floor(diffInHours / 24);
         return `${diffInDays} days ago`;
     };
+
+    const handleAddToCart = async (productId, productVariantId) => {
+        console.log("productid>>>>>>>>>>>>>",productId);
+        console.log("productVariantId",productVariantId);
+        
+        try {
+            const response = await axios.post(`${BaseUrl}/api/createCart`, {
+                productId:productId,
+                productVariantId:productVariantId,
+                quantity:selectedQuantity
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            // console.log("response", response.data);
+            if(response.data.status === 201) {
+                setSelectedQuantity('Select');
+                navigate('/cart');
+            }
+        } catch (error) {
+            console.error('Data Fetching Error:', error);
+        }
+    }
     return (
         <>
             {/* Header section  */}
@@ -181,7 +327,7 @@ const WomenDetails = () => {
             {/* Personal Details section start */}
             {product.map((item) => {
                 const discountAmount = (item.productVariantData[0].originalPrice * item.productVariantData[0].discountPrice) / 100;
-                const sizesArray = item.productVariantData[0].size.split(',').map(size => parseInt(size.trim()));
+                const sizesArray = item.productVariantData[0].size.split(',').map(size => size.trim());
                 const images = item.productVariantData[0].images || [];
                 return (
                     <>
@@ -335,13 +481,14 @@ const WomenDetails = () => {
                                                             <Link className='text-decoration-underline d_cur' onClick={(e) => { e.preventDefault(); setsizeModalShow(true) }}>Size chart</Link>
                                                         </div>
                                                         <div className="d-flex">
-                                                            {sizesArray.map((size) => (
+                                                        {sizesArray.map((size) => (
+                                                                
                                                                 <div
                                                                     key={size}
-                                                                    className={`d_sizebox d-flex justify-content-center align-items-center d_cur ${selectedSize === size ? 'active' : ''} ${size === sizesArray[0] ? 'd_disable' : ''}`}
+                                                                    className={`d_sizebox d-flex justify-content-center align-items-center d_cur ${selectedSize === size ? 'active' : ''} `}
                                                                     onClick={() => size !== sizesArray[0] && setSelectedSize(size)}
                                                                 >
-                                                                    {size === sizesArray[0] && <div className="d_diagonal-line"></div>}
+                                                                    {/* {size === sizesArray[0] && <div className="d_diagonal-line"></div>} */}
                                                                     <p className="mb-0">{size}</p>
                                                                 </div>
                                                             ))}
@@ -373,13 +520,21 @@ const WomenDetails = () => {
                                             <div className="d_delbtn">
                                                 <div className="d-flex">
                                                     <div className="d_cta d-flex justify-content-center align-items-center me-3">
-                                                        <Link to="" className='d_hearticon'><CiHeart className='' /></Link>
+                                                        {/* <Link to="" className='d_hearticon'><CiHeart className='' /></Link> */}
+                                                        <div
+                                                            className="d_trendicon d-flex justify-content-center align-items-center d_cur d_hearticon"
+                                                            onClick={(e) => handleClickwishlist(item, e)}
+                                                            >
+                                                            {isSelectedwishlist.includes(item.productId || item._id || item.id) ? 
+                                                                <IoMdHeart className='d_icon' style={{ color: 'red' }} /> :
+                                                                <IoMdHeartEmpty className='d_icon' style={{ color: '#6a6a6a' }} />}
+                                                        </div>
                                                     </div>
                                                     <div className="d_cta  d-flex justify-content-center align-items-center me-3">
                                                         <Link to="" className='text-decoration-none d_buy text-center'>Buy Now</Link>
                                                     </div>
                                                     <div className="d_cta  d-flex justify-content-center align-items-center">
-                                                        <Link to="" className='text-decoration-none d_addcartbtn text-center d-block'>Add to cart</Link>
+                                                    <Link className='text-decoration-none d_addcartbtn text-center d-block' onClick={() => handleAddToCart(item._id, item.productVariantData[0]._id)}>Add to cart</Link>
                                                     </div>
                                                 </div>
                                             </div>
