@@ -327,7 +327,7 @@ const Header = () => {
                                             {searchResults.map((product, index) => (
                                                 <li key={`product-${index}`}
                                                 className='py-2'>
-                                                    <Link to={`/womendetails/${product._id}`}
+                                                    <Link className='mv_search_a' to={`/womendetails/${product._id}`}
                                                     >
                                                     <div className='d-flex align-items-center w-100'>
                                                         <div>

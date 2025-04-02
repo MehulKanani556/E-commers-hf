@@ -74,7 +74,7 @@ const Product = () => {
     const BaseUrl = process.env.REACT_APP_BASEURL;
     const token = localStorage.getItem('token');
 
-    const mainCategoryId = location.state.mainCategoryId;
+    const mainCategoryId = location.state?.mainCategoryId;
 
 
     // Function to fetch wishlist data from server

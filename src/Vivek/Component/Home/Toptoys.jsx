@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import axios from 'axios';
+import { Link } from 'react-router-dom'
 
 const Toptoys = () => {
     const BaseUrl = process.env.REACT_APP_BASEURL;
@@ -74,13 +75,15 @@ const Toptoys = () => {
                                     className="col-xxl-2 col-lg-3 col-md-4 col-sm-6 my-3"
                                 >
                                     <div className="product-item">
-                                        <div className='electronc_img'>
-                                            <img
-                                                src={`${BaseUrl}/${item?.offerImage}`}
-                                                alt={item.productData[0]?.productName}
-                                                className='w-100 h-100 object_cover'
-                                            />
-                                        </div>
+                                        <Link to={`/womendetails/${item.productId}`} >
+                                            <div className='electronc_img'>
+                                                <img
+                                                    src={`${BaseUrl}/${item?.offerImage}`}
+                                                    alt={item.productData[0]?.productName}
+                                                    className='w-100 h-100 object_cover'
+                                                />
+                                            </div>
+                                        </Link>
                                         <div className='Ele_description mt-2'>
                                             <h4 className='font_16 mb-0'>{item.productData[0]?.productName}</h4>
                                             <p className='fw-bold font_18 mb-0'>Up to {item.discountPrice}% off</p>

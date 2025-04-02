@@ -43,6 +43,8 @@
     line-height: 100%;
     letter-spacing: 0%;
     color: #000000;
+}
+.mv_search_a{
     text-decoration: none !important;
 }
 
