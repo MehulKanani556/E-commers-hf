@@ -4,11 +4,17 @@ import Map from '../Map';
 import { Modal } from 'react-bootstrap';
 import Header from '../../Component/header/Header.jsx'
 import Footer from '../footer/Footer.jsx';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 function TrackOrder() {
 
     const navigate = useNavigate();
+    const { id } = useParams();
+
+    const BaseUrl = process.env.REACT_APP_BASEURL;
+    const token = localStorage.getItem('token');
+    const [data, setData] = useState([]);
 
     const [deletecard, setDeletecard] = useState(false);
     const [canclecard, setCanclecard] = useState(false);
@@ -27,6 +33,22 @@ function TrackOrder() {
         setCanclecard(false); // Close the success modal
     };
 
+    useEffect(() => {
+        const fetchData = async () => {
+            console.log("id",id)
+            try {
+                const response = await axios.get(`${BaseUrl}/api/getOrder/${id}`, {
+                headers: { Authorization: `Bearer ${token}` },
+                });
+                console.log(response.data)
+                setData(response.data.order);
+            } catch (error) {
+                console.error('Data fetching failed:', error);
+            }
+        };
+        fetchData();
+    }, [id, BaseUrl, token]);
+      
     return (
         <React.Fragment>
             <Header />
@@ -60,70 +82,67 @@ function TrackOrder() {
                     <div>
                         <div className='VK_order_parent'>
                             <div className='VK_order_card my-sm-3'>
-
                                 <div className='V_pad'>
                                     <p className='m-0 fw-600 font_18'>
                                         Order Details
                                     </p>
                                 </div>
-                            
-                            <div className='d-flex justify-content-between flex-wrap align-items-center V_border_bottom '>
-                            </div>
-                            <div className='VK_order_product h-100 w-100 justify-content-between d-flex flex-wrap  py-3'>
-                                <div className="row m-0 flex-lg-row flex-column-reverse w-100 ">
-                                    <div className="col-lg-4 px-0">
-                                        <div className='d-flex'>
-                                            <div className='px-0'>
-                                                <img src={require('../../assets/order1.png')} alt="" width="100px" height="120px" />
+                                <div className='d-flex justify-content-between flex-wrap align-items-center V_border_bottom '>
+                                </div>
+                                {data.map((item) => (
+                                    <div key={item._id} className='VK_order_product h-100 w-100 justify-content-between d-flex flex-wrap py-3'>
+                                        <div className="row m-0 flex-lg-row flex-column-reverse w-100 ">
+                                            <div className="col-lg-4 px-0">
+                                                <div className='d-flex'>
+                                                    <div className='px-0'>
+                                                        <img src={`${BaseUrl}/${item.productVariantData[0].images[0]}`} alt="" width="100px" height="120px" />
+                                                    </div>
+                                                    <div className='ps-2 ps-sm-4'>
+                                                        <h1 className='V_full_pair'>{item.productData[0]?.productName || "Product Name"}</h1>
+                                                        <p className='V_full_child_text mb-0'>{item.productVariantData[0]?.shortDescription || "No description available"}</p>
+                                                        <p className='V_light mb-0 py-2'>Color: <span className='V_xl'>{item.productVariantData[0]?.colorName || "N/A"}</span></p>
+                                                        <p className='V_track_order_price mb-0'>${item.totalAmount}</p>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className='ps-2 ps-sm-4'>
-                                                <h1 className='V_full_pair'>Full pair stretched</h1>
-                                                <p className='V_full_child_text mb-0'>Lorem ipsum dolor sit amet consectetur. Ac iaculis viverra purus malesuada </p>
-                                                <p className='V_light mb-0 py-2'>Light Brown <span className='V_xl'>XL</span></p>
-                                                <p className='V_track_order_price mb-0'>$120</p>
+                                            <div className="col-lg-8 py-3 pt-lg-0 pt-xl-3 VK_subtrack position-relative VK_padding overflow-auto">
+                                                <div className='V_back-line4'></div>
+                                                <div className="d-flex justify-content-between px-md-3 px-lg-5">
+                                                    <div className='text-center'>
+                                                        <p className='V_confirmed mb-0'>Order Confirmed</p>
+                                                        <img src={require('../../assets/ordered confirmed.png')} alt="" className='py-2' />
+                                                        <p className='V_track_time mb-0'>{new Date(item.createdAt).toLocaleDateString()} <span>{new Date(item.createdAt).toLocaleTimeString()}</span></p>
+                                                        <p className='V_order_description mb-0'>Your order has been placed.</p>
+                                                    </div>
+                                                    <div className='text-center'>
+                                                        <p className='V_confirmed mb-0'>Shipped</p>
+                                                        <img src={require('../../assets/shipped.png')} alt="" className='py-2' />
+                                                        <p className='V_track_time mb-0'>02 Oct, 2024 <span>5:21 PM </span></p>
+                                                        <p className='V_order_description mb-0'>Your item has been shipped</p>
+                                                    </div>
+                                                    <div className='text-center'>
+                                                        <p className='V_confirmed mb-0'>Out for Delivery</p>
+                                                        <img src={require('../../assets/Out for Delivery logo.png')} alt="" className='py-2' />
+                                                        <p className='V_track_time mb-0'>05 Oct, 2024 <span>8:36 PM</span></p>
+                                                    </div>
+                                                    <div className='text-center'>
+                                                        <p className='V_confirmed mb-0'>Delivered</p>
+                                                        <img src={require('../../assets/delivered logo.png')} alt="" className='py-2' />
+                                                        <p className='V_track_time mb-0'>10 Oct, 2024 <span>8:36 PM</span></p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-8 py-3 pt-lg-0 pt-xl-3 VK_subtrack position-relative VK_padding overflow-auto">
-                                        <div className='V_back-line4'></div>
-                                        <div className="d-flex justify-content-between px-md-3 px-lg-5 ">
-                                            <div className='text-center'>
-                                                <p className='V_confirmed mb-0'>Order Confirmed</p>
-                                                <img src={require('../../assets/ordered confirmed.png')} alt="" className='py-2' />
-                                                <p className='V_track_time mb-0'>01 Oct, 2024 <span>1:21 PM</span></p>
-                                                <p className='V_order_description mb-0'>your order has been placed.</p>
-                                            </div>
-                                            <div className='text-center'>
-                                                <p className='V_confirmed mb-0'>Shipped</p>
-                                                <img src={require('../../assets/shipped.png')} alt="" className='py-2' />
-                                                <p className='V_track_time mb-0'>02 Oct, 2024 <span>5:21 PM </span></p>
-                                                <p className='V_order_description mb-0'>Your item has been shipped</p>
-                                            </div>
-                                            <div className='text-center'>
-                                                <p className='V_confirmed mb-0'>Order Confirmed</p>
-                                                <img src={require('../../assets/Out for Delivery logo.png')} alt="" className='py-2' />
-                                                <p className='V_track_time mb-0'>05 Oct, 2024 <span>8:36 PM</span></p>
-                                                {/* <p className='V_order_description mb-0'>your order has been placed.</p> */}
-                                            </div>
-                                            <div className='text-center'>
-                                                <p className='V_confirmed mb-0'>Delivered</p>
-                                                <img src={require('../../assets/delivered logo.png')} alt="" className='py-2' />
-                                                <p className='V_track_time mb-0'>10 Oct, 2024 <span>8:36 PM</span></p>
-                                                {/* <p className='V_order_description mb-0'>your order has been placed.</p> */}
-                                            </div>
-                                        </div>
+                                ))}
+                                <div className=" V_pad pt-lg-3 ">
+                                    <p className='V_label '>Order ID:   <span className='V_label_value ps-2'> #5656565656</span></p>
+                                    <div className="d-flex flex-xl-nowrap">
+                                        <p className='V_label mb-0'>Order Date:   <span className='V_label_value ps-2'> 21/09/2024</span> </p>
+                                        <p className='V_label ps-3 mb-0'>Expected Delivery:  <span className='V_label_value ps-2'> 26/09/2024</span></p>
                                     </div>
                                 </div>
                             </div>
-                            <div className=" V_pad pt-lg-3 ">
-                                <p className='V_label '>Order ID:   <span className='V_label_value ps-2'> #5656565656</span></p>
-                                <div className="d-flex flex-xl-nowrap">
-                                    <p className='V_label mb-0'>Order Date:   <span className='V_label_value ps-2'> 21/09/2024</span> </p>
-                                    <p className='V_label ps-3 mb-0'>Expected Delivery:  <span className='V_label_value ps-2'> 26/09/2024</span></p>
-                                </div>
-                            </div>
-
-                        </div>
                     </div>
                     <div className='VK_order_card my-3 my-sm-5'>
                         <div className='VK_order_product h-100 w-100  py-3'>

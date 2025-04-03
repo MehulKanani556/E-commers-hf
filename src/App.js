@@ -100,7 +100,7 @@ function App() {
           {/* wishlist */}
           <Route path="/wishlist" element={<Wishlist />} />
 
-          <Route path="/trackorder" element={<TrackOrder />} />
+          <Route path="/trackorder/:id" element={<TrackOrder />} />
 
           <Route path='/trackrefund' element={<TrackRefund />} />
           <Route path='/myordertrack' element={<MyOrderwithTracking />} />

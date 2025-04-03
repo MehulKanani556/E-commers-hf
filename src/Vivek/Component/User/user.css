@@ -348,7 +348,9 @@
 .VK_order_status {
     font-size: 22px;
 }
-
+.mv_other_page{
+    cursor: pointer !important;
+}
 .VK_order_dots {
     height: 12px;
     width: 12px;

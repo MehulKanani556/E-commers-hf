@@ -30,6 +30,62 @@ const Header = () => {
     const [selectedCategory, setSelectedCategory] = useState('All Categories');
     const [searchResults, setSearchResults] = useState([]);
 
+    const [loading, setLoading] = useState(false)
+    const [formData, setFormData] = useState({
+        name: '',
+        contactNo: '',
+        address: '',
+        landmark: '',
+        pincode: '',
+        city: '',
+        state: '',
+        addressType: 'Home'
+    })
+
+    // Handle form input changes
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setFormData({
+            ...formData,
+            [name]: value
+        })
+    }
+
+    // API URL
+    const API_URL = 'http://localhost:5000/api'
+
+    // Handle radio button change for address type
+    const handleAddressTypeChange = (e) => {
+        setFormData({
+            ...formData,
+            addressType: e.target.value
+        })
+    }
+
+    // Get token from localStorage
+    const getToken = () => {
+        return localStorage.getItem('token')
+    }
+    // Config for axios
+    const config = {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        }
+    }
+
+    // Create new address
+    const createAddress = async (e) => {
+        e.preventDefault()
+        try {
+            setLoading(true)
+            await axios.post(`${API_URL}/createAddress`, formData, config)
+            setadderss_model(false)
+        } catch (error) {
+            console.error('Error creating address:', error)
+            setLoading(false)
+        }
+    }
+
     let login_chk = () => {
         let login = localStorage.getItem('login')
 
@@ -495,56 +551,107 @@ const Header = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <div className='p-2 py-3'>
-                        <form action="" className='w-100 VK_address_form'>
+                        <form onSubmit={createAddress} className='w-100 VK_address_form'>
                             <div className='VK_name mb-3'>
                                 <span className='VK_input_label pb-1'>
                                     Name
                                 </span>
-                                <input type="text" className='VK_from_input w-100 py-2 px-3' placeholder='Enter name' />
+                                <input 
+                                    type="text" 
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    className='VK_from_input w-100 py-2 px-3' 
+                                    placeholder='Enter name' 
+                                    required 
+                                />
                             </div>
                             <div className='VK_name my-3'>
                                 <span className='VK_input_label pb-1'>
                                     Contact no.
                                 </span>
-                                <input type="text" className='VK_from_input w-100 py-2 px-3' placeholder='Enter Contact No.' />
+                                <input 
+                                    type="text" 
+                                    name="contactNo"
+                                    value={formData.contactNo}
+                                    onChange={handleChange}
+                                    className='VK_from_input w-100 py-2 px-3' 
+                                    placeholder='Enter Contact No.' 
+                                    required 
+                                />
                             </div>
                             <div className='VK_name my-3'>
                                 <span className='VK_input_label pb-1'>
                                     Building No. /  Building Name / Street Name
                                 </span>
-                                <input type="text" className='VK_from_input w-100 py-2 px-3' placeholder='Enter Building No. / Building Name / Street Name' />
+                                <input 
+                                    type="text" 
+                                    name="address"
+                                    value={formData.address}
+                                    onChange={handleChange}
+                                    className='VK_from_input w-100 py-2 px-3' 
+                                    placeholder='Enter Building No. / Building Name / Street Name' 
+                                    required 
+                                />
                             </div>
                             <div className='VK_name my-3'>
                                 <span className='VK_input_label pb-1'>
                                     Landmark
                                 </span>
-                                <input type="text" className='VK_from_input w-100 py-2 px-3' placeholder='Enter Landmark' />
+                                <input 
+                                    type="text" 
+                                    name="landmark"
+                                    value={formData.landmark}
+                                    onChange={handleChange}
+                                    className='VK_from_input w-100 py-2 px-3' 
+                                    placeholder='Enter Landmark' 
+                                />
                             </div>
                             <div className='d-flex flex-sm-nowrap flex-wrap my-3 gap-3'>
                                 <div className='w-100'>
                                     <span className='VK_input_label pb-1'>
                                         Pincode
                                     </span>
-                                    <input type="text" className='VK_from_input w-100 py-2 px-3' placeholder='Enter Pincode' />
+                                    <input 
+                                        type="text" 
+                                        name="pincode"
+                                        value={formData.pincode}
+                                        onChange={handleChange}
+                                        className='VK_from_input w-100 py-2 px-3' 
+                                        placeholder='Enter Pincode' 
+                                        required 
+                                    />
                                 </div>
                                 <div className='w-100'>
                                     <span className='VK_input_label pb-1'>
                                         City
                                     </span>
-                                    <select name="" id="" className='VK_from_input w-100 py-2 px-3'>
-                                        <option value="">Select</option>
-                                    </select>
+                                    <input 
+                                        type="text" 
+                                        name="city"
+                                        value={formData.city}
+                                        onChange={handleChange}
+                                        className='VK_from_input w-100 py-2 px-3' 
+                                        placeholder='Enter City' 
+                                        required 
+                                    />
                                 </div>
                                 <div className='w-100'>
                                     <span className='VK_input_label pb-1'>
                                         State
                                     </span>
-                                    <select name="" id="" className='VK_from_input w-100 py-2 px-3'>
-                                        <option value="">Select</option>
-                                    </select>
+                                    <input 
+                                        type="text" 
+                                        name="state"
+                                        value={formData.state}
+                                        onChange={handleChange}
+                                        className='VK_from_input w-100 py-2 px-3' 
+                                        placeholder='Enter State' 
+                                        required 
+                                    />
                                 </div>
                             </div>
-                            <div className=' my-4'>
+                            <div className='my-4'>
                                 <div className='pb-2'>
                                     <span className='text-black fw-bold'>
                                         Address Type
@@ -555,25 +662,34 @@ const Header = () => {
                                         type="radio"
                                         id="home-radio"
                                         label="Home"
-                                        name="address"
+                                        name="addressType"
+                                        value="Home"
+                                        checked={formData.addressType === "Home"}
+                                        onChange={handleAddressTypeChange}
                                     />
                                     <Form.Check
                                         type="radio"
                                         id="work-radio"
                                         label="Work"
-                                        name="address"
+                                        name="addressType"
+                                        value="Work"
+                                        checked={formData.addressType === "Work"}
+                                        onChange={handleAddressTypeChange}
                                     />
                                     <Form.Check
                                         type="radio"
                                         id="other-radio"
                                         label="Other"
-                                        name="address"
+                                        name="addressType"
+                                        value="Other"
+                                        checked={formData.addressType === "Other"}
+                                        onChange={handleAddressTypeChange}
                                     />
                                 </div>
                             </div>
                             <div className='mt-4 text-center'>
-                                <button type="submit" className='VK_add_address_submit'>
-                                    Save
+                                <button type="submit" className='VK_add_address_submit' disabled={loading}>
+                                    {loading ? 'Saving...' : 'Save'}
                                 </button>
                             </div>
                         </form>

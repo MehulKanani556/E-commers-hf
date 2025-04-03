@@ -43,7 +43,7 @@ console.log("token",token);
     const fetchAddresses = async () => {
         try {
             setLoading(true)
-            const response = await axios.get(`${API_URL}/allAddress`, {
+            const response = await axios.get(`${API_URL}/getAllMyAddress`, {
                 headers: {Authorization : `Bearer ${token}`}
             })
             setAddresses(response.data.address)
