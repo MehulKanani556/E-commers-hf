@@ -300,8 +300,8 @@ const WomenDetails = () => {
     };
 
     const handleAddToCart = async (productId, productVariantId) => {
-        console.log("productid>>>>>>>>>>>>>",productId);
-        console.log("productVariantId",productVariantId);
+        // console.log("productid>>>>>>>>>>>>>",productId);
+        // console.log("productVariantId",productVariantId);
         
         try {
             const response = await axios.post(`${BaseUrl}/api/createCart`, {

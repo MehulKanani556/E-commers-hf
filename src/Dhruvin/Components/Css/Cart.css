@@ -259,6 +259,10 @@
     padding: 10px 0px;
 }
 
+.selected-delivery {
+    border: 2px solid #000000;
+}
+
 .ds_cod-title {
     color: #6A6A6A;
 }
