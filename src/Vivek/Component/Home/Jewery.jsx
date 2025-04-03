@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import './home.css';
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 const Jewery = () => {
 
@@ -41,9 +42,11 @@ const Jewery = () => {
                                             {item.offerName}
                                             </h3>
                                         </div>
-                                        <button className='VK_white_btn'>
-                                            {item.buttonText}
-                                        </button>
+                                        <Link to={`/product/${item.categoryId}` } state={{mainCategoryId:item.mainCategoryId}}>
+                                            <button className='VK_white_btn'>
+                                                {item.buttonText}
+                                            </button>
+                                        </Link>
                                     </div>
                                 </div>
                             </Col>

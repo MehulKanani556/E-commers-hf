@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 const Bestsellers = () => {
     const BaseUrl = process.env.REACT_APP_BASEURL;
@@ -62,13 +63,15 @@ const Bestsellers = () => {
                                     key={item.productId}
                                 >
                                     <div className="product-item">
-                                        <div className='best_seller_img'>
-                                            <img
-                                                src={`${BaseUrl}/${item.images[0]}`}
-                                                className='w-100 h-100 object_cover'
-                                                alt={item.productName}
-                                            />
-                                        </div>
+                                        <Link to={`/womendetails/${item.productId}`} >
+                                            <div className='best_seller_img'>
+                                                <img
+                                                    src={`${BaseUrl}/${item.images[0]}`}
+                                                    className='w-100 h-100 object_cover'
+                                                    alt={item.productName}
+                                                />
+                                            </div>
+                                        </Link>
                                         <div className='Ele_description mt-2'>
                                             <h4 className='font_16 pt-1 mb-1'>{item.productName}</h4>
                                             {/* Display discount price from allProductOffer */}
