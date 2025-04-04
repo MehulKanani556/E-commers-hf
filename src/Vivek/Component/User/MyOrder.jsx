@@ -94,7 +94,7 @@ const MyOrder = () => {
     };
 
     const handleClick = (item) => {
-        console.log("item", item)
+        // console.log("item", item)
 
         const itemId = item.orderId;
         if (item.status === 'Delivered') {
