@@ -51,6 +51,7 @@ import UserAddress from './Vivek/Component/User/UserAddress';
 import Category from './Vivek/Component/Home/Category';
 import Product from './Vivek/Component/Home/Product';
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { CartProvider } from './Context/CartContext';
 
 
 function App() {
@@ -59,75 +60,77 @@ function App() {
 
 
       <BrowserRouter>
-        <Routes>
+        <CartProvider>
+          <Routes>
 
-          {/* home page */}
-          <Route path='/' element={<Home />} />
+            {/* home page */}
+            <Route path='/' element={<Home />} />
 
-          {/* electronics */}
-          <Route path='/electronics' element={<Electronics />} />
+            {/* electronics */}
+            <Route path='/electronics' element={<Electronics />} />
 
-          {/* beauty */}
-          <Route path="/beauty" element={<Beauty />} />
+            {/* beauty */}
+            <Route path="/beauty" element={<Beauty />} />
 
-          {/* women */}
-          <Route path='/women' element={<Womenstore />} />
-          <Route path='/womenstore' element={<Womenfilter />} />
-          <Route path='/womendetails/:productId' element={<WomenDetails />} />
-          <Route path='/electronicdetails' element={<Electronicdetails />} />
+            {/* women */}
+            <Route path='/women' element={<Womenstore />} />
+            <Route path='/womenstore' element={<Womenfilter />} />
+            <Route path='/womendetails/:productId' element={<WomenDetails />} />
+            <Route path='/electronicdetails' element={<Electronicdetails />} />
 
-          <Route path='/category/:id' element={<Category/>} />
-          <Route path='/product/:id' element={< Product/>} />
+            <Route path='/category/:id' element={<Category />} />
+            <Route path='/product/:id' element={< Product />} />
 
-          {/* Profile */}
-          <Route path='/profile' element={<Profile />} />
+            {/* Profile */}
+            <Route path='/profile' element={<Profile />} />
 
-          {/* about us */}
-          <Route path="/about" element={<AboutUs />} />
+            {/* about us */}
+            <Route path="/about" element={<AboutUs />} />
 
-          {/*contact us  */}
-          <Route path="/contact" element={<ContactUs />} />
+            {/*contact us  */}
+            <Route path="/contact" element={<ContactUs />} />
 
-          {/* luggage */}
-          <Route path="/luggage" element={<Luggage />} />
+            {/* luggage */}
+            <Route path="/luggage" element={<Luggage />} />
 
-          {/* sport */}
-          <Route path="/sports" element={<Sports />} />
+            {/* sport */}
+            <Route path="/sports" element={<Sports />} />
 
-          {/* HELP  */}
-          <Route path="/help" element={<HelpSupport />} />
+            {/* HELP  */}
+            <Route path="/help" element={<HelpSupport />} />
 
-          {/* wishlist */}
-          <Route path="/wishlist" element={<Wishlist />} />
+            {/* wishlist */}
+            <Route path="/wishlist" element={<Wishlist />} />
 
-          <Route path="/trackorder/:id" element={<TrackOrder />} />
+            <Route path="/trackorder/:id" element={<TrackOrder />} />
 
-          <Route path='/trackrefund' element={<TrackRefund />} />
-          <Route path='/myordertrack' element={<MyOrderwithTracking />} />
+            <Route path='/trackrefund' element={<TrackRefund />} />
+            <Route path='/myordertrack' element={<MyOrderwithTracking />} />
 
-          <Route path='/returnrefund' element={<TrackReturnRefund />} />
-          <Route path='/ratereview' element={<RateReview />} />
-          <Route path='/combine' element={<Combined />} />                                                                                                                                                                                                                                                                                                                                    
-          {/* User */}
-          <Route path="/user" element={<User />}>
-            <Route path='profile' element={<UserProfile />} />
-            <Route path='payment' element={<UserpaymentMethod />} />
-            <Route path='payment/upi' element={<GooglepayUPIMethod />} />
-            <Route path='myorder' element={<MyOrder />} />
-            <Route path='faqs' element={<UserFaq />} />
-          
-            <Route path='term' element={<TermOfServices />} />
-            <Route path='deactive' element={<UserDeactive />} />
-            <Route path='address' element={<UserAddress />} />
-          </Route>
+            <Route path='/returnrefund' element={<TrackReturnRefund />} />
+            <Route path='/ratereview' element={<RateReview />} />
+            <Route path='/combine' element={<Combined />} />
+            {/* User */}
+            <Route path="/user" element={<User />}>
+              <Route path='profile' element={<UserProfile />} />
+              <Route path='payment' element={<UserpaymentMethod />} />
+              <Route path='payment/upi' element={<GooglepayUPIMethod />} />
+              <Route path='myorder' element={<MyOrder />} />
+              <Route path='faqs' element={<UserFaq />} />
 
-          {/* Cart  */}
+              <Route path='term' element={<TermOfServices />} />
+              <Route path='deactive' element={<UserDeactive />} />
+              <Route path='address' element={<UserAddress />} />
+            </Route>
 
-          <Route path="/cart" element={<Cart />}></Route>  
-          <Route path="/invoice" element={<Invoice />}></Route>  
+            {/* Cart  */}
+
+            <Route path="/cart" element={<Cart />}></Route>
+            <Route path="/invoice/:id" element={<Invoice />}></Route>
 
 
-        </Routes>
+          </Routes>
+        </CartProvider>
       </BrowserRouter>
 
 

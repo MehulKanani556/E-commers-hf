@@ -7,12 +7,14 @@ import { BsCart3 } from 'react-icons/bs'
 import Models from './model/Models'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { useCart } from '../../../Context/CartContext'
 
 const Header = () => {
 
     const BaseUrl = process.env.REACT_APP_BASEURL;
     const token = localStorage.getItem('token');
 
+    const {cartItems } = useCart();
     // login 
     const [modalShow, setModalShow] = React.useState(false);
     const [address_model, setadderss_model] = useState(false);
@@ -233,7 +235,7 @@ const Header = () => {
 
             // Ensure the response data has the expected structure
             setSearchResults(response.data);
-            console.log("ooo",response.data)
+            console.log("ooo", response.data)
         } catch (error) {
             console.error('Global search error:', error);
             // Reset search results on error
@@ -259,10 +261,10 @@ const Header = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchQuery]);
 
-    const handleSearchResultClick = async(id) => {
+    const handleSearchResultClick = async (id) => {
         try {
             const response = await axios.get(`${BaseUrl}/api/getProduct/${id}`, {
-            headers: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `Bearer ${token}` },
             });
             console.log(response.data);
         } catch (error) {
@@ -355,8 +357,11 @@ const Header = () => {
                                                         Wishlist
                                                     </Link>
                                                     <hr className='m-0' />
-                                                    <Link to='/cart' className='px-3 py-3 d-flex align-items-center d_theme text-decoration-none'>
+                                                    <Link to='/cart' className='px-3 py-3 d-flex align-items-center d_theme text-decoration-none  position-relative'>
                                                         <BsCart3 className='me-2 font_20' />
+                                                        <span className='s_cart1'>
+                                                            {cartItems.length || 0}
+                                                        </span>
                                                         Cart
                                                     </Link>
                                                 </div>
@@ -382,21 +387,21 @@ const Header = () => {
                                         <ul className='VK_input_suggestion list-unstyled'>
                                             {searchResults.map((product, index) => (
                                                 <li key={`product-${index}`}
-                                                className='py-2'>
+                                                    className='py-2'>
                                                     <Link className='mv_search_a' to={`/womendetails/${product._id}`}
                                                     >
-                                                    <div className='d-flex align-items-center w-100'>
-                                                        <div>
-                                                            <img src={require('../../assets/zoom.png')} height="22px" width="22px" alt="" />
+                                                        <div className='d-flex align-items-center w-100'>
+                                                            <div>
+                                                                <img src={require('../../assets/zoom.png')} height="22px" width="22px" alt="" />
+                                                            </div>
+                                                            <div className='ps-3 mv_search_text'>
+                                                                {product.productName}
+                                                            </div>
+                                                            <div className='ms-auto'>
+                                                                <img src={require('../../assets/arrow.png')} height="20px" width="20px" alt="" />
+                                                            </div>
                                                         </div>
-                                                        <div className='ps-3 mv_search_text'>
-                                                            {product.productName}
-                                                        </div>
-                                                        <div className='ms-auto'>
-                                                            <img src={require('../../assets/arrow.png')} height="20px" width="20px" alt="" />
-                                                        </div>
-                                                    </div>
-                                                </Link>
+                                                    </Link>
                                                 </li>
                                             ))}
                                         </ul>
@@ -409,8 +414,11 @@ const Header = () => {
                                         <Link to='/wishlist'>
                                             <img src={require("../../assets/wishlist.png")} height={20} width={20} alt="" />
                                         </Link>
-                                        <Link to='/cart'>
+                                        <Link to='/cart' className='position-relative' >
                                             <img src={require("../../assets/Cart.png")} height={22} width={22} alt="" />
+                                            <span className='s_cart'>
+                                                {cartItems.length || 0}
+                                            </span>
                                         </Link>
                                         <div>
                                             <button className='bg-transparent border-0' onClick={() => { login_chk() }}>
@@ -556,55 +564,55 @@ const Header = () => {
                                 <span className='VK_input_label pb-1'>
                                     Name
                                 </span>
-                                <input 
-                                    type="text" 
+                                <input
+                                    type="text"
                                     name="name"
                                     value={formData.name}
                                     onChange={handleChange}
-                                    className='VK_from_input w-100 py-2 px-3' 
-                                    placeholder='Enter name' 
-                                    required 
+                                    className='VK_from_input w-100 py-2 px-3'
+                                    placeholder='Enter name'
+                                    required
                                 />
                             </div>
                             <div className='VK_name my-3'>
                                 <span className='VK_input_label pb-1'>
                                     Contact no.
                                 </span>
-                                <input 
-                                    type="text" 
+                                <input
+                                    type="text"
                                     name="contactNo"
                                     value={formData.contactNo}
                                     onChange={handleChange}
-                                    className='VK_from_input w-100 py-2 px-3' 
-                                    placeholder='Enter Contact No.' 
-                                    required 
+                                    className='VK_from_input w-100 py-2 px-3'
+                                    placeholder='Enter Contact No.'
+                                    required
                                 />
                             </div>
                             <div className='VK_name my-3'>
                                 <span className='VK_input_label pb-1'>
                                     Building No. /  Building Name / Street Name
                                 </span>
-                                <input 
-                                    type="text" 
+                                <input
+                                    type="text"
                                     name="address"
                                     value={formData.address}
                                     onChange={handleChange}
-                                    className='VK_from_input w-100 py-2 px-3' 
-                                    placeholder='Enter Building No. / Building Name / Street Name' 
-                                    required 
+                                    className='VK_from_input w-100 py-2 px-3'
+                                    placeholder='Enter Building No. / Building Name / Street Name'
+                                    required
                                 />
                             </div>
                             <div className='VK_name my-3'>
                                 <span className='VK_input_label pb-1'>
                                     Landmark
                                 </span>
-                                <input 
-                                    type="text" 
+                                <input
+                                    type="text"
                                     name="landmark"
                                     value={formData.landmark}
                                     onChange={handleChange}
-                                    className='VK_from_input w-100 py-2 px-3' 
-                                    placeholder='Enter Landmark' 
+                                    className='VK_from_input w-100 py-2 px-3'
+                                    placeholder='Enter Landmark'
                                 />
                             </div>
                             <div className='d-flex flex-sm-nowrap flex-wrap my-3 gap-3'>
@@ -612,42 +620,42 @@ const Header = () => {
                                     <span className='VK_input_label pb-1'>
                                         Pincode
                                     </span>
-                                    <input 
-                                        type="text" 
+                                    <input
+                                        type="text"
                                         name="pincode"
                                         value={formData.pincode}
                                         onChange={handleChange}
-                                        className='VK_from_input w-100 py-2 px-3' 
-                                        placeholder='Enter Pincode' 
-                                        required 
+                                        className='VK_from_input w-100 py-2 px-3'
+                                        placeholder='Enter Pincode'
+                                        required
                                     />
                                 </div>
                                 <div className='w-100'>
                                     <span className='VK_input_label pb-1'>
                                         City
                                     </span>
-                                    <input 
-                                        type="text" 
+                                    <input
+                                        type="text"
                                         name="city"
                                         value={formData.city}
                                         onChange={handleChange}
-                                        className='VK_from_input w-100 py-2 px-3' 
-                                        placeholder='Enter City' 
-                                        required 
+                                        className='VK_from_input w-100 py-2 px-3'
+                                        placeholder='Enter City'
+                                        required
                                     />
                                 </div>
                                 <div className='w-100'>
                                     <span className='VK_input_label pb-1'>
                                         State
                                     </span>
-                                    <input 
-                                        type="text" 
+                                    <input
+                                        type="text"
                                         name="state"
                                         value={formData.state}
                                         onChange={handleChange}
-                                        className='VK_from_input w-100 py-2 px-3' 
-                                        placeholder='Enter State' 
-                                        required 
+                                        className='VK_from_input w-100 py-2 px-3'
+                                        placeholder='Enter State'
+                                        required
                                     />
                                 </div>
                             </div>
