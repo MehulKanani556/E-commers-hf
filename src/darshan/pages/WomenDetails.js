@@ -21,11 +21,13 @@ import Footer from '../../Vivek/Component/footer/Footer';
 import ReactImageMagnify from 'react-image-magnify';
 import axios from 'axios';
 import { IoMdHeartEmpty, IoMdHeart, IoMdClose } from 'react-icons/io';
+import { useCart } from '../../Context/CartContext';
 
 
 const WomenDetails = () => {
 
     const { productId } = useParams();
+    const {addToCart} = useCart();
     const navigate = useNavigate();
 
     const BaseUrl = process.env.REACT_APP_BASEURL;
@@ -311,8 +313,10 @@ const WomenDetails = () => {
             }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            // console.log("response", response.data);
+            // console.log("response", response.data.cart._id);
+            const cartId = response.data.cart._id
             if(response.data.status === 201) {
+                addToCart(productId, productVariantId, cartId);
                 setSelectedQuantity('Select');
                 navigate('/cart');
             }

@@ -12,6 +12,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { State, City } from 'country-state-city';
+import { useCart } from "../../../Context/CartContext";
 
 
 const Cart = () => {
@@ -20,6 +21,7 @@ const Cart = () => {
   const token = localStorage.getItem('token');
 
   const navigate = useNavigate();
+  const { removeFromCart } = useCart();
 
   const [showModal, setShowModal] = useState(false);
   const [address, setAddress] = useState([]);
@@ -53,7 +55,7 @@ const Cart = () => {
   const [appliedDiscount, setAppliedDiscount] = useState(0);
   const [selectedDeliveryType, setSelectedDeliveryType] = useState('Free');
   const [productData, setProductData] = useState([]);
-  const [orderData, setOrderData] = useState({ addressData: [], productData: [] });
+  const [orderData, setOrderData] = useState();
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
@@ -133,7 +135,6 @@ const Cart = () => {
 
   const createOrder = async () => {
     try {
-      const selectedAddress = address.find(addr => addr._id === selectedAddressId);
 
       const orderItems = cartData.map(item => ({
         productId: item.productData[0]._id,
@@ -148,12 +149,10 @@ const Cart = () => {
         deliveryType: selectedDeliveryType,
         paymentMethod: 'received'
       }, { headers: { Authorization: `Bearer ${token}` } });
-      // console.log("response", response.data.order._id);
-      setOrderData({
-        ...response.data.order,
-        addressData: [selectedAddress] // Format it to match your JSX expectations
-      });
+
       setId(response.data.order._id);
+      localStorage.removeItem('cartItems');
+
     } catch (error) {
       console.error('Data Fetching Error:', error);
     }
@@ -175,8 +174,8 @@ const Cart = () => {
     }
   }
 
-  const handleinvoicenavigate = () => {
-    navigate('/invoice');
+  const handleinvoicenavigate = (id) => {
+    navigate(`/invoice/${id}`);
   }
 
   const handleDropdownSelect = (suffix) => {
@@ -282,6 +281,7 @@ const Cart = () => {
       setCartData(prevCartData => {
         return prevCartData.filter(item => item._id !== itemId);
       });
+      removeFromCart(itemId);
     }
   };
 
@@ -352,12 +352,14 @@ const Cart = () => {
       return total + (item.quantity * discountPrice);
     }, 0).toFixed(2);
   };
+
   const calculateTotal = () => {
     const subtotal = parseFloat(calculateSubtotal());
     const tax = 40;
     const deliveryCharge = deliveryCharges[selectedDeliveryType] || 0;
     return ((subtotal - appliedDiscount) + tax + deliveryCharge).toFixed(2);
   };
+
   const handleApplyCoupon = (e) => {
     e.preventDefault();
 
@@ -379,14 +381,50 @@ const Cart = () => {
         const response = await axios.get(`${BaseUrl}/api/getOrder/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
-        console.log("response", response.data.order);
-        setOrderData(response.data.order);
+        // console.log("response", response.data.order);
+        setOrderData(response.data.order[0]);
       } catch (error) {
         console.error('Data fetching failed:', error);
       }
     }
     if (id) fetchOrderData();
   }, [id]);
+
+  const calculateOrderSubTotal = () => {
+    let subtotal = 0;
+
+    // Check if orderData exists and has items
+    if (orderData && orderData.items && orderData.productVariantData) {
+      // Loop through all items in the order
+      orderData.items.forEach((item, index) => {
+        if (orderData.productVariantData[index]) {
+          const originalPrice = orderData.productVariantData[index].originalPrice;
+          const discountPrice = orderData.productVariantData[index].discountPrice;
+          const quantity = item.quantity;
+
+          // Calculate discounted price for each item
+          const itemPrice = originalPrice - (originalPrice * discountPrice / 100);
+          subtotal += itemPrice * quantity;
+        }
+      });
+    }
+
+    return subtotal.toFixed(2);
+  };
+
+  const calculateOrderTotal = () => {
+    const subtotal = parseFloat(calculateSubtotal());
+    let deliveryCharge = 0;
+    const Tax = 40;
+
+    // Add delivery charge if it's not free
+    if (selectedDeliveryType && selectedDeliveryType !== "Free") {
+      deliveryCharge = parseFloat(deliveryCharges[selectedDeliveryType] || 0);
+    }
+
+    const total = subtotal + deliveryCharge + Tax;
+    return total.toFixed(2);
+  };
 
   return (
     <div>
@@ -1102,11 +1140,11 @@ const Cart = () => {
                           <div>
                             <div className="d-flex ">
                               <p className="ds_con-bill-txt ">Order ID:</p>
-                              <p className="ds_con-bill-deta text-dark fw-600 text-start" >{orderData[0]?._id}</p>
+                              <p className="ds_con-bill-deta text-dark fw-600 text-start" >{orderData?._id}</p>
                             </div>
                             <div className="d-flex ">
                               <p className="ds_con-bill-txt">Order Date:</p>
-                              <p className="ds_con-bill-deta text-dark fw-600" >{new Date(orderData[0]?.createdAt).toLocaleDateString('en-US', {
+                              <p className="ds_con-bill-deta text-dark fw-600" >{new Date(orderData?.createdAt).toLocaleDateString('en-US', {
                                 year: 'numeric',
                                 month: 'long',
                                 day: 'numeric',
@@ -1114,7 +1152,7 @@ const Cart = () => {
                             </div>
                             <div className="d-flex ">
                               <p className="ds_con-bill-txt">Payment Method:</p>
-                              <p className="ds_con-bill-deta text-dark fw-600" >{orderData[0]?.paymentMethod}<RiArrowDropDownLine /></p>
+                              <p className="ds_con-bill-deta text-dark fw-600" >{orderData?.paymentMethod}<RiArrowDropDownLine /></p>
                             </div>
                             <div className="d-flex  mt-1">
                               <p className="ds_con-bill-txt">Card name</p>
@@ -1132,23 +1170,33 @@ const Cart = () => {
                         </div>
 
                         <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12  mt-3">
-                          {console.log("ordeData",orderData.addressData)}
-                          
+                          {/* {console.log("ordeData",orderData.addressData)} */}
+
                           <div>
                             <p className="ds_con-bill-txt">Billing Address</p>
-                            <p className="ds_con-font text-dark fw-600 " >{orderData.addressData?.name}</p>
-                            <p className="ds_con-font text-dark fw-600">{`${orderData?.addressData?.address},${orderData?.addressData?.landmark}, ${orderData?.addressData?.city}, ${orderData?.addressData?.state},  ${orderData?.addressData?.pincode}`}</p>
-                            <p className="ds_con-font text-dark fw-600">+1 {orderData.addressData?.contactNo}</p>
+                            <p className="ds_con-font text-dark fw-600 " >{orderData?.addressData[0]?.name}</p>
+                            <p className="ds_con-font text-dark fw-600">
+                              {orderData?.addressData[0] &&
+                                `${orderData.addressData[0].address}, ${orderData.addressData[0].landmark}, 
+                                ${orderData.addressData[0].city}, ${orderData.addressData[0].state}, 
+                                ${orderData.addressData[0].pincode}`
+                              }
+                            </p>
+                            <p className="ds_con-font text-dark fw-600">+1 {orderData?.addressData[0]?.contactNo}</p>
                           </div>
                         </div>
 
                         <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12  mt-3 mb-3">
                           <div>
                             <p className="ds_con-bill-txt">Shipping Address</p>
-                            <p className="ds_con-font text-dark fw-600 " >{orderData.addressData?.name}</p>
-                            <p className="ds_con-font text-dark fw-600">{`${orderData?.addressData?.address},${orderData?.addressData?.landmark}, ${orderData?.addressData?.city}, ${orderData?.addressData?.state},  ${orderData?.addressData?.pincode}`}</p>
-                            <p className="ds_con-font text-dark fw-600">+1 {orderData.addressData?.contactNo}</p>
-                            <button className=" ds_con-btn" onClick={handleinvoicenavigate}>View Invoice</button>
+                            <p className="ds_con-font text-dark fw-600 " >{orderData?.addressData[0]?.name}</p>
+                            <p className="ds_con-font text-dark fw-600">  {orderData?.addressData[0] &&
+                              `${orderData.addressData[0].address}, ${orderData.addressData[0].landmark}, 
+                                ${orderData.addressData[0].city}, ${orderData.addressData[0].state}, 
+                                ${orderData.addressData[0].pincode}`
+                            }</p>
+                            <p className="ds_con-font text-dark fw-600">+1 {orderData?.addressData[0]?.contactNo}</p>
+                            <button className=" ds_con-btn" onClick={() => handleinvoicenavigate(orderData?._id)}>View Invoice</button>
                           </div>
                         </div>
                       </div>
@@ -1159,189 +1207,66 @@ const Cart = () => {
 
               <div className="col-xl-4 col-lg-4 mt-lg-0 mt-4">
                 <div className="ds_con-buy">
-                  {orderData.productData}
-                  <div className="d-flex justify-content-between px-3">
-                    <div>
-                      <div className="d-flex">
+                  {/* {orderData.productData} */}
+                  {orderData?.productData?.map((product, index) => (
+                    <div key={product._id}>
+                      <div className="d-flex justify-content-between px-3 mt-3">
                         <div>
-                          <img src={require("../Img/trade.png")} alt="" />
+                          <div className="d-flex">
+                            <div>
+                              <img
+                                src={`${BaseUrl}/${orderData?.productVariantData[index]?.images[0]}`}
+                                alt=""
+                                style={{ width: '50px', height: '80px', objectFit: 'cover' }}
+                              />
+                            </div>
+                            <div className="ms-2">
+                              <p className="fw-600 mb-0 ds_con-trade">{product.productName}</p>
+                              <p className="ds_con-trade-text mb-0">{orderData?.productVariantData[index]?.shortDescription}</p>
+                              <p className="ds_qantity" style={{ color: '#6A6A6ABF' }}>
+                                Qty : <span className="fw-600 text-dark">{orderData?.items[index]?.quantity}</span>
+                              </p>
+                            </div>
+                          </div>
                         </div>
-                        <div className="ms-2">
-                          <p className="fw-600 mb-0 ds_con-trade">Traditional</p>
-                          <p className="ds_con-trade-text mb-0">Elegant peach color silk chaniya choli</p>
-                          <p className="ds_qantity" style={{ color: '#6A6A6ABF' }}>Qty : <span className="fw-600 text-dark">01</span></p>
-                        </div>
+                        <p className="ds_con-price fw-600">
+                          ${orderData?.productVariantData[index]?.originalPrice &&
+                            (orderData.productVariantData[index].originalPrice -
+                              (orderData.productVariantData[index].originalPrice *
+                                orderData.productVariantData[index].discountPrice / 100))}
+                        </p>
                       </div>
+                      {/* Add divider between products */}
+                      {index < orderData.productData.length - 1 && <div className="ds_con-line mt-3"></div>}
                     </div>
-                    <p className="ds_con-price fw-600">$120</p>
-                  </div>
-
+                  ))}
                   <div className="ds_con-line mt-3"></div>
 
                   <div>
                     <div className="d-flex px-3 mt-3 justify-content-between">
                       <h6 className="ds_con-total">Sub Total</h6>
-                      <h6 className="ds_con-total-price text-dark fw-600">$240</h6>
+                      <h6 className="ds_con-total-price text-dark fw-600">${calculateOrderSubTotal()}</h6>
+                    </div>
+                    <div className="d-flex px-3 mt-3 justify-content-between">
+                      <h6 className="ds_con-total">Tax</h6>
+                      <h6 className="ds_con-total-price text-dark fw-600">+ $40</h6>
                     </div>
                     <div className="d-flex px-3 mt-3 justify-content-between">
                       <h6 className="ds_con-total">Delivery Charge</h6>
-                      <h6 className="ds_con-total-price fw-600" style={{ color: "#03CF18" }}>FREE</h6>
+                      <h6 className="ds_con-total-price fw-600" style={{ color: "#03CF18" }}>{selectedDeliveryType ? (
+                        selectedDeliveryType === "Free" ? "FREE" : `$${deliveryCharges[selectedDeliveryType]}`
+                      ) : "Select Delivery"}</h6>
                     </div>
                   </div>
                   <div className="ds_con-dash mt-3"></div>
 
                   <div className="d-flex justify-content-between px-3 mt-3">
                     <h4 className="ds_con-amount">Total Amount</h4>
-                    <h4 className="ds_con-amount">$220</h4>
+                    <h4 className="ds_con-amount">${calculateOrderTotal()}</h4>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* /* {************** Invoice *******************} */}
-      <section className="d-none">
-        <div>
-          <div className="d_container">
-            <div className="mt-4">
-              <div className="row justify-content-center">
-                <div className="col-xl-8 ">
-                  <div className="ds_in-bg">
-                    <h5 className="fw-bold">LOGO</h5>
-                    <div className="d-flex flex-wrap justify-content-between ">
-                      <div className="mt-4">
-                        <h5 className="ds_in-name">Jhon Wick</h5>
-                        <h6 className="ds_in-email">example@gmail.com</h6>
-                        <h6 className="ds_in-email">+1 565 5656 565</h6>
-                      </div>
-                      <div className="d-flex justify-content-between mt-4 ds_in-flex-manage">
-                        <div>
-                          <p className="ds_in-text mb-0">Invoice No</p>
-                          <p className="ds_in-text mb-0">Invoice Date</p>
-                          <p className="ds_in-text mb-0">Order ID</p>
-                        </div>
-                        <div className="text-end">
-                          <p className="ds_in-text mb-0 text-dark fw-500">#123456</p>
-                          <p className="ds_in-text mb-0 text-dark fw-500">26/09/2024</p>
-                          <p className="ds_in-text mb-0 text-dark fw-500">#1123456789654</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-xl-4 col-lg-4 col-md-4 mt-4">
-                      <div className="ds_in-border h-100">
-                        <p className="ds_in-sold fw-500 mb-2">SOLD BY</p>
-                        <p className="ds_in-sold text-dark fw-600 mb-0">COCOBLU RETAIL LIMITED </p>
-                        <p className="ds_in-add text-dark fw-400">Renaissance industrial smart city, Kalyan Sape road, Thane, Maharashtra, 421302 IN</p>
-                      </div>
-                    </div>
-
-                    <div className="col-xl-4 col-lg-4 col-md-4 mt-4">
-                      <div className="ds_in-border h-100">
-                        <p className="ds_in-sold fw-500 mb-2">BILLED TO</p>
-                        <p className="ds_in-sold text-dark fw-600 mb-0">Alex Shroff </p>
-                        <p className="ds_in-add text-dark fw-400">Ehrenkranz 13 Washington Square S , New York , Washington Square , NY 10012 , USA</p>
-                      </div>
-                    </div>
-
-                    <div className="col-xl-4 col-lg-4 col-md-4 mt-4">
-                      <div className="ds_in-border border-0 h-100">
-                        <p className="ds_in-sold fw-500 mb-2">SHIPPED TO</p>
-                        <p className="ds_in-sold text-dark fw-600 mb-0">Alex Shroff </p>
-                        <p className="ds_in-add text-dark fw-400">Ehrenkranz 13 Washington Square S , New York , Washington Square , NY 10012 , USA</p>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="ds_in-line mt-3"></div>
-                    </div>
-
-                    <div className="mt-4 ds_table-main">
-                      <table>
-                        <thead>
-                          <tr>
-                            <th className="ds_table-th">Item</th>
-                            <th className="ds_table-th">Qty.</th>
-                            <th className="ds_table-th">Price</th>
-                            <th className="ds_table-th">Amount</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>
-                              <div className="ds_table-title">Traditional Chaniya Choli</div>
-                              <div className="ds_table-desc">Elegant peach color silk chaniya choli with dupatta & accessories</div>
-                            </td>
-                            <td className="ds_table-quantity">1</td>
-                            <td className="ds_table-price">$120.00</td>
-                            <td className="ds_table-price">$120.00</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="ds_table-title">Traditional Chaniya Choli</div>
-                              <div className="ds_table-desc">Elegant peach color silk chaniya choli with dupatta & accessories</div>
-                            </td>
-                            <td className="ds_table-quantity">1</td>
-                            <td className="ds_table-price">$120.00</td>
-                            <td className="ds_table-price">$120.00</td>
-                          </tr>
-                        </tbody>
-                      </table>
-
-
-
-                    </div>
-
-                    <div>
-                      <div className="ds_in-line mt-5"></div>
-                    </div>
-
-                    <div>
-                      <div className="d-flex justify-content-between flex-wrap align-items-end ">
-                        <div className="mt-4">
-                          <h6 className="ds_in-method">Payment Method </h6>
-                          <p className="ds_in-name mb-0">Bank Name : Bank Central Asia (BCA)</p>
-                          <p className="ds_in-name mb-0">Card No. : 1234 5678 9123 4567</p>
-                          <p className="ds_in-name mb-0">Name : Jhon Wick</p>
-                        </div>
-                        <div className="mt-4">
-                          <div className="d-flex justify-content-between">
-                            <div>
-                              <p className="ds_in-sub">Sub Total</p>
-                              <p className="ds_in-sub">Discount</p>
-                              <p className="ds_in-sub">SGST</p>
-                              <p className="ds_in-sub">CGST</p>
-                              <h6 className="ds_in-total">Total Amount</h6>
-                            </div>
-                            <div className="ms-5">
-                              <p className="ds_in-sub fw-600 text-dark">$240.00</p>
-                              <p className="ds_in-sub fw-600" style={{ color: "#0F993E" }}>-$40.00</p>
-                              <p className="ds_in-sub fw-600 text-dark">$3.50</p>
-                              <p className="ds_in-sub fw-600 text-dark">$6.50</p>
-                              <h6 className="ds_in-total">$210.00</h6>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="mt-5 text-center">
-                      <div>
-                        <p className="ds_in-thank mb-0">Thank you for shopping with us!</p>
-                        <p className="ds_in-thank ">Have a nice day <img src={require("../Img/smile.png")} alt="" /></p>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="d_invoicefooter">
-            <p className="mb-0">If you have any questions, feel free to call customer care at +1 565 5656 565 or use Contact Us section.</p>
           </div>
         </div>
       </section>

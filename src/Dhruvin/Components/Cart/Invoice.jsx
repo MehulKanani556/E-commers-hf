@@ -1,7 +1,55 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './../Css/Cart.css'
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const Invoice = () => {
+
+    const BaseUrl = process.env.REACT_APP_BASEURL;
+    const token = localStorage.getItem('token');
+
+    const { id } = useParams();
+    // console.log("id",id);
+
+    const [orderData, setOrderData] = useState();
+    
+    useEffect(() => {
+        const fetchOrderData = async () => {
+            try {
+                const response = await axios.get(`${BaseUrl}/api/getOrder/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                // console.log("response", response.data.order);
+                setOrderData(response.data.order[0]);
+                // console.log("addressData", response.data.order[0].addressData);
+
+            } catch (error) {
+                console.error('Data fetching failed:', error);
+            }
+        }
+        if (id) fetchOrderData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id, BaseUrl, token]);
+
+    // Add this before the return statement in your component
+    const calculateSubtotal = () => {
+        // console.log("ordedata",orderData);
+
+        return orderData?.items.reduce((total, item, index) => {
+            const price = orderData?.productVariantData[index]?.originalPrice -
+                (orderData?.productVariantData[index]?.originalPrice *
+                    orderData?.productVariantData[index]?.discountPrice / 100);
+            return total + (price * item.quantity);
+        }, 0) || 0;
+    };
+
+    const subtotal = calculateSubtotal();
+    const sgstRate = 0.015; // 1.5%
+    const cgstRate = 0.025; // 2.5%
+    const sgstAmount = subtotal * sgstRate;
+    const cgstAmount = subtotal * cgstRate;
+    const totalAmount = subtotal + sgstAmount + cgstAmount;
+
     return (
         <>
 
@@ -15,9 +63,9 @@ const Invoice = () => {
                                         <h5 className="fw-bold">LOGO</h5>
                                         <div className="d-flex flex-wrap justify-content-between ">
                                             <div className="mt-4">
-                                                <h5 className="ds_in-name">Jhon Wick</h5>
-                                                <h6 className="ds_in-email">example@gmail.com</h6>
-                                                <h6 className="ds_in-email">+1 565 5656 565</h6>
+                                                <h5 className="ds_in-name">{orderData?.userData?.[0].name}</h5>
+                                                <h6 className="ds_in-email">{orderData?.userData?.[0].email}</h6>
+                                                <h6 className="ds_in-email">+1 {orderData?.userData?.[0].mobileNo}</h6>
                                             </div>
                                             <div className="d-flex justify-content-between mt-4 ds_in-flex-manage">
                                                 <div>
@@ -27,8 +75,12 @@ const Invoice = () => {
                                                 </div>
                                                 <div className="text-end">
                                                     <p className="ds_in-text mb-0 text-dark fw-500">#123456</p>
-                                                    <p className="ds_in-text mb-0 text-dark fw-500">26/09/2024</p>
-                                                    <p className="ds_in-text mb-0 text-dark fw-500">#1123456789654</p>
+                                                    <p className="ds_in-text mb-0 text-dark fw-500">{new Date(orderData?.createdAt).toLocaleDateString('en-US', {
+                                                        year: 'numeric',
+                                                        month: 'long',
+                                                        day: 'numeric',
+                                                    })}</p>
+                                                    <p className="ds_in-text mb-0 text-dark fw-500">{orderData?._id}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -45,16 +97,24 @@ const Invoice = () => {
                                         <div className="col-xl-4 col-lg-4 col-md-4 mt-4">
                                             <div className="ds_in-border h-100">
                                                 <p className="ds_in-sold fw-500 mb-2">BILLED TO</p>
-                                                <p className="ds_in-sold text-dark fw-600 mb-0">Alex Shroff </p>
-                                                <p className="ds_in-add text-dark fw-400">Ehrenkranz 13 Washington Square S , New York , Washington Square , NY 10012 , USA</p>
+                                                <p className="ds_in-sold text-dark fw-600 mb-0">{orderData?.addressData[0]?.name}</p>
+                                                <p className="ds_in-add text-dark fw-400">{orderData?.addressData[0] &&
+                                                    `${orderData.addressData[0].address}, ${orderData.addressData[0].landmark}, 
+                                                        ${orderData.addressData[0].city}, ${orderData.addressData[0].state}, 
+                                                        ${orderData.addressData[0].pincode}`
+                                                }</p>
                                             </div>
                                         </div>
 
                                         <div className="col-xl-4 col-lg-4 col-md-4 mt-4">
                                             <div className="ds_in-border border-0 h-100">
                                                 <p className="ds_in-sold fw-500 mb-2">SHIPPED TO</p>
-                                                <p className="ds_in-sold text-dark fw-600 mb-0">Alex Shroff </p>
-                                                <p className="ds_in-add text-dark fw-400">Ehrenkranz 13 Washington Square S , New York , Washington Square , NY 10012 , USA</p>
+                                                <p className="ds_in-sold text-dark fw-600 mb-0">{orderData?.addressData[0]?.name}</p>
+                                                <p className="ds_in-add text-dark fw-400">{orderData?.addressData[0] &&
+                                                    `${orderData.addressData[0].address}, ${orderData.addressData[0].landmark}, 
+                                                    ${orderData.addressData[0].city}, ${orderData.addressData[0].state}, 
+                                                    ${orderData.addressData[0].pincode}`
+                                                }</p>
                                             </div>
                                         </div>
 
@@ -73,24 +133,24 @@ const Invoice = () => {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <div className="ds_table-title">Traditional Chaniya Choli</div>
-                                                            <div className="ds_table-desc">Elegant peach color silk chaniya choli with dupatta & accessories</div>
-                                                        </td>
-                                                        <td className="ds_table-quantity">1</td>
-                                                        <td className="ds_table-price">$120.00</td>
-                                                        <td className="ds_table-price">$120.00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div className="ds_table-title">Traditional Chaniya Choli</div>
-                                                            <div className="ds_table-desc">Elegant peach color silk chaniya choli with dupatta & accessories</div>
-                                                        </td>
-                                                        <td className="ds_table-quantity">1</td>
-                                                        <td className="ds_table-price">$120.00</td>
-                                                        <td className="ds_table-price">$120.00</td>
-                                                    </tr>
+                                                    {orderData?.productData?.map((product, index) => (
+                                                        <tr key={product._id}>
+                                                            <td>
+                                                                <div className="ds_table-title">{product.productName}</div>
+                                                                <div className="ds_table-desc">{orderData?.productVariantData[index]?.shortDescription}</div>
+                                                            </td>
+                                                            <td className="ds_table-quantity">{orderData?.items[index]?.quantity}</td>
+                                                            <td className="ds_table-price"> ${orderData?.productVariantData[index]?.originalPrice &&
+                                                                (orderData.productVariantData[index].originalPrice -
+                                                                    (orderData.productVariantData[index].originalPrice *
+                                                                        orderData.productVariantData[index].discountPrice / 100))}</td>
+                                                            <td className="ds_table-price"> ${(orderData?.productVariantData[index]?.originalPrice &&
+                                                                (orderData.productVariantData[index].originalPrice -
+                                                                    (orderData.productVariantData[index].originalPrice *
+                                                                        orderData.productVariantData[index].discountPrice / 100)) *
+                                                                orderData?.items[index]?.quantity).toFixed(2)}</td>
+                                                        </tr>
+                                                    ))}
                                                 </tbody>
                                             </table>
                                         </div>
@@ -111,17 +171,17 @@ const Invoice = () => {
                                                     <div className="d-flex justify-content-between">
                                                         <div>
                                                             <p className="ds_in-sub">Sub Total</p>
-                                                            <p className="ds_in-sub">Discount</p>
+                                                            {/* <p className="ds_in-sub">Discount</p> */}
                                                             <p className="ds_in-sub">SGST</p>
                                                             <p className="ds_in-sub">CGST</p>
                                                             <h6 className="ds_in-total">Total Amount</h6>
                                                         </div>
                                                         <div className="ms-5">
-                                                            <p className="ds_in-sub fw-600 text-dark">$240.00</p>
-                                                            <p className="ds_in-sub fw-600" style={{ color: "#0F993E" }}>-$40.00</p>
-                                                            <p className="ds_in-sub fw-600 text-dark">$3.50</p>
-                                                            <p className="ds_in-sub fw-600 text-dark">$6.50</p>
-                                                            <h6 className="ds_in-total">$210.00</h6>
+                                                            <p className="ds_in-sub fw-600 text-dark">${subtotal.toFixed(2)}</p>
+                                                            {/* <p className="ds_in-sub fw-600" style={{ color: "#0F993E" }}>-$40.00</p> */}
+                                                            <p className="ds_in-sub fw-600 text-dark">${sgstAmount.toFixed(2)}</p>
+                                                            <p className="ds_in-sub fw-600 text-dark">${cgstAmount.toFixed(2)}</p>
+                                                            <h6 className="ds_in-total">${totalAmount.toFixed(2)}</h6>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -150,4 +210,4 @@ const Invoice = () => {
     )
 }
 
-export default Invoice
+export default Invoice;
