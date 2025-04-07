@@ -1,12 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../User/user.css';
 import Map from '../Map.jsx';
 // import { Modal } from 'react-bootstrap';
 import Header from '../header/Header.jsx'
 import Footer from '../footer/Footer.jsx';
 import { FaStar } from 'react-icons/fa6';
+import axios from 'axios';
 
 function RateReview() {
+
+    // const BaseUrl = process.env.REACT_APP_BASEURL;
+    // const token = localStorage.getItem('token');
+
+    // const [formData, setFormData] = useState({
+    //     productId: '',
+    //     productVariantId: '',
+    //     rating: '',
+    //     review: '',
+    // });
+
+    // const [success, setSuccess] = useState('');
+
+    // // Clear form fields
+    // const clearForm = () => {
+    //     setFormData({
+    //     productId: '',
+    //     productVariantId: '',
+    //     rating: '',
+    //     review: '',
+    //     });
+    // };
+
+    // const handleSubmit = async (e) => {
+    //     clearForm();
+
+    //     try {
+    //       const response = await axios.post(`${BaseUrl}/api/createRatingAndReview`,formData,{ 
+    //             headers: { Authorization: `Bearer ${token}` } 
+    //         }
+    //     );
+    //     console.error('response>>>>>>>>>>', response.data);
+    //     if (response.status === 200) {
+    //         setSuccess('Your message has been sent successfully.');
+    //     }
+    //     } catch (err) {
+    //       console.error('API Error:', err);
+    //     }
+    // };
+    
     return (
         <React.Fragment>
             <Header />

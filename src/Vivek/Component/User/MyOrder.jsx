@@ -94,15 +94,14 @@ const MyOrder = () => {
     };
 
     const handleClick = (item) => {
-        // console.log("item", item)
-
         const itemId = item.orderId;
+        
         if (item.status === 'Delivered') {
-            navigate('/ratereview');
+            navigate('/ratereview', { state: { orderData: item } });
         } else if (item.status === 'arriving') {
-            navigate(`/trackorder/${itemId}`);
+            navigate(`/trackorder/${itemId}`, { state: { orderData: item } });
         } else if (item.status === 'Cancelled') {
-            navigate('/trackrefund');
+            navigate('/trackrefund', { state: { orderData: item } });
         }
     };
 

@@ -29,7 +29,7 @@ function TrackOrder() {
     const [invoiceModal, setInvoiceModal] = useState(false);
     const [cancelComment, setCancelComment] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
-    
+
     const handleCancelOrder = () => {
         // Reset form data when opening modal
         setCancel({
@@ -48,7 +48,7 @@ function TrackOrder() {
             reasonForCancellationId: e.target.value
         });
     };
-    
+
     // Handle comments change
     const handleCommentsChange = (e) => {
         setCancel({
@@ -58,39 +58,39 @@ function TrackOrder() {
         setComments(e.target.value);
     };
 
-    const handleSaveCancel = (event) => {
+    const handleSaveCancel = async (event) => {
         event.preventDefault();
-        
+
         // Validate inputs before submission
         if (!Cancel.reasonForCancellationId || !cancelComment) {
             alert("Please select a reason and provide comments");
             return;
         }
-        
+
         // Update the Cancel object with the comment from the state
         const cancelData = {
             ...Cancel,
             comments: cancelComment
         };
-        
+
         setIsSubmitting(true);
-        
-        // Call the API to cancel the order
-        axios.post(`${BaseUrl}/cancelOrder`, cancelData, {
-            headers: { Authorization: `Bearer ${token}` },
-        })
-        .then(response => {
+
+        try {
+            let response = await axios.post(`${BaseUrl}/api/cancelleOrder`, cancelData, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
             console.log("Order cancelled successfully", response.data);
             setIsSubmitting(false);
             setDeletecard(false);
             setCanclecard(true);
-        })
-        .catch(error => {
+        } catch (error) {
             console.error("Error cancelling order:", error);
             setIsSubmitting(false);
-            alert("Failed to cancel order. Please try again.");
-        });
+            alert(error);
+        }
     };
+
 
     const handleCloseSuccessModal = () => {
         setCanclecard(false); // Close the success modal
@@ -98,12 +98,12 @@ function TrackOrder() {
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log("id",id)
+            console.log("id", id)
             try {
                 const response = await axios.get(`${BaseUrl}/api/getOrder/${id}`, {
-                headers: { Authorization: `Bearer ${token}` },
+                    headers: { Authorization: `Bearer ${token}` },
                 });
-                console.log("response",response.data)
+                console.log("response>>>>>>>>>>>>>>>>>>", response.data)
                 setData(response.data.order);
             } catch (error) {
                 console.error('Data fetching failed:', error);
@@ -116,9 +116,9 @@ function TrackOrder() {
         const reason = async () => {
             try {
                 const response = await axios.get(`${BaseUrl}/api/allReasons`, {
-                headers: { Authorization: `Bearer ${token}` },
+                    headers: { Authorization: `Bearer ${token}` },
                 });
-                console.log("response",response.data)
+                console.log("response", response.data)
                 setReason(response.data.reasons);
             } catch (error) {
                 console.error('Data fetching failed:', error);
@@ -126,7 +126,7 @@ function TrackOrder() {
         };
         reason();
     }, [BaseUrl, token]);
-    
+
     useEffect(() => {
         // Update orderId in Cancel state when id changes
         setCancel(prev => ({
@@ -149,7 +149,7 @@ function TrackOrder() {
         date.setDate(date.getDate() + 5); // Adding 5 days for delivery
         return formatDate(date);
     };
-      
+
     return (
         <React.Fragment>
             <Header />
@@ -202,18 +202,18 @@ function TrackOrder() {
                                                         <h1 className='V_full_pair'>{item.productData[0]?.productName || "Product Name"}</h1>
                                                         <p className='V_full_child_text mb-0'>{item.productVariantData[0]?.shortDescription || "No description available"}</p>
                                                         <div className='d-flex py-2'>
-                                                        <p className='V_light mb-0 me-3'>
-                                                            {/* Color: &nbsp; */}
-                                                            <span className='V_xl'>
-                                                                {item.productVariantData[0]?.colorName?.split(',')[0] || "N/A"}
-                                                            </span>
-                                                        </p>
-                                                        <p className='V_light mb-0 '>
-                                                            {/* Color: &nbsp; */}
-                                                            <span className='V_xl'>
-                                                                {item.productVariantData[0]?.size?.split(',')[0] || "N/A"}
-                                                            </span>
-                                                        </p>
+                                                            <p className='V_light mb-0 me-3'>
+                                                                {/* Color: &nbsp; */}
+                                                                <span className='V_xl'>
+                                                                    {item.productVariantData[0]?.colorName?.split(',')[0] || "N/A"}
+                                                                </span>
+                                                            </p>
+                                                            <p className='V_light mb-0 '>
+                                                                {/* Color: &nbsp; */}
+                                                                <span className='V_xl'>
+                                                                    {item.productVariantData[0]?.size?.split(',')[0] || "N/A"}
+                                                                </span>
+                                                            </p>
                                                         </div>
                                                         <p className='V_track_order_price mb-0'>${item.totalAmount}</p>
                                                     </div>
@@ -259,14 +259,14 @@ function TrackOrder() {
                                     </div>
                                 ))}
                             </div>
-                    </div>
-                    <div className='VK_order_card my-3 my-sm-5'>
-                        <div className='VK_order_product h-100 w-100  py-3'>
-                            <div className="row m-0">
-                                <div className="col-6 col-sm-4 V_right_border py-3">
-                                    <div className='V_delivery_address_width'>
-                                        <h1 className='V_delivery_address'>Delivery Address</h1>
-                                        {data.length > 0 && data[0].addressData && data[0].addressData.length > 0 ? (
+                        </div>
+                        <div className='VK_order_card my-3 my-sm-5'>
+                            <div className='VK_order_product h-100 w-100  py-3'>
+                                <div className="row m-0">
+                                    <div className="col-6 col-sm-4 V_right_border py-3">
+                                        <div className='V_delivery_address_width'>
+                                            <h1 className='V_delivery_address'>Delivery Address</h1>
+                                            {data.length > 0 && data[0].addressData && data[0].addressData.length > 0 ? (
                                                 <>
                                                     <p className='V_customer_name pt-3'>{data[0].addressData[0].name}</p>
                                                     <p className='V_customer_address'>{data[0].addressData[0].address}, {data[0].addressData[0].landmark}, {data[0].addressData[0].city}, {data[0].addressData[0].state}, {data[0].addressData[0].pincode}</p>
@@ -275,44 +275,44 @@ function TrackOrder() {
                                             ) : (
                                                 <p className='V_customer_name pt-3'>No address data available</p>
                                             )}
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="col-6 col-sm-4 V_right_border d-flex justify-content-center py-3">
-                                    {data.map((item) => (
-                                        <div key={item._id} className="justify-content-start text-start">
-                                            <h1 className='V_delivery_address'>Payment Details</h1>
-                                            {/* <p className='V_customer_name pt-3 pb-2 mb-0'>Debit Card</p>
+                                    <div className="col-6 col-sm-4 V_right_border d-flex justify-content-center py-3">
+                                        {data.map((item) => (
+                                            <div key={item._id} className="justify-content-start text-start">
+                                                <h1 className='V_delivery_address'>Payment Details</h1>
+                                                {/* <p className='V_customer_name pt-3 pb-2 mb-0'>Debit Card</p>
                                             <p className='V_card_name mb-0 py-1'>Card Name <span className='V_ame_exp'>American Express </span></p>
                                             <p className='V_card_name mb-0 py-1'>Transaction ID <span className='V_ame_exp'> #123456789 </span></p> */}
-                                            <p className='V_card_name mb-0 py-1'>Payment Status <span className='V_success'> {item.paymentMethod} </span></p>
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className="col-6 col-sm-4 py-3">
-                                    <div className="V_invoice_width">
-                                        <h1 className='V_invoice'>Invoice</h1>
-                                        <p 
-                                            className='V_down_invoic mt-3'
-                                            onClick={() => setInvoiceModal(true)} 
-                                            style={{ cursor: 'pointer', textDecoration: 'underline' }}
-                                        >
-                                            Download Invoice
-                                        </p>
+                                                <p className='V_card_name mb-0 py-1'>Payment Status <span className='V_success'> {item.paymentMethod} </span></p>
+                                            </div>
+                                        ))}
                                     </div>
-                                    <div className='text-end'>
-                                        <button type='submit' className='V_cancle_order_btn px-sm-3 px-md-4 py-2'
-                                            onClick={handleCancelOrder}
-                                        >
-                                            Cancel Order
-                                        </button>
+                                    <div className="col-6 col-sm-4 py-3">
+                                        <div className="V_invoice_width">
+                                            <h1 className='V_invoice'>Invoice</h1>
+                                            <p
+                                                className='V_down_invoic mt-3'
+                                                onClick={() => setInvoiceModal(true)}
+                                                style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                            >
+                                                Download Invoice
+                                            </p>
+                                        </div>
+                                        <div className='text-end'>
+                                            <button type='submit' className='V_cancle_order_btn px-sm-3 px-md-4 py-2'
+                                                onClick={handleCancelOrder}
+                                            >
+                                                Cancel Order
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
 
             {/* Invoice Modal */}
@@ -366,7 +366,7 @@ function TrackOrder() {
                                 <span className='VK_input_label pb-1'>
                                     Reason for cancellation <span className='V_complasery'>*</span>
                                 </span>
-                                <select 
+                                <select
                                     className='VK_from_input w-100 py-2 px-3 mt-2'
                                     value={Cancel.reasonForCancellationId}
                                     onChange={handleReasonChange}
@@ -384,8 +384,8 @@ function TrackOrder() {
                                 <span className='VK_input_label pb-1'>
                                     Comments <span className='V_complasery'>*</span>
                                 </span>
-                                <textarea 
-                                    className='V_textarea w-100 py-2 px-3 mt-2' 
+                                <textarea
+                                    className='V_textarea w-100 py-2 px-3 mt-2'
                                     value={cancelComment}
                                     onChange={(e) => setCancelComment(e.target.value)}
                                     required
@@ -393,8 +393,8 @@ function TrackOrder() {
                                 </textarea>
                             </div>
                             <div className='mt-5 text-center'>
-                                <button 
-                                    type="submit" 
+                                <button
+                                    type="submit"
                                     className='VK_add_address_submit mt-4'
                                     disabled={isSubmitting}
                                 >
