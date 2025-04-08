@@ -9,6 +9,7 @@ const MyOrder = () => {
 
     const [orders, setOrders] = useState([]);
     const [filteredOrders, setFilteredOrders] = useState([]);
+    const [productData, setProductData] = useState({});
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,6 +32,8 @@ const MyOrder = () => {
                             processedOrders.push({
                                 id: `${order._id}-${itemIndex}`, // Create unique ID for each item in order
                                 orderId: order._id,
+                                productId: item.productId,       // Added productId
+                                productVariantId: item.productVariantId, // Added productVariantId
                                 name: productData.productName || "Unknown Product",
                                 description: variantData.shortDescription || "No description available",
                                 color: variantData.colorName ? variantData.colorName.split(',')[0] : null,
@@ -63,6 +66,31 @@ const MyOrder = () => {
         fetchData();
     }, [BaseUrl, token]);
 
+    // Fetch product data for ratings when needed
+    const fetchProductData = async (productId) => {
+        try {
+            // Check if we already have this product data cached
+            if (productData[productId]) {
+                return productData[productId];
+            }
+            
+            const response = await axios.get(`${BaseUrl}/api/getProduct/${productId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            
+            // Cache the product data
+            setProductData(prev => ({
+                ...prev,
+                [productId]: response.data
+            }));
+            
+            return response.data;
+        } catch (error) {
+            console.error('Product data fetching failed:', error);
+            return null;
+        }
+    };
+
     // Helper function to generate appropriate status messages
     const getStatusMessage = (status) => {
         switch (status) {
@@ -93,11 +121,25 @@ const MyOrder = () => {
         }
     };
 
-    const handleClick = (item) => {
+    const handleClick = async (item) => {
         const itemId = item.orderId;
         
         if (item.status === 'Delivered') {
-            navigate('/ratereview', { state: { orderData: item } });
+            // Fetch the product data with ratings before navigating
+            if (item.productId) {
+                const data = await fetchProductData(item.productId);
+                // Add the product data to the item before passing to the next screen
+                navigate('/ratereview', { 
+                    state: { 
+                        orderData: {
+                            ...item,
+                            productRatingData: data
+                        } 
+                    } 
+                });
+            } else {
+                navigate('/ratereview', { state: { orderData: item } });
+            }
         } else if (item.status === 'arriving') {
             navigate(`/trackorder/${itemId}`, { state: { orderData: item } });
         } else if (item.status === 'Cancelled') {
@@ -151,29 +193,31 @@ const MyOrder = () => {
                                             <p className='font_14 mb-1 text-black fw-500'>{item.description}</p>
                                             {item.color && <p className='font_14 light_color mb-1'>Color: {item.color}</p>}
                                             {item.size && <p className='font_14 light_color mb-1'>Size: {item.size}</p>}
-                                            {/* <p className='font_14 light_color mb-1'>Quantity: {item.quantity}</p> */}
-
-                                            {/* Display specifications if available */}
-                                            {/* {Object.keys(item.specifications).length > 0 && (
-                                            <div className='mt-2'>
-                                                <p className='font_14 mb-1 fw-500'>Specifications:</p>
-                                                {Object.entries(item.specifications).map(([key, value]) => (
-                                                    <p key={key} className='font_14 light_color mb-0'>{key}: {value}</p>
-                                                ))}
-                                            </div>
-                                        )} */}
+                                            
+                                            {/* Show rating if product data is available */}
+                                            {productData[item.productId] && (
+                                                <div className='d-flex mt-2'>
+                                                    <div className='V_bg_star'>
+                                                        <p className='mb-0 px-2 d-flex align-items-center'> 
+                                                            <span className='ps-2 fw-bolder'>
+                                                                {productData[item.productId].product && 
+                                                                 productData[item.productId].product[0]?.ratingData && 
+                                                                 productData[item.productId].product[0]?.ratingData[0]?.rating ? 
+                                                                 productData[item.productId].product[0].ratingData[0].rating : "0.0"}
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                    <div className='px-3 fw-bold'>
+                                                        ({productData[item.productId].product && 
+                                                          productData[item.productId].product[0]?.ratingData ? 
+                                                          productData[item.productId].product[0].ratingData.length : "0"})
+                                                    </div>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                     <div className='VK_order_price'>
                                         <p className='m-0 fw-bold'>${item.price}</p>
-                                        {/* {item.originalPrice > item.price && (
-                                        <>
-                                            <p className='m-0 text-decoration-line-through text-muted font_14'>${item.originalPrice}</p>
-                                            <p className='m-0 text-success font_14'>
-                                                Save: ${calculateSavings(item.originalPrice, item.price, item.quantity)}
-                                            </p>
-                                        </>
-                                    )} */}
                                     </div>
                                     <div className='VK_order_status ms-xl-0 ms-auto mt-xl-0 mt-4'>
                                         <div className='h-100 d-flex flex-column'>
