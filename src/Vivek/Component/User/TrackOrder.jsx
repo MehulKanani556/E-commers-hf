@@ -94,6 +94,7 @@
                     });
                     // console.log("response>>>>>>>>>>>>>>>>>>", response.data)
                     setData(response.data.order);
+                    
                 } catch (error) {
                     console.error('Data fetching failed:', error);
                 }
@@ -211,27 +212,78 @@
                                                 <div className="col-lg-8 py-3 pt-lg-0 pt-xl-3 VK_subtrack position-relative VK_padding overflow-auto">
                                                     <div className='V_back-line4'></div>
                                                     <div className="d-flex justify-content-between px-md-3 px-lg-5">
+                                                        {/* Order Confirmed Step */}
                                                         <div className='text-center'>
                                                             <p className='V_confirmed mb-0'>Order Confirmed</p>
-                                                            <img src={require('../../assets/ordered confirmed.png')} alt="" className='py-2' />
-                                                            <p className='V_track_time mb-0'>{new Date(item.createdAt).toLocaleDateString()} <span>{new Date(item.createdAt).toLocaleTimeString()}</span></p>
-                                                            <p className='V_order_description mb-0'>Your order has been placed.</p>
+                                                            <img 
+                                                                src={require('../../assets/ordered confirmed.png')} 
+                                                                alt="" 
+                                                                className='py-2' 
+                                                                style={{ opacity: item.orderStatus === 'Confirmed' || item.orderStatus === 'Shipped' || item.orderStatus === 'outForDelivery' || item.orderStatus === 'Delivered' ? 1 : 0.5 }}
+                                                            />
+                                                            {(item.orderStatus === 'Confirmed' || item.orderStatus === 'Shipped' || item.orderStatus === 'outForDelivery' || item.orderStatus === 'Delivered') && (
+                                                                <>
+                                                                    <p className='V_track_time mb-0'>{new Date(item.createdAt).toLocaleDateString()} <span>{new Date(item.createdAt).toLocaleTimeString()}</span></p>
+                                                                    <p className='V_order_description mb-0'>Your order has been placed.</p>
+                                                                </>
+                                                            )}
                                                         </div>
+
+                                                        {/* Shipped Step */}
                                                         <div className='text-center'>
                                                             <p className='V_confirmed mb-0'>Shipped</p>
-                                                            <img src={require('../../assets/shipped.png')} alt="" className='py-2' />
-                                                            {/* <p className='V_track_time mb-0'>02 Oct, 2024 <span>5:21 PM </span></p> */}
-                                                            <p className='V_order_description mb-0'>Your item has been shipped</p>
+                                                            <img 
+                                                                src={require('../../assets/shipped.png')} 
+                                                                alt="" 
+                                                                className='py-2' 
+                                                                style={{ opacity: item.orderStatus === 'Shipped' || item.orderStatus === 'outForDelivery' || item.orderStatus === 'Delivered' ? 1 : 0.5 }}
+                                                            />
+                                                            {(item.orderStatus === 'Shipped' || item.orderStatus === 'outForDelivery' || item.orderStatus === 'Delivered') && (
+                                                                <>
+                                                                    {item.shippedAt && (
+                                                                        <p className='V_track_time mb-0'>{new Date(item.shippedAt).toLocaleDateString()} <span>{new Date(item.shippedAt).toLocaleTimeString()}</span></p>
+                                                                    )}
+                                                                    <p className='V_order_description mb-0'>Your item has been shipped</p>
+                                                                </>
+                                                            )}
                                                         </div>
+                                                        
+                                                        {/* Out for Delivery Step */}
                                                         <div className='text-center'>
                                                             <p className='V_confirmed mb-0'>Out for Delivery</p>
-                                                            <img src={require('../../assets/Out for Delivery logo.png')} alt="" className='py-2' />
-                                                            {/* <p className='V_track_time mb-0'>05 Oct, 2024 <span>8:36 PM</span></p> */}
+                                                            <img 
+                                                                src={require('../../assets/Out for Delivery logo.png')} 
+                                                                alt="" 
+                                                                className='py-2' 
+                                                                style={{ opacity: item.orderStatus === 'outForDelivery' || item.orderStatus === 'Delivered' ? 1 : 0.5 }}
+                                                            />
+                                                            {(item.orderStatus === 'outForDelivery' || item.orderStatus === 'Delivered') && (
+                                                                <>
+                                                                    {item.outForDeliveryAt && (
+                                                                        <p className='V_track_time mb-0'>{new Date(item.outForDeliveryAt).toLocaleDateString()} <span>{new Date(item.outForDeliveryAt).toLocaleTimeString()}</span></p>
+                                                                    )}
+                                                                    <p className='V_order_description mb-0'>Out for delivery</p>
+                                                                </>
+                                                            )}
                                                         </div>
+                                                        
+                                                        {/* Delivered Step */}
                                                         <div className='text-center'>
-                                                            <p className='V_confirmed mb-0'>Delivered</p>
-                                                            <img src={require('../../assets/delivered logo.png')} alt="" className='py-2' />
-                                                            <p className='V_track_time mb-0'>10 Oct, 2024 <span>8:36 PM</span></p>
+                                                            <p className='V_confirmed mb-0'>Delivered</p>   
+                                                            <img 
+                                                                src={require('../../assets/delivered logo.png')} 
+                                                                alt="" 
+                                                                className='py-2' 
+                                                                style={{ opacity: item.orderStatus === 'Delivered' ? 1 : 0.5 }}
+                                                            />
+                                                            {item.orderStatus === 'Delivered' && (
+                                                                <>
+                                                                    {item.deliveredAt && (
+                                                                        <p className='V_track_time mb-0'>{new Date(item.deliveredAt).toLocaleDateString()} <span>{new Date(item.deliveredAt).toLocaleTimeString()}</span></p>
+                                                                    )}
+                                                                    <p className='V_order_description mb-0'>Your item has been delivered</p>
+                                                                </>
+                                                            )}
                                                         </div>
                                                     </div>
                                                 </div>

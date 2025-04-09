@@ -6,9 +6,11 @@ import { Modal } from 'react-bootstrap';
 import Header from '../../Component/header/Header.jsx'
 import Footer from '../footer/Footer.jsx';
 import * as Yup from 'yup'
-
+import { useNavigate } from 'react-router-dom';
 
 function MyOrderwithTracking() {
+
+    const navigate = useNavigate();
 
     const [returncard, setReturncard] = useState(false);
     const [canclecard, setCanclecard] = useState(false);
@@ -385,7 +387,7 @@ function MyOrderwithTracking() {
                             >
                                 Back to Home
                             </button>
-                            <button type="submit" className='V_order_success px-4 py-2 mt-3 mx-3 text-white bg-dark'
+                            <button type="submit"  onClick={() => navigate('/returnrefund')} className='V_order_success px-4 py-2 mt-3 mx-3 text-white bg-dark'
                             >
                                 Track Return/Refund
                             </button>
