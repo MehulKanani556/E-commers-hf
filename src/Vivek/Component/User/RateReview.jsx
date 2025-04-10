@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../User/user.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../header/Header.jsx';
 import Footer from '../footer/Footer.jsx';
 import { FaStar } from 'react-icons/fa6';
@@ -8,6 +8,7 @@ import axios from 'axios';
 
 function RateReview() {
     const location = useLocation();
+    const navigate = useNavigate(); // Add useNavigate hook
     const BaseUrl = process.env.REACT_APP_BASEURL;
     const token = localStorage.getItem('token');
     const orderData = location.state?.orderData || null;
@@ -132,6 +133,11 @@ function RateReview() {
         setImageFiles([]);
     };
 
+    // Handle return to My Orders button click
+    const handleReturnToMyOrders = () => {
+        navigate('/myOrder'); // Navigate to MyOrder page
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -179,9 +185,14 @@ function RateReview() {
 
             console.log('Response:', response.data);
 
-            if (response.status === 200) {
+            if (response.status === 201) {
                 setSuccess('Your review has been submitted successfully.');
                 clearForm();
+                
+                // Add a small delay before redirecting to show the success message
+                setTimeout(() => {
+                    navigate('/user/myorder'); // Redirect to MyOrder page on successful submission
+                });
             }
         } catch (err) {
             console.error('API Error:', err);
@@ -213,7 +224,10 @@ function RateReview() {
                                     <p className='font_14 mb-4'>
                                         Please select a product from your orders to review
                                     </p>
-                                    <button className='VK_empty_order_btn'>
+                                    <button 
+                                        className='VK_empty_order_btn'
+                                        onClick={handleReturnToMyOrders}
+                                    >
                                         Return to My Orders
                                     </button>
                                 </div>
