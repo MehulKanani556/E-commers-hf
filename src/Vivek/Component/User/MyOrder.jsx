@@ -104,6 +104,8 @@ const MyOrder = () => {
                 return 'Your order has been shipped and is on its way.';
             case 'outForDelivery':
                 return 'Your order is out for delivery and will reach you soon.';
+            case 'Return':
+                return 'Your order is out for Return and will reach you soon.';
             default:
                 return `Current order status: ${status}`;
         }
@@ -152,15 +154,17 @@ const MyOrder = () => {
             navigate(`/trackorder/${itemId}`, { state: { orderData: item } });
         } else if (item.status === 'Cancelled') {
             navigate('/trackrefund', { state: { orderData: item } });
+        } else if (item.status === 'Return') {
+            navigate('/returnrefund', { state: { orderData: item } });
         }
     };
 
-    const handlereturn  = (item) => {
+    const handlereturn = (item) => {
         if (item.status === 'Delivered') {
-          // Navigate to combinepage
-          navigate('/myordertrack'); // or use your router's navigation method
-        } 
-      };
+            // Navigate to combinepage
+            navigate(`/myordertrack/${item.orderId}`); // or use your router's navigation method
+        }
+    };
 
     // Calculate savings
     const calculateSavings = (originalPrice, discountPrice, quantity) => {
@@ -193,7 +197,7 @@ const MyOrder = () => {
                 <div className='VK_order_parent'>
                     {filteredOrders.length > 0 ? (
                         filteredOrders.map((item, index) => (
-                            <div key={item.id}  className={`VK_order_card my-3 ${item.status === 'Delivered' ? 'd_cur' : ''}`}  onClick={() => {handlereturn(item)}}>
+                            <div key={item.id} className={`VK_order_card my-3 ${item.status === 'Delivered' ? 'd_cur' : ''}`} onClick={() => { handlereturn(item) }}>
                                 <div className='VK_order_product h-100 w-100 justify-content-between d-flex flex-wrap'>
                                     <div className='VK_order_detail d-flex flex-sm-row flex-column'>
                                         <div>
@@ -249,7 +253,7 @@ const MyOrder = () => {
                                             <p className='font_14 fw-bold light_color'>{item.message}</p>
                                             <p className='mt-auto text-end m-0 font_16 VK_track fw-500'>
                                                 <div className='mv_other_page' onClick={() => handleClick(item)}>
-                                                    {item.status === 'Delivered' ? 'Add Rate & Review' : item.status === 'arriving' || item.status === 'Shipped' || item.status === 'outForDelivery' ? 'Track Order' : item.status === 'Cancelled' ? 'View refund status' : null}
+                                                    {item.status === 'Delivered' ? 'Add Rate & Review' : item.status === 'arriving' || item.status === 'Shipped' || item.status === 'outForDelivery' ? 'Track Order' : item.status === 'Cancelled' ? 'Track Order' : item.status === 'Return' ? 'Refund Order Status' || 'View refund status' : null}
                                                 </div>
                                             </p>
                                         </div>

@@ -105,7 +105,7 @@ function App() {
             <Route path="/trackorder/:id" element={<TrackOrder />} />
 
             <Route path='/trackrefund' element={<TrackRefund />} />
-            <Route path='/myordertrack' element={<MyOrderwithTracking />} />
+            <Route path='/myordertrack/:id' element={<MyOrderwithTracking />} />
 
             <Route path='/returnrefund' element={<TrackReturnRefund />} />
             <Route path='/ratereview' element={<RateReview />} />

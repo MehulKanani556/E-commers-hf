@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../User/user.css';
 import Map from '../Map';
 import { useFormik } from 'formik';
@@ -6,66 +6,177 @@ import { Modal } from 'react-bootstrap';
 import Header from '../../Component/header/Header.jsx'
 import Footer from '../footer/Footer.jsx';
 import * as Yup from 'yup'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 function MyOrderwithTracking() {
 
+    const BaseUrl = process.env.REACT_APP_BASEURL;
+    const token = localStorage.getItem('token');
+
     const navigate = useNavigate();
+    const { id } = useParams();
 
     const [returncard, setReturncard] = useState(false);
-    const [canclecard, setCanclecard] = useState(false);
-    const [change, setchange] = useState(false);
-    const [otpmodel, setotpmodel] = useState(false);
-    const [resetpassword, setresetpassword] = useState(false);
+    const [successcard, setSuccesscard] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [data, setData] = useState([]);
+    const [reason, setReason] = useState([]);
+    const [mobileNo, setMobileNo] = useState('');
+    const [returnRequest, setReturnRequest] = useState({
+        orderId: id,
+        reasonForReturn: '',
+        mobileNo: ''
+    });
+    const [invoiceModal, setInvoiceModal] = useState(false);
+
+    // OTP states and logic
+    const [otpVerification, setOtpVerification] = useState(false);
+    const [otpValue, setOtpValue] = useState('');
+    const [otp, setOtp] = useState({
+        otp1: '',
+        otp2: '',
+        otp3: '',
+        otp4: '',
+        otp5: '',
+        otp6: ''
+    });
+    const [otpError, setOtpError] = useState('');
 
     const handleReturnOrder = () => {
-        setReturncard(true); // Show the cancel order modal
-    };
-
-    const handleSaveCancel = (event) => {
-        event.preventDefault();
-        setReturncard(false); // Close the cancel order modal
-        setCanclecard(true); // Show the success modal
-    };
-
-    const handleCloseSuccessModal = () => {
-        setCanclecard(false); // Close the success modal
-    };
-    // otp model
-    const otp_validation = Yup.object({
-        otp1: Yup.string().required('Required').matches(/^[0-9]$/, 'Must be a number'),
-        otp2: Yup.string().required('Required').matches(/^[0-9]$/, 'Must be a number'),
-        otp3: Yup.string().required('Required').matches(/^[0-9]$/, 'Must be a number'),
-        otp4: Yup.string().required('Required').matches(/^[0-9]$/, 'Must be a number'),
-        otp5: Yup.string().required('Required').matches(/^[0-9]$/, 'Must be a number'),
-        otp6: Yup.string().required('Required').matches(/^[0-9]$/, 'Must be a number'),
-    });
-
-    const otpFormik = useFormik({
-        initialValues: {
+        // Reset form data when opening modal
+        setReturnRequest({
+            orderId: id,
+            reasonForReturn: '',
+            mobileNo: ''
+        });
+        setOtpVerification(false);
+        setOtp({
             otp1: '',
             otp2: '',
             otp3: '',
             otp4: '',
             otp5: '',
             otp6: ''
-        },
-        validationSchema: otp_validation,
-        onSubmit: (values) => {
-            otp_submit(values);
-        }
-    });
-
-    const otp_submit = (values) => {
-        const otp = values.otp1 + values.otp2 + values.otp3 + values.otp4;
-        console.log('OTP Submitted:', otp);
-        if (change) {
-            setresetpassword(true)
-        }
-        setotpmodel(false);
+        });
+        setOtpError('');
+        setReturncard(true); // Show the return order modal
     };
 
-    // otp model focus
+    // Handle reason selection
+    const handleReasonChange = (e) => {
+        setReturnRequest({
+            ...returnRequest,
+            reasonForReturn: e.target.value
+        });
+    };
+
+    // Handle mobile number input
+    const handleMobileChange = (e) => {
+        setReturnRequest({
+            ...returnRequest,
+            mobileNo: e.target.value
+        });
+    };
+
+    const handleRequestOtp = async (event) => {
+        event.preventDefault();
+        
+        // Validate inputs before requesting OTP
+        if (!returnRequest.reasonForReturn || !returnRequest.mobileNo) {
+            alert("Please select a reason and provide mobile number");
+            return;
+        }
+
+        // Mobile number validation (simple validation for example)
+        if (!/^\d{10}$/.test(returnRequest.mobileNo)) {
+            alert("Please enter a valid 10-digit mobile number");
+            return;
+        }
+
+        setIsSubmitting(true);
+        
+        try {
+            // Call the API to generate OTP
+            const response = await axios.post(`${BaseUrl}/api/generateReturnOrderOtp`, returnRequest, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            if (response.data.status === 201) {
+                setOtpVerification(true);
+                setIsSubmitting(false);
+            } else {
+                alert(response.data.message || "Failed to send OTP. Please try again.");
+                setIsSubmitting(false);
+            }
+        } catch (error) {
+            console.error("Error requesting OTP:", error);
+            alert(error.response?.data?.message || "Failed to send OTP. Please try again.");
+            setIsSubmitting(false);
+        }
+    };
+
+    const handleOtpChange = (e, field) => {
+        // Allow only numeric input
+        const value = e.target.value.replace(/[^0-9]/g, '');
+        
+        setOtp({
+            ...otp,
+            [field]: value
+        });
+
+        // Calculate the complete OTP value whenever any digit changes
+        const updatedOtp = { ...otp, [field]: value };
+        const fullOtp = Object.values(updatedOtp).join('');
+        setOtpValue(fullOtp);
+    };
+
+    const handleSubmitReturn = async (event) => {
+        event.preventDefault();
+        
+        // Validate the OTP before submission
+        const fullOtp = Object.values(otp).join('');
+        if (fullOtp.length !== 6) {
+            setOtpError("Please enter a valid 6-digit OTP");
+            return;
+        }
+
+        setIsSubmitting(true);
+        setOtpError('');
+
+        try {
+            // Prepare the payload for OTP verification
+            const verifyPayload = {
+                orderId: returnRequest.orderId,
+                otp: parseInt(fullOtp),  // Convert to number as per your API
+                mobileNo: returnRequest.mobileNo
+            };
+
+            // Call the API to verify OTP
+            const response = await axios.post(`${BaseUrl}/api/verifyReturnOrderOtp`, verifyPayload, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            if (response.data.status === 200) {
+                setIsSubmitting(false);
+                setReturncard(false);
+                setSuccesscard(true);
+            } else {
+                setOtpError(response.data.message || "OTP verification failed");
+                setIsSubmitting(false);
+            }
+        } catch (error) {
+            console.error("Error verifying OTP:", error);
+            setOtpError(error.response?.data?.message || "OTP verification failed. Please try again.");
+            setIsSubmitting(false);
+        }
+    };
+
+    const handleCloseSuccessModal = () => {
+        setSuccesscard(false); // Close the success modal
+    };
+
+    // Handle OTP input focus
     const handleInput = (e, index) => {
         const input = e.target;
         const nextInput = input.nextElementSibling;
@@ -78,8 +189,51 @@ function MyOrderwithTracking() {
         }
     };
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${BaseUrl}/api/getOrder/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setData(response.data.order);
+            } catch (error) {
+                console.error('Data Fetching Error:', error);
+            }
+        }
+        fetchData();
+    }, [id, BaseUrl, token]);
 
+    // Fetch return reasons
+    useEffect(() => {
+        const fetchReasons = async () => {
+            try {
+                const response = await axios.get(`${BaseUrl}/api/allReasons`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                console.log("response.data.reason",response.data.reasons);
+                setReason(response.data.reasons);
+            } catch (error) {
+                console.error('Failed to fetch return reasons:', error);
+            }
+        };
+        fetchReasons();
+    }, [BaseUrl, token]);
 
+    // Update orderId in ReturnRequest state when id changes
+    useEffect(() => {
+        setReturnRequest(prev => ({
+            ...prev,
+            orderId: id
+        }));
+    }, [id]);
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
 
     return (
         <React.Fragment>
@@ -89,9 +243,6 @@ function MyOrderwithTracking() {
                     <h2 className='VK_trackorder_heading py-5 mb-0'>
                         My Order
                     </h2>
-
-
-
 
                     {/* empty order */}
                     <div className='VK_my_order d-flex justify-content-center align-items-center h-100 d-none'>
@@ -113,7 +264,6 @@ function MyOrderwithTracking() {
                         </div>
                     </div>
 
-
                     {/* my order */}
                     <div>
                         <div className='VK_order_parent'>
@@ -127,86 +277,109 @@ function MyOrderwithTracking() {
 
                                 <div className='d-flex justify-content-between flex-wrap align-items-center V_border_bottom '>
                                 </div>
-                                <div className='VK_order_product h-100 w-100 justify-content-between d-flex flex-wrap  py-3'>
-                                    <div className="row m-0 flex-lg-row flex-column-reverse w-100 ">
-                                        <div className="col-lg-4 ">
-                                            <div className='d-flex'>
-                                                <div className='px-2'>
-                                                    <img src={require('../../assets/order1.png')} alt="" width="100px" height="120px" />
+                                {data.map((item) => {
+                                    return (
+                                        <div className='VK_order_product h-100 w-100 justify-content-between d-flex flex-wrap  py-3' key={item._id}>
+                                            <div className="row m-0 flex-lg-row flex-column-reverse w-100 ">
+                                                <div className="col-lg-4 ">
+                                                    <div className='d-flex'>
+                                                        <div className='px-2'>
+                                                            <img src={`${BaseUrl}/${item.productVariantData[0].images[0]}`} alt="" width="100px" height="120px" />
+                                                        </div>
+                                                        <div className='ps-2 ps-sm-4'>
+                                                            <h1 className='V_full_pair'>{item.productData[0].productName}</h1>
+                                                            <p className='V_full_child_text mb-0'>{item.productVariantData[0].description}</p>
+                                                            <div className='d-flex py-2'>
+                                                                <p className='V_light mb-0 me-3'>
+                                                                    <span className='V_xl'>
+                                                                        {item.productVariantData[0]?.colorName?.split(',')[0] || "N/A"}
+                                                                    </span>
+                                                                </p>
+                                                                <p className='V_light mb-0 '>
+                                                                    <span className='V_xl'>
+                                                                        {item.productVariantData[0]?.size?.split(',')[0] || "N/A"}
+                                                                    </span>
+                                                                </p>
+                                                            </div>
+                                                            <p className='V_track_order_price mb-0'>${item.totalAmount}</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className='ps-2 ps-sm-4'>
-                                                    <h1 className='V_full_pair'>Full pair stretched</h1>
-                                                    <p className='V_full_child_text mb-0'>Lorem ipsum dolor sit amet consectetur. Ac iaculis viverra purus malesuada </p>
-                                                    <p className='V_light mb-0 py-2'>Light Brown <span className='V_xl'>XL</span></p>
-                                                    <p className='V_track_order_price mb-0'>$120</p>
+                                                <div className="col-lg-8 py-3 VK_subtrack pt-lg-0 pt-xl-3 position-relative overflow-auto">
+                                                    <div className='V_back-line2'></div>
+                                                    <div className="d-flex justify-content-between px-md-3 px-lg-5 ">
+                                                        <div className='text-center'>
+                                                            <p className='V_confirmed mb-0'>Order Confirmed</p>
+                                                            <img src={require('../../assets/ordered confirmed.png')} alt="" className='py-2' />
+                                                            <p className='V_track_time mb-0'>{new Date(item.createdAt).toLocaleDateString()} <span>{new Date(item.createdAt).toLocaleTimeString()}</span></p>
+                                                            <p className='V_order_description mb-0'>your order has been placed.</p>
+                                                        </div>
+                                                        <div className='text-center'>
+                                                            <p className='V_confirmed mb-0'>Shipped</p>
+                                                            <img src={require('../../assets/shipped.png')} alt="" className='py-2' />
+                                                            <p className='V_track_time mb-0'>02 Oct, 2024 <span>5:21 PM </span></p>
+                                                            <p className='V_order_description mb-0'>Your item has been shipped</p>
+                                                        </div>
+                                                        <div className='text-center'>
+                                                            <p className='V_confirmed mb-0'>Out for Delivery</p>
+                                                            <img src={require('../../assets/Out for delivery 2.png')} alt="" className='py-2' />
+                                                            <p className='V_track_time mb-0'>05 Oct, 2024 <span>8:36 PM</span></p>
+                                                            <p className='V_order_description mb-0'>Your item has been out for delivery</p>
+                                                        </div>
+                                                        <div className='text-center'>
+                                                            <p className='V_confirmed mb-0'>Delivered</p>
+                                                            <img src={require('../../assets/delivered 2.png')} alt="" className='py-2' />
+                                                            <p className='V_track_time mb-0'>10 Oct, 2024 <span>8:36 PM</span></p>
+                                                            <p className='V_order_description mb-0'>Your item has been delivered</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-lg-8 py-3 VK_subtrack pt-lg-0 pt-xl-3 position-relative overflow-auto">
-                                            <div className='V_back-line2'></div>
-                                            <div className="d-flex justify-content-between px-md-3 px-lg-5 ">
-                                                <div className='text-center'>
-                                                    <p className='V_confirmed mb-0'>Order Confirmed</p>
-                                                    <img src={require('../../assets/ordered confirmed.png')} alt="" className='py-2' />
-                                                    <p className='V_track_time mb-0'>01 Oct, 2024 <span>1:21 PM</span></p>
-                                                    <p className='V_order_description mb-0'>your order has been placed.</p>
-                                                </div>
-                                                <div className='text-center'>
-                                                    <p className='V_confirmed mb-0'>Shipped</p>
-                                                    <img src={require('../../assets/shipped.png')} alt="" className='py-2' />
-                                                    <p className='V_track_time mb-0'>02 Oct, 2024 <span>5:21 PM </span></p>
-                                                    <p className='V_order_description mb-0'>Your item has been shipped</p>
-                                                </div>
-                                                <div className='text-center'>
-                                                    <p className='V_confirmed mb-0'>Order Confirmed</p>
-                                                    <img src={require('../../assets/Out for delivery 2.png')} alt="" className='py-2' />
-                                                    <p className='V_track_time mb-0'>05 Oct, 2024 <span>8:36 PM</span></p>
-                                                    <p className='V_order_description mb-0'>Your item has been out for delivery</p>
-                                                </div>
-                                                <div className='text-center'>
-                                                    <p className='V_confirmed mb-0'>Delivered</p>
-                                                    <img src={require('../../assets/delivered 2.png')} alt="" className='py-2' />
-                                                    <p className='V_track_time mb-0'>10 Oct, 2024 <span>8:36 PM</span></p>
-                                                    <p className='V_order_description mb-0'>Your item has been delivered</p>
-                                                </div>
-                                            </div>
+                                    )
+                                })}
+                                {data.length > 0 && data[0] && (
+                                    <div className="V_pad pt-lg-3">
+                                        <p className='V_label'>Order ID: <span className='V_label_value ps-2'>#{data[0]._id}</span></p>
+                                        <div className="d-flex flex-xl-nowrap">
+                                            <p className='V_label mb-0'>Order Date: <span className='V_label_value ps-2'>{formatDate(data[0].createdAt)}</span></p>
+                                            <p className='V_label ps-3 mb-0'>Delivery Date: <span className='V_label_value ps-2'>10/10/2024</span></p>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="V_pad  pt-lg-3 ">
-                                    <p className='V_label '>Order ID:   <span className='V_label_value ps-2'> #5656565656</span></p>
-                                    <div className="d-flex flex-xl-nowrap">
-                                        <p className='V_label mb-0'>Order Date:   <span className='V_label_value ps-2'> 21/09/2024</span> </p>
-                                        <p className='V_label ps-3 mb-0'>Expected Delivery:  <span className='V_label_value ps-2'> 26/09/2024</span></p>
-                                    </div>
-                                </div>
+                                )}
 
                             </div>
                         </div>
                         <div className='VK_order_card my-3 my-sm-5'>
                             <div className='VK_order_product h-100 w-100  py-3'>
                                 <div className="row m-0">
-                                    <div className="col-6 col-sm-4 V_right_border py-3">
-                                        <div className='V_delivery_address_width'>
-                                            <h1 className='V_delivery_address'>Delivery Address</h1>
-                                            <p className='V_customer_name pt-3'>Jhon Wick</p>
-                                            <p className='V_customer_address'>Ehrenkranz 13 Washington Square S, New York,Washington Square, NY 10012, USA</p>
-                                            <p className='V_customer_number'>+1 56565 56565</p>
+                                    {data.length > 0 && data[0] && data[0].addressData && data[0].addressData.length > 0 && (
+                                        <div className="col-6 col-sm-4 V_right_border py-3">
+                                            <div className='V_delivery_address_width'>
+                                                <h1 className='V_delivery_address'>Delivery Address</h1>
+                                                <p className='V_customer_name pt-3'>{data[0].addressData[0].name}</p>
+                                                <p className='V_customer_address'>{`${data[0].addressData[0].landmark}, ${data[0].addressData[0].city}, ${data[0].addressData[0].state}, ${data[0].addressData[0].pincode}`}</p>
+                                                <p className='V_customer_number'>+1 {data[0].addressData[0].contactNo}</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    )}
                                     <div className="col-6 col-sm-4 V_right_border d-flex justify-content-center py-3">
                                         <div className="justify-content-start text-start">
                                             <h1 className='V_delivery_address'>Payment Details</h1>
-                                            <p className='V_customer_name pt-3 pb-2 mb-0'>Debit Card</p>
-                                            <p className='V_card_name mb-0 py-1'>Card Name <span className='V_ame_exp'>American Express </span></p>
-                                            <p className='V_card_name mb-0 py-1'>Transaction ID <span className='V_ame_exp'> #123456789 </span></p>
-                                            <p className='V_card_name mb-0 py-1'>Payment Status <span className='V_success'> Success </span></p>
+                                            {data.length > 0 && data[0] && (
+                                                <>
+                                                    <p className='V_customer_name pt-3 pb-2 mb-0'>{data[0].paymentMethod}</p>
+                                                    <p className='V_card_name mb-0 py-1'>Payment Status <span className='V_success'> Success </span></p>
+                                                </>
+                                            )}
                                         </div>
                                     </div>
                                     <div className="col-6 col-sm-4 py-3">
                                         <div className="V_invoice_width">
                                             <h1 className='V_invoice'>Invoice</h1>
-                                            <p className='V_down_invoic mt-3'>Download Invoice</p>
+                                            <p className='V_down_invoic mt-3'
+                                            onClick={() => setInvoiceModal(true)}
+                                             style={{ cursor: 'pointer', textDecoration: 'underline' }}>Download Invoice</p>
                                         </div>
                                         <div className='text-end'>
                                             <button type='submit' className='V_cancle_order_btn px-sm-3 px-md-4 py-2'
@@ -223,7 +396,36 @@ function MyOrderwithTracking() {
                 </div>
             </section>
 
-            {/* Cancle ordered model */}
+            {/* Invoice Modal */}
+            <Modal show={invoiceModal} onHide={() => setInvoiceModal(false)} centered className='VK_add_address_model_'>
+                <Modal.Header closeButton>
+                    <Modal.Title>
+                        <h5 className='VK_add_address_model_heading'>Invoice Details</h5>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className='p-2 py-3'>
+                        {data.length > 0 ? (
+                            <div>
+                                <p><strong>Order ID:</strong> #{data[0]._id}</p>
+                                <p><strong>Order Date:</strong> {new Date(data[0].createdAt).toLocaleDateString()}</p>
+                                <p><strong>Payment Method:</strong> {data[0].paymentMethod}</p>
+                                <p><strong>Total Amount:</strong> ${data[0].totalAmount}</p>
+                                <div className="mt-3 text-center">
+                                    <a href={`${BaseUrl}/invoices/${data[0]._id}`} className="V_cancle_order_btn px-sm-3 px-md-4 py-2" download>
+                                        Download Invoice
+                                    </a>
+                                </div>
+                            </div>
+                        ) : (
+                            <p>No invoice data available.</p>
+                        )}
+                    </div>
+                </Modal.Body>
+            </Modal>
+
+
+            {/* Return Order Modal */}
             <Modal
                 show={returncard}
                 onHide={() => setReturncard(false)}
@@ -240,154 +442,122 @@ function MyOrderwithTracking() {
                 </Modal.Header>
                 <Modal.Body>
                     <div className='p-2 py-3'>
-                        <form action="" onSubmit={handleSaveCancel} className='w-100 VK_address_form'>
+                        <form onSubmit={otpVerification ? handleSubmitReturn : handleRequestOtp} className='w-100 VK_address_form'>
                             <div className='VK_name mb-3'>
                                 <span className='VK_input_label pb-1'>
                                     Order ID<span className='V_complasery'>*</span>
                                 </span>
-                                <input type="text" className='VK_from_input w-100 py-2 px-3 mt-2'
-                                    placeholder='Enter Order ID'>
-
-                                </input>
+                                <input 
+                                    type="text" 
+                                    className='VK_from_input w-100 py-2 px-3 mt-2'
+                                    value={returnRequest.orderId}
+                                    readOnly
+                                />
                             </div>
                             <div className='VK_name mb-4'>
                                 <span className='VK_input_label pb-1'>
                                     Reason for Return <span className='V_complasery'>*</span>
                                 </span>
-                                <select type="text" className='VK_from_input w-100 py-2 px-3 mt-2' placeholder='Select Reason' >
-                                    <option value="">I was hopping for a shorter delivery time</option>
-                                    <option value="">Product quality does not match the level of its worth</option>
-                                    <option value="">The product doesn't look like the online picture </option>
-                                    <option value="">The product was damaged in transit or was poorly made </option>
-                                    <option value="">The product information was misleading</option>
-                                    <option value="">My reason are not listed here</option>
+                                <select 
+                                    className='VK_from_input w-100 py-2 px-3 mt-2' 
+                                    value={returnRequest.reasonForReturn}
+                                    onChange={handleReasonChange}
+                                    required
+                                    disabled={otpVerification}
+                                >
+                                    <option value="">Select a reason</option>
+                                    {reason && reason.map((item) => (
+                                        <option key={item._id} value={item._id}>
+                                            {item.reasonName}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
-                            <div className='VK_name mb-3'>
+                            <div className='VK_name mb-4'>
                                 <span className='VK_input_label pb-1'>
                                     Mobile No <span className='V_complasery'>*</span>
                                 </span>
-                                <input type="text" className='VK_from_input w-100 py-2 px-3 mt-2'
-                                    placeholder='Enter Mobile no..'>
-                                </input>
+                                <input 
+                                    type="text" 
+                                    className='VK_from_input w-100 py-2 px-3 mt-2'
+                                    placeholder='Enter Mobile no..'
+                                    value={returnRequest.mobileNo}
+                                    onChange={handleMobileChange}
+                                    required
+                                    disabled={otpVerification}
+                                    pattern="[0-9]{10}"
+                                    title="Please enter a valid 10-digit mobile number"
+                                />
                             </div>
-                            <div className="mb-3">
-                                <span className='text-dark pb-3 pt-5'>
-                                    Enter OTP to return order
-                                </span>
-                                <form method='post' onSubmit={otpFormik.handleSubmit}>
-                                    <div className=' my-3 my-sm-4 d-flex gap-3 justify-content-between'>
-                                        <input
-                                            type="text"
-                                            className='V_otp_input1'
-                                            maxLength="1"
-                                            name="otp1"
-                                            value={otpFormik.values.otp1}
-                                            onChange={otpFormik.handleChange}
-                                            onBlur={otpFormik.handleBlur}
-                                            onInput={(e) => handleInput(e, 0)}
-                                        />
-                                        <input
-                                            type="text"
-                                            className='V_otp_input1'
-                                            maxLength="1"
-                                            name="otp2"
-                                            value={otpFormik.values.otp2}
-                                            onChange={otpFormik.handleChange}
-                                            onBlur={otpFormik.handleBlur}
-                                            onInput={(e) => handleInput(e, 1)}
-                                        />
-                                        <input
-                                            type="text"
-                                            className='V_otp_input1'
-                                            maxLength="1"
-                                            name="otp3"
-                                            value={otpFormik.values.otp3}
-                                            onChange={otpFormik.handleChange}
-                                            onBlur={otpFormik.handleBlur}
-                                            onInput={(e) => handleInput(e, 2)}
-                                        />
-                                        <input
-                                            type="text"
-                                            className='V_otp_input1'
-                                            maxLength="1"
-                                            name="otp4"
-                                            value={otpFormik.values.otp4}
-                                            onChange={otpFormik.handleChange}
-                                            onBlur={otpFormik.handleBlur}
-                                            onInput={(e) => handleInput(e, 3)}
-                                        />
-                                        <input
-                                            type="text"
-                                            className='V_otp_input1'
-                                            maxLength="1"
-                                            name="otp5"
-                                            value={otpFormik.values.otp5}
-                                            onChange={otpFormik.handleChange}
-                                            onBlur={otpFormik.handleBlur}
-                                            onInput={(e) => handleInput(e, 4)}
-                                        />
-                                        <input
-                                            type="text"
-                                            className='V_otp_input1'
-                                            maxLength="1"
-                                            name="otp6"
-                                            value={otpFormik.values.otp6}
-                                            onChange={otpFormik.handleChange}
-                                            onBlur={otpFormik.handleBlur}
-                                            onInput={(e) => handleInput(e, 5)}
-                                        />
+                            
+                            {otpVerification && (
+                                <div className="mb-3">
+                                    <span className='text-dark d-block'>
+                                        Enter OTP to return order
+                                    </span>
+                                    <div className='my-3 my-sm-4 d-flex gap-3 justify-content-between'>
+                                        {[1, 2, 3, 4, 5, 6].map((num) => (
+                                            <input
+                                                key={num}
+                                                type="text"
+                                                className='V_otp_input1'
+                                                maxLength="1"
+                                                value={otp[`otp${num}`]}
+                                                onChange={(e) => handleOtpChange(e, `otp${num}`)}
+                                                onInput={(e) => handleInput(e, num-1)}
+                                                pattern="[0-9]"
+                                                required={otpVerification}
+                                            />
+                                        ))}
                                     </div>
-
-                                    {/* Display validation errors
-                                    <div className='text-center'>
-                                        {(otpFormik.touched.otp1 && otpFormik.errors.otp1) ||
-                                            (otpFormik.touched.otp2 && otpFormik.errors.otp2) ||
-                                            (otpFormik.touched.otp3 && otpFormik.errors.otp3) ||
-                                            (otpFormik.touched.otp4 && otpFormik.errors.otp4) ? (
-                                            <span className='VK_error_text text-danger'>
-                                                Please fill all OTP fields correctly
-                                            </span>
-                                        ) : null}
-                                    </div> */}
-
-                                    {/* <div className='mb-4 pt-2'>
-                                        <input type="submit" value={"Submit OTP"} className='w-100 inter model_theme' />
-                                    </div> */}
-                                </form>
-                            </div>
+                                    {otpError && <p className="text-danger small">{otpError}</p>}
+                                </div>
+                            )}
+                            
                             <div className='mt-3 text-center'>
-                                <button type="submit" className='VK_add_address_submit mt-4'
-                                    onClick={() => setCanclecard(true)}
-                                >
-                                    Request for OTP
-                                </button>
+                                {!otpVerification ? (
+                                    <button 
+                                        type="submit" 
+                                        className='VK_add_address_submit mt-4'
+                                        disabled={isSubmitting}
+                                    >
+                                        {isSubmitting ? 'Processing...' : 'Request for OTP'}
+                                    </button>
+                                ) : (
+                                    <button 
+                                        type="submit" 
+                                        className='VK_add_address_submit mt-4'
+                                        disabled={isSubmitting}
+                                    >
+                                        {isSubmitting ? 'Processing...' : 'Verify & Submit'}
+                                    </button>
+                                )}
                             </div>
                         </form>
                     </div>
                 </Modal.Body>
             </Modal>
 
-
-
-            {/* Cancel Success Modal */}
+            {/* Return Success Modal */}
             <Modal
-                show={canclecard}
+                show={successcard}
                 onHide={handleCloseSuccessModal}
                 centered
                 className='VK_add_address_model_'
             >
                 <Modal.Body>
                     <div className='p-2 py-3 text-center'>
-                        <img src={require('../../assets/track return order.png')} alt="Order Cancelled Successfully" className='pt-5 pb-4' />
+                        <img src={require('../../assets/track return order.png')} alt="Return Request Successful" className='pt-5 pb-4' />
                         <p className='mb-0 V_success_modal'>Your request for return product has been <br />
                             successfully received</p>
                         <div className='mt-3 text-center'>
-                            <button type="submit" className='V_order_success px-4 py-2 mt-3 mx-3 text-dark bg-white'
-                            >
+                            <Link to='/' className='V_order_success px-4 py-2 mt-3 mx-3 text-dark bg-white text-decoration-none'>
                                 Back to Home
-                            </button>
-                            <button type="submit"  onClick={() => navigate('/returnrefund')} className='V_order_success px-4 py-2 mt-3 mx-3 text-white bg-dark'
+                            </Link>
+                            <button 
+                                type="button" 
+                                onClick={() => navigate('/returnrefund')} 
+                                className='V_order_success px-4 py-2 mt-3 mx-3 text-white bg-dark'
                             >
                                 Track Return/Refund
                             </button>
@@ -395,7 +565,6 @@ function MyOrderwithTracking() {
                     </div>
                 </Modal.Body>
             </Modal>
-
 
             <Footer />
         </React.Fragment>
