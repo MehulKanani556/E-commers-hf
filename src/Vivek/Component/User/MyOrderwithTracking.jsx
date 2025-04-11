@@ -29,7 +29,8 @@ function MyOrderwithTracking() {
         mobileNo: ''
     });
     const [invoiceModal, setInvoiceModal] = useState(false);
-
+    const [returnOrderId, setReturnOrderId] = useState('');
+    
     // OTP states and logic
     const [otpVerification, setOtpVerification] = useState(false);
     const [otpValue, setOtpValue] = useState('');
@@ -140,10 +141,10 @@ function MyOrderwithTracking() {
             setOtpError("Please enter a valid 6-digit OTP");
             return;
         }
-
+    
         setIsSubmitting(true);
         setOtpError('');
-
+    
         try {
             // Prepare the payload for OTP verification
             const verifyPayload = {
@@ -151,13 +152,17 @@ function MyOrderwithTracking() {
                 otp: parseInt(fullOtp),  // Convert to number as per your API
                 mobileNo: returnRequest.mobileNo
             };
-
+    
             // Call the API to verify OTP
             const response = await axios.post(`${BaseUrl}/api/verifyReturnOrderOtp`, verifyPayload, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-
+            console.log("response", response.data);
             if (response.data.status === 200) {
+                // Store the return order ID from the response
+                if (response.data.returnOrder && response.data.returnOrder._id) {
+                    setReturnOrderId(response.data.returnOrder._id);
+                }
                 setIsSubmitting(false);
                 setReturncard(false);
                 setSuccesscard(true);
@@ -556,7 +561,7 @@ function MyOrderwithTracking() {
                             </Link>
                             <button 
                                 type="button" 
-                                onClick={() => navigate('/returnrefund')} 
+                                onClick={() => navigate(`/returnrefund/${returnOrderId}`)} 
                                 className='V_order_success px-4 py-2 mt-3 mx-3 text-white bg-dark'
                             >
                                 Track Return/Refund

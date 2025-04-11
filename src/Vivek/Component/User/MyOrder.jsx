@@ -29,11 +29,15 @@ const MyOrder = () => {
                             // Find corresponding product and variant data
                             const productData = order.productData.find(p => p._id === item.productId) || {};
                             const variantData = order.productVariantData.find(v => v._id === item.productVariantId) || {};
+
+                            const returnOrder = (order.returnOrderData || []).find(r => r.orderId === order._id);
+
                             processedOrders.push({
                                 id: `${order._id}-${itemIndex}`, // Create unique ID for each item in order
                                 orderId: order._id,
                                 productId: item.productId,       // Added productId
-                                productVariantId: item.productVariantId, // Added productVariantId
+                                productVariantId: item.productVariantId,
+                                returnOrderId: returnOrder?._id,// Added productVariantId
                                 name: productData.productName || "Unknown Product",
                                 description: variantData.shortDescription || "No description available",
                                 color: variantData.colorName ? variantData.colorName.split(',')[0] : null,
@@ -41,7 +45,7 @@ const MyOrder = () => {
                                 price: order.totalAmount || 0,
                                 originalPrice: variantData.originalPrice || 0,
                                 status: order.orderStatus === "Confirmed" ? "arriving" : order.orderStatus,
-                                status_date: new Date(order.createdAt).toLocaleDateString('en-US', {
+                                status_date: new Date(order.updatedAt).toLocaleDateString('en-US', {
                                     day: '2-digit',
                                     month: 'short',
                                     year: 'numeric'
@@ -129,6 +133,7 @@ const MyOrder = () => {
 
     const handleClick = async (item) => {
         const itemId = item.orderId;
+        const returnOrderId = item.returnOrderId
 
         if (item.status === 'Delivered') {
             // Fetch the product data with ratings before navigating
@@ -155,7 +160,7 @@ const MyOrder = () => {
         } else if (item.status === 'Cancelled') {
             navigate('/trackrefund', { state: { orderData: item } });
         } else if (item.status === 'Return') {
-            navigate('/returnrefund', { state: { orderData: item } });
+            navigate(`/returnrefund/${returnOrderId}`, { state: { orderData: item } });
         }
     };
 
