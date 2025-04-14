@@ -624,7 +624,7 @@
 .V_back-line {
     position: absolute;
     width: 80%;
-    border: 0.32px dashed #6A6A6A;
+    border: 0.32px solid #6A6A6A;
     top: 87px;
     z-index: -1;
     left: 110px;
@@ -1149,7 +1149,7 @@
     }
 
     .V_back-line {
-        width: 72%;
+        width: 67%;
     }
 
     .V_label_value {
@@ -1204,7 +1204,7 @@
     }
 
     .V_back-line {
-        width: 80%;
+        width: 69%;
     }
 
     .V_back-line4 {
@@ -1543,7 +1543,7 @@
     }
 
     .V_back-line {
-        width: 75%;
+        width: 78%;
         left: 90px;
         top: 50px;
     }
@@ -1675,7 +1675,7 @@
     }
 
     .V_back-line {
-        width: 60%;
+        width: 65%;
         left: 120px;
         top: 35px;
     }

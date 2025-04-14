@@ -23,41 +23,42 @@ const MyOrder = () => {
                     // Process the orders
                     const processedOrders = [];
 
-                    response.data.allMyOrders.forEach(order => {
-                        // For each order, process all items
-                        order.items.forEach((item, itemIndex) => {
-                            // Find corresponding product and variant data
-                            const productData = order.productData.find(p => p._id === item.productId) || {};
-                            const variantData = order.productVariantData.find(v => v._id === item.productVariantId) || {};
+                        response.data.allMyOrders.forEach(order => {
+                            // For each order, process all items
+                            order.items.forEach((item, itemIndex) => {
+                                // Find corresponding product and variant data
+                                const productData = order.productData.find(p => p._id === item.productId) || {};
+                                const variantData = order.productVariantData.find(v => v._id === item.productVariantId) || {};
 
-                            const returnOrder = (order.returnOrderData || []).find(r => r.orderId === order._id);
-
-                            processedOrders.push({
-                                id: `${order._id}-${itemIndex}`, // Create unique ID for each item in order
-                                orderId: order._id,
-                                productId: item.productId,       // Added productId
-                                productVariantId: item.productVariantId,
-                                returnOrderId: returnOrder?._id,// Added productVariantId
-                                name: productData.productName || "Unknown Product",
-                                description: variantData.shortDescription || "No description available",
-                                color: variantData.colorName ? variantData.colorName.split(',')[0] : null,
-                                size: variantData.size ? variantData.size.split(',')[0] : null,
-                                price: order.totalAmount || 0,
-                                originalPrice: variantData.originalPrice || 0,
-                                status: order.orderStatus === "Confirmed" ? "arriving" : order.orderStatus,
-                                status_date: new Date(order.updatedAt).toLocaleDateString('en-US', {
-                                    day: '2-digit',
-                                    month: 'short',
-                                    year: 'numeric'
-                                }),
-                                message: getStatusMessage(order.orderStatus),
-                                images: variantData.images && variantData.images.length > 0 ?
-                                    variantData.images[0].replace(/\\/g, '/') : null,
-                                // quantity: item.quantity || 1,
-                                // specifications: variantData.specifications || {}
+                                const returnOrder = (order.returnOrderData || []).find(r => r.orderId === order._id);
+                                const cancelOrder = (order.cancelOrderData || [])[0];
+                                processedOrders.push({
+                                    id: `${order._id}-${itemIndex}`, // Create unique ID for each item in order
+                                    orderId: order._id,
+                                    productId: item.productId,       // Added productId
+                                    productVariantId: item.productVariantId,
+                                    cancelOrderId: cancelOrder?._id,
+                                    returnOrderId: returnOrder?._id,// Added productVariantId
+                                    name: productData.productName || "Unknown Product",
+                                    description: variantData.shortDescription || "No description available",
+                                    color: variantData.colorName ? variantData.colorName.split(',')[0] : null,
+                                    size: variantData.size ? variantData.size.split(',')[0] : null,
+                                    price: order.totalAmount || 0,
+                                    originalPrice: variantData.originalPrice || 0,
+                                    status: order.orderStatus === "Confirmed" ? "arriving" : order.orderStatus,
+                                    status_date: new Date(order.updatedAt).toLocaleDateString('en-US', {
+                                        day: '2-digit',
+                                        month: 'short',
+                                        year: 'numeric'
+                                    }),
+                                    message: getStatusMessage(order.orderStatus),
+                                    images: variantData.images && variantData.images.length > 0 ?
+                                        variantData.images[0].replace(/\\/g, '/') : null,
+                                    // quantity: item.quantity || 1,
+                                    // specifications: variantData.specifications || {}
+                                });
                             });
                         });
-                    });
 
                     setOrders(processedOrders);
                     setFilteredOrders(processedOrders);
@@ -134,6 +135,8 @@ const MyOrder = () => {
     const handleClick = async (item) => {
         const itemId = item.orderId;
         const returnOrderId = item.returnOrderId
+        const cancelOrderId = item.cancelOrderId
+        console.log("item", item);
 
         if (item.status === 'Delivered') {
             // Fetch the product data with ratings before navigating
@@ -158,7 +161,7 @@ const MyOrder = () => {
         } else if (item.status === 'outForDelivery') {
             navigate(`/trackorder/${itemId}`, { state: { orderData: item } });
         } else if (item.status === 'Cancelled') {
-            navigate('/trackrefund', { state: { orderData: item } });
+            navigate(`/trackrefund/${cancelOrderId}`, { state: { orderData: item } });
         } else if (item.status === 'Return') {
             navigate(`/returnrefund/${returnOrderId}`, { state: { orderData: item } });
         }
