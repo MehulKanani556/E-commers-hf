@@ -29,7 +29,6 @@ function TrackOrder() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [cancelOrderId, setCancelOrderId] = useState('');
     const [trackingSteps, setTrackingSteps] = useState([]);
-    const [trackingStatus, setTrackingStatus] = useState('');
 
     const handleCancelOrder = () => {
         // Reset form data when opening modal
@@ -95,7 +94,6 @@ function TrackOrder() {
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log("id", id)
             try {
                 const response = await axios.get(`${BaseUrl}/api/getOrder/${id}`, {
                     headers: { Authorization: `Bearer ${token}` },
@@ -117,16 +115,76 @@ function TrackOrder() {
             const response = await axios.get(`${BaseUrl}/api/tracking/${trackingNumber}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            console.log("response >>>>>>>>>>>>>>>>>>", response.data);
-            
-            if (response.data.status === 200) {
-                setTrackingSteps(response.data.trackingData.steps || []);
-                setTrackingStatus(response.data.trackingData.status || '');
+            // console.log("response >>>>>>>>>>>>>>>>>>", response.data.trackingData.steps);
+
+            if (response.data.status === 200 && response.data.trackingData) {
+                const steps = response.data.trackingData.steps || [];
+                
+                console.log("Tracking steps:", steps);
+                
+                setTrackingSteps(steps);
             }
         } catch (error) {
             console.error('Tracking Fetch Error:', error);
         }
     };
+    useEffect(() => {
+        const mapTrackingStepsToOrderStatus = (steps) => {
+            if (!steps || steps.length === 0) return;
+
+            // Find relevant status updates based on descriptions
+            const shipped = steps.find(step =>
+                step.description.includes('Picked up') ||
+                step.description.includes('Shipment information')
+            );
+
+            const outForDelivery = steps.find(step =>
+                step.description.includes('On FedEx vehicle for delivery')
+            );
+
+            const delivered = steps.find(step =>
+                step.description.includes('Ready for recipient pickup') ||
+                step.description.includes('Delivered')
+            );
+
+            if (shipped && data.length > 0) {
+                setData(prevData => {
+                    const newData = [...prevData];
+                    if (!newData[0].shippedAt) {
+                        newData[0] = { ...newData[0], shippedAt: shipped.date };
+                    }
+                    return newData;
+                });
+            }
+
+            if (outForDelivery && data.length > 0) {
+                setData(prevData => {
+                    const newData = [...prevData];
+                    if (!newData[0].outForDeliveryAt) {
+                        newData[0] = { ...newData[0], outForDeliveryAt: outForDelivery.date };
+                    }
+                    return newData;
+                });
+            }
+
+            if (delivered && data.length > 0) {
+                setData(prevData => {
+                    const newData = [...prevData];
+                    if (!newData[0].deliveredAt) {
+                        newData[0] = { ...newData[0], deliveredAt: delivered.date };
+                        if (newData[0].orderStatus !== 'Delivered') {
+                            newData[0].orderStatus = 'Delivered';
+                        }
+                    }
+                    return newData;
+                });
+            }
+        };
+
+        if (trackingSteps.length > 0 && data.length > 0) {
+            mapTrackingStepsToOrderStatus(trackingSteps);
+        }
+    }, [trackingSteps, data]);
 
     useEffect(() => {
         const reason = async () => {
