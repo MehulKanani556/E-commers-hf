@@ -28,6 +28,8 @@ function TrackOrder() {
     const [cancelComment, setCancelComment] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [cancelOrderId, setCancelOrderId] = useState('');
+    const [trackingSteps, setTrackingSteps] = useState([]);
+    const [trackingStatus, setTrackingStatus] = useState('');
 
     const handleCancelOrder = () => {
         // Reset form data when opening modal
@@ -98,14 +100,33 @@ function TrackOrder() {
                 const response = await axios.get(`${BaseUrl}/api/getOrder/${id}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-                // console.log("response>>>>>>>>>>>>>>>>>>", response.data)
+                // console.log("response>>>>>>>>>>>>>>>>>>", response.data.order[0].trackingNumber)
                 setData(response.data.order);
+                if (response.data.order[0]?.trackingNumber) {
+                    fetchTrackingInfo(response.data.order[0].trackingNumber);
+                }
             } catch (error) {
                 console.error('Data fetching failed:', error);
             }
         };
         fetchData();
     }, [id, BaseUrl, token]);
+
+    const fetchTrackingInfo = async (trackingNumber) => {
+        try {
+            const response = await axios.get(`${BaseUrl}/api/tracking/${trackingNumber}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            console.log("response >>>>>>>>>>>>>>>>>>", response.data);
+            
+            if (response.data.status === 200) {
+                setTrackingSteps(response.data.trackingData.steps || []);
+                setTrackingStatus(response.data.trackingData.status || '');
+            }
+        } catch (error) {
+            console.error('Tracking Fetch Error:', error);
+        }
+    };
 
     useEffect(() => {
         const reason = async () => {
