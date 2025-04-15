@@ -201,11 +201,11 @@ function TrackRefund() {
                                         <div className="col-6 V_right_border py-3">
                                             <div className='V_delivery_address_width'>
                                                 <h1 className='V_delivery_address'>Delivery Address</h1>
-                                                {data.length > 0 && data[0].userData[0] && data[0].userData[0].length > 0 ? (
+                                                {data.length > 0 && data[0].userData?.length > 0 && data[0].addressData?.length > 0 ? (
                                                     <>
                                                         <p className='V_customer_name pt-3'>{data[0].userData[0].name}</p>
                                                         <p className='V_customer_address'>
-                                                            {data[0].addressData[0].address}, {data[0].addressData[0].landmark}, {data[0].addressData[0].city}, {data[0].addressData[0].state}, {data[0].addressData[0].pincode}
+                                                            {data[0].addressData[0].address}, {data[0].addressData[0].landmark}, {data[0].addressData[0].city}, {data[0].addressData[0].state} - {data[0].addressData[0].pincode}
                                                         </p>
                                                         <p className='V_customer_number'>{data[0].addressData[0].contactNo}</p>
                                                     </>
