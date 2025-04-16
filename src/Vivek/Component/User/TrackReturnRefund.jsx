@@ -21,12 +21,12 @@ function TrackReturnRefund() {
         const fetchReturnOrderData = async () => {
             try {
                 setLoading(true);
-                console.log("Fetching return order with id:", id);
+                // console.log("Fetching return order with id:", id);
                 const response = await axios.get(`${BaseUrl}/api/getReturnOrder/${id}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 
-                console.log("Return order API response:", response.data.returnOrder[0]);
+                // console.log("Return order API response:", response.data.returnOrder[0]);
 
                 if (response.data && response.data.returnOrder && response.data.returnOrder.length > 0) {
                     setReturnOrderData(response.data.returnOrder[0]);
@@ -210,7 +210,7 @@ function TrackReturnRefund() {
     const returnReason = returnOrderData.cancellationData && returnOrderData.cancellationData.length > 0
         ? returnOrderData.cancellationData[0].reasonName
         : "Reason not specified";
-console.log("returnOrderData.orderStatus",returnOrderData.returnOrderStatus);
+// console.log("returnOrderData.orderStatus",returnOrderData.returnOrderStatus);
     // Main content when data is loaded successfully
     return (
         <React.Fragment>

@@ -117,19 +117,12 @@ function MyOrderwithTracking() {
         }
     };
 
-    const handleOtpChange = (e, field) => {
-        // Allow only numeric input
-        const value = e.target.value.replace(/[^0-9]/g, '');
-        
-        setOtp({
-            ...otp,
-            [field]: value
-        });
-
-        // Calculate the complete OTP value whenever any digit changes
-        const updatedOtp = { ...otp, [field]: value };
-        const fullOtp = Object.values(updatedOtp).join('');
-        setOtpValue(fullOtp);
+    const handleOtpChange = (e, name) => {
+        const value = e.target.value.replace(/[^0-9]/g, ''); // Only allow numbers
+        setOtp((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
     };
 
     const handleSubmitReturn = async (event) => {
@@ -157,7 +150,7 @@ function MyOrderwithTracking() {
             const response = await axios.post(`${BaseUrl}/api/verifyReturnOrderOtp`, verifyPayload, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            console.log("response", response.data);
+            // console.log("response", response.data);
             if (response.data.status === 200) {
                 // Store the return order ID from the response
                 if (response.data.returnOrder && response.data.returnOrder._id) {
@@ -215,7 +208,7 @@ function MyOrderwithTracking() {
                 const response = await axios.get(`${BaseUrl}/api/allReasons`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-                console.log("response.data.reason",response.data.reasons);
+                // console.log("response.data.reason",response.data.reasons);
                 setReason(response.data.reasons);
             } catch (error) {
                 console.error('Failed to fetch return reasons:', error);
@@ -238,6 +231,58 @@ function MyOrderwithTracking() {
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const year = date.getFullYear();
         return `${day}/${month}/${year}`;
+    };
+
+    const handleKeyDown = (e, index) => {
+        const inputs = document.querySelectorAll('.V_otp_input1');
+    
+        switch (e.key) {
+            case "Backspace":
+                if (e.target.value === "") {
+                    if (index > 0) inputs[index - 1].focus();
+                } else {
+                    e.preventDefault();
+                    const updatedOtp = { ...otp };
+                    updatedOtp[`otp${index + 1}`] = '';
+                    setOtp(updatedOtp);
+                }
+                break;
+    
+            case "ArrowLeft":
+                e.preventDefault(); // prevent cursor move
+                if (index > 0) inputs[index - 1].focus();
+                break;
+    
+            case "ArrowRight":
+                e.preventDefault(); // prevent cursor move
+                if (index < inputs.length - 1) inputs[index + 1].focus();
+                break;
+    
+            default:
+                if (/^[0-9]$/.test(e.key)) {
+                    setTimeout(() => {
+                        if (index < inputs.length - 1) inputs[index + 1].focus();
+                    }, 10);
+                }
+                break;
+        }
+    };    
+    
+    const handlePasteOtp = (e) => {
+        e.preventDefault();
+        const paste = e.clipboardData.getData('text').trim();
+    
+        if (/^\d{6}$/.test(paste)) {
+            const updatedOtp = {};
+            paste.split('').forEach((digit, idx) => {
+                updatedOtp[`otp${idx + 1}`] = digit;
+            });
+            setOtp(updatedOtp);
+    
+            // Optional: Move focus to last box
+            const inputs = document.querySelectorAll('.V_otp_input1');
+            if (inputs[5]) inputs[5].focus();
+        }
     };
 
     return (
@@ -501,7 +546,7 @@ function MyOrderwithTracking() {
                                         Enter OTP to return order
                                     </span>
                                     <div className='my-3 my-sm-4 d-flex gap-3 justify-content-between'>
-                                        {[1, 2, 3, 4, 5, 6].map((num) => (
+                                        {[1, 2, 3, 4, 5, 6].map((num, index) => (
                                             <input
                                                 key={num}
                                                 type="text"
@@ -509,9 +554,11 @@ function MyOrderwithTracking() {
                                                 maxLength="1"
                                                 value={otp[`otp${num}`]}
                                                 onChange={(e) => handleOtpChange(e, `otp${num}`)}
-                                                onInput={(e) => handleInput(e, num-1)}
+                                                onInput={(e) => handleInput(e, index)}
+                                                onKeyDown={(e) => handleKeyDown(e, index)}
                                                 pattern="[0-9]"
                                                 required={otpVerification}
+                                                onPaste={handlePasteOtp}
                                             />
                                         ))}
                                     </div>

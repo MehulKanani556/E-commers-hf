@@ -35,12 +35,12 @@ function RateReview() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                console.log("orderData", orderData);
+                // console.log("orderData", orderData);
                 if (orderData && orderData.productId) {
                     const response = await axios.get(`${BaseUrl}/api/getProduct/${orderData.productId}`, {
                         headers: { Authorization: `Bearer ${token}` },
                     });
-                    console.log("response>>>>>>>>>>>>>>>>>>", response.data);
+                    // console.log("response>>>>>>>>>>>>>>>>>>", response.data);
                     setData(response.data);
                 } else {
                     console.error("No productId available in orderData");
@@ -169,8 +169,8 @@ function RateReview() {
                 submitFormData.append('productImages', file);
             });
 
-            console.log("Submitting form data:", formData);
-            console.log("Sending files:", imageFiles);
+            // console.log("Submitting form data:", formData);
+            // console.log("Sending files:", imageFiles);
             
             const response = await axios.post(
                 `${BaseUrl}/api/createRatingAndReview`,
@@ -183,7 +183,7 @@ function RateReview() {
                 }
             );
 
-            console.log('Response:', response.data);
+            // console.log('Response:', response.data);
 
             if (response.status === 201) {
                 setSuccess('Your review has been submitted successfully.');

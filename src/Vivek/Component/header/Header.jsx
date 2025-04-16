@@ -26,6 +26,7 @@ const Header = () => {
     // const [mainCategory, setMainCategory] = useState([]);
     // const [category, setCategory] = useState([]);
     // const [subCategory, setSubCategory] = useState([]);
+    const [noResultsFound, setNoResultsFound] = useState(false);
 
     const [isSearching, setIsSearching] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -223,6 +224,7 @@ const Header = () => {
         fetchData();
     }, [BaseUrl, token]);
 
+    // Fix the performGlobalSearch function to handle no results scenario
     const performGlobalSearch = async () => {
         setIsSearching(true);
         try {
@@ -233,17 +235,20 @@ const Header = () => {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
-            // Ensure the response data has the expected structure
-            setSearchResults(response.data);
-            console.log("ooo", response.data)
+            // Check if search results are empty
+            if (response.data && response.data.length === 0) {
+                setSearchResults([]);
+                setNoResultsFound(true);
+            } else {
+                setSearchResults(response.data);
+                setNoResultsFound(false);
+            }
+            // console.log("Search results:", response.data);
         } catch (error) {
             console.error('Global search error:', error);
-            // Reset search results on error
-            setSearchResults({
-                products: [],
-                categories: [],
-                subCategories: []
-            });
+            // Reset search results on error and show "not found"
+            setSearchResults([]);
+            setNoResultsFound(true);
         }
         setIsSearching(false);
     };
@@ -266,7 +271,7 @@ const Header = () => {
             const response = await axios.get(`${BaseUrl}/api/getProduct/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            console.log(response.data);
+            // console.log(response.data);
         } catch (error) {
             console.error('Data fetching failed:', error);
         }
@@ -385,25 +390,33 @@ const Header = () => {
                                             </button>
                                         </span>
                                         <ul className='VK_input_suggestion list-unstyled'>
-                                            {searchResults.map((product, index) => (
-                                                <li key={`product-${index}`}
-                                                    className='py-2'>
-                                                    <Link className='mv_search_a' to={`/womendetails/${product._id}`}
-                                                    >
-                                                        <div className='d-flex align-items-center w-100'>
-                                                            <div>
-                                                                <img src={require('../../assets/zoom.png')} height="22px" width="22px" alt="" />
+                                            {searchResults.length > 0 ? (
+                                                searchResults.map((product, index) => (
+                                                    <li key={`product-${index}`} className='py-2'>
+                                                        <Link className='mv_search_a' to={`/womendetails/${product._id}`}>
+                                                            <div className='d-flex align-items-center w-100'>
+                                                                <div>
+                                                                    <img src={require('../../assets/zoom.png')} height="22px" width="22px" alt="" />
+                                                                </div>
+                                                                <div className='ps-3 mv_search_text'>
+                                                                    {product.productName}
+                                                                </div>
+                                                                <div className='ms-auto'>
+                                                                    <img src={require('../../assets/arrow.png')} height="20px" width="20px" alt="" />
+                                                                </div>
                                                             </div>
-                                                            <div className='ps-3 mv_search_text'>
-                                                                {product.productName}
-                                                            </div>
-                                                            <div className='ms-auto'>
-                                                                <img src={require('../../assets/arrow.png')} height="20px" width="20px" alt="" />
-                                                            </div>
+                                                        </Link>
+                                                    </li>
+                                                ))
+                                            ) : (
+                                                searchQuery.length > 0 && noResultsFound && (
+                                                    <li className='py-3 text-center'>
+                                                        <div className="not-found-message">
+                                                            Product not found. Please try a different search.
                                                         </div>
-                                                    </Link>
-                                                </li>
-                                            ))}
+                                                    </li>
+                                                )
+                                            )}
                                         </ul>
                                     </div>
                                 </div>

@@ -74,7 +74,7 @@ function TrackOrder() {
             // console.log("Order cancelled successfully", response.data);
             if (response.data.cancelOrder && response.data.cancelOrder._id) {
                 setCancelOrderId(response.data.cancelOrder._id);
-                console.log("response.data.cancelOrder._id", response.data);
+                // console.log("response.data.cancelOrder._id", response.data);
             }
 
             setIsSubmitting(false);
@@ -120,7 +120,7 @@ function TrackOrder() {
             if (response.data.status === 200 && response.data.trackingData) {
                 const steps = response.data.trackingData.steps || [];
                 
-                console.log("Tracking steps:", steps);
+                // console.log("Tracking steps:", steps);
                 
                 setTrackingSteps(steps);
             }

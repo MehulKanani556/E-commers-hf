@@ -17,7 +17,7 @@ const MyOrder = () => {
                 const response = await axios.get(`${BaseUrl}/api/getAllMyOrders`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
-                console.log("API response", response.data);
+                // console.log("API response", response.data);
 
                 if (response.data.allMyOrders && Array.isArray(response.data.allMyOrders)) {
                     // Process the orders
@@ -136,7 +136,7 @@ const MyOrder = () => {
         const itemId = item.orderId;
         const returnOrderId = item.returnOrderId
         const cancelOrderId = item.cancelOrderId
-        console.log("item", item);
+        // console.log("item", item);
 
         if (item.status === 'Delivered') {
             // Fetch the product data with ratings before navigating
