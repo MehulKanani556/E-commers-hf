@@ -131,7 +131,7 @@ const Wishlist = () => {
                                         <div className='VK_wishlist_parent'>
                                             <div className='VK_wishlist_img'>
                                                 <img
-                                                    src={`${BaseUrl}/${item.image}`}
+                                                    src={`${BaseUrl}/public/${item.image}`}
                                                     className='w-100 h-100 object_cover object_top'
                                                     alt={item.name}
                                                 />

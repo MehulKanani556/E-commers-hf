@@ -164,9 +164,9 @@
     .VK_second_cont img{
         object-position: -220px;
     }
-    .VK_first_cont img{
+    /* .VK_first_cont img{
         object-position: -500px;
-    }
+    } */
 
 }
 @media (max-width:480px) {

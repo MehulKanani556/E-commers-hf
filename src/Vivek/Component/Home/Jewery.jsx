@@ -30,7 +30,7 @@ const Jewery = () => {
                 <div className='d_container p-0'>
                     <Row className='m-0 VK_jewery_cont'>
                         {popularbarnd.map((item) => (
-                            <Col lg={6} className='h-100 p-0 px-sm-2'>
+                            <Col lg={6} className='h-100 p-0 px-sm-2 my-2'>
                                 <div className='h-100 VK_jewery_col VK_jewery_div'>
                                     <img src={`${BaseUrl}/${item?.offerImage}`} className='w-100 h-100' alt="" />
                                     <div className='VK_jewery_text_1 text-center'>
