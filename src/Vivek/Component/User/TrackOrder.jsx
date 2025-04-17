@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../User/user.css';
 import { Modal } from 'react-bootstrap';
 import Header from '../../Component/header/Header.jsx'
 import Footer from '../footer/Footer.jsx';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { usePDF } from 'react-to-pdf';
 
 
 function TrackOrder() {
 
     const navigate = useNavigate();
     const { id } = useParams();
+    const invoiceRef = useRef(null);
 
     const BaseUrl = process.env.REACT_APP_BASEURL;
     const token = localStorage.getItem('token');
@@ -22,13 +24,20 @@ function TrackOrder() {
         comments: '',
     });
 
+    // Initialize the PDF generation functionality
+    const { toPDF, targetRef } = usePDF({
+        filename: 'invoice.pdf',
+        page: { margin: 10 }
+    });
     const [deletecard, setDeletecard] = useState(false);
     const [canclecard, setCanclecard] = useState(false);
     const [invoiceModal, setInvoiceModal] = useState(false);
     const [cancelComment, setCancelComment] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [cancelOrderId, setCancelOrderId] = useState('');
-    const [trackingSteps, setTrackingSteps] = useState([]);
+
+
+
 
     const handleCancelOrder = () => {
         // Reset form data when opening modal
@@ -115,76 +124,105 @@ function TrackOrder() {
             const response = await axios.get(`${BaseUrl}/api/tracking/${trackingNumber}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            // console.log("response >>>>>>>>>>>>>>>>>>", response.data.trackingData.steps);
 
             if (response.data.status === 200 && response.data.trackingData) {
                 const steps = response.data.trackingData.steps || [];
-                
-                // console.log("Tracking steps:", steps);
-                
-                setTrackingSteps(steps);
+
+                // setTrackingSteps(steps);
+
+                const status = updateOrderTrackingStatus(steps);
+                setData((prevData) => {
+                    const updatedOrder = { ...prevData[0], ...status };
+                    return [updatedOrder];
+                });
             }
         } catch (error) {
             console.error('Tracking Fetch Error:', error);
         }
     };
-    useEffect(() => {
-        const mapTrackingStepsToOrderStatus = (steps) => {
-            if (!steps || steps.length === 0) return;
+    const formatDateTime = (value) => {
+        if (!value) return '';
+        const date = new Date(value);
+        const formattedDate = date.toLocaleDateString('en-US', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        });
+        const formattedTime = date.toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        });
+        return `${formattedDate} ${formattedTime}`;
+    };
 
-            // Find relevant status updates based on descriptions
-            const shipped = steps.find(step =>
-                step.description.includes('Picked up') ||
-                step.description.includes('Shipment information')
-            );
-
-            const outForDelivery = steps.find(step =>
-                step.description.includes('On FedEx vehicle for delivery')
-            );
-
-            const delivered = steps.find(step =>
-                step.description.includes('Ready for recipient pickup') ||
-                step.description.includes('Delivered')
-            );
-
-            if (shipped && data.length > 0) {
-                setData(prevData => {
-                    const newData = [...prevData];
-                    if (!newData[0].shippedAt) {
-                        newData[0] = { ...newData[0], shippedAt: shipped.date };
-                    }
-                    return newData;
-                });
-            }
-
-            if (outForDelivery && data.length > 0) {
-                setData(prevData => {
-                    const newData = [...prevData];
-                    if (!newData[0].outForDeliveryAt) {
-                        newData[0] = { ...newData[0], outForDeliveryAt: outForDelivery.date };
-                    }
-                    return newData;
-                });
-            }
-
-            if (delivered && data.length > 0) {
-                setData(prevData => {
-                    const newData = [...prevData];
-                    if (!newData[0].deliveredAt) {
-                        newData[0] = { ...newData[0], deliveredAt: delivered.date };
-                        if (newData[0].orderStatus !== 'Delivered') {
-                            newData[0].orderStatus = 'Delivered';
-                        }
-                    }
-                    return newData;
-                });
-            }
+    const updateOrderTrackingStatus = (steps) => {
+        const updatedStatus = {
+            orderStatus: 'Confirmed', // Default
+            shippedAt: null,
+            outForDeliveryAt: null,
+            deliveredAt: null
         };
 
-        if (trackingSteps.length > 0 && data.length > 0) {
-            mapTrackingStepsToOrderStatus(trackingSteps);
+        for (let step of steps) {
+            const { description, date } = step;
+
+            if (description.includes('Picked up')) {
+                updatedStatus.orderStatus = 'Shipped';
+                updatedStatus.shippedAt = formatDateTime(date);
+            }
+
+            if (description.includes('On FedEx vehicle for delivery')) {
+                updatedStatus.orderStatus = 'outForDelivery';
+                updatedStatus.outForDeliveryAt = formatDateTime(date);
+            }
+
+            if (description.includes('Ready for recipient pickup')) {
+                updatedStatus.orderStatus = 'Delivered';
+                updatedStatus.deliveredAt = formatDateTime(date);
+            }
         }
-    }, [trackingSteps, data]);
+
+        return updatedStatus;
+    };
+
+    const getStepStatus = (item, step) => {
+        const now = new Date();
+        const createdAt = new Date(item.createdAt);
+
+        const isValidStep = (stepDate) => {
+            const stepTime = new Date(stepDate);
+            return stepTime >= createdAt && stepTime <= now;
+        };
+
+        switch (step) {
+            case 'Confirmed':
+                return createdAt <= now ? 'active' : '';
+            case 'Shipped':
+                return item.shippedAt && isValidStep(item.shippedAt) ? 'active' : '';
+            case 'outForDelivery':
+                return item.outForDeliveryAt && isValidStep(item.outForDeliveryAt) ? 'active' : '';
+            case 'Delivered':
+                return item.deliveredAt && isValidStep(item.deliveredAt) ? 'active' : '';
+            default:
+                return '';
+        }
+    };
+
+    const getProgressWidth = (item) => {
+        let progressWidth = '25%';
+
+        if (getStepStatus(item, 'Delivered') === 'active') {
+            progressWidth = '100%';
+        } else if (getStepStatus(item, 'outForDelivery') === 'active') {
+            progressWidth = '75%';
+        } else if (getStepStatus(item, 'Shipped') === 'active') {
+            progressWidth = '50%';
+        }
+
+        return progressWidth;
+    };
+
 
     useEffect(() => {
         const reason = async () => {
@@ -209,19 +247,52 @@ function TrackOrder() {
         }));
     }, [id]);
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const day = date.getDate().toString().padStart(2, '0');
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
+    // const formatDate = (dateString) => {
+    //     const date = new Date(dateString);
+    //     const day = date.getDate().toString().padStart(2, '0');
+    //     const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    //     const year = date.getFullYear();
+    //     return `${day}/${month}/${year}`;
+    // };
+
+    // // Calculate expected delivery date (adding 5 days to order date)
+    // const calculateExpectedDelivery = (orderDate) => {
+    //     const date = new Date(orderDate);
+    //     date.setDate(date.getDate() + 5); // Adding 5 days for delivery
+    //     return formatDate(date);
+    // };
+
+    const handleNavigateInvoice = (id) => {
+        navigate(`/invoice/${id}`);
+    }
+
+    const calculateSubtotal = () => {
+        // console.log("ordedata",orderData);
+
+        return data[0]?.items?.reduce((total, item, index) => {
+            const price = data[0]?.productVariantData[index]?.originalPrice -
+                (data[0]?.productVariantData[index]?.originalPrice *
+                    data[0]?.productVariantData[index]?.discountPrice / 100);
+            return total + (price * item.quantity);
+        }, 0) || 0;
     };
 
-    // Calculate expected delivery date (adding 5 days to order date)
-    const calculateExpectedDelivery = (orderDate) => {
-        const date = new Date(orderDate);
-        date.setDate(date.getDate() + 5); // Adding 5 days for delivery
-        return formatDate(date);
+    const subtotal = calculateSubtotal();
+    const sgstRate = 0.015; // 1.5%
+    const cgstRate = 0.025; // 2.5%
+    const sgstAmount = subtotal * sgstRate;
+    const cgstAmount = subtotal * cgstRate;
+    const totalAmount = subtotal + sgstAmount + cgstAmount;
+
+    const handleDownloadInvoice = () => {
+        setInvoiceModal(true);
+
+        setTimeout(() => {
+            toPDF();
+            setTimeout(() => {
+                setInvoiceModal(false);
+            }, 1000); 
+        }, 500);
     };
 
     return (
@@ -294,7 +365,17 @@ function TrackOrder() {
                                                 </div>
                                             </div>
                                             <div className="col-lg-8 py-3 pt-lg-0 pt-xl-3 VK_subtrack position-relative VK_padding overflow-auto">
-                                                <div className='V_back-line4'></div>
+                                                <div className='V_back-line4'>
+                                                    <div className="progress-line" style={{
+                                                        position: 'absolute',
+                                                        top: 0,
+                                                        left: 0,
+                                                        height: '100%',
+                                                        width: getProgressWidth(item),
+                                                        backgroundColor: '#4CAF50',
+                                                        transition: 'width 0.5s ease'
+                                                    }}></div>
+                                                </div>
                                                 <div className="d-flex justify-content-between px-md-3 px-lg-5">
                                                     {/* Order Confirmed Step */}
                                                     <div className='text-center'>
@@ -303,11 +384,14 @@ function TrackOrder() {
                                                             src={require('../../assets/ordered confirmed.png')}
                                                             alt=""
                                                             className='py-2'
-                                                            style={{ opacity: item.orderStatus === 'Confirmed' || item.orderStatus === 'Shipped' || item.orderStatus === 'outForDelivery' || item.orderStatus === 'Delivered' ? 1 : 0.5 }}
+                                                            style={{ opacity: getStepStatus(item, 'Confirmed') === 'active' ? 1 : 0.5 }}
                                                         />
-                                                        {(item.orderStatus === 'Confirmed' || item.orderStatus === 'Shipped' || item.orderStatus === 'outForDelivery' || item.orderStatus === 'Delivered') && (
+                                                        {getStepStatus(item, 'Confirmed') === 'active' && (
                                                             <>
-                                                                <p className='V_track_time mb-0'>{new Date(item.createdAt).toLocaleDateString()} <span>{new Date(item.createdAt).toLocaleTimeString()}</span></p>
+                                                                <p className='V_track_time mb-0'>
+                                                                    {/* {item.createdAt} */}
+                                                                    <span>{formatDateTime(item.createdAt)}</span>
+                                                                </p>
                                                                 <p className='V_order_description mb-0'>Your order has been placed.</p>
                                                             </>
                                                         )}
@@ -320,13 +404,15 @@ function TrackOrder() {
                                                             src={require('../../assets/shipped.png')}
                                                             alt=""
                                                             className='py-2'
-                                                            style={{ opacity: item.orderStatus === 'Shipped' || item.orderStatus === 'outForDelivery' || item.orderStatus === 'Delivered' ? 1 : 0.5 }}
+                                                            style={{ opacity: getStepStatus(item, 'Shipped') === 'active' ? 1 : 0.5 }}
                                                         />
-                                                        {(item.orderStatus === 'Shipped' || item.orderStatus === 'outForDelivery' || item.orderStatus === 'Delivered') && (
+                                                        {item.shippedAt && (
+                                                            <p className='V_track_time mb-0'>
+                                                                <span>{item.shippedAt}</span>
+                                                            </p>
+                                                        )}
+                                                        {getStepStatus(item, 'Shipped') === 'active' && (
                                                             <>
-                                                                {item.shippedAt && (
-                                                                    <p className='V_track_time mb-0'>{new Date(item.shippedAt).toLocaleDateString()} <span>{new Date(item.shippedAt).toLocaleTimeString()}</span></p>
-                                                                )}
                                                                 <p className='V_order_description mb-0'>Your item has been shipped</p>
                                                             </>
                                                         )}
@@ -339,13 +425,15 @@ function TrackOrder() {
                                                             src={require('../../assets/Out for Delivery logo.png')}
                                                             alt=""
                                                             className='py-2'
-                                                            style={{ opacity: item.orderStatus === 'outForDelivery' || item.orderStatus === 'Delivered' ? 1 : 0.5 }}
+                                                            style={{ opacity: getStepStatus(item, 'outForDelivery') === 'active' ? 1 : 0.5 }}
                                                         />
-                                                        {(item.orderStatus === 'outForDelivery' || item.orderStatus === 'Delivered') && (
+                                                        {item.outForDeliveryAt && (
+                                                            <p className='V_track_time mb-0'>
+                                                                <span> {item.outForDeliveryAt}</span>
+                                                            </p>
+                                                        )}
+                                                        {getStepStatus(item, 'outForDelivery') === 'active' && (
                                                             <>
-                                                                {item.outForDeliveryAt && (
-                                                                    <p className='V_track_time mb-0'>{new Date(item.outForDeliveryAt).toLocaleDateString()} <span>{new Date(item.outForDeliveryAt).toLocaleTimeString()}</span></p>
-                                                                )}
                                                                 <p className='V_order_description mb-0'>Out for delivery</p>
                                                             </>
                                                         )}
@@ -358,13 +446,16 @@ function TrackOrder() {
                                                             src={require('../../assets/delivered logo.png')}
                                                             alt=""
                                                             className='py-2'
-                                                            style={{ opacity: item.orderStatus === 'Delivered' ? 1 : 0.5 }}
+                                                            style={{ opacity: getStepStatus(item, 'Delivered') === 'active' ? 1 : 0.5 }}
                                                         />
-                                                        {item.orderStatus === 'Delivered' && (
+                                                        {item.deliveredAt && (
+                                                            <p className='V_track_time mb-0'>
+                                                                {/* {item.deliveredAt} */}
+                                                                <span>{item.deliveredAt}</span>
+                                                            </p>
+                                                        )}
+                                                        {getStepStatus(item, 'Delivered') === 'active' && (
                                                             <>
-                                                                {item.deliveredAt && (
-                                                                    <p className='V_track_time mb-0'>{new Date(item.deliveredAt).toLocaleDateString()} <span>{new Date(item.deliveredAt).toLocaleTimeString()}</span></p>
-                                                                )}
                                                                 <p className='V_order_description mb-0'>Your item has been delivered</p>
                                                             </>
                                                         )}
@@ -378,8 +469,8 @@ function TrackOrder() {
                                     <div key={item._id} className="V_pad pt-lg-3">
                                         <p className='V_label'>Order ID: <span className='V_label_value ps-2'>#{item._id}</span></p>
                                         <div className="d-flex flex-xl-nowrap">
-                                            <p className='V_label mb-0'>Order Date: <span className='V_label_value ps-2'>{formatDate(item.createdAt)}</span></p>
-                                            <p className='V_label ps-3 mb-0'>Expected Delivery: <span className='V_label_value ps-2'>{calculateExpectedDelivery(item.createdAt)}</span></p>
+                                            <p className='V_label mb-0'>Order Date: <span className='V_label_value ps-2'>{formatDateTime(item.createdAt)}</span></p>
+                                            <p className='V_label ps-3 mb-0'>Expected Delivery: <span className='V_label_value ps-2'>{item.deliveredAt}</span></p>
                                         </div>
                                     </div>
                                 ))}
@@ -406,9 +497,9 @@ function TrackOrder() {
                                         {data.map((item) => (
                                             <div key={item._id} className="justify-content-start text-start">
                                                 <h1 className='V_delivery_address'>Payment Details</h1>
-                                                {/* <p className='V_customer_name pt-3 pb-2 mb-0'>Debit Card</p>
+                                                <p className='V_customer_name pt-3 pb-2 mb-0'>Debit Card</p>
                                                 <p className='V_card_name mb-0 py-1'>Card Name <span className='V_ame_exp'>American Express </span></p>
-                                                <p className='V_card_name mb-0 py-1'>Transaction ID <span className='V_ame_exp'> #123456789 </span></p> */}
+                                                <p className='V_card_name mb-0 py-1'>Transaction ID <span className='V_ame_exp'> #123456789 </span></p>
                                                 <p className='V_card_name mb-0 py-1'>Payment Status <span className='V_success'> {item.paymentMethod} </span></p>
                                             </div>
                                         ))}
@@ -416,13 +507,15 @@ function TrackOrder() {
                                     <div className="col-6 col-sm-4 py-3">
                                         <div className="V_invoice_width">
                                             <h1 className='V_invoice'>Invoice</h1>
-                                            <p
-                                                className='V_down_invoic mt-3'
-                                                onClick={() => setInvoiceModal(true)}
-                                                style={{ cursor: 'pointer', textDecoration: 'underline' }}
-                                            >
-                                                Download Invoice
-                                            </p>
+                                            {data.length > 0 && (
+                                                <p
+                                                    className='V_down_invoic mt-3'
+                                                    onClick={handleDownloadInvoice}
+                                                    style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                                >
+                                                    Download Invoice
+                                                </p>
+                                            )}
                                         </div>
                                         <div className='text-end'>
                                             <button type='submit' className='V_cancle_order_btn px-sm-3 px-md-4 py-2'
@@ -439,35 +532,157 @@ function TrackOrder() {
                 </div>
             </section>
 
+            <section  ref={targetRef}>
+                <div>
+                    <div className="d_container">
+                        <div className="mt-4">
+                            <div className="row justify-content-center">
+                                <div className="col-12 ">
+                                    <div className="ds_in-bg">
+                                        <h5 className="fw-bold">LOGO</h5>
+                                        <div className="d-flex flex-wrap justify-content-between ">
+                                            <div className="mt-4">
+                                                <h5 className="ds_in-name">{data[0]?.userData?.[0].name}</h5>
+                                                <h6 className="ds_in-email">{data[0]?.userData?.[0].email}</h6>
+                                                <h6 className="ds_in-email">+1 {data[0]?.userData?.[0].mobileNo}</h6>
+                                            </div>
+                                            <div className="d-flex justify-content-between mt-4 ds_in-flex-manage">
+                                                <div>
+                                                    <p className="ds_in-text mb-0">Invoice No</p>
+                                                    <p className="ds_in-text mb-0">Invoice Date</p>
+                                                    <p className="ds_in-text mb-0">Order ID</p>
+                                                </div>
+                                                <div className="text-end">
+                                                    <p className="ds_in-text mb-0 text-dark fw-500">#123456</p>
+                                                    <p className="ds_in-text mb-0 text-dark fw-500">{new Date(data[0]?.createdAt).toLocaleDateString('en-US', {
+                                                        year: 'numeric',
+                                                        month: 'long',
+                                                        day: 'numeric',
+                                                    })}</p>
+                                                    <p className="ds_in-text mb-0 text-dark fw-500">{data[0]?._id}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-xl-4 col-lg-4 col-md-4 mt-4">
+                                            <div className="ds_in-border h-100">
+                                                <p className="ds_in-sold fw-500 mb-2">SOLD BY</p>
+                                                <p className="ds_in-sold text-dark fw-600 mb-0">COCOBLU RETAIL LIMITED </p>
+                                                <p className="ds_in-add text-dark fw-400">Renaissance industrial smart city, Kalyan Sape road, Thane, Maharashtra, 421302 IN</p>
+                                            </div>
+                                        </div>
+                                        <div className="col-xl-4 col-lg-4 col-md-4 mt-4">
+                                            <div className="ds_in-border h-100">
+                                                <p className="ds_in-sold fw-500 mb-2">BILLED TO</p>
+                                                <p className="ds_in-sold text-dark fw-600 mb-0">{data[0]?.addressData[0]?.name}</p>
+                                                <p className="ds_in-add text-dark fw-400">{data[0]?.addressData[0] &&
+                                                    `${data[0].addressData[0].address}, ${data[0].addressData[0].landmark}, 
+                                                        ${data[0].addressData[0].city}, ${data[0].addressData[0].state}, 
+                                                        ${data[0].addressData[0].pincode}`
+                                                }</p>
+                                            </div>
+                                        </div>
 
-            {/* Invoice Modal */}
-            <Modal show={invoiceModal} onHide={() => setInvoiceModal(false)} centered className='VK_add_address_model_'>
-                <Modal.Header closeButton>
-                    <Modal.Title>
-                        <h5 className='VK_add_address_model_heading'>Invoice Details</h5>
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <div className='p-2 py-3'>
-                        {data.length > 0 ? (
-                            <div>
-                                <p><strong>Order ID:</strong> #{data[0]._id}</p>
-                                <p><strong>Order Date:</strong> {new Date(data[0].createdAt).toLocaleDateString()}</p>
-                                <p><strong>Payment Method:</strong> {data[0].paymentMethod}</p>
-                                <p><strong>Total Amount:</strong> ${data[0].totalAmount}</p>
-                                <div className="mt-3 text-center">
-                                    <a href={`${BaseUrl}/invoices/${data[0]._id}`} className="V_cancle_order_btn px-sm-3 px-md-4 py-2" download>
-                                        Download Invoice
-                                    </a>
+                                        <div className="col-xl-4 col-lg-4 col-md-4 mt-4">
+                                            <div className="ds_in-border border-0 h-100">
+                                                <p className="ds_in-sold fw-500 mb-2">SHIPPED TO</p>
+                                                <p className="ds_in-sold text-dark fw-600 mb-0">{data[0]?.addressData[0]?.name}</p>
+                                                <p className="ds_in-add text-dark fw-400">{data[0]?.addressData[0] &&
+                                                    `${data[0].addressData[0].address}, ${data[0].addressData[0].landmark}, 
+                                                    ${data[0].addressData[0].city}, ${data[0].addressData[0].state}, 
+                                                    ${data[0].addressData[0].pincode}`
+                                                }</p>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div className="ds_in-line mt-3"></div>
+                                        </div>
+
+                                        <div className="mt-4 ds_table-main">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th className="ds_table-th">Item</th>
+                                                        <th className="ds_table-th">Qty.</th>
+                                                        <th className="ds_table-th">Price</th>
+                                                        <th className="ds_table-th">Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {data[0]?.productData?.map((product, index) => (
+                                                        <tr key={product._id}>
+                                                            <td>
+                                                                <div className="ds_table-title">{product.productName}</div>
+                                                                <div className="ds_table-desc">{data[0]?.productVariantData[index]?.shortDescription}</div>
+                                                            </td>
+                                                            <td className="ds_table-quantity">{data[0]?.items[index]?.quantity}</td>
+                                                            <td className="ds_table-price"> ${data[0]?.productVariantData[index]?.originalPrice &&
+                                                                (data[0].productVariantData[index].originalPrice -
+                                                                    (data[0].productVariantData[index].originalPrice *
+                                                                        data[0].productVariantData[index].discountPrice / 100))}</td>
+                                                            <td className="ds_table-price"> ${(data[0]?.productVariantData[index]?.originalPrice &&
+                                                                (data[0].productVariantData[index].originalPrice -
+                                                                    (data[0].productVariantData[index].originalPrice *
+                                                                        data[0].productVariantData[index].discountPrice / 100)) *
+                                                                data[0]?.items[index]?.quantity).toFixed(2)}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div>
+                                            <div className="ds_in-line mt-5"></div>
+                                        </div>
+
+                                        <div>
+                                            <div className="d-flex justify-content-between flex-wrap align-items-end ">
+                                                <div className="mt-4">
+                                                    <h6 className="ds_in-method">Payment Method </h6>
+                                                    <p className="ds_in-name mb-0">Bank Name : Bank Central Asia (BCA)</p>
+                                                    <p className="ds_in-name mb-0">Card No. : 1234 5678 9123 4567</p>
+                                                    <p className="ds_in-name mb-0">Name : Jhon Wick</p>
+                                                </div>
+                                                <div className="mt-4">
+                                                    <div className="d-flex justify-content-between">
+                                                        <div>
+                                                            <p className="ds_in-sub">Sub Total</p>
+                                                            {/* <p className="ds_in-sub">Discount</p> */}
+                                                            <p className="ds_in-sub">SGST</p>
+                                                            <p className="ds_in-sub">CGST</p>
+                                                            <h6 className="ds_in-total">Total Amount</h6>
+                                                        </div>
+                                                        <div className="ms-5">
+                                                            <p className="ds_in-sub fw-600 text-dark">${subtotal.toFixed(2)}</p>
+                                                            {/* <p className="ds_in-sub fw-600" style={{ color: "#0F993E" }}>-$40.00</p> */}
+                                                            <p className="ds_in-sub fw-600 text-dark">${sgstAmount.toFixed(2)}</p>
+                                                            <p className="ds_in-sub fw-600 text-dark">${cgstAmount.toFixed(2)}</p>
+                                                            <h6 className="ds_in-total">${totalAmount.toFixed(2)}</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="mt-5 text-center">
+                                            <div>
+                                                <p className="ds_in-thank mb-0">Thank you for shopping with us!</p>
+                                                <p className="ds_in-thank ">Have a nice day &#128522;</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
-                        ) : (
-                            <p>No invoice data available.</p>
-                        )}
+                        </div>
                     </div>
-                </Modal.Body>
-            </Modal>
-
+                    <div className="d_invoicefooter">
+                        <p className="mb-0">If you have any questions, feel free to call customer care at +1 565 5656 565 or use Contact Us section.</p>
+                    </div>
+                </div>
+            </section>
 
             {/* Cancel order modal */}
             <Modal
@@ -530,8 +745,6 @@ function TrackOrder() {
                     </div>
                 </Modal.Body>
             </Modal>
-
-
 
             {/* Cancel Success Modal */}
             <Modal
