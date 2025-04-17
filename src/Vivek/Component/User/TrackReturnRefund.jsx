@@ -2,17 +2,22 @@ import React, { useEffect, useState } from 'react';
 import '../User/user.css';
 import Header from '../header/Header.jsx';
 import Footer from '../footer/Footer.jsx';
-import { Modal } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { usePDF } from 'react-to-pdf';
 
 function TrackReturnRefund() {
     const { id } = useParams(); // Get the returnOrder_id from URL parameters
     const [returnOrderData, setReturnOrderData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [invoiceModal, setInvoiceModal] = useState(false);
-    const [data, setData] = useState([]);
+    const [showInvoice, setShowInvoice] = useState(false);
+
+    // Initialize the PDF generation functionality
+    const { toPDF, targetRef } = usePDF({
+        filename: 'invoice.pdf',
+        page: { margin: 10 }
+    });
 
     const BaseUrl = process.env.REACT_APP_BASEURL;
     const token = localStorage.getItem('token');
@@ -125,6 +130,52 @@ function TrackReturnRefund() {
         };
     };
 
+    const handleDownloadInvoice = () => {
+        setShowInvoice(true);
+
+        setTimeout(() => {
+            toPDF();
+            setTimeout(() => {
+                setShowInvoice(false);
+            }, 1000);
+        }, 500);
+    };
+
+    const calculateInvoiceTotals = () => {
+        let subtotal = 0;
+        
+        // Calculate subtotal from product variant data
+        returnOrderData?.productVariantData?.forEach((variant, index) => {
+            const quantity = returnOrderData?.items?.[index]?.quantity || 1;
+            const price = variant?.originalPrice ? 
+                (variant.originalPrice - (variant.originalPrice * variant.discountPrice / 100)) : 
+                0;
+            subtotal += price * quantity;
+        });
+        
+        // If no subtotal was calculated but we have order data with totalAmount, use that
+        if (subtotal === 0 && returnOrderData?.orderData?.[0]?.totalAmount) {
+            subtotal = returnOrderData.orderData[0].totalAmount;
+        }
+        
+        // Calculate tax amounts (assuming 9% each for SGST and CGST)
+        const taxRate = 0.09; // 9%
+        const sgstAmount = subtotal * taxRate;
+        const cgstAmount = subtotal * taxRate;
+        
+        // Calculate total amount
+        const totalAmount = subtotal + sgstAmount + cgstAmount;
+        
+        return {
+            subtotal,
+            sgstAmount,
+            cgstAmount,
+            totalAmount
+        };
+    };
+    
+    const { subtotal, sgstAmount, cgstAmount, totalAmount } = calculateInvoiceTotals();
+
     // Show loading state
     if (loading) {
         return (
@@ -201,16 +252,12 @@ function TrackReturnRefund() {
         ? returnOrderData.productData[0].productName
         : "Product";
 
-    // Get total amount
-    const totalAmount = returnOrderData.orderData && returnOrderData.orderData.length > 0
-        ? returnOrderData.orderData[0].totalAmount
-        : 0;
 
     // Get return reason
     const returnReason = returnOrderData.cancellationData && returnOrderData.cancellationData.length > 0
         ? returnOrderData.cancellationData[0].reasonName
         : "Reason not specified";
-// console.log("returnOrderData.orderStatus",returnOrderData.returnOrderStatus);
+    // console.log("returnOrderData.orderStatus",returnOrderData.returnOrderStatus);
     // Main content when data is loaded successfully
     return (
         <React.Fragment>
@@ -237,7 +284,7 @@ function TrackReturnRefund() {
                                     <div className="row m-0 flex-lg-row flex-column-reverse w-100">
                                         <div className="col-lg-4 px-0">
                                             <div className='d-flex'>
-                                            <img src={`${BaseUrl}/${returnOrderData.productVariantData[0].images[0]}`} alt="" width="100px" height="120px" />
+                                                <img src={`${BaseUrl}/${returnOrderData.productVariantData[0].images[0]}`} alt="" width="100px" height="120px" />
                                                 <div className='ps-2 ps-sm-4'>
                                                     <h1 className='V_full_pair'>{productName}</h1>
                                                     <p className='V_full_child_text mb-0'>
@@ -267,13 +314,13 @@ function TrackReturnRefund() {
                                                 {/* Order Initiated Step */}
                                                 <div className='text-center'>
                                                     <p className='V_confirmed mb-0'>Initiated</p>
-                                                    <img 
-                                                        src={require('../../assets/ordered confirmed.png')} 
-                                                        alt="" 
-                                                        className='py-2' 
-                                                        style={{ opacity: returnOrderData.returnOrderStatus === 'Initiated' || returnOrderData.returnOrderStatus === 'Picked up' || returnOrderData.returnOrderStatus === 'Received' || returnOrderData.returnOrderStatus === 'Refund Initiated'|| returnOrderData.returnOrderStatus === 'Refund Credited' ? 1 : 0.5 }}
+                                                    <img
+                                                        src={require('../../assets/ordered confirmed.png')}
+                                                        alt=""
+                                                        className='py-2'
+                                                        style={{ opacity: returnOrderData.returnOrderStatus === 'Initiated' || returnOrderData.returnOrderStatus === 'Picked up' || returnOrderData.returnOrderStatus === 'Received' || returnOrderData.returnOrderStatus === 'Refund Initiated' || returnOrderData.returnOrderStatus === 'Refund Credited' ? 1 : 0.5 }}
                                                     />
-                                                    {(returnOrderData.returnOrderStatus === 'Initiated' || returnOrderData.returnOrderStatus === 'Picked up' || returnOrderData.returnOrderStatus === 'Received' || returnOrderData.returnOrderStatus === 'Refund Initiated'|| returnOrderData.returnOrderStatus === 'Refund Credited') && (
+                                                    {(returnOrderData.returnOrderStatus === 'Initiated' || returnOrderData.returnOrderStatus === 'Picked up' || returnOrderData.returnOrderStatus === 'Received' || returnOrderData.returnOrderStatus === 'Refund Initiated' || returnOrderData.returnOrderStatus === 'Refund Credited') && (
                                                         <>
                                                             <p className='V_track_time mb-0'>{new Date(returnOrderData.createdAt).toLocaleDateString()} <span>{new Date(returnOrderData.createdAt).toLocaleTimeString()}</span></p>
                                                             <p className='V_order_description mb-0'>Your order Has Been Placed.</p>
@@ -284,13 +331,13 @@ function TrackReturnRefund() {
                                                 {/* Picked up Step */}
                                                 <div className='text-center'>
                                                     <p className='V_confirmed mb-0'>Picked up</p>
-                                                    <img 
-                                                        src={require('../../assets/shipped.png')} 
-                                                        alt="" 
-                                                        className='py-2' 
-                                                        style={{ opacity: returnOrderData.returnOrderStatus === 'Picked up' || returnOrderData.returnOrderStatus === 'Received' || returnOrderData.returnOrderStatus === 'Refund Initiated'|| returnOrderData.returnOrderStatus === 'Refund Credited'  ? 1 : 0.5 }}
+                                                    <img
+                                                        src={require('../../assets/shipped.png')}
+                                                        alt=""
+                                                        className='py-2'
+                                                        style={{ opacity: returnOrderData.returnOrderStatus === 'Picked up' || returnOrderData.returnOrderStatus === 'Received' || returnOrderData.returnOrderStatus === 'Refund Initiated' || returnOrderData.returnOrderStatus === 'Refund Credited' ? 1 : 0.5 }}
                                                     />
-                                                    {(returnOrderData.returnOrderStatus === 'Picked up' || returnOrderData.returnOrderStatus === 'Received' || returnOrderData.returnOrderStatus === 'Refund Initiated'|| returnOrderData.returnOrderStatus === 'Refund Credited' ) && (
+                                                    {(returnOrderData.returnOrderStatus === 'Picked up' || returnOrderData.returnOrderStatus === 'Received' || returnOrderData.returnOrderStatus === 'Refund Initiated' || returnOrderData.returnOrderStatus === 'Refund Credited') && (
                                                         <>
                                                             {returnOrderData.shippedAt && (
                                                                 <p className='V_track_time mb-0'>{new Date(returnOrderData.shippedAt).toLocaleDateString()} <span>{new Date(returnOrderData.shippedAt).toLocaleTimeString()}</span></p>
@@ -299,17 +346,17 @@ function TrackReturnRefund() {
                                                         </>
                                                     )}
                                                 </div>
-                                                    
+
                                                 {/*Received Step */}
                                                 <div className='text-center'>
                                                     <p className='V_confirmed mb-0'>Received</p>
-                                                    <img 
-                                                        src={require('../../assets/Out for Delivery logo.png')} 
-                                                        alt="" 
-                                                        className='py-2' 
-                                                        style={{ opacity: returnOrderData.returnOrderStatus === 'Received' || returnOrderData.returnOrderStatus === 'Refund Initiated'|| returnOrderData.returnOrderStatus === 'Refund Credited' ? 1 : 0.5 }}
+                                                    <img
+                                                        src={require('../../assets/Out for Delivery logo.png')}
+                                                        alt=""
+                                                        className='py-2'
+                                                        style={{ opacity: returnOrderData.returnOrderStatus === 'Received' || returnOrderData.returnOrderStatus === 'Refund Initiated' || returnOrderData.returnOrderStatus === 'Refund Credited' ? 1 : 0.5 }}
                                                     />
-                                                    {(returnOrderData.returnOrderStatus === 'Received' || returnOrderData.returnOrderStatus === 'Refund Initiated'|| returnOrderData.returnOrderStatus === 'Refund Credited') && (
+                                                    {(returnOrderData.returnOrderStatus === 'Received' || returnOrderData.returnOrderStatus === 'Refund Initiated' || returnOrderData.returnOrderStatus === 'Refund Credited') && (
                                                         <>
                                                             {returnOrderData.outForDeliveryAt && (
                                                                 <p className='V_track_time mb-0'>{new Date(returnOrderData.outForDeliveryAt).toLocaleDateString()} <span>{new Date(returnOrderData.outForDeliveryAt).toLocaleTimeString()}</span></p>
@@ -318,17 +365,17 @@ function TrackReturnRefund() {
                                                         </>
                                                     )}
                                                 </div>
-                                                        
+
                                                 {/* Refund Initiated Step */}
                                                 <div className='text-center'>
-                                                    <p className='V_confirmed mb-0'>Refund Initiated</p>   
-                                                    <img 
-                                                        src={require('../../assets/delivered logo.png')} 
-                                                        alt="" 
-                                                        className='py-2' 
-                                                        style={{ opacity: returnOrderData.returnOrderStatus === 'Refund Initiated'|| returnOrderData.returnOrderStatus === 'Refund Credited' ? 1 : 0.5 }}
+                                                    <p className='V_confirmed mb-0'>Refund Initiated</p>
+                                                    <img
+                                                        src={require('../../assets/delivered logo.png')}
+                                                        alt=""
+                                                        className='py-2'
+                                                        style={{ opacity: returnOrderData.returnOrderStatus === 'Refund Initiated' || returnOrderData.returnOrderStatus === 'Refund Credited' ? 1 : 0.5 }}
                                                     />
-                                                    {(returnOrderData.returnOrderStatus === 'Refund Initiated'|| returnOrderData.returnOrderStatus === 'Refund Credited' )&& (
+                                                    {(returnOrderData.returnOrderStatus === 'Refund Initiated' || returnOrderData.returnOrderStatus === 'Refund Credited') && (
                                                         <>
                                                             {returnOrderData.deliveredAt && (
                                                                 <p className='V_track_time mb-0'>{new Date(returnOrderData.deliveredAt).toLocaleDateString()} <span>{new Date(returnOrderData.deliveredAt).toLocaleTimeString()}</span></p>
@@ -340,12 +387,12 @@ function TrackReturnRefund() {
 
                                                 {/* Refund Credited Step */}
                                                 <div className='text-center'>
-                                                    <p className='V_confirmed mb-0'>Refund Credited</p>   
-                                                    <img 
-                                                        src={require('../../assets/delivered logo.png')} 
-                                                        alt="" 
-                                                        className='py-2' 
-                                                        style={{ opacity: returnOrderData.returnOrderStatus === 'Refund Credited'? 1 : 0.5 }}
+                                                    <p className='V_confirmed mb-0'>Refund Credited</p>
+                                                    <img
+                                                        src={require('../../assets/delivered logo.png')}
+                                                        alt=""
+                                                        className='py-2'
+                                                        style={{ opacity: returnOrderData.returnOrderStatus === 'Refund Credited' ? 1 : 0.5 }}
                                                     />
                                                     {returnOrderData.returnOrderStatus === 'Refund Credited' && (
                                                         <>
@@ -409,7 +456,7 @@ function TrackReturnRefund() {
                                             <h1 className='V_invoice'>Invoice</h1>
                                             <p
                                                 className='V_down_invoic mt-3'
-                                                onClick={() => setInvoiceModal(true)}
+                                                onClick={handleDownloadInvoice}
                                                 style={{ cursor: 'pointer', textDecoration: 'underline' }}
                                             >
                                                 Download Invoice
@@ -423,33 +470,157 @@ function TrackReturnRefund() {
                 </div>
             </section>
 
-            {/* Invoice Modal */}
-            <Modal show={invoiceModal} onHide={() => setInvoiceModal(false)} centered className='VK_add_address_model_'>
-                    <Modal.Header closeButton>
-                        <Modal.Title>
-                            <h5 className='VK_add_address_model_heading'>Invoice Details</h5>
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <div className='p-2 py-3'>
-                        {returnOrderData ? (
-                            <div>
-                                <p><strong>Order ID:</strong> #{returnOrderData._id}</p>
-                                <p><strong>Order Date:</strong> {new Date(returnOrderData.createdAt).toLocaleDateString()}</p>
-                                <p><strong>Payment Method:</strong> {returnOrderData.orderData?.[0]?.paymentMethod || 'N/A'}</p>
-                                <p><strong>Total Amount:</strong> ${returnOrderData.orderData?.[0]?.totalAmount || 0}</p>
-                                <div className="mt-3 text-center">
-                                    <a href={`${BaseUrl}/invoices/${returnOrderData._id}`} className="V_cancle_order_btn px-sm-3 px-md-4 py-2" download>
-                                        Download Invoice
-                                    </a>
+            <section ref={targetRef} style={{ display: showInvoice ? 'block' : 'none', position: showInvoice ? 'absolute' : 'fixed', left: '-9999px' }}>
+                <div>
+                    <div className="d_container">
+                        <div className="mt-4">
+                            <div className="row justify-content-center">
+                                <div className="col-12 ">
+                                    <div className="ds_in-bg">
+                                        <h5 className="fw-bold">LOGO</h5>
+                                        <div className="d-flex flex-wrap justify-content-between ">
+                                            <div className="mt-4">
+                                                <h5 className="ds_in-name">{returnOrderData?.userData?.[0].name}</h5>
+                                                <h6 className="ds_in-email">{returnOrderData?.userData?.[0].email}</h6>
+                                                <h6 className="ds_in-email">+1 {returnOrderData?.userData?.[0].mobileNo}</h6>
+                                            </div>
+                                            <div className="d-flex justify-content-between mt-4 ds_in-flex-manage">
+                                                <div>
+                                                    <p className="ds_in-text mb-0">Invoice No</p>
+                                                    <p className="ds_in-text mb-0">Invoice Date</p>
+                                                    <p className="ds_in-text mb-0">Order ID</p>
+                                                </div>
+                                                <div className="text-end">
+                                                    <p className="ds_in-text mb-0 text-dark fw-500">#123456</p>
+                                                    <p className="ds_in-text mb-0 text-dark fw-500">{new Date(returnOrderData?.createdAt).toLocaleDateString('en-US', {
+                                                        year: 'numeric',
+                                                        month: 'long',
+                                                        day: 'numeric',
+                                                    })}</p>
+                                                    <p className="ds_in-text mb-0 text-dark fw-500">{returnOrderData?._id}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        {/* <div className="col-xl-4 col-lg-4 col-md-4 mt-4">
+                                            <div className="ds_in-border h-100">
+                                                <p className="ds_in-sold fw-500 mb-2">SOLD BY</p>
+                                                <p className="ds_in-sold text-dark fw-600 mb-0">COCOBLU RETAIL LIMITED </p>
+                                                <p className="ds_in-add text-dark fw-400">Renaissance industrial smart city, Kalyan Sape road, Thane, Maharashtra, 421302 IN</p>
+                                            </div>
+                                        </div> */}
+                                        <div className="col-xl-4 col-lg-4 col-md-4 mt-4">
+                                            <div className="ds_in-border h-100">
+                                                <p className="ds_in-sold fw-500 mb-2">Picked up Address</p>
+                                                <p className="ds_in-sold text-dark fw-600 mb-0">{returnOrderData?.addressData[0]?.name}</p>
+                                                <p className="ds_in-add text-dark fw-400">{returnOrderData?.addressData[0] &&
+                                                    `${returnOrderData.addressData[0].address}, ${returnOrderData.addressData[0].landmark}, 
+                                                        ${returnOrderData.addressData[0].city}, ${returnOrderData.addressData[0].state}, 
+                                                        ${returnOrderData.addressData[0].pincode}`
+                                                }</p>
+                                            </div>
+                                        </div>
+                                        <div className="col-xl-4 col-lg-4 col-md-4 mt-4">
+                                            <div className="ds_in-border border-0 h-100">
+                                                <p className="ds_in-sold fw-500 mb-2">Return Details</p>
+                                                <p className='V_customer_name pt-3 pb-2 mb-0'>Return Status</p>
+                                                <p className='V_wed mb-0 py-1'>
+                                                    Status: <strong>{returnOrderData.returnOrderStatus}</strong>
+                                                </p>
+                                                <p className='V_wed mb-0 py-1'>
+                                                    Reason: {returnReason}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div className="ds_in-line mt-3"></div>
+                                        </div>
+
+                                        <div className="mt-4 ds_table-main">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th className="ds_table-th">Item</th>
+                                                        <th className="ds_table-th">Qty.</th>
+                                                        <th className="ds_table-th">Price</th>
+                                                        <th className="ds_table-th">Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {returnOrderData?.productData?.map((product, index) => {
+                                                        const variantData = returnOrderData?.productVariantData?.[index];
+                                                        const itemData = returnOrderData?.items?.[index] || { quantity: 1 };
+
+                                                        const price = variantData?.originalPrice ?
+                                                            (variantData.originalPrice - (variantData.originalPrice * variantData.discountPrice / 100)).toFixed(2) :
+                                                            0;
+
+                                                        const itemTotal = (price * itemData.quantity).toFixed(2);
+
+                                                        return (
+                                                            <tr key={`${product._id}-${index}`}>
+                                                                <td>
+                                                                    <div className="ds_table-title">{product.productName}</div>
+                                                                </td>
+                                                                <td className="ds_table-quantity">{itemData.quantity}</td>
+                                                                <td className="ds_table-price">${price}</td>
+                                                                <td className="ds_table-price">${itemTotal}</td>
+                                                            </tr>
+                                                        );
+                                                    })}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div>
+                                            <div className="ds_in-line mt-5"></div>
+                                        </div>
+
+                                        <div>
+                                            <div className="d-flex justify-content-between flex-wrap align-items-end ">
+                                                <div className="mt-4">
+                                                </div>
+                                                <div className="mt-4">
+                                                    <div className="d-flex justify-content-between">
+                                                        <div>
+                                                            <p className="ds_in-sub">Sub Total</p>
+                                                            {/* <p className="ds_in-sub">Discount</p> */}
+                                                            <p className="ds_in-sub">SGST</p>
+                                                            <p className="ds_in-sub">CGST</p>
+                                                            <h6 className="ds_in-total">Total Amount</h6>
+                                                        </div>
+                                                        <div className="ms-5">
+                                                            <p className="ds_in-sub fw-600 text-dark">${subtotal.toFixed(2)}</p>
+                                                            <p className="ds_in-sub fw-600 text-dark">${sgstAmount.toFixed(2)}</p>
+                                                            <p className="ds_in-sub fw-600 text-dark">${cgstAmount.toFixed(2)}</p>
+                                                            <h6 className="ds_in-total">${totalAmount.toFixed(2)}</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="mt-5 text-center">
+                                            <div>
+                                                <p className="ds_in-thank mb-0">Thank you for shopping with us!</p>
+                                                <p className="ds_in-thank ">Have a nice day &#128522;</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
-                        ) : (
-                            <p>No invoice data available.</p>
-                        )}
                         </div>
-                    </Modal.Body>
-                </Modal>
+                    </div>
+                    <div className="d_invoicefooter">
+                        <p className="mb-0">If you have any questions, feel free to call customer care at +1 565 5656 565 or use Contact Us section.</p>
+                    </div>
+                </div>
+            </section>
+
+           
 
             <Footer />
         </React.Fragment>

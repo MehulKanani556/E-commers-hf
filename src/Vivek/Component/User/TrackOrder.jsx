@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect,  useState } from 'react';
 import '../User/user.css';
 import { Modal } from 'react-bootstrap';
 import Header from '../../Component/header/Header.jsx'
@@ -12,7 +12,6 @@ function TrackOrder() {
 
     const navigate = useNavigate();
     const { id } = useParams();
-    const invoiceRef = useRef(null);
 
     const BaseUrl = process.env.REACT_APP_BASEURL;
     const token = localStorage.getItem('token');
@@ -31,13 +30,10 @@ function TrackOrder() {
     });
     const [deletecard, setDeletecard] = useState(false);
     const [canclecard, setCanclecard] = useState(false);
-    const [invoiceModal, setInvoiceModal] = useState(false);
     const [cancelComment, setCancelComment] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [cancelOrderId, setCancelOrderId] = useState('');
-
-
-
+    const [showInvoice, setShowInvoice] = useState(false);
 
     const handleCancelOrder = () => {
         // Reset form data when opening modal
@@ -117,6 +113,7 @@ function TrackOrder() {
             }
         };
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id, BaseUrl, token]);
 
     const fetchTrackingInfo = async (trackingNumber) => {
@@ -262,9 +259,6 @@ function TrackOrder() {
     //     return formatDate(date);
     // };
 
-    const handleNavigateInvoice = (id) => {
-        navigate(`/invoice/${id}`);
-    }
 
     const calculateSubtotal = () => {
         // console.log("ordedata",orderData);
@@ -285,12 +279,12 @@ function TrackOrder() {
     const totalAmount = subtotal + sgstAmount + cgstAmount;
 
     const handleDownloadInvoice = () => {
-        setInvoiceModal(true);
+        setShowInvoice(true);
 
         setTimeout(() => {
             toPDF();
             setTimeout(() => {
-                setInvoiceModal(false);
+                setShowInvoice(false);
             }, 1000); 
         }, 500);
     };
@@ -532,7 +526,7 @@ function TrackOrder() {
                 </div>
             </section>
 
-            <section  ref={targetRef}>
+            <section ref={targetRef} style={{ display: showInvoice ? 'block' : 'none', position: showInvoice ? 'absolute' : 'fixed', left: '-9999px' }}>
                 <div>
                     <div className="d_container">
                         <div className="mt-4">

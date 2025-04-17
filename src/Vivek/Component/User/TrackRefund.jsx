@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import '../User/user.css';
-import { Modal } from 'react-bootstrap';
 import Header from '../../Component/header/Header.jsx'
 import Footer from '../footer/Footer.jsx';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { usePDF } from 'react-to-pdf';
 
 function TrackRefund() {
-    const navigate = useNavigate();
+
     const { id } = useParams();
     const BaseUrl = process.env.REACT_APP_BASEURL;
     const token = localStorage.getItem('token');
     const [data, setData] = useState([]);
-    const [invoiceModal, setInvoiceModal] = useState(false);
 
+    const [showInvoice, setShowInvoice] = useState(false);
+
+    // Initialize the PDF generation functionality
+    const { toPDF, targetRef } = usePDF({
+        filename: 'invoice.pdf',
+        page: { margin: 10 }
+    });
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -53,6 +59,51 @@ function TrackRefund() {
         const formattedMinutes = minutes.toString().padStart(2, '0');
         return `${formattedHours}:${formattedMinutes} ${ampm}`;
     };
+    const handleDownloadInvoice = () => {
+        setShowInvoice(true);
+
+        setTimeout(() => {
+            toPDF();
+            setTimeout(() => {
+                setShowInvoice(false);
+            }, 1000);
+        }, 500);
+    };
+
+    const calculateInvoiceTotals = () => {
+        let subtotal = 0;
+
+        // Calculate subtotal from product variant data
+        data[0]?.productVariantData?.forEach((variant, index) => {
+            const quantity = data[0]?.items?.[index]?.quantity || 1;
+            const price = variant?.originalPrice ?
+                (variant.originalPrice - (variant.originalPrice * variant.discountPrice / 100)) :
+                0;
+            subtotal += price * quantity;
+        });
+
+        // If no subtotal was calculated but we have order data with totalAmount, use that
+        if (subtotal === 0 && data[0]?.orderData?.[0]?.totalAmount) {
+            subtotal = data[0].orderData[0].totalAmount;
+        }
+
+        // Calculate tax amounts (assuming 9% each for SGST and CGST)
+        const taxRate = 0.09; // 9%
+        const sgstAmount = subtotal * taxRate;
+        const cgstAmount = subtotal * taxRate;
+
+        // Calculate total amount
+        const totalAmount = subtotal + sgstAmount + cgstAmount;
+
+        return {
+            subtotal,
+            sgstAmount,
+            cgstAmount,
+            totalAmount
+        };
+    };
+
+    const { subtotal, sgstAmount, cgstAmount, totalAmount } = calculateInvoiceTotals();
 
     return (
         <React.Fragment>
@@ -219,7 +270,7 @@ function TrackRefund() {
                                                 <h1 className='V_invoice'>Invoice</h1>
                                                 <p
                                                     className='V_down_invoic mt-3'
-                                                    onClick={() => setInvoiceModal(true)}
+                                                    onClick={handleDownloadInvoice}
                                                     style={{ cursor: 'pointer', textDecoration: 'underline' }}
                                                 >
                                                     Download Invoice
@@ -234,33 +285,144 @@ function TrackRefund() {
                 </div>
             </section>
 
-            {/* Invoice Modal */}
-            <Modal show={invoiceModal} onHide={() => setInvoiceModal(false)} centered className='VK_add_address_model_'>
-                <Modal.Header closeButton>
-                    <Modal.Title>
-                        <h5 className='VK_add_address_model_heading'>Invoice Details</h5>
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <div className='p-2 py-3'>
-                        {data.length > 0 ? (
-                            <div>
-                                <p><strong>Order ID:</strong> #{data[0]._id}</p>
-                                <p><strong>Order Date:</strong> {formatDate(data[0].createdAt)}</p>
-                                <p><strong>Payment :</strong> {data[0].orderData[0].paymentMethod}</p>
-                                <p><strong>Total Amount:</strong> ${data[0].orderData[0].totalAmount}</p>
-                                <div className="mt-3 text-center">
-                                    <a href={`${BaseUrl}/invoices/${data[0]._id}`} className="V_cancle_order_btn px-sm-3 px-md-4 py-2" download>
-                                        Download Invoice
-                                    </a>
+            <section ref={targetRef} style={{ display: showInvoice ? 'block' : 'none', position: showInvoice ? 'absolute' : 'fixed', left: '-9999px' }}>
+                <div>
+                    <div className="d_container">
+                        <div className="mt-4">
+                            <div className="row justify-content-center">
+                                <div className="col-12 ">
+                                    <div className="ds_in-bg">
+                                        <h5 className="fw-bold">LOGO</h5>
+                                        <div className="d-flex flex-wrap justify-content-between ">
+                                            <div className="mt-4">
+                                                <h5 className="ds_in-name">{data[0]?.userData?.[0].name}</h5>
+                                                <h6 className="ds_in-email">{data[0]?.userData?.[0].email}</h6>
+                                                <h6 className="ds_in-email">+1 {data[0]?.userData?.[0].mobileNo}</h6>
+                                            </div>
+                                            <div className="d-flex justify-content-between mt-4 ds_in-flex-manage">
+                                                <div>
+                                                    <p className="ds_in-text mb-0">Invoice No</p>
+                                                    <p className="ds_in-text mb-0">Invoice Date</p>
+                                                    <p className="ds_in-text mb-0">Order ID</p>
+                                                </div>
+                                                <div className="text-end">
+                                                    <p className="ds_in-text mb-0 text-dark fw-500">#123456</p>
+                                                    <p className="ds_in-text mb-0 text-dark fw-500">{new Date(data[0]?.createdAt).toLocaleDateString('en-US', {
+                                                        year: 'numeric',
+                                                        month: 'long',
+                                                        day: 'numeric',
+                                                    })}</p>
+                                                    <p className="ds_in-text mb-0 text-dark fw-500">{data[0]?._id}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+
+                                        <div className="col-xl-4 col-lg-4 col-md-4 mt-4">
+                                            <div className="ds_in-border h-100">
+                                                <p className="ds_in-sold fw-500 mb-2">Delivery Address</p>
+                                                {data[0]?.addressData && data[0].addressData.length > 0 ? (
+                                                    <>
+                                                        <p className="ds_in-sold text-dark fw-600 mb-0">{data[0].addressData[0]?.name || data[0]?.userData?.[0]?.name}</p>
+                                                        <p className="ds_in-add text-dark fw-400">
+                                                            {data[0].addressData[0].address}, {data[0].addressData[0].landmark},
+                                                            {data[0].addressData[0].city}, {data[0].addressData[0].state},
+                                                            {data[0].addressData[0].pincode}
+                                                        </p>
+                                                    </>
+                                                ) : (
+                                                    <p></p>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div className="ds_in-line mt-3"></div>
+                                        </div>
+
+                                        <div className="mt-4 ds_table-main">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th className="ds_table-th">Item</th>
+                                                        <th className="ds_table-th">Qty.</th>
+                                                        <th className="ds_table-th">Price</th>
+                                                        <th className="ds_table-th">Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {data[0]?.productData?.map((product, index) => {
+                                                        const variantData = data[0]?.productVariantData?.[index];
+                                                        const itemData = data[0]?.items?.[index] || { quantity: 1 };
+
+                                                        const price = variantData?.originalPrice ?
+                                                            (variantData.originalPrice - (variantData.originalPrice * variantData.discountPrice / 100)).toFixed(2) :
+                                                            0;
+
+                                                        const itemTotal = (price * itemData.quantity).toFixed(2);
+
+                                                        return (
+                                                            <tr key={`${product._id}-${index}`}>
+                                                                <td>
+                                                                    <div className="ds_table-title">{product.productName}</div>
+                                                                </td>
+                                                                <td className="ds_table-quantity">{itemData.quantity}</td>
+                                                                <td className="ds_table-price">${price}</td>
+                                                                <td className="ds_table-price">${itemTotal}</td>
+                                                            </tr>
+                                                        );
+                                                    })}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div>
+                                            <div className="ds_in-line mt-5"></div>
+                                        </div>
+
+                                        <div>
+                                            <div className="d-flex justify-content-between flex-wrap align-items-end ">
+                                                <div className="mt-4">
+                                                </div>
+                                                <div className="mt-4">
+                                                    <div className="d-flex justify-content-between">
+                                                        <div>
+                                                            <p className="ds_in-sub">Sub Total</p>
+                                                            {/* <p className="ds_in-sub">Discount</p> */}
+                                                            <p className="ds_in-sub">SGST</p>
+                                                            <p className="ds_in-sub">CGST</p>
+                                                            <h6 className="ds_in-total">Total Amount</h6>
+                                                        </div>
+                                                        <div className="ms-5">
+                                                            <p className="ds_in-sub fw-600 text-dark">${subtotal.toFixed(2)}</p>
+                                                            <p className="ds_in-sub fw-600 text-dark">${sgstAmount.toFixed(2)}</p>
+                                                            <p className="ds_in-sub fw-600 text-dark">${cgstAmount.toFixed(2)}</p>
+                                                            <h6 className="ds_in-total">${totalAmount.toFixed(2)}</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="mt-5 text-center">
+                                            <div>
+                                                <p className="ds_in-thank mb-0">Thank you for shopping with us!</p>
+                                                <p className="ds_in-thank ">Have a nice day &#128522;</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
-                        ) : (
-                            <p>No invoice data available.</p>
-                        )}
+                        </div>
                     </div>
-                </Modal.Body>
-            </Modal>
+                    <div className="d_invoicefooter">
+                        <p className="mb-0">If you have any questions, feel free to call customer care at +1 565 5656 565 or use Contact Us section.</p>
+                    </div>
+                </div>
+            </section>
+
 
             <Footer />
         </React.Fragment>
