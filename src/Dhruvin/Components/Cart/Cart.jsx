@@ -135,17 +135,6 @@ const Cart = () => {
 
   const createOrder = async () => {
     try {
-
-      //       const orderItems = cartData
-      //         .filter(item => selectedItems.includes(item._id))
-      //         .map(item => ({
-      //           // {console.log()}
-
-      //           productId: item.productData[0]._id,
-      //           productVariantId: item.productVariantData[0]._id,
-      //           quantity: item.quantity
-      //         }));
-      // console.log("orderItems>>>>>>>>",orderItems);
       const orderItems = cartData
         .filter(item => selectedItems.includes(item._id))
         .map(item => {
@@ -170,7 +159,7 @@ const Cart = () => {
         deliveryType: selectedDeliveryType,
         paymentMethod: 'received'
       }, { headers: { Authorization: `Bearer ${token}` } });
-
+      console.log("Order creation response:", response.data);
       setId(response.data.order._id);
       localStorage.removeItem('cartItems');
 
@@ -187,7 +176,10 @@ const Cart = () => {
     try {
 
       await createOrder();
-
+      
+      selectedItems.forEach(itemId => {
+        removeFromCart(itemId);
+      });
       document.getElementById("ds_order_conformation").classList.remove("d-none")
       document.getElementById("ds_cartsec").classList.add("d-none")
     } catch (error) {
@@ -470,7 +462,9 @@ const Cart = () => {
 
       {/* **************** Cart Without Address ************* */}
       {cartData.length > 0 ? (
+
         <section className="mb-5 mt-4 d-non" id="ds_cartsec">
+          {console.log("cartData>>>>>", cartData)}
           <div>
             <div className="d_container">
               <div className="d-flex justify-content-between align-items-center">

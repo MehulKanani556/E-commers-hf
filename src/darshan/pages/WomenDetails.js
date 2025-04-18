@@ -5,7 +5,6 @@ import icon360 from './../d_img/360.png';
 import './../css/womendetail.css';
 import { FaStar } from 'react-icons/fa';
 import { MdKeyboardArrowDown } from 'react-icons/md';
-import { CiHeart } from 'react-icons/ci';
 import Accordion from 'react-bootstrap/Accordion';
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
 // import Bought from '../components/Bought';
@@ -20,14 +19,14 @@ import Process from '../../Vivek/Component/common/Process';
 import Footer from '../../Vivek/Component/footer/Footer';
 import ReactImageMagnify from 'react-image-magnify';
 import axios from 'axios';
-import { IoMdHeartEmpty, IoMdHeart, IoMdClose } from 'react-icons/io';
+import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
 import { useCart } from '../../Context/CartContext';
 
 
 const WomenDetails = () => {
 
     const { productId } = useParams();
-    const {addToCart} = useCart();
+    const { addToCart } = useCart();
     const navigate = useNavigate();
 
     const BaseUrl = process.env.REACT_APP_BASEURL;
@@ -53,6 +52,9 @@ const WomenDetails = () => {
         isOpen: false,
         activeIndex: 0
     });
+    const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
+    const [availableColors, setAvailableColors] = useState([]);
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -117,7 +119,7 @@ const WomenDetails = () => {
     const handleClickwishlist = async (item, e) => {
         e.preventDefault();
         const itemId = item.productId || item._id || item.id;
-        
+
         try {
             if (isSelectedwishlist.includes(itemId)) {
                 // Find the actual wishlist item ID for deletion
@@ -127,12 +129,12 @@ const WomenDetails = () => {
                         Authorization: `Bearer ${token}`,
                     }
                 });
-                
+
                 // Find the wishlist entry that matches this product ID
                 const wishlistEntry = response.data.wishlist.find(
                     entry => (entry.productId || entry._id) === itemId
                 );
-                
+
                 if (wishlistEntry) {
                     // Remove from wishlist on the server
                     await axios.delete(`${BaseUrl}/api/deleteWishList/${wishlistEntry._id}`, {
@@ -141,15 +143,15 @@ const WomenDetails = () => {
                         }
                     });
                 }
-                
+
                 // Update local state
                 setIsSelectedWishlist(prev => {
                     const updatedWishlist = prev.filter(id => id !== itemId);
                     localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
-                    
+
                     // Notify other components
                     window.dispatchEvent(new CustomEvent('wishlistUpdated'));
-                    
+
                     return updatedWishlist;
                 });
             } else {
@@ -161,15 +163,15 @@ const WomenDetails = () => {
                         Authorization: `Bearer ${token}`,
                     }
                 });
-                
+
                 // Update local state
                 setIsSelectedWishlist(prev => {
                     const updatedWishlist = [...prev, itemId];
                     localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
-                    
+
                     // Notify other components
                     window.dispatchEvent(new CustomEvent('wishlistUpdated'));
-                    
+
                     return updatedWishlist;
                 });
             }
@@ -222,19 +224,29 @@ const WomenDetails = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            // console.log("Productresponse", response.data.product);
+            console.log("Productresponse", response.data.product);
             setProduct(response.data.product);
 
-            if (response.data.product.length > 0 &&
-                response.data.product[0].productVariantData.length > 0 &&
-                response.data.product[0].productVariantData[0].images.length > 0) {
+            if (product.length > 0 && product[0].productVariantData.length > 0) {
+                // Extract unique colors from all variants
+                const colors = product[0].productVariantData.map(variant =>
+                    variant.colorName ? variant.colorName.split(',').map(color => color.trim()) : []
+                ).flat();
 
-                const firstImage = response.data.product[0].productVariantData[0].images[0];
-                setMainContent({
-                    type: 'image',
-                    src: `${BaseUrl}/${firstImage.replace(/\\/g, '/')}`,
-                    index: 0
-                });
+                // Remove duplicates
+                const uniqueColors = [...new Set(colors)];
+                setAvailableColors(uniqueColors);
+
+                // Set initial variant and main content
+                setSelectedVariantIndex(0);
+                if (product[0].productVariantData[0].images.length > 0) {
+                    const firstImage = product[0].productVariantData[0].images[0];
+                    setMainContent({
+                        type: 'image',
+                        src: `${BaseUrl}/${firstImage.replace(/\\/g, '/')}`,
+                        index: 0
+                    });
+                }
             }
 
         } catch (error) {
@@ -246,7 +258,6 @@ const WomenDetails = () => {
         fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productId, token]);
-
 
     //All product 
 
@@ -304,18 +315,18 @@ const WomenDetails = () => {
     const handleAddToCart = async (productId, productVariantId) => {
         // console.log("productid>>>>>>>>>>>>>",productId);
         // console.log("productVariantId",productVariantId);
-        
+
         try {
             const response = await axios.post(`${BaseUrl}/api/createCart`, {
-                productId:productId,
-                productVariantId:productVariantId,
-                quantity:selectedQuantity
+                productId: productId,
+                productVariantId: productVariantId,
+                quantity: selectedQuantity
             }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             // console.log("response", response.data.cart._id);
             const cartId = response.data.cart._id
-            if(response.data.status === 201) {
+            if (response.data.status === 201) {
                 addToCart(productId, productVariantId, cartId);
                 setSelectedQuantity('Select');
                 navigate('/cart');
@@ -324,6 +335,29 @@ const WomenDetails = () => {
             console.error('Data Fetching Error:', error);
         }
     }
+
+    const handleColorSelect = (colorName) => {
+        const variantIndex = product[0].productVariantData.findIndex(variant =>
+            variant.colorName && variant.colorName.split(',').some(color => color.trim() === colorName)
+        );
+
+        if (variantIndex !== -1) {
+            setSelectedVariantIndex(variantIndex);
+
+            if (product[0].productVariantData[variantIndex].images.length > 0) {
+                const firstImage = product[0].productVariantData[variantIndex].images[0];
+                setMainContent({
+                    type: 'image',
+                    src: `${BaseUrl}/${firstImage.replace(/\\/g, '/')}`,
+                    index: 0
+                });
+            }
+
+            setSelectedSize(null);
+            setSelectedQuantity('Select');
+        }
+    };
+
     return (
         <>
             {/* Header section  */}
@@ -468,13 +502,24 @@ const WomenDetails = () => {
                                             <div className="d_color">
                                                 <div className="d_title">Colors :</div>
                                                 <div className='d-flex align-items-center gap-2'>
-                                                    {item.productVariantData[0].colorName &&
-                                                        item.productVariantData[0].colorName.split(',').map((color, index) => (
-                                                            <div
-                                                                key={index}
-                                                                style={{ backgroundColor: color, width: '30px', height: '30px', borderRadius: '50%' }}
-                                                            ></div>
-                                                        ))}
+                                                    {console.log("availableColors", availableColors)}
+                                                    {availableColors.map((color, index) => (
+
+                                                        <div
+                                                            key={index}
+                                                            style={{
+                                                                backgroundColor: color,
+                                                                width: '30px',
+                                                                height: '30px',
+                                                                borderRadius: '50%',
+                                                                cursor: 'pointer',
+                                                                border: product[0]?.productVariantData[selectedVariantIndex]?.colorName?.includes(color)
+                                                                    ? '2px solid #000'
+                                                                    : '1px solid #ddd'
+                                                            }}
+                                                            onClick={() => handleColorSelect(color)}
+                                                        ></div>
+                                                    ))}
                                                 </div>
                                             </div>
                                             <div className="d_size">
@@ -485,14 +530,12 @@ const WomenDetails = () => {
                                                             <Link className='text-decoration-underline d_cur' onClick={(e) => { e.preventDefault(); setsizeModalShow(true) }}>Size chart</Link>
                                                         </div>
                                                         <div className="d-flex">
-                                                        {sizesArray.map((size) => (
-                                                                
+                                                            {sizesArray?.map((size) => (
                                                                 <div
                                                                     key={size}
-                                                                    className={`d_sizebox d-flex justify-content-center align-items-center d_cur ${selectedSize === size ? 'active' : ''} `}
-                                                                    onClick={() => size !== sizesArray[0] && setSelectedSize(size)}
+                                                                    className={`d_sizebox d-flex justify-content-center align-items-center d_cur ${selectedSize === size ? 'active' : ''}`}
+                                                                    onClick={() => setSelectedSize(size)}
                                                                 >
-                                                                    {/* {size === sizesArray[0] && <div className="d_diagonal-line"></div>} */}
                                                                     <p className="mb-0">{size}</p>
                                                                 </div>
                                                             ))}
@@ -528,8 +571,8 @@ const WomenDetails = () => {
                                                         <div
                                                             className="d_trendicon d-flex justify-content-center align-items-center d_cur d_hearticon"
                                                             onClick={(e) => handleClickwishlist(item, e)}
-                                                            >
-                                                            {isSelectedwishlist.includes(item.productId || item._id || item.id) ? 
+                                                        >
+                                                            {isSelectedwishlist.includes(item.productId || item._id || item.id) ?
                                                                 <IoMdHeart className='d_icon' style={{ color: 'red' }} /> :
                                                                 <IoMdHeartEmpty className='d_icon' style={{ color: '#6a6a6a' }} />}
                                                         </div>
@@ -538,7 +581,7 @@ const WomenDetails = () => {
                                                         <Link to="" className='text-decoration-none d_buy text-center'>Buy Now</Link>
                                                     </div>
                                                     <div className="d_cta  d-flex justify-content-center align-items-center">
-                                                    <Link className='text-decoration-none d_addcartbtn text-center d-block' onClick={() => handleAddToCart(item._id, item.productVariantData[0]._id)}>Add to cart</Link>
+                                                        <Link className='text-decoration-none d_addcartbtn text-center d-block' onClick={() => handleAddToCart(item._id, item.productVariantData[0]._id)}>Add to cart</Link>
                                                     </div>
                                                 </div>
                                             </div>
@@ -847,7 +890,7 @@ const WomenDetails = () => {
             <Footer />
 
             {/* Size chart Women section start */}
-            {console.log("product@@@@@@@@@@@@@@", product)}
+            {/* {console.log("product@@@@@@@@@@@@@@", product)} */}
 
             {product[0]?.mainCategoriesData?.[0]?.mainCategoryName === "Women" ? (
                 <Modal className="d_sizemodal"

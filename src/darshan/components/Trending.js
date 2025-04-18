@@ -154,6 +154,7 @@ const Trending = () => {
             <div className="d_margin">
               <div className="d_head d-flex justify-content-between align-items-center">
                 <h4 className='mb-sm-0 mb-1'>Trending Collection for you</h4>
+                
                 <p className='mb-0'><Link to="/womenstore" className='text-decoration-none'>View More</Link></p>
               </div>
               <div className="row gy-xl-4 gy-4">
@@ -164,7 +165,7 @@ const Trending = () => {
 
                   return (
                     <div key={itemId} className="col-12 col-sm-6 col-lg-4 col-xl-3 px-2">
-                      <Link to='/womendetails'>
+                      <Link to={`/womendetails/${data[0].productId}`} state={{mainCategoryId: item.mainCategoryId}}>
                         <div className="d_box mx-2">
                           <div className="d_img">
                             <img src={`${BaseUrl}/${variantData.images[0]}`} alt="" />

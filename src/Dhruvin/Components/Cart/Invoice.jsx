@@ -19,7 +19,7 @@ const Invoice = () => {
                 const response = await axios.get(`${BaseUrl}/api/getOrder/${id}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
-                // console.log("response", response.data.order);
+                // console.log("response", response.data);
                 setOrderData(response.data.order[0]);
                 // console.log("addressData", response.data.order[0].addressData);
 
