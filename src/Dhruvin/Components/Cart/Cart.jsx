@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../../Vivek/Component/header/Header";
 import Footer from "../../../Vivek/Component/footer/Footer";
 import "../Css/Cart.css";
-import { IoMdHeartEmpty } from "react-icons/io";
 import { FaStar } from "react-icons/fa6";
 import { Form, Modal } from "react-bootstrap";
 import { FaCheckCircle } from "react-icons/fa";
@@ -56,6 +55,7 @@ const Cart = () => {
   const [selectedDeliveryType, setSelectedDeliveryType] = useState('Free');
   const [productData, setProductData] = useState([]);
   const [orderData, setOrderData] = useState();
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
@@ -136,11 +136,32 @@ const Cart = () => {
   const createOrder = async () => {
     try {
 
-      const orderItems = cartData.map(item => ({
-        productId: item.productData[0]._id,
-        productVariantId: item.productVariantData[0]._id,
-        quantity: item.quantity
-      }));
+      //       const orderItems = cartData
+      //         .filter(item => selectedItems.includes(item._id))
+      //         .map(item => ({
+      //           // {console.log()}
+
+      //           productId: item.productData[0]._id,
+      //           productVariantId: item.productVariantData[0]._id,
+      //           quantity: item.quantity
+      //         }));
+      // console.log("orderItems>>>>>>>>",orderItems);
+      const orderItems = cartData
+        .filter(item => selectedItems.includes(item._id))
+        .map(item => {
+          console.log("Processing item:", item);
+          return {
+            productId: item.productData[0]._id,
+            productVariantId: item.productVariantData[0]._id,
+            quantity: item.quantity
+          };
+        });
+      console.log("orderItems>>>>>>>>", orderItems);
+      // Don't proceed if no items are selected
+      if (orderItems.length === 0) {
+        alert("Please select at least one item to order.");
+        return;
+      }
 
       const response = await axios.post(`${BaseUrl}/api/createOrder`, {
         addressId: selectedAddressId,
@@ -346,11 +367,13 @@ const Cart = () => {
   };
 
   const calculateSubtotal = () => {
-    return cartData.reduce((total, item) => {
-      const discountPrice = item.productVariantData[0].originalPrice -
-        (item.productVariantData[0].originalPrice * item.productVariantData[0].discountPrice / 100);
-      return total + (item.quantity * discountPrice);
-    }, 0).toFixed(2);
+    return cartData
+      .filter(item => selectedItems.includes(item._id))
+      .reduce((total, item) => {
+        const discountPrice = item.productVariantData[0].originalPrice -
+          (item.productVariantData[0].originalPrice * item.productVariantData[0].discountPrice / 100);
+        return total + (item.quantity * discountPrice);
+      }, 0).toFixed(2);
   };
 
   const calculateTotal = () => {
@@ -388,6 +411,7 @@ const Cart = () => {
       }
     }
     if (id) fetchOrderData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const calculateOrderSubTotal = () => {
@@ -425,7 +449,21 @@ const Cart = () => {
     const total = subtotal + deliveryCharge + Tax;
     return total.toFixed(2);
   };
+  const handleItemCheckboxChange = (itemId) => {
+    if (selectedItems.includes(itemId)) {
+      setSelectedItems(selectedItems.filter(id => id !== itemId));
+    } else {
+      setSelectedItems([...selectedItems, itemId]);
+    }
+  };
 
+  const handleSelectAllCheckbox = (e) => {
+    if (e.target.checked) {
+      setSelectedItems(cartData.map(item => item._id));
+    } else {
+      setSelectedItems([]);
+    }
+  };
   return (
     <div>
       <Header />
@@ -509,7 +547,9 @@ const Cart = () => {
                           <div className="row mt-5">
                             <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
                               <div className="form-check">
-                                <input className="form-check-input ds_cursor" type="checkbox" value="" id="flexCheckDefault" />
+                                <input className="form-check-input ds_cursor" type="checkbox" checked={selectedItems.length === cartData.length && cartData.length > 0}
+                                  onChange={handleSelectAllCheckbox}
+                                  id="flexCheckDefault" />
                                 <label className="form-check-label" htmlFor="flexCheckDefault">
                                   Select All
                                 </label>
@@ -568,7 +608,9 @@ const Cart = () => {
                                   <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
                                     <div className="d-flex align-items-center">
                                       <div>
-                                        <input className="form-check-input ds_cursor" type="checkbox" value="" id="flexCheckDefault" />
+                                        <input className="form-check-input ds_cursor" type="checkbox" checked={selectedItems.includes(item._id)}
+                                          onChange={() => handleItemCheckboxChange(item._id)}
+                                          id={`checkbox-${item._id}`} />
                                       </div>
                                       <div className="ms-4">
                                         <img src={`${BaseUrl}/${item.productVariantData[0].images[0]}`} className="ds_add-img" alt="" />
