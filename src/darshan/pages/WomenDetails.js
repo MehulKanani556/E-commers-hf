@@ -535,7 +535,7 @@ const WomenDetails = () => {
                                                         </div>
                                                     </div>
                                                     <div className="d_cta  d-flex justify-content-center align-items-center me-3">
-                                                        <Link to="" className='text-decoration-none d_buy text-center'>Buy Now</Link>
+                                                        <Link to="" className='text-decoration-none d_buy text-center' onClick={() => handleAddToCart(item._id, item.productVariantData[0]._id)}>Buy Now</Link>
                                                     </div>
                                                     <div className="d_cta  d-flex justify-content-center align-items-center">
                                                     <Link className='text-decoration-none d_addcartbtn text-center d-block' onClick={() => handleAddToCart(item._id, item.productVariantData[0]._id)}>Add to cart</Link>

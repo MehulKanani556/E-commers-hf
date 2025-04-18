@@ -1298,13 +1298,23 @@ const Product = () => {
                                                         {isActivecategory &&
                                                             <>
                                                                 <div className='mt-3'>
-                                                                    {subCategory.map((category, index) => (
-                                                                        <div key={index} className="d_cuscheckbox d_cur d-flex align-items-center">
-                                                                            <input type="checkbox" onChange={() => handleCheckboxChange('categories', category.id, category.label)} checked={!!checkedFilters.categories[category.id]} id={`category-${category.id}`} />
-                                                                            <label htmlFor={`category-${category.id}`} className="d_checkmark"></label>
-                                                                            <p className="mb-0">{category.label}</p>
-                                                                        </div>
-                                                                    ))}
+                                                                    {subCategory.map((category, index) => {
+                                                                        return (
+                                                                            <div
+                                                                                key={index}
+                                                                                className="d_cuscheckbox d_cur d-flex align-items-center"
+                                                                            >
+                                                                                <input
+                                                                                    type="checkbox"
+                                                                                    onChange={() => handleCheckboxChange('categories', category._id, category.subCategoryName)}
+                                                                                    checked={!!checkedFilters.categories[category._id]}
+                                                                                    id={`category-${category._id}`}
+                                                                                />
+                                                                                <label htmlFor={`category-${category._id}`} className="d_checkmark"></label>
+                                                                                <p className="mb-0">{category.subCategoryName}</p>
+                                                                            </div>
+                                                                        );
+                                                                    })}
                                                                 </div>
                                                             </>
                                                         }
