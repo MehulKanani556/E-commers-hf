@@ -33,7 +33,7 @@ const Collection = () => {
                             <Col lg={6} className='my-2'>
                                 <div className='VK_watch_cont VK_first_cont'>
                                     <div className='h-100'>
-                                        <img src={`${BaseUrl}/${item?.offerImage}`} className='w-100 h-100 object_cover' alt="" />
+                                        <img src={`${BaseUrl}/${item?.offerImage}`} className='w-100 h-100 mv_custom_object' alt="" />
                                         <div className='VK_watch_abs text-white'>
                                             <h5 className='VK_watch_h5'>
                                                 {item.offerType}
