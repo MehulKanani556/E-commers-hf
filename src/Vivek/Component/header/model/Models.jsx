@@ -66,7 +66,7 @@ const Register_model = (props) => {
             try {
                 const response = await axios.post(`${BaseUrl}/api/login`, values);
 
-                console.log("respose>>>>>>>>", response.data);
+                // console.log("respose>>>>>>>>", response.data);
                 if (response.data.status === 200) {
                     const token = response.data.token;
                     localStorage.setItem('token', token);
@@ -74,7 +74,7 @@ const Register_model = (props) => {
                     setloginmodel(false);
                 }
             } catch (error) {
-                console.error('USer Login Error:', error);
+                console.error('User Login Error:', error);
                 if (error.response && error.response.data && error.response.data.message) {
                     setFieldError("password",error.response.data.message);
                 }

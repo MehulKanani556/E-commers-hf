@@ -7,52 +7,9 @@ import axios from 'axios'
 const Popularbrands = () => {
 
     const BaseUrl = process.env.REACT_APP_BASEURL;
-    const [popularbarnd, setPopularbrand] = useState([]);
+    const token = localStorage.getItem('token');
 
-    let data = [
-        {
-            title: "Women’s Jeans",
-            image: "popular1.png",
-            logo: "zara.png",
-            offer: "Upto 20% OFF"
-        },
-        {
-            title: "Get Your Style.",
-            image: "popular2.png",
-            logo: "calvin.png",
-            offer: "Upto 20% OFF"
-        },
-        {
-            title: "Experience Luxury Every Day",
-            image: "popular3.png",
-            logo: "fossil.png",
-            offer: "Upto 20% OFF"
-        },
-        {
-            title: "Stylish sports apparel for you",
-            image: "popular4.png",
-            logo: "armour.png",
-            offer: "Upto 20% OFF"
-        },
-        {
-            title: "Elegance in every stroke",
-            image: "popular5.png",
-            logo: "sugar.png",
-            offer: "Upto 20% OFF"
-        },
-        {
-            title: "Accessorize Your Life",
-            image: "popular6.png",
-            logo: "swarovski.png",
-            offer: "Upto 20% OFF"
-        },
-        {
-            title: "Walk with Confidence",
-            image: "popular7.png",
-            logo: "bata.png",
-            offer: "Upto 20% OFF"
-        },
-    ]
+    const [popularbarnd, setPopularbrand] = useState([]);
 
     let cnt = 1
 
@@ -60,15 +17,29 @@ const Popularbrands = () => {
         try {
             const response = await axios.get(`${BaseUrl}/api/getAllBrands`);
             setPopularbrand(response?.data?.popularBrand)
-            // console.log(response?.data?.popularBrand)
+            console.log(response?.data?.popularBrand)
         } catch (error) {
             console.error("Error fetching brand data:", error);
         }
     }
 
+    const fetchProductData = async () => {
+        try {
+            const response = await axios.get(`${BaseUrl}/api/allProduct`, {
+                headers: {Authorization :` Berer ${token}`}
+            });
+            console.log("response",response.data.product);
+            console.log("mainCategory",response.data.product[0].mainCategoryId);
+            console.log("brand>>>>>>>",response.data.product[0].productVariantData[0].specifications);
+            
+        } catch (error) {
+            console.error('Data Fetching Error:', error);
+        }
+    }
     useEffect(() => {
         // setgridview(data)
-        fetchPopularbrand()
+        fetchProductData();
+        fetchPopularbrand();
     }, []);
 
     return (

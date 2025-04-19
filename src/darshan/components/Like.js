@@ -71,13 +71,13 @@ const Like = ({ data, bestSellerIds, newArrivalIds }) => {
                     </div>
                     <Slider {...settings} prevArrow={<CustomPrevArrow />} nextArrow={<CustomNextArrow />}>
                         {data.map((item) => {
-                            const discountAmount = (item.productVariantData[0].originalPrice * item.productVariantData[0].discountPrice) / 100;
+                            const discountAmount = (item.productVariantData[0]?.originalPrice * item.productVariantData[0]?.discountPrice) / 100;
                             return (
                                 <div key={item._id} className="slider-item">
                                      <Link to={`/womendetails/${item._id}`}>
                                         <div className="d_box">
                                             <div className="d_img">
-                                                <img src={`${BaseUrl}/${item.productVariantData[0].images[0]}`} alt="" />
+                                                <img src={`${BaseUrl}/${item.productVariantData[0]?.images[0]}`} alt="" />
                                                 {bestSellerIds.includes(item._id) && (<div className="d_seller">Best Seller</div>)}
                                                 {newArrivalIds.includes(item._id) && (<div className="d_arrival">New Arrival</div>)}
                                                 <div className="d_trendicon d-flex justify-content-center align-items-center d_cur">
@@ -96,14 +96,14 @@ const Like = ({ data, bestSellerIds, newArrivalIds }) => {
                                                     <div className="d_desc">{item.productName}</div>
                                                     <div className="d-flex align-items-center justify-content-between mt-auto">
                                                         <div className="d-flex align-items-center">
-                                                            {item.productVariantData[0].colorName.split(',').map((color, i) => (
+                                                            {item.productVariantData[0]?.colorName.split(',').map((color, i) => (
                                                                 <div key={i} className="d_color" style={{ backgroundColor: color }}></div>
                                                             ))}
                                                         </div>
 
                                                         <div className="d-flex align-items-end">
-                                                            <div className="d_price">${(item.productVariantData[0].originalPrice - discountAmount)}</div>
-                                                            <div className="d_disprice ms-1 text-decoration-line-through">${item.productVariantData[0].originalPrice}</div>
+                                                            <div className="d_price">${(item.productVariantData[0]?.originalPrice - discountAmount)}</div>
+                                                            <div className="d_disprice ms-1 text-decoration-line-through">${item.productVariantData[0]?.originalPrice}</div>
                                                         </div>
                                                     </div>
                                                 </div>

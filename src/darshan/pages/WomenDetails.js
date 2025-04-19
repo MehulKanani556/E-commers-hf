@@ -180,14 +180,13 @@ const WomenDetails = () => {
         }
     };
 
-    const handleThumbnailClick = (item) => {
-
+    const handleThumbnailClick = (imagePath) => {
         setMainContent({
             type: 'image',
-            src: `${BaseUrl}/${item.replace(/\\/g, '/')}`,
+            src: `${BaseUrl}/${imagePath.replace(/\\/g, '/')}`,
             index: 0
         });
-
+    
         // If it's a video, play it
         if (mainContent.type === 'video' && videoRef.current) {
             setTimeout(() => {
@@ -226,33 +225,34 @@ const WomenDetails = () => {
             });
             console.log("Productresponse", response.data.product);
             setProduct(response.data.product);
-
-            if (product.length > 0 && product[0].productVariantData.length > 0) {
-                // Extract unique colors from all variants
-                const colors = product[0].productVariantData.map(variant =>
-                    variant.colorName ? variant.colorName.split(',').map(color => color.trim()) : []
-                ).flat();
-
-                // Remove duplicates
-                const uniqueColors = [...new Set(colors)];
-                setAvailableColors(uniqueColors);
-
-                // Set initial variant and main content
-                setSelectedVariantIndex(0);
-                if (product[0].productVariantData[0].images.length > 0) {
-                    const firstImage = product[0].productVariantData[0].images[0];
-                    setMainContent({
-                        type: 'image',
-                        src: `${BaseUrl}/${firstImage.replace(/\\/g, '/')}`,
-                        index: 0
-                    });
-                }
-            }
-
         } catch (error) {
             console.error("Error fetching products:", error);
         }
     }
+    // Move the color extraction logic to a separate useEffect that runs after product data is loaded
+    useEffect(() => {
+        if (product.length > 0 && product[0].productVariantData?.length > 0) {
+            // Extract unique colors from all variants
+            const colors = product[0].productVariantData.map(variant =>
+                variant.colorName ? variant.colorName.split(',').map(color => color.trim()) : []
+            ).flat();
+
+            // Remove duplicates
+            const uniqueColors = [...new Set(colors)];
+            setAvailableColors(uniqueColors);
+
+            // Set initial variant and main content
+            setSelectedVariantIndex(0);
+            if (product[0].productVariantData[0].images.length > 0) {
+                const firstImage = product[0].productVariantData[0].images[0];
+                setMainContent({
+                    type: 'image',
+                    src: `${BaseUrl}/${firstImage.replace(/\\/g, '/')}`,
+                    index: 0
+                });
+            }
+        }
+    }, [product]);
 
     useEffect(() => {
         fetchData();
@@ -344,17 +344,21 @@ const WomenDetails = () => {
         if (variantIndex !== -1) {
             setSelectedVariantIndex(variantIndex);
 
-            if (product[0].productVariantData[variantIndex].images.length > 0) {
-                const firstImage = product[0].productVariantData[variantIndex].images[0];
+            const selectedVariant = product[0].productVariantData[variantIndex];
+
+            if (selectedVariant.images.length > 0) {
+                const firstImage = selectedVariant.images[0];
                 setMainContent({
                     type: 'image',
                     src: `${BaseUrl}/${firstImage.replace(/\\/g, '/')}`,
                     index: 0
                 });
             }
-
             setSelectedSize(null);
             setSelectedQuantity('Select');
+
+            const sizesArray = selectedVariant.size.split(',').map(size => size.trim());
+            const discountAmount = (selectedVariant.originalPrice * selectedVariant.discountPrice) / 100;
         }
     };
 
@@ -364,9 +368,10 @@ const WomenDetails = () => {
             <Header />
             {/* Personal Details section start */}
             {product.map((item) => {
-                const discountAmount = (item.productVariantData[0].originalPrice * item.productVariantData[0].discountPrice) / 100;
-                const sizesArray = item.productVariantData[0].size.split(',').map(size => size.trim());
-                const images = item.productVariantData[0].images || [];
+                const selectedVariant = item.productVariantData[selectedVariantIndex];
+                const discountAmount = (selectedVariant.originalPrice * selectedVariant.discountPrice) / 100;
+                const sizesArray = selectedVariant.size.split(',').map(size => size.trim());
+                const images = selectedVariant.images || [];
                 return (
                     <>
                         <section className='d_p-50 pb-0 d_womendetail'>
@@ -377,7 +382,7 @@ const WomenDetails = () => {
                                             {/* Thumbnail Column */}
                                             <div className="col-12 col-sm-3 d-flex justify-content-center">
                                                 <div className="d_subimg">
-                                                    {item.productVariantData[0].images.map((item, index) => (
+                                                    {item.productVariantData[selectedVariantIndex].images.map((item, index) => (
 
                                                         <div
                                                             key={index}
@@ -454,12 +459,12 @@ const WomenDetails = () => {
                                             <div className='d_colordesc'>{item.productName}</div>
                                             <div className="d_stock">{item.stockStatus}</div>
                                             {/* <div className="d_outofstock">Out of Stock</div> */}
-                                            <div className="d_desc">{item.productVariantData[0].description}</div>
+                                            <div className="d_desc">{selectedVariant.description}</div>
                                             <div className="d-flex align-items-end">
-                                                <div className="d_price me-2">${(item.productVariantData[0].originalPrice - discountAmount)}</div>
-                                                <div className="d_originalprice me-2 text-decoration-line-through">${item.productVariantData[0].originalPrice}</div>
+                                                <div className="d_price me-2">${(selectedVariant.originalPrice - discountAmount)}</div>
+                                                <div className="d_originalprice me-2 text-decoration-line-through">${selectedVariant.originalPrice}</div>
                                                 <div className="d_saveprice ">
-                                                    (Save ${discountAmount.toFixed(2)})
+                                                (Save ${discountAmount.toFixed(2)})
                                                 </div>
                                             </div>
                                             <div className="d_offer">
@@ -502,7 +507,6 @@ const WomenDetails = () => {
                                             <div className="d_color">
                                                 <div className="d_title">Colors :</div>
                                                 <div className='d-flex align-items-center gap-2'>
-                                                    {console.log("availableColors", availableColors)}
                                                     {availableColors.map((color, index) => (
 
                                                         <div
@@ -578,10 +582,10 @@ const WomenDetails = () => {
                                                         </div>
                                                     </div>
                                                     <div className="d_cta  d-flex justify-content-center align-items-center me-3">
-                                                        <Link to="" className='text-decoration-none d_buy text-center' onClick={() => handleAddToCart(item._id, item.productVariantData[0]._id)}>Buy Now</Link>
+                                                        <Link to="" className='text-decoration-none d_buy text-center' onClick={() => handleAddToCart(item._id, selectedVariant._id)}>Buy Now</Link>
                                                     </div>
                                                     <div className="d_cta  d-flex justify-content-center align-items-center">
-                                                        <Link className='text-decoration-none d_addcartbtn text-center d-block' onClick={() => handleAddToCart(item._id, item.productVariantData[0]._id)}>Add to cart</Link>
+                                                        <Link className='text-decoration-none d_addcartbtn text-center d-block' onClick={() => handleAddToCart(item._id, selectedVariant._id)}>Add to cart</Link>
                                                     </div>
                                                 </div>
                                             </div>
@@ -698,7 +702,7 @@ const WomenDetails = () => {
                             <Accordion.Item eventKey="0">
                                 <Accordion.Header>Product Description</Accordion.Header>
                                 <Accordion.Body className="d_prodesc">
-                                    <div className="d_desc">{item.productVariantData[0].description}</div>
+                                    <div className="d_desc">{item.productVariantData[selectedVariantIndex].description}</div>
                                     <div className="d_digitalphoto">
                                         <p className='mb-0'>Slight colour variation is possible due to digital photography.</p>
                                     </div>
