@@ -9,7 +9,7 @@ import { Link, useParams } from 'react-router-dom';
 const CommSlider = () => {
 
     const { id } = useParams();
-    console.log("id", id);
+    // console.log("id", id);
 
     const BaseUrl = process.env.REACT_APP_BASEURL;
     const [category, setCategory] = useState([]);
@@ -42,7 +42,7 @@ const CommSlider = () => {
             try {
                 setIsLoading(true);
                 const response = await axios.get(`${BaseUrl}/api/allCategory`);
-                console.log("response", response.data);
+                // console.log("response", response.data);
                 setCategory(response.data.category);
             } catch (error) {
                 console.error('Data fetching Error:', error);
