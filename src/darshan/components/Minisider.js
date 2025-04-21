@@ -39,10 +39,10 @@ const Minisider = () => {
 
     const fetchMinisilder = async () => {
         if (id) {
-            try {
+            try { 
                 setIsLoading(true);
                 const response = await axios.get(`${BaseUrl}/api/getMainCategoryAndCategory/${id}`);
-                console.log("response", response.data);
+                // console.log("response", response.data);
                 setCategory(response.data.category);
             } catch (error) {
                 console.error('Data fetching Error:', error);
@@ -54,6 +54,7 @@ const Minisider = () => {
     }
     useEffect(() => {
         fetchMinisilder();
+          // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
     if (isLoading) return <div>Loading...</div>;

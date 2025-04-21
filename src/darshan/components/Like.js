@@ -87,7 +87,7 @@ const Like = ({ data, bestSellerIds, newArrivalIds }) => {
                                             <div className="d_content">
                                                 <div className='d-flex flex-column h-100'>
                                                     <div className="d-flex align-items-center justify-content-between">
-                                                        <div className="d_name">{item.categoriesData[0].categoryName}</div>
+                                                        <div className="d_name">{item.categoriesData[0]?.categoryName}</div>
                                                         <div className='d-flex align-items-center'>
                                                             <FaStar className='d_staricon me-1' />
                                                             <div className="d_review">{parseFloat(item.ratingData[0]?.rating) || 0}</div>

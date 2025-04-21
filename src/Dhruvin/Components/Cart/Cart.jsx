@@ -464,7 +464,7 @@ const Cart = () => {
       {cartData.length > 0 ? (
 
         <section className="mb-5 mt-4 d-non" id="ds_cartsec">
-          {console.log("cartData>>>>>", cartData)}
+          {/* {console.log("cartData>>>>>", cartData)} */}
           <div>
             <div className="d_container">
               <div className="d-flex justify-content-between align-items-center">

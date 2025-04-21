@@ -41,6 +41,7 @@ const Trending = () => {
   // Initial fetch of wishlist data
   useEffect(() => {
     fetchWishlist();
+       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [BaseUrl, token]);
 
   // Listen for custom event from Wishlist component
@@ -66,6 +67,7 @@ const Trending = () => {
       window.removeEventListener('storage', handleWishlistUpdate);
       clearInterval(intervalId);
     };
+       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSelectedwishlist]);
 
   // Fetch trending products data
@@ -86,7 +88,7 @@ const Trending = () => {
   const handleClickwishlist = async (item, e) => {
     e.preventDefault();
     const itemId = item.productId || item._id;
-    
+
     try {
       if (isSelectedwishlist.includes(itemId)) {
         // Find the actual wishlist item ID for deletion
@@ -95,12 +97,12 @@ const Trending = () => {
             Authorization: `Bearer ${token}`,
           }
         });
-        
+
         // Find the wishlist entry that matches this product ID
         const wishlistEntry = response.data.wishlist.find(
           entry => (entry.productId || entry._id) === itemId
         );
-        
+
         if (wishlistEntry) {
           // Remove from wishlist on the server
           await axios.delete(`${BaseUrl}/api/deleteWishList/${wishlistEntry._id}`, {
@@ -109,15 +111,15 @@ const Trending = () => {
             }
           });
         }
-        
+
         // Update local state
         setIsSelectedWishlist(prev => {
           const updatedWishlist = prev.filter(id => id !== itemId);
           localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
-          
+
           // Notify other components
           window.dispatchEvent(new CustomEvent('wishlistUpdated'));
-          
+
           return updatedWishlist;
         });
       } else {
@@ -129,15 +131,15 @@ const Trending = () => {
             Authorization: `Bearer ${token}`,
           }
         });
-        
+
         // Update local state
         setIsSelectedWishlist(prev => {
           const updatedWishlist = [...prev, itemId];
           localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
-          
+
           // Notify other components
           window.dispatchEvent(new CustomEvent('wishlistUpdated'));
-          
+
           return updatedWishlist;
         });
       }
@@ -154,7 +156,7 @@ const Trending = () => {
             <div className="d_margin">
               <div className="d_head d-flex justify-content-between align-items-center">
                 <h4 className='mb-sm-0 mb-1'>Trending Collection for you</h4>
-                
+
                 <p className='mb-0'><Link to="/womenstore" className='text-decoration-none'>View More</Link></p>
               </div>
               <div className="row gy-xl-4 gy-4">
@@ -165,15 +167,15 @@ const Trending = () => {
 
                   return (
                     <div key={itemId} className="col-12 col-sm-6 col-lg-4 col-xl-3 px-2">
-                      <Link to={`/womendetails/${data[0].productId}`} state={{mainCategoryId: item.mainCategoryId}}>
+                      <Link to={`/womendetails/${data[0].productId}`} state={{ mainCategoryId: item.mainCategoryId }}>
                         <div className="d_box mx-2">
                           <div className="d_img">
                             <img src={`${BaseUrl}/${variantData.images[0]}`} alt="" />
                             {productDetails?.stockStatus === "In Stock" && (
                               <div className="d_seller">Best Seller</div>
                             )}
-                            <div 
-                              className="d_trendicon d-flex justify-content-center align-items-center d_cur" 
+                            <div
+                              className="d_trendicon d-flex justify-content-center align-items-center d_cur"
                               onClick={(e) => handleClickwishlist(item, e)}
                             >
                               {isSelectedwishlist.includes(itemId) ?
@@ -199,9 +201,9 @@ const Trending = () => {
                                 </div>
                                 <div className="d-flex align-items-end">
                                   <div className="d_price">
-                                    {variantData?.originalPrice && variantData?.discountPrice
-                                      ? `$${variantData.discountPrice}`
-                                      : "$0"}
+                                    ${variantData && variantData.originalPrice && variantData.discountPrice
+                                      ? (variantData.originalPrice - (variantData.originalPrice * variantData.discountPrice) / 100)
+                                      : '0'}
                                   </div>
                                   <div className="d_disprice ms-1 text-decoration-line-through">${variantData?.originalPrice}</div>
                                 </div>

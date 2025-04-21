@@ -61,7 +61,7 @@ const Register_model = (props) => {
     let loginFormik = useFormik({
         initialValues: init_login,
         validationSchema: login_validation,
-        onSubmit: async (values, { resetForm,setFieldError }) => {
+        onSubmit: async (values, { resetForm, setFieldError }) => {
 
             try {
                 const response = await axios.post(`${BaseUrl}/api/login`, values);
@@ -76,7 +76,7 @@ const Register_model = (props) => {
             } catch (error) {
                 console.error('User Login Error:', error);
                 if (error.response && error.response.data && error.response.data.message) {
-                    setFieldError("password",error.response.data.message);
+                    setFieldError("password", error.response.data.message);
                 }
             }
         }
@@ -188,7 +188,7 @@ const Register_model = (props) => {
     let resetFormik = useFormik({
         initialValues: init_reset_password,
         validationSchema: reset_password_validation,
-        onSubmit: async (values, {resetForm}) => {
+        onSubmit: async (values, { resetForm }) => {
             try {
 
                 const token = localStorage.getItem('token');
@@ -197,8 +197,8 @@ const Register_model = (props) => {
 
                 const response = await axios.post(`${BaseUrl}/api/resetPassword/${decode._id}`, values);
 
-                console.log("REsponse",response.data );
-                if(response.data.status === 200){
+                console.log("REsponse", response.data);
+                if (response.data.status === 200) {
                     resetForm('');
                     setresetpassword(false);
                     setloginmodel(true);
@@ -236,6 +236,8 @@ const Register_model = (props) => {
                 centered
                 className='register_model'
             >
+                <Modal.Header closeButton className='mx-2 border-bottom-0'>
+                </Modal.Header>
                 <Modal.Body className='inter model_padding'>
                     <h4 className='text-black text-center model_heading fw-600 mb-3'>Register</h4>
                     <p className='text-center font_18 light_color fw-500 mb-3'>
@@ -293,6 +295,8 @@ const Register_model = (props) => {
                 centered
                 className='login_model'
             >
+                  <Modal.Header closeButton className='mx-2 border-bottom-0'>
+                  </Modal.Header>
                 <Modal.Body className='inter model_padding'>
                     <h4 className='text-black text-center model_heading fw-600 mb-3'>Login</h4>
                     <p className='text-center font_18 light_color fw-500 mb-3'>Log in to continue</p>
