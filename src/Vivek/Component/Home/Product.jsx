@@ -782,6 +782,38 @@ const Product = () => {
         return originalPrice - discountAmount;
     };
 
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const pathSegments = window.location.pathname.split('/');
+                const brandParam = decodeURIComponent(pathSegments[pathSegments.length - 1]);
+    
+                console.log("Brand from URL:", brandParam);
+    
+                const response = await axios.get(`${BaseUrl}/api/allProduct`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+    
+                let filteredProducts = response.data.product;
+                console.log("Response data:", filteredProducts);
+    
+                if (brandParam) {
+                    const filterbrand = filteredProducts.filter((item) => {
+                        return item.productName.trim().toLowerCase() === brandParam.trim().toLowerCase();
+                    });
+                    console.log("---", filterbrand);
+                    setFilteredProducts(filterbrand);
+                }
+    
+            } catch (error) {
+                console.error('Data Fetching Error:', error);
+            }
+        };
+    
+        fetchProducts();
+    }, [window.location.pathname]);
+    
+    
 
     return (
         <>
@@ -1703,7 +1735,7 @@ const Product = () => {
                                                         <Link to={`/womendetails/${item._id}`} >
                                                             <div className="d_box">
                                                                 <div className="d_img">
-                                                                    <img src={`${BaseUrl}/${item.productVariantData[0].images[0]}`} alt="" />
+                                                                    <img src={`${BaseUrl}/${item.productVariantData[0]?.images[0]}`} alt="" />
                                                                     {item.isBestSeller && (
                                                                         <div className="d_seller">Best Seller</div>
                                                                     )}
@@ -1728,10 +1760,10 @@ const Product = () => {
                                                                                 <div className="d_review">{item.rating || 0}</div>
                                                                             </div>
                                                                         </div>
-                                                                        <div className="d_desc">{item.productVariantData[0].description || item.productVariantData[0].shortDescription}</div>
+                                                                        <div className="d_desc">{item.productVariantData[0]?.description || item.productVariantData[0]?.shortDescription}</div>
                                                                         <div className="d-flex align-items-center justify-content-between mt-auto">
                                                                             <div className="d-flex align-items-center">
-                                                                                {(item.productVariantData[0].colorName || '').split(',').map((color, i) => (
+                                                                                {(item.productVariantData[0]?.colorName || '').split(',').map((color, i) => (
                                                                                     <div
                                                                                         key={i}
                                                                                         className={`d_color ${i === 0 ? 'active' : ""}`}
@@ -1741,15 +1773,15 @@ const Product = () => {
                                                                             </div>
                                                                             <div className="d-flex align-items-end">
                                                                                 <div className="d_price">
-                                                                                    ${item.productVariantData[0].originalPrice && item.productVariantData[0].discountPrice
+                                                                                    ${item.productVariantData[0]?.originalPrice && item.productVariantData[0]?.discountPrice
                                                                                         ? calculateDiscountPrice(
-                                                                                            parseInt(item.productVariantData[0].originalPrice),
-                                                                                            parseInt(item.productVariantData[0].discountPrice)
+                                                                                            parseInt(item.productVariantData[0]?.originalPrice),
+                                                                                            parseInt(item.productVariantData[0]?.discountPrice)
                                                                                         )
                                                                                         : "0"}
                                                                                 </div>
                                                                                 <div className="d_disprice ms-1 text-decoration-line-through">
-                                                                                    ${item.productVariantData[0].originalPrice}
+                                                                                    ${item.productVariantData[0]?.originalPrice}
                                                                                 </div>
                                                                             </div>
 

@@ -588,7 +588,7 @@ const Cart = () => {
                           <div className="ds_with-border"></div>
                           <div className="">
                             {cartData.map((item) => {
-                              const discountprice = item.productVariantData[0].originalPrice - (item.productVariantData[0].originalPrice * item.productVariantData[0].discountPrice / 100);
+                              const discountprice = item.productVariantData[0]?.originalPrice - (item.productVariantData[0]?.originalPrice * item.productVariantData[0]?.discountPrice / 100);
 
                               const deliveryDate = new Date();
                               deliveryDate.setDate(deliveryDate.getDate() + 3);
@@ -607,14 +607,14 @@ const Cart = () => {
                                           id={`checkbox-${item._id}`} />
                                       </div>
                                       <div className="ms-4">
-                                        <img src={`${BaseUrl}/${item.productVariantData[0].images[0]}`} className="ds_add-img" alt="" />
+                                        <img src={`${BaseUrl}/${item.productVariantData[0]?.images[0]}`} className="ds_add-img" alt="" />
                                       </div>
                                     </div>
                                   </div>
                                   <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 ">
                                     <div className="ds_add-body">
-                                      <p className="fw-bold mb-0">{item.productData[0].productName}</p>
-                                      <p className="ds_mini-text mb-0">{item.productVariantData[0].description}</p>
+                                      <p className="fw-bold mb-0">{item.productData[0]?.productName}</p>
+                                      <p className="ds_mini-text mb-0">{item.productVariantData[0]?.description}</p>
                                       {/* <p className="ds_add-type mb-0">Light Brown</p>
                                       <p className="ds_add-type">XL</p> */}
                                     </div>
