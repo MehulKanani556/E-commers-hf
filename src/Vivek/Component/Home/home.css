@@ -94,7 +94,10 @@
     text-transform: uppercase;
     font-weight: 600;
 }
-
+.mv_custom_object{
+    object-fit: cover;
+    object-position: top;
+}
 
 /* watch collection */
 .VK_watch_cont {

@@ -77,6 +77,7 @@ const Trending = () => {
         const response = await axios.get(`${BaseUrl}/api/tredingProducts/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        console.log("response-------",response.data);
         setData(response.data.trendingProducts);
       } catch (error) {
         console.error('Data fetching failed:', error);
