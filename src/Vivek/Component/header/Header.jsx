@@ -14,7 +14,7 @@ const Header = () => {
     const BaseUrl = process.env.REACT_APP_BASEURL;
     const token = localStorage.getItem('token');
 
-    const {cartItems } = useCart();
+    const { cartItems } = useCart();
     // login 
     const [modalShow, setModalShow] = React.useState(false);
     const [address_model, setadderss_model] = useState(false);
@@ -466,22 +466,41 @@ const Header = () => {
                                             <div className='VK_mega_menu'>
                                                 <div className='VK_mega_menu_div_parent'>
                                                     {categoriesByMain[mainCategory.mainCategoryName] &&
-                                                        Object.keys(categoriesByMain[mainCategory.mainCategoryName]).map((categoryName) => (
-                                                            <div key={categoryName} className='VK_menu_list'>
-                                                                <p className='mb-2 font_18 header_color inter'>
-                                                                    <b>{categoryName}</b>
-                                                                </p>
-                                                                <ul className='list-unstyled p-0 m-0 header_light inter'>
-                                                                    {categoriesByMain[mainCategory.mainCategoryName][categoryName].map((subCategory) => (
-                                                                        <li className='py-1' key={subCategory}>
-                                                                            <Link to={`/${mainCategory.mainCategoryName.toLowerCase()}/${categoryName.toLowerCase()}/${subCategory.toLowerCase()}`} className='text-decoration-none d_theme'>
-                                                                                {subCategory}
-                                                                            </Link>
-                                                                        </li>
-                                                                    ))}
-                                                                </ul>
-                                                            </div>
-                                                        ))
+                                                        Object.keys(categoriesByMain[mainCategory.mainCategoryName]).map((categoryName) => {
+                                                            const categoryItems = categoriesByMain[mainCategory.mainCategoryName][categoryName];
+                                                            const categoryObj = mainCategory.categories.find(cat => cat.categoryName === categoryName);
+                                                            const categoryId = categoryObj ? categoryObj._id : '';
+
+                                                            return (
+                                                                <div key={categoryName} className='VK_menu_list'>
+                                                                    <p className='mb-2 font_18 header_color inter'>
+                                                                        <b>{categoryName}</b>
+                                                                    </p>
+                                                                    <ul className='list-unstyled p-0 m-0 header_light inter'>
+                                                                        {categoryItems.map((subCategory) => {
+                                                                            const subCategoryId = typeof subCategory === 'object' ? subCategory._id : '';
+                                                                            const subCategoryName = typeof subCategory === 'object' ? subCategory.subCategoryName : subCategory;
+
+                                                                            return (
+                                                                                <li className='py-1' key={subCategoryId || subCategoryName}>
+                                                                                    <Link
+                                                                                        to={`/product/${categoryId}`}
+                                                                                        state={{
+                                                                                            mainCategoryId: mainCategory._id,
+                                                                                            categoryId: categoryId,
+                                                                                            subCategoryId: subCategoryId
+                                                                                        }}
+                                                                                        className='text-decoration-none d_theme'
+                                                                                    >
+                                                                                        {subCategoryName}
+                                                                                    </Link>
+                                                                                </li>
+                                                                            );
+                                                                        })}
+                                                                    </ul>
+                                                                </div>
+                                                            );
+                                                        })
                                                     }
                                                 </div>
                                             </div>
