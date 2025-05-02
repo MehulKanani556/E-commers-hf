@@ -35,7 +35,7 @@ function Luggage() {
                                                 <h1 className='V_packsack'>PACKSACK</h1>
                                                 <p className='V_child_text'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.</p>
                                             </div>
-                                            <div className='pt-3 pt-md-5'>
+                                            <div className='pt-3'>
                                                 <Button className='py-2 px-5 text-white V_luggage_buy_now_button'>BUY NOW</Button>
                                             </div>
                                         </div>

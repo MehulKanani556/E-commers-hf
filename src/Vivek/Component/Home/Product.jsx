@@ -719,24 +719,6 @@ const Product = () => {
     // color
     const displayedcolor = showMore.color ? color : color.slice(0, initialDisplayCount);
 
-    // Sleeve
-    const displayedsleeve = showMore.sleeve ? sleeves : sleeves.slice(0, initialDisplayCount);
-
-    // Material
-    const filteredmaterial = materials.filter(material =>
-        material.materialname.toLowerCase().includes(searchmaterial.toLowerCase())
-    );
-    const displayedmaterial = showMore.material ? filteredmaterial : filteredmaterial.slice(0, initialDisplayCount);
-
-    // Pattern
-    const displayedpattern = showMore.pattern ? patterns : patterns.slice(0, initialDisplayCount);
-
-    // style
-    const filteredstyle = styles.filter(style =>
-        style.stylename.toLowerCase().includes(searchstyle.toLowerCase())
-    );
-    const displayedstyle = showMore.style ? filteredstyle : filteredstyle.slice(0, initialDisplayCount);
-
     // Toggle dropdown visibility
     const toggleDropdown = (e) => {
         e.stopPropagation(); // Prevent immediate closure on toggle click
@@ -1069,7 +1051,7 @@ const Product = () => {
                                                                         <input type="checkbox" onChange={() => handleCheckboxChange('colors', color.id, color.colorname)} checked={!!checkedFilters.colors[color.id]} id={`color-${color.id}`} />
                                                                         <label htmlFor={`color-${color.id}`} className="d_checkmark"></label>
                                                                         <div className="d-flex align-items-center">
-                                                                            <div className="d_color" style={{ background: color.colorname }}></div>
+                                                                            <div className="d_color border border-black" style={{ background: color.colorname }}></div>
                                                                             <p className='mb-0'>{color.colorname}</p>
                                                                         </div>
                                                                     </div>

@@ -313,8 +313,10 @@ const WomenDetails = () => {
     };
 
     const handleAddToCart = async (productId, productVariantId) => {
-        // console.log("productid>>>>>>>>>>>>>",productId);
-        // console.log("productVariantId",productVariantId);
+        if (selectedQuantity === 'Select') {
+            alert('Please select a quantity before adding to cart');
+            return;
+        }
 
         try {
             const response = await axios.post(`${BaseUrl}/api/createCart`, {
@@ -753,6 +755,7 @@ const WomenDetails = () => {
                                     <p>{item.productVariantData[0].returnPolicy}</p>
                                 </Accordion.Body>
                             </Accordion.Item>
+                            {item.ratingData.length ? (
                             <Accordion.Item eventKey="3">
                                 <Accordion.Header>Rating & Review</Accordion.Header>
                                 <Accordion.Body className="d_review">
@@ -853,6 +856,7 @@ const WomenDetails = () => {
                                     </div>
                                 </Accordion.Body>
                             </Accordion.Item>
+                            ) :(<></>) }
                         </Accordion>
                     ))}
                 </div>

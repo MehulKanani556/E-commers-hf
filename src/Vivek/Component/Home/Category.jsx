@@ -52,7 +52,7 @@ const Category = () => {
 
             {/* Banner section Start */}
             {product && product.mainCategoryName === 'Women' ? (
-                <Banner />
+                <Banner id={product._id} />
             ) : product && product.mainCategoryName === 'Men' ? (
                 <MensBanner />
             ) : product && product.mainCategoryName === 'Baby & Kids' ? (

@@ -1,14 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './footer.css';
 import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Footer = () => {
+
+    const BaseUrl = process.env.REACT_APP_BASEURL;
+    const token = localStorage.getItem('token');
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${BaseUrl}/api/allMainCategory`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                // console.log("response", response.data.users);
+                setData(response.data.users);
+            } catch (error) {
+                console.error('Data fetching Error:', error);
+            }
+        }
+        fetchData();
+    }, []);
     return (
         <footer className='Footer VK_footer_par'>
             <div className='d_container inter VK_sec_padding'>
                 <Row className='m-0 justify-content-xxl-center justify-content-between'>
-                    <Col xl={4} md={4} sm={6} className='px-2 text-white my-sm-4 my-2'>
+                    <Col xl={4} lg={3} md={6} sm={6} className='px-2 text-white my-sm-4 my-2'>
                         <div className='text-white'>
                             <h2 className='fw-bolder'>
                                 Logo
@@ -37,38 +58,28 @@ const Footer = () => {
                             </div>
                         </div>
                     </Col>
-                    <Col xl={2} lg={2} md={3} sm={6} xs={6} className='px-2 text-white my-sm-4 my-2 ms-xxl-auto'>
+                    <Col xl={2} lg={3} md={6} sm={6} xs={6} className='px-2 text-white my-sm-4 my-2 ms-xl-auto '>
                         <h5 className='font_20 fw-500 mb-sm-4 mb-2 '>
                             Categories
                         </h5>
                         <ul className='list-unstyled VK_footer_ul'>
-                            <li className='my-2'>
-                                <Link to="/women">Women's Fashion</Link>
-                            </li>
-                            <li className='my-2'>
-                                <Link to='/electronics'>Electronics</Link>
-                            </li>
-                            <li className='my-2'>
-                                <Link to='/beauty'>Beauty</Link>
-                            </li>
-                            <li className='my-2'>
-                                <Link to='/luggage'>Luggage</Link>
-                            </li>
-                            <li className='my-2'>
-                                <Link to='/sports'>Sports</Link>
-                            </li>
+                            {data.map((item) => (
+                                <li className='my-2' key={item._id}>
+                                    <Link to={`/category/${item._id}`}>{item.mainCategoryName}</Link>
+                                </li>
+                            ))}
                         </ul>
                     </Col>
-                    <Col xl={2} md={3} sm={6} xs={6}  className='px-2 text-white my-sm-4 my-2'>
+                    <Col xl={2} lg={3} md={6} sm={6} xs={6} className='px-2 text-white my-sm-4 my-2'>
                         <h5 className='font_20 fw-500 mb-sm-4 mb-2'>
                             Quick Links
                         </h5>
                         <ul className='list-unstyled VK_light_color VK_footer_ul'>
                             <li className='my-2'>
-                                <Link to='/profile'>My Account</Link>
+                                <Link to='/user/profile'>My Account</Link>
                             </li>
                             <li className='my-2'>
-                                <Link to='/profile' state={{ activeSection: 'order' }}>My Order</Link>
+                                <Link to='/user/myorder' state={{ activeSection: 'order' }}>My Order</Link>
                             </li>
                             <li className='my-2'>
                                 <Link to='/wishlist'>My Wishlist</Link>
@@ -78,7 +89,7 @@ const Footer = () => {
                             </li>
                         </ul>
                     </Col>
-                    <Col xl={2} md={2} sm={6} xs={12} className='px-2 text-white my-sm-4 my-2'>
+                    <Col xl={2} lg={3} md={6} sm={6} xs={12} className='px-2 text-white my-sm-4 my-2'>
                         <h5 className='font_20 fw-500 mb-sm-4 mb-2'>
                             Let us help you
                         </h5>

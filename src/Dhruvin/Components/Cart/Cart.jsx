@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "../../../Vivek/Component/header/Header";
 import Footer from "../../../Vivek/Component/footer/Footer";
 import "../Css/Cart.css";
@@ -20,6 +20,7 @@ const Cart = () => {
   const token = localStorage.getItem('token');
 
   const navigate = useNavigate();
+  const canvasRef = useRef(null);
   const { removeFromCart } = useCart();
 
   const [showModal, setShowModal] = useState(false);
@@ -56,6 +57,7 @@ const Cart = () => {
   const [productData, setProductData] = useState([]);
   const [orderData, setOrderData] = useState();
   const [selectedItems, setSelectedItems] = useState([]);
+  const [captchaText, setCaptchaText] = useState("");
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
@@ -456,6 +458,65 @@ const Cart = () => {
       setSelectedItems([]);
     }
   };
+  
+  const drawCaptcha = (text) => {
+    const canvas = canvasRef.current;
+    
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+      // Background
+      ctx.fillStyle = "#f0f0f0";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.font = "24px Arial";
+      ctx.fillStyle = "#333";
+      ctx.setTransform(1, 0.1, 0.1, 1, 0, 0); // Skew a bit
+      ctx.fillText(text, 10, 30);
+  
+      // Add noise lines
+      for (let i = 0; i < 3; i++) {
+        ctx.beginPath();
+        ctx.moveTo(Math.random() * 100, Math.random() * 40);
+        ctx.lineTo(Math.random() * 100, Math.random() * 40);
+        ctx.strokeStyle = "#999";
+        ctx.stroke();
+      }
+  
+      // Reset transform
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+    }
+  };
+  
+  const generateCaptcha = () => {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let text = "";
+    for (let i = 0; i < 5; i++) {
+      text += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    setCaptchaText(text);
+    if (typeof window !== 'undefined') {
+      // Use setTimeout to ensure the canvas is mounted
+      setTimeout(() => {
+        drawCaptcha(text);
+      }, 0);
+    }
+  };
+  
+  useEffect(() => {
+    // Only run on client-side
+    if (typeof window !== 'undefined') {
+      const timer = setTimeout(() => {
+        generateCaptcha();
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   return (
     <div>
       <Header />
@@ -739,13 +800,13 @@ const Cart = () => {
                                 </div>
                                 <div className="row justify-content-center align-items-center">
                                   <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 mt-3">
-                                    <img src={require("../Img/captha.png")} alt="" className="ds_cod-cap" />
+                                  <canvas ref={canvasRef} width={100} height={40} className="ds_cod-cap" />
                                   </div>
-                                  <div className="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12 mt-3">
+                                  <div className="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-10 mt-3 p-sm-0">
                                     <input type="text" className="ds_cod-input" placeholder="Enter the captcha" />
                                   </div>
-                                  <div className="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12 mt-3">
-                                    <MdRefresh className="ds_cod-refresh" />
+                                  <div className="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1 mt-3">
+                                    <MdRefresh className="ds_cod-refresh cur"  onClick={generateCaptcha} />
                                   </div>
                                 </div>
                                 <div className="row mt-5">
@@ -820,42 +881,30 @@ const Cart = () => {
                                     <input type="text" className="ds_net-input" placeholder="Search your bank" />
                                     <IoSearch className="ds_net-icon" />
                                   </div>
-                                  <div className="d-flex flex-wrap justify-content-between align-items-center mt-5">
-                                    <div className="text-center">
+                                  <div className="d-flex flex-wrap  align-items-center mt-5 ">
+                                    <div className="text-center mx-2">
                                       <img src={require('../Img/city.png')} alt="" className="ds_net-img" />
-                                      <p className="ds_net-text">Citi <br /> Bank</p>
+                                      <p className="ds_net-text">Citi Bank</p>
                                     </div>
-                                    <div className="text-center">
+                                    <div className="text-center mx-2">
                                       <img src={require('../Img/well.png')} alt="" className="ds_net-img" />
-                                      <p className="ds_net-text">Wells Fargo <br /> Bank</p>
+                                      <p className="ds_net-text">Wells Fargo Bank</p>
                                     </div>
-                                    <div className="text-center">
+                                    <div className="text-center mx-2">
                                       <img src={require('../Img/capital.png')} alt="" className="ds_net-img" />
-                                      <p className="ds_net-text">Capital One <br /> Bank</p>
+                                      <p className="ds_net-text">Capital One Bank</p>
                                     </div>
-                                    <div className="text-center">
+                                    <div className="text-center mx-2">
                                       <img src={require('../Img/td.png')} alt="" className="ds_net-img" />
-                                      <p className="ds_net-text">TD <br /> Bank</p>
+                                      <p className="ds_net-text">TD Bank</p>
                                     </div>
-                                    <div className="text-center">
+                                    <div className="text-center mx-2">
                                       <img src={require('../Img/city.png')} alt="" className="ds_net-img" />
-                                      <p className="ds_net-text">Citi <br /> Bank</p>
+                                      <p className="ds_net-text">Citi Bank</p>
                                     </div>
-                                    <div className="text-center">
-                                      <img src={require('../Img/capital.png')} alt="" className="ds_net-img" />
-                                      <p className="ds_net-text">Capital One <br /> Bank</p>
-                                    </div>
-                                    <div className="text-center">
+                                    <div className="text-center mx-2">
                                       <img src={require('../Img/td.png')} alt="" className="ds_net-img" />
-                                      <p className="ds_net-text">TD <br /> Bank</p>
-                                    </div>
-                                    <div className="text-center">
-                                      <img src={require('../Img/city.png')} alt="" className="ds_net-img" />
-                                      <p className="ds_net-text">Citi <br /> Bank</p>
-                                    </div>
-                                    <div className="text-center">
-                                      <img src={require('../Img/well.png')} alt="" className="ds_net-img" />
-                                      <p className="ds_net-text">Wells Fargo <br /> Bank</p>
+                                      <p className="ds_net-text">TD Bank</p>
                                     </div>
                                   </div>
                                 </div>

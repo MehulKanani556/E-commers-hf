@@ -6,6 +6,7 @@ import '../common.css';
 import { Col, Row } from 'react-bootstrap';
 import { FaHeart, FaStar } from 'react-icons/fa6';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Wishlist = () => {
     const BaseUrl = process.env.REACT_APP_BASEURL;
@@ -49,19 +50,20 @@ const Wishlist = () => {
                     rating: 4.5, // Default rating since it's not in your data
                     image: imageUrl,
                     color: colors,
+                    mainCategoryId: item.productData[0].mainCategoryId,
                     stockStatus: item.productData?.[0]?.stockStatus || "Out of Stock"
                 };
             });
 
             setWishlistdata(transformedData);
-            
+
             // Update the wishlist IDs in localStorage
             const wishlistIds = transformedData.map(item => item.productId);
             localStorage.setItem('wishlist', JSON.stringify(wishlistIds));
-            
+
             // Notify other components about wishlist update
             window.dispatchEvent(new CustomEvent('wishlistUpdated'));
-            
+
             setIsLoading(false);
         } catch (error) {
             console.error("Error fetching wishlist data:", error);
@@ -84,11 +86,11 @@ const Wishlist = () => {
             // First update the state
             const updatedWishlist = wishlistdata.filter(item => item.id !== wishlistId);
             setWishlistdata(updatedWishlist);
-            
+
             // Then update localStorage with the new wishlist IDs
             const wishlistIds = updatedWishlist.map(item => item.productId);
             localStorage.setItem('wishlist', JSON.stringify(wishlistIds));
-            
+
             // Notify other components about wishlist update using a custom event
             window.dispatchEvent(new CustomEvent('wishlistUpdated'));
 
@@ -113,7 +115,7 @@ const Wishlist = () => {
                         <img src={require('../../assets/empty wishlist.png')} alt="Empty Wishlist" />
                         <p className='mb-2 fw-600'>Your wishlist is empty!</p>
                         <p className='font_14'>Explore more and shortlist some items.</p>
-                        <button className='VK_theme_btn'>Continue Shopping</button>
+                        <button className='VK_theme_btn'><Link to={'/'} className='text-white text-decoration-none'>Continue Shopping</Link></button>
                     </div>
                 </div>
             ) : (
@@ -127,57 +129,59 @@ const Wishlist = () => {
                         <Row>
                             {wishlistdata.map((item, index) => (
                                 <Col xl={3} lg={4} sm={6} className='my-3' key={index}>
-                                    <div className="VK_wishlist_boxshadow">
-                                        <div className='VK_wishlist_parent'>
-                                            <div className='VK_wishlist_img'>
-                                                <img
-                                                    src={`${BaseUrl}/public/${item.image}`}
-                                                    className='w-100 h-100 object_cover object_top'
-                                                    alt={item.name}
-                                                />
+                                        <div className="VK_wishlist_boxshadow">
+                                    <Link to={`/womendetails/${item.productId }`} state={{ mainCategoryId: item.mainCategoryId }} className='text-dark text-decoration-none'>
+                                            <div className='VK_wishlist_parent'>
+                                                <div className='VK_wishlist_img'>
+                                                    <img
+                                                        src={`${BaseUrl}/public/${item.image}`}
+                                                        className='w-100 h-100 object_cover object_top'
+                                                        alt={item.name}
+                                                    />
+                                                </div>
+                                                <div className='VK_wishlist_bt'>
+                                                    <button
+                                                        className='VK_wishlist_btn'
+                                                        onClick={() => handleRemoveFromWishlist(item.id, item.productId)}
+                                                    >
+                                                        <FaHeart className='text-danger vk_IN' />
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <div className='VK_wishlist_bt'>
-                                                <button
-                                                    className='VK_wishlist_btn'
-                                                    onClick={() => handleRemoveFromWishlist(item.id, item.productId)}
-                                                >
-                                                    <FaHeart className='text-danger vk_IN' />
-                                                </button>
+                                            <div className='VK_wislist_desc'>
+                                                <div className='d-flex align-items-center justify-content-between'>
+                                                    <h5 className='m-0 VK_wishlist_cart_tit'>{item.name}</h5>
+                                                    <div className='VK_revire_desc d-inline-flex'>
+                                                        <FaStar className='text-warning VK_icns' />
+                                                        <span className='font_14'>{item.rating}</span>
+                                                    </div>
+                                                </div>
+                                                <p className='mb-2 font_14 fw-500'>{item.description}</p>
+                                                <div className='d-flex justify-content-between align-items-center'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        {item.color.map((color, ind) => (
+                                                            <span
+                                                                key={ind}
+                                                                className='VK_wishlist_color_span d-inline-block'
+                                                                style={{ backgroundColor: color }}
+                                                            ></span>
+                                                        ))}
+                                                    </div>
+                                                    <div className='d-flex align-items-end'>
+                                                        <p className='m-0 fw-600 text-black'>${item.price}</p>
+                                                        <p className='m-0 light_color font_14 ps-1'>
+                                                            <strike>${item.old_price}</strike>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div className='mt-2'>
+                                                    <span className={`badge ${item.stockStatus === 'In Stock' ? 'bg-success' : 'bg-danger'}`}>
+                                                        {item.stockStatus}
+                                                    </span>
+                                                </div>
                                             </div>
+                                    </Link>
                                         </div>
-                                        <div className='VK_wislist_desc'>
-                                            <div className='d-flex align-items-center justify-content-between'>
-                                                <h5 className='m-0 VK_wishlist_cart_tit'>{item.name}</h5>
-                                                <div className='VK_revire_desc d-inline-flex'>
-                                                    <FaStar className='text-warning VK_icns' />
-                                                    <span className='font_14'>{item.rating}</span>
-                                                </div>
-                                            </div>
-                                            <p className='mb-2 font_14 fw-500'>{item.description}</p>
-                                            <div className='d-flex justify-content-between align-items-center'>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    {item.color.map((color, ind) => (
-                                                        <span
-                                                            key={ind}
-                                                            className='VK_wishlist_color_span d-inline-block'
-                                                            style={{ backgroundColor: color }}
-                                                        ></span>
-                                                    ))}
-                                                </div>
-                                                <div className='d-flex align-items-end'>
-                                                    <p className='m-0 fw-600 text-black'>${item.price}</p>
-                                                    <p className='m-0 light_color font_14 ps-1'>
-                                                        <strike>${item.old_price}</strike>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div className='mt-2'>
-                                                <span className={`badge ${item.stockStatus === 'In Stock' ? 'bg-success' : 'bg-danger'}`}>
-                                                    {item.stockStatus}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </Col>
                             ))}
                         </Row>

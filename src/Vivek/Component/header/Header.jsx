@@ -30,7 +30,7 @@ const Header = () => {
 
     const [isSearching, setIsSearching] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState('All Categories');
+    // const [selectedCategory, setSelectedCategory] = useState('All Categories');
     const [searchResults, setSearchResults] = useState([]);
 
     const [loading, setLoading] = useState(false)
@@ -136,30 +136,30 @@ const Header = () => {
 
     // search suggestions
 
-    let [suggestion, setsuggestion] = useState(null);
+    // let [suggestion, setsuggestion] = useState(null);
 
-    let search_sug = [
-        "iphone 16 pro max",
-        "Samsung Galaxy S23 Ultra 5G AI Smartphone ",
-        "iphone 16 pro max",
-        "Samsung Galaxy S23 Ultra 5G AI Smartphone ",
-        "Samsung Galaxy S23 Ultra 5G AI Smartphone ",
-        "Samsung Galaxy S23 Ultra 5G AI Smartphone "
-    ]
+    // let search_sug = [
+    //     "iphone 16 pro max",
+    //     "Samsung Galaxy S23 Ultra 5G AI Smartphone ",
+    //     "iphone 16 pro max",
+    //     "Samsung Galaxy S23 Ultra 5G AI Smartphone ",
+    //     "Samsung Galaxy S23 Ultra 5G AI Smartphone ",
+    //     "Samsung Galaxy S23 Ultra 5G AI Smartphone "
+    // ]
 
-    const handle_serachSuggestion = (event) => {
-        let search_text = event.target.value.toLowerCase();
-        if (search_text.length > 0) {
-            const filtered = search_sug.filter((element) =>
-                element.toLocaleLowerCase().includes(search_text)
-            );
+    // const handle_serachSuggestion = (event) => {
+    //     let search_text = event.target.value.toLowerCase();
+    //     if (search_text.length > 0) {
+    //         const filtered = search_sug.filter((element) =>
+    //             element.toLocaleLowerCase().includes(search_text)
+    //         );
 
-            setsuggestion(filtered.length > 0 ? filtered : null);
+    //         setsuggestion(filtered.length > 0 ? filtered : null);
 
-        } else {
-            setsuggestion(null);
-        }
-    };
+    //     } else {
+    //         setsuggestion(null);
+    //     }
+    // };
 
 
     // image search model
@@ -266,16 +266,16 @@ const Header = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchQuery]);
 
-    const handleSearchResultClick = async (id) => {
-        try {
-            const response = await axios.get(`${BaseUrl}/api/getProduct/${id}`, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            // console.log(response.data);
-        } catch (error) {
-            console.error('Data fetching failed:', error);
-        }
-    }
+    // const handleSearchResultClick = async (id) => {
+    //     try {
+    //         const response = await axios.get(`${BaseUrl}/api/getProduct/${id}`, {
+    //             headers: { Authorization: `Bearer ${token}` },
+    //         });
+    //         // console.log(response.data);
+    //     } catch (error) {
+    //         console.error('Data fetching failed:', error);
+    //     }
+    // }
 
     return (
         <React.Fragment>

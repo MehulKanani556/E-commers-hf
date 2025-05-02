@@ -4,8 +4,9 @@ import { GoArrowUpRight } from "react-icons/go";
 import { FiPlus } from "react-icons/fi";
 import '../css/style.css';
 import Animation from './Animation';
+import { Link } from 'react-router-dom';
 
-const Banner = () => {
+const Banner = ({id}) => {
     return (
         <>
 
@@ -19,12 +20,12 @@ const Banner = () => {
                                 <div className="row align-items-center mx-0">
                                     <div className="col-12 col-sm-6">
                                         <div className="d_content">
-                                            <p className='mb-0'>The new stylish collection</p>
+                                            <p className='mb-0'>THE NEW STYLISH COLLECTION</p>
                                             <div className="d_head">
-                                                <h2>New fall season 2024 </h2>
+                                                <h2>NEW FALL SEASON 2024 </h2>
                                             </div>
                                             <div className="d_cta">
-                                                <a href="" className='text-decoration-none'>Shop now <GoArrowUpRight className='ms-1 d_arrowicon' /></a>
+                                                <Link href="" className='text-decoration-none'>Shop now <GoArrowUpRight className='ms-1 d_arrowicon' /></Link>
                                             </div>
                                         </div>
                                     </div>
@@ -101,7 +102,7 @@ const Banner = () => {
                                             <h3>BLACK FABRIC STRAP</h3>
                                             <p>It’s Fastrack’s philosophy, its mantra, its battle cry. This simple phrase is the expression of the way the brand thinks, operates, communicates and works. It’s a blueprint for all that is Fastrack.</p>
                                             <div className="d_cta mt-5">
-                                                <a href="" className='text-decoration-none'>Buy Now</a>
+                                                <Link href="" className='text-decoration-none'>Buy Now</Link>
                                             </div>
                                         </div>
                                     </div>
@@ -124,7 +125,7 @@ const Banner = () => {
                                             <h2>Latest Jewelry Collections</h2>
                                             <p className='mb-0'>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document.</p>
                                             <div className="d_cta mt-5">
-                                                <a href="" className='text-decoration-none'>Buy Now</a>
+                                                <Link href="" className='text-decoration-none'>Buy Now</Link>
                                             </div>
                                         </div>
                                     </div>
